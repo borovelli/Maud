@@ -1,0 +1,313 @@
+data_global
+_audit_creation_date 'Mon Feb 08 18:15:22 CET 1999'
+_audit_creation_method 'Maud, version 2.033'
+_audit_update_record 'Last update Tue Sep 20 23:15:02 CEST 2005'
+_computing_structure_refinement 'Maud, version 2.033'
+_refine_ls_R_factor_all -0.0015532204
+_refine_ls_wR_factor_all 0.0026319153
+_refine_ls_goodness_of_fit_all 0.12935968
+_publ_contact_author_name 'Luca Lutterotti'
+_publ_section_title untitled
+_pd_proc_ls_extract_int 'end of iteration'
+_pd_proc_ls_texture_comp 'end of iteration'
+_computing_reduce_memory_occ true
+_pd_proc_ls_theoretical_weight false
+_pd_proc_ls_extract_pos 'end of iteration'
+_pd_proc_ls_strain_comp 'end of iteration'
+_pd_proc_ls_extract_Fhkl 'end of iteration'
+_pd_proc_ls_Fhkl_comp 'end of iteration'
+_pd_proc_ls_weight_scheme log10*q^4
+_refine_ls_weighting_scheme WgtSS
+_refine_ls_WSS_factor 0.23677835
+
+#subordinateObject_Marqardt Least Squares
+
+_computing_refinement_algorithm 'Marqardt Least Squares'
+
+_refine_ls_number_iteration 5
+_riet_refine_ls_precision 1.0E-8
+_riet_refine_ls_derivative_step 1.0E-4
+_riet_refine_ls_double_derivative false
+
+#end_subordinateObject_Marqardt Least Squares
+
+
+
+data_sample_Sample_x
+_pd_spec_description 'Sample description'
+_pd_spec_orientation_omega 0 #min 0.0 #max 0.0
+_pd_spec_orientation_chi 0 #min -810.0 #max 990.0
+_pd_spec_orientation_phi 0 #min 0.0 #max 0.0
+_riet_par_spec_displac_x 0 #min 0.0 #max 0.0
+_riet_par_spec_displac_y 0 #min 0.0 #max 0.0
+_riet_par_spec_displac_z 0 #min 0.0 #max 0.0
+_pd_spec_size_axial 0 #min 0.0 #max 0.0
+_pd_spec_size_equat 33.11865(0.7797646) #min 0.0 #max 0.0
+_pd_spec_size_thick 0 #min 0.0 #max 0.0
+_pd_spec_size_radius 0 #min 0.0 #max 0.0
+
+#subordinateObject_cube
+
+_pd_spec_shape 'cube'
+
+
+#end_subordinateObject_cube
+
+
+#subordinateObject_None Layer workout
+
+_riet_layer_solution_method 'None Layer workout'
+
+
+#end_subordinateObject_None Layer workout
+
+
+#subordinateObject_No precession
+
+_riet_spec_precession_error 'No precession'
+
+
+#end_subordinateObject_No precession
+
+
+#subordinateObject_air
+
+_riet_spec_layer_id 'air'
+
+_riet_par_spec_layer_thickness 0 #min 0.1 #max 1.0E8
+_reflectivity_layer_critical_qc 0 #min 0.0010 #max 0.5
+_reflectivity_layer_absorption 0 #min 1.0E-8 #max 1.0E-5
+_reflectivity_layer_roughness 0 #min 0.01 #max 100.0
+
+
+#end_subordinateObject_air
+
+
+#subordinateObject_Layer_x
+
+_riet_spec_layer_id 'Layer_x'
+
+_riet_par_spec_layer_thickness 12.68995(1.0761093) #min 0.1 #max 1.0E8
+_reflectivity_layer_critical_qc 0.032407153(3.4884925E-4) #min 0.0010 #max 0.5
+_reflectivity_layer_absorption 1.9437542E-7(2.4860325E-8) #min 1.0E-8 #max 1.0E-5
+_reflectivity_layer_roughness 4.5899196(0.16940568) #min 0.01 #max 100.0
+
+
+#end_subordinateObject_Layer_x
+
+
+#subordinateObject_Layer_x1
+
+_riet_spec_layer_id 'Layer_x1'
+
+_riet_par_spec_layer_thickness 142.3256(1.5491493) #min 0.1 #max 1.0E8
+_reflectivity_layer_critical_qc 0.03169255(5.7467838E-5) #min 0.0010 #max 0.5
+_reflectivity_layer_absorption 5.452058E-8(1.28723885E-8) #min 1.0E-8 #max 1.0E-5
+_reflectivity_layer_roughness 0.33851644(0.08996007) #min 0.01 #max 100.0
+
+
+#end_subordinateObject_Layer_x1
+
+
+#subordinateObject_Layer_x
+
+_riet_spec_layer_id 'Layer_x'
+
+_riet_par_spec_layer_thickness 3.6258743(1.0135965) #min 0.1 #max 1.0E8
+_reflectivity_layer_critical_qc 0.032037545(3.559674E-4) #min 0.0010 #max 0.5
+_reflectivity_layer_absorption 4.2584594E-7(8.772639E-8) #min 1.0E-8 #max 1.0E-5
+_reflectivity_layer_roughness 6.0891457(1.0580723) #min 0.01 #max 100.0
+
+
+#end_subordinateObject_Layer_x
+
+
+#subordinateObject_substrate
+
+_riet_spec_layer_id 'substrate'
+
+_riet_par_spec_layer_thickness 0 #min 0.1 #max 1.0E8
+_reflectivity_layer_critical_qc 0.0317 #min 0.0010 #max 0.5
+_reflectivity_layer_absorption 1.7e-7 #min 1.0E-8 #max 1.0E-5
+_reflectivity_layer_roughness 3.319732(0.4323909) #min 0.01 #max 100.0
+
+
+#end_subordinateObject_substrate
+
+
+#subordinateObject_DataFileSet_x
+
+_pd_meas_dataset_id 'DataFileSet_x'
+
+_pd_meas_datetime_initiated 'Date/time meas'
+_pd_meas_info_author_name ?
+_riet_meas_datafile_format ?
+_pd_proc_ls_background_function ?
+_pd_proc_ls_profile_function ?
+_pd_proc_ls_peak_cutoff 20
+_pd_proc_2theta_range_min 0
+_pd_proc_2theta_range_max 0
+_pd_proc_2theta_range_inc ?
+_diffrn_ambient_pressure ?
+_diffrn_ambient_temperature ?
+_riet_lorentz_restricted false
+_riet_par_background_interpolated false
+_riet_par_background_interpolation_range 15
+_riet_meas_dataset_compute true
+
+loop_
+_riet_par_background_pol
+  1.8879975E-8(2.0014723E-9) #min -90.0 #max 110.0
+
+
+#subordinateObject_none ie
+
+_riet_intensity_extraction 'none ie'
+
+
+#end_subordinateObject_none ie
+
+
+#subordinateObject_none pe
+
+_riet_position_extraction 'none pe'
+
+
+#end_subordinateObject_none pe
+
+
+#subordinateObject_Matrix method
+
+_reflectivity_model_type 'Matrix method'
+
+
+#end_subordinateObject_Matrix method
+
+
+#subordinateObject_Diffraction Instrument
+
+_diffrn_measurement_device 'Diffraction Instrument'
+
+_diffrn_measurement_device_type 'Diffraction Instrument'
+_riet_caglioti_d_dep true
+_riet_asymmetry_tan_dep true
+_riet_omega/chi_broadening_convoluted false
+_pd_proc_intensity_incident 1.2606567(0.023934124) #min 0.0 #max 10000.0
+_riet_par_asymmetry_truncation 0.4 #min -0.44 #max 4.4
+
+loop_
+_riet_par_caglioti_value
+  0.0030606876(6.677011E-4) #min -0.001244395 #max 0.1
+
+loop_
+_riet_par_gaussian_value
+  0 #min 0.0 #max 1.0
+
+loop_
+_riet_par_2-theta_offset
+  -0.012418605(0.0015303892) #min 0.0 #max 0.0
+
+
+#subordinateObject_none
+
+_inst_intensity_calibration 'none'
+
+
+#end_subordinateObject_none
+
+
+#subordinateObject_none
+
+_inst_angular_calibration 'none'
+
+
+#end_subordinateObject_none
+
+
+#subordinateObject_BB reflectivity
+
+_pd_instr_geometry 'BB reflectivity'
+
+_diffrn_radiation_monochromator Filtered
+_pd_instr_2theta_monochr_post 0
+_pd_instr_dist_src/samp 180.0
+_pd_instr_monochr_pre_spec none
+_pd_instr_2theta_monochr_pre 0
+_pd_instr_divg_ax_src/samp 0.03125
+_pd_instr_divg_slit_auto false
+_diffrn_radiation_polarisn_norm 0 #min 0.0 #max 360.0
+_diffrn_radiation_polarisn_ratio 0 #min 0.0 #max 1.0
+
+#end_subordinateObject_BB reflectivity
+
+
+#subordinateObject_Reflectivity scan
+
+_diffrn_measurement_method 'Reflectivity scan'
+
+
+#end_subordinateObject_Reflectivity scan
+
+
+#subordinateObject_Synchrotron
+
+_diffrn_radiation_type 'Synchrotron'
+
+
+#subordinateObject_Added_by_default
+
+_diffrn_radiation_wavelength_id 'Added_by_default'
+
+_diffrn_radiation_wavelength 1.197 #min 0.1 #max 10.0
+_diffrn_radiation_wavelength_wt 1.00000000 #min 0.0 #max 1.01
+
+#end_subordinateObject_Added_by_default
+
+
+#end_subordinateObject_Synchrotron
+
+
+#subordinateObject_Scintillation
+
+_diffrn_radiation_detector 'Scintillation'
+
+
+#end_subordinateObject_Scintillation
+
+
+#subordinateObject_none abs
+
+_exptl_absorpt_correction_type 'none abs'
+
+
+#end_subordinateObject_none abs
+
+
+#end_subordinateObject_Diffraction Instrument
+
+
+#subordinateObject_G11.ddq
+
+_riet_meas_datafile_name 'G11.ddq'
+
+_riet_meas_datafile_format ?
+_pd_meas_orientation_omega 0.0
+_pd_meas_orientation_chi 0.0
+_pd_meas_orientation_phi 0.0
+_pd_meas_orientation_eta 0.0
+_riet_meas_datafile_compute true
+_riet_meas_datafile_fitting false
+_pd_meas_detector_id none
+_pd_meas_step_count_time 1.0
+_pd_meas_units_of_intensity counts
+_riet_meas_datafile_as_background false
+_riet_meas_data_group_count 1
+_pd_meas_counts_monitor 1.0 #min 0.0 #max 10.0
+
+
+#end_subordinateObject_G11.ddq
+
+
+#end_subordinateObject_DataFileSet_x
+
+
