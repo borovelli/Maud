@@ -1,0 +1,171 @@
+<HTML>
+	<HEAD>
+		<TITLE>
+			ECJ
+		</TITLE>
+	</HEAD>
+	<BODY bgcolor=white>
+		<p>
+			<table border=0 width="100%">
+				<tr>
+					<td bgcolor="darkblue" width="100%">
+						<font color=white size=1>&nbsp;</font>
+					</td>
+				</tr>
+			</table>
+			<p>
+			<font size=6><b>ECJ <font color= darkblue >9</font></b></font> <br>
+			<font size="4"><b>A Java-based Evolutionary Computation and <br>
+			Genetic Programming Research System <br>
+			by <a href="http://www.cs.umd.edu/users/seanl/">Sean Luke</a></b></font>
+			<p>
+			<p>
+			<b>Contributors: Liviu Panait, Jeff Bassett, Robert Hubley, and Alexander Chircop</b>
+			<p>
+			<table border=0 width="100%">
+				<tr>
+					<td bgcolor="darkblue" width="100%">
+						<font color=white size=1>&nbsp;</font>
+					</td>
+				</tr>
+			</table>
+			<p>
+			ECJ is a research EC system written in Java. It was designed to be highly flexible, with nearly all classes (and all of their settings) dynamically determined at runtime by a user-provided parameter file. All structures in the system are arranged to be easily modifiable. Even so, the system was designed with an eye toward efficiency; ECJ may make you reconsider notions about Java and slowness.
+			<H3>
+				Features
+			</H3>
+			<p>
+			ECJ is pretty full-featured as evolutionary computation systems go, and I believe it to be the most feature-rich GP system available in the public domain.
+			<p>
+			<b>General Features</b>
+			<ul>
+				<li>Platform-independent checkpointing and logging
+				<li>Hierarchical parameter files
+				<li>Multithreading
+				<li>Mersenne Twister Random Number Generators
+				<li>Abstractions for implementing a variety of EC forms.
+			</ul>
+			<b>EC Features</b>
+			<ul>
+				<li>Asynchronous island models over TCP/IP
+				<li>Genetic Algorithms/Programming style Steady State and Generational evolution, with or without Elitism
+				<li>Evolutionary-Strategies style (mu,lambda) and (mu+lambda) evolution
+				<li>Very flexible breeding architecture
+				<li>Many selection operators
+				<li>Multiple subpopulations and species
+				<li>Inter-subpopulation exchanges
+				<li>Reading populations from files
+				<li>Hooks for coevolution, competitive/cooperative fitness strategies, and multiobjective optimization
+				<li>Packages for parsimony pressure
+			</ul>
+			<b>GP Features</b>
+			<ul>
+				<li>Set-based Strongly-Typed Genetic Programming
+				<li>Ephemeral Random Constants
+				<li>Automatically-Defined Functions and Automatically Defined Macros
+				<li>Multiple tree forests
+				<li>Six tree-creation algorithms
+				<li>Extensive set of GP breeding operators
+				<li>Seven pre-done GP application problem domains (ant, regression, multiplexer, lawnmower, parity, two-box, edge)
+			</ul>
+			<b>Vector (GA/ES) Features</b>
+			<ul>
+				<li>Fixed-Length and Variable-Length Genomes
+				<li>Arbitrary representations
+				<li>Five pre-done vector application problem domains (sum, rosenbrock, sphere, step, noisy-quartic)
+			</ul>
+			<b>Other Features</b>
+			<ul>
+				<li>Multiset-based genomes in the <tt>rule</tt> package, for evolving Pitt-approach rulesets or other set-based representations.
+				<li> Hooks for using the <a href="http://www.teambots.org">Teambots</a> robot simultation system to do evaluation.
+			</ul>
+			<h3>
+				Download ECJ
+			</h3>
+			<p>
+			<b>Download</b> ECJ version 9 as <a href="http://www.cs.umd.edu/projects/plus/ec/ecj/ec.tar.gz">ec.tar.gz</a> or (bigger) <a href="http://www.cs.umd.edu/projects/plus/ec/ecj/ec.zip">ec.zip</a>. The license agreement and <b>online documentation</b> of the system is also <a href="docs">available.</a>
+			<p>
+			ECJ is released under a special open source license. Please read the license before using the software. See the provided README file to locate the software license.
+			<p>
+			ECJ is a very extensive system and my experimental needs only rigorously test certain parts of it. I welcome you to try it out and bang on it and improve it. Please <a href="mailto:seanl@cs.umd.edu">contact me</a> with any suggestions, ideas, or modifications.
+			<h3>
+				Migrating from the Previous Version
+			</h3>
+			<p>
+ECJ 9 is primarily bug fixes and the addition of two more tutorials and Robert Hubley's SPEA2 package.  There should be no significant migration issues.
+			<h3>
+				The Agent
+			</h3>
+			<p>
+			The software license refers to the "Agent". Presently, that's <a href="http://www.cs.umd.edu/users/seanl/">me, Sean.</a>
+			<h3>
+				Contacting the author
+			</h3>
+			Sean Luke can be found at <a href="http://www.cs.umd.edu/users/seanl/">http://www.cs.umd.edu/users/seanl/</a>
+			<h3>
+				Other Publically-Available Java-Based Evolutionary Computation Systems
+			</h3>
+			<dl>
+				<dt><b>GP Systems</b><dd>
+				<dl>
+					<dt><b>Tree-based GP, implemented with trees</b> <dd>
+					<ul>
+						<li><a href="http://www.cs.umd.edu/projects/plus/ec/ecj/">ECJ</a>
+						<li><a href="http://www.cs.ucl.ac.uk/staff/A.Qureshi/gpsys_doc.html">gpsys</a>
+						<li><a href="http://www.sourceforge.net/projects/jrgp">jrgp</a>
+						<li><a href="http://jgprog.sourceforge.net/">JGProg</a>
+						<li>Sutherland (contact <a href="http://www.mrs.umn.edu/~mcphee">Nicholas McPhee</a>)
+						<li><a href="http://www.esatclear.ie/~rwallace/gp.html">Genetic Programming in Java</a> by Russell Wallace
+					</ul>
+					<dt><b>Tree-based GP, implemented with arrays</b> <dd>
+					<ul>
+						<li><a href="http://www.geocities.com/computercondottiere/javaGPtree.tgz">javaGPtree</a>, by <a href="mailto:sfurlong@acmenet.net">Steve Furlong</a>
+					</ul>
+					<dt><b>GP Applets</b> <dd>
+					<ul>
+						<li><a href="http://alphard.ethz.ch/gerber/approx/default.html">Symbolic Regression applet</a> by Hansueli Gerber.
+						<li><a href="http://studentweb.cs.bham.ac.uk/~fsc/DGP.html">DGP</a>, based on Gerber's applet.
+						<li>MTGP (contact <a href="a.zalzala@hw.ac.uk">A. M. S. Zalzala</a>)
+					</ul>
+					<br>
+					<dt><b>GP using Java Bytecode</b> <dd>
+					<ul>
+						<li>BCGP (contact <a href="bharvey@austx.tandem.com">Brad Harvey</a>)
+						<li>JME and DJBGP (contact <a href="Eduard.Lukschandl@ehpt.com">Eduard Lukschandl</a>)
+					</ul>
+					<dt><b>Private GP Systems</b> <dd>
+					<ul>
+						<li><a href="http://www.genetic-programming.com/">genetic-programming.com</a> (John Koza's company) has developed a fast Java system.
+					</ul>
+					<dt><b>GP: Whereabouts Unknown</b> <dd>
+					<ul>
+						<li>gpjpp
+						<li>gpjava, originally developed at <a href="http://dinf.vub.ac.be/asg/research/research.html">ASyG</a>, Vrje Universiteit Brussel.
+					</ul>
+				</dl>
+				<dt><b>Other EC Stuff in Java</b>
+				<p>
+					This is just a small sample, of course.
+					<ul>
+						<li><a href="http://cs.gmu.edu/~eclab/tools.html">ECKit</a>, a Java-based system for cooperative coevolution.
+						<li><a href="http://laseeb.ist.utl.pt/sw/jdeal/">JDEAL</a> (GA/ES)
+						<li><a href="http://www.cs.utexas.edu/users/nn/pages/software/abstracts.html#javasane">JavaSANE</a> (evolving neural networks)
+						<li>Java applet showing <a href="http://lslwww.epfl.ch/~moshes/Frederic/notunif1.html">Evolved Cellular Automata</a>
+						<li><a href="http://www.alumni.caltech.edu/~bwbush/Java/banda/genalg/algorithm.html">GENALG</a>, another GA applet
+						<li><a href="http://www2.informatik.uni-erlangen.de/~jacob/Evolvica/">Evolvica</a>, a collection of tutorials and applets demonstrating GA, ES, and GP.
+						<li><a href="http://www2.informatik.uni-erlangen.de/IMMD-II/Persons/jacob/Evolvica/Java/CharacterEvolution/index.html">Another GA demo.</a>
+						<li>The <a href="http://www.cs.ruu.nl/people/peterb/computer/ea/eavisualizer/program.html">EA Visualizer</a> (GA)
+						<li>Rasjus Ursem's <a href="http://www.evalife.dk/applications.php">EA Library</a> (GA, a little GP)
+						<li><a href="http://cs.felk.cvut.cz/~koutnij/studium/jaga/jaga.html">jaga</a> (GA)
+						<li><a href="http://www.tik.ee.ethz.ch/~zitzler/moea.html">Multiobjective</a> optimization applet
+						<li>Various <a href="http://www2.informatik.uni-erlangen.de/IMMD-II/Persons/jacob/Evolvica/Java/Overview.html">Demonstrations</a> of using Java to evolve nifty stuff
+						<li><a href="http://gaslab.cs.unr.edu/">GASLAB</a> has GA Java tools
+						<li>A Java-based demonstration of evolved <a href="http://asd.bbn.com/papers/traffic/traffic.html">Traffic control rules</a>, discovered through GP
+					</ul>
+					<dd>
+			</dl>
+			<br>
+			<br>
+			<br>
+	</BODY>
+</HTML>

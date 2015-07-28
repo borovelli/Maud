@@ -1,0 +1,11 @@
+#
+# Simple default parameters for multiobjective fitness
+#
+
+# how many objectives should we have by default?
+# you can also assign this on a per-subpopulation basis
+fit.multi.numobjectives = 			2
+
+# The default value for whether the criterion is AND or OR, is AND.
+# You can set this to OR, but you'll have to do so on a per-subpopulation basis.
+
