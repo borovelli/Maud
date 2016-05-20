@@ -37,467 +37,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3188ddab-ee7e-4799-90e9-3d5065d3cd7a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Jama/CholeskyDecomposition.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Jama/EigenvalueDecomposition.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Jama/LUDecomposition.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Jama/Matrix.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Jama/QRDecomposition.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Jama/SingularValueDecomposition.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Jama/util/Maths.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/TnxDatafile.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/examples/Properties.3D" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/examples/marker.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/files/classnames.ins" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/FilmScreamer.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/Maud.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/MaudApp.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/MaudApplet.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/MaudITS.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/MaudText.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/MaudWebStart.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/Maudette.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/MaudetteApp.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/BlogContentPane.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/io/RSSFeedLoader.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/it/unitn/ing/xgridagent/Agent.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/it/unitn/ing/xgridagent/Task.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/it/unitn/ing/xgridagent/XGridAgent.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/it/unitn/ing/xgridagent/XGridMessage.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/it/unitn/ing/xgridagent/XGridRequestHandler.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/examples/instruments.mdb" afterPath="$PROJECT_DIR$/src/files/instruments.mdb" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/examples/structures.mdb" afterPath="$PROJECT_DIR$/src/files/structures.mdb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/PlasterOfParis.mdb" afterPath="$PROJECT_DIR$/src/examples/PlasterOfParis.mdb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/Steel16CrNi4.RAW" afterPath="$PROJECT_DIR$/src/examples/Steel16CrNi4.RAW" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/film1.jpg" afterPath="$PROJECT_DIR$/src/examples/film1.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/film16.tif" afterPath="$PROJECT_DIR$/src/examples/film16.tif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/sio250.raw" afterPath="$PROJECT_DIR$/src/examples/sio250.raw" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/files/xraydata.db" afterPath="$PROJECT_DIR$/src/files/xraydata.db" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/AddHost.gif" afterPath="$PROJECT_DIR$/src/images/20x20/AddHost.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/AlignCenter.gif" afterPath="$PROJECT_DIR$/src/images/20x20/AlignCenter.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/AlignCenterArrow.gif" afterPath="$PROJECT_DIR$/src/images/20x20/AlignCenterArrow.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/AlignLeft.gif" afterPath="$PROJECT_DIR$/src/images/20x20/AlignLeft.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/AlignLeftArrow.gif" afterPath="$PROJECT_DIR$/src/images/20x20/AlignLeftArrow.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/AlignRight.gif" afterPath="$PROJECT_DIR$/src/images/20x20/AlignRight.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/AlignRightArrow.gif" afterPath="$PROJECT_DIR$/src/images/20x20/AlignRightArrow.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/BarGraph.gif" afterPath="$PROJECT_DIR$/src/images/20x20/BarGraph.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Battery.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Battery.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Binocular.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Binocular.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/BlueCircle.gif" afterPath="$PROJECT_DIR$/src/images/20x20/BlueCircle.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/BlueFlag.gif" afterPath="$PROJECT_DIR$/src/images/20x20/BlueFlag.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Bold.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Bold.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Bomb.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Bomb.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Box.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Box.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Bulb.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Bulb.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/CD.gif" afterPath="$PROJECT_DIR$/src/images/20x20/CD.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Calculator.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Calculator.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Camera.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Camera.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/CameraFlash.gif" afterPath="$PROJECT_DIR$/src/images/20x20/CameraFlash.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Caution.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Caution.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Check.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Check.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/CheckNetwork.gif" afterPath="$PROJECT_DIR$/src/images/20x20/CheckNetwork.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Circle.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Circle.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Circle_0.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Circle_0.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Circle_1.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Circle_1.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Circle_2.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Circle_2.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Circle_3.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Circle_3.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Circle_4.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Circle_4.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Circle_5.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Circle_5.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Circle_6.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Circle_6.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Circle_7.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Circle_7.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Circle_8.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Circle_8.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Circle_9.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Circle_9.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/CleanUp.gif" afterPath="$PROJECT_DIR$/src/images/20x20/CleanUp.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Clock.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Clock.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/ClockGo.gif" afterPath="$PROJECT_DIR$/src/images/20x20/ClockGo.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/ClockStop.gif" afterPath="$PROJECT_DIR$/src/images/20x20/ClockStop.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Column.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Column.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Computer.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Computer.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Copy.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Copy.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Cut.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Cut.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Cylinder.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Cylinder.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Data.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Data.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/DataExtract.gif" afterPath="$PROJECT_DIR$/src/images/20x20/DataExtract.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/DataStore.gif" afterPath="$PROJECT_DIR$/src/images/20x20/DataStore.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Delete.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Delete.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/DeleteColumn.gif" afterPath="$PROJECT_DIR$/src/images/20x20/DeleteColumn.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/DeleteRow.gif" afterPath="$PROJECT_DIR$/src/images/20x20/DeleteRow.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/DeleteSheet.gif" afterPath="$PROJECT_DIR$/src/images/20x20/DeleteSheet.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Document.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Document.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/DocumentDraw.gif" afterPath="$PROJECT_DIR$/src/images/20x20/DocumentDraw.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/DocumentIn.gif" afterPath="$PROJECT_DIR$/src/images/20x20/DocumentIn.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/DocumentMag.gif" afterPath="$PROJECT_DIR$/src/images/20x20/DocumentMag.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/DocumentOut.gif" afterPath="$PROJECT_DIR$/src/images/20x20/DocumentOut.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Down.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Down.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/DownLeft.gif" afterPath="$PROJECT_DIR$/src/images/20x20/DownLeft.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/DownRight.gif" afterPath="$PROJECT_DIR$/src/images/20x20/DownRight.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Draw.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Draw.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Enter.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Enter.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Envelope.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Envelope.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/EnvelopeIn.gif" afterPath="$PROJECT_DIR$/src/images/20x20/EnvelopeIn.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/EnvelopeOpen.gif" afterPath="$PROJECT_DIR$/src/images/20x20/EnvelopeOpen.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/EnvelopeOut.gif" afterPath="$PROJECT_DIR$/src/images/20x20/EnvelopeOut.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Exit.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Exit.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Eyeball.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Eyeball.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Favorite.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Favorite.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/FingerDown.gif" afterPath="$PROJECT_DIR$/src/images/20x20/FingerDown.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/FingerLeft.gif" afterPath="$PROJECT_DIR$/src/images/20x20/FingerLeft.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/FingerRight.gif" afterPath="$PROJECT_DIR$/src/images/20x20/FingerRight.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/FingerUp.gif" afterPath="$PROJECT_DIR$/src/images/20x20/FingerUp.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Folder.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Folder.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/FolderIn.gif" afterPath="$PROJECT_DIR$/src/images/20x20/FolderIn.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/FolderOut.gif" afterPath="$PROJECT_DIR$/src/images/20x20/FolderOut.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Forward.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Forward.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/ForwardAll.gif" afterPath="$PROJECT_DIR$/src/images/20x20/ForwardAll.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Gauge.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Gauge.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/GreenFlag.gif" afterPath="$PROJECT_DIR$/src/images/20x20/GreenFlag.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Hammer.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Hammer.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Help.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Help.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Home.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Home.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Inform.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Inform.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Insert.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Insert.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Italic.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Italic.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Key.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Key.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Laptop.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Laptop.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Left.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Left.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Lengthen.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Lengthen.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/LengthenLeftRight.gif" afterPath="$PROJECT_DIR$/src/images/20x20/LengthenLeftRight.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/LengthenRightLeft.gif" afterPath="$PROJECT_DIR$/src/images/20x20/LengthenRightLeft.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/LineGraph.gif" afterPath="$PROJECT_DIR$/src/images/20x20/LineGraph.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Lock.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Lock.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Magnify.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Magnify.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/MagnifyMinus.gif" afterPath="$PROJECT_DIR$/src/images/20x20/MagnifyMinus.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/MagnifyPlus.gif" afterPath="$PROJECT_DIR$/src/images/20x20/MagnifyPlus.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Memory.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Memory.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Minus.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Minus.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Mouse1Btn.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Mouse1Btn.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Mouse2Btn.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Mouse2Btn.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Mouse3Btn.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Mouse3Btn.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/MouseWheel.gif" afterPath="$PROJECT_DIR$/src/images/20x20/MouseWheel.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Move.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Move.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/MultiLayer.gif" afterPath="$PROJECT_DIR$/src/images/20x20/MultiLayer.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/New.gif" afterPath="$PROJECT_DIR$/src/images/20x20/New.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/NewColumn.gif" afterPath="$PROJECT_DIR$/src/images/20x20/NewColumn.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/NewEnvelope.gif" afterPath="$PROJECT_DIR$/src/images/20x20/NewEnvelope.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/NewFolder.gif" afterPath="$PROJECT_DIR$/src/images/20x20/NewFolder.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/NewPin.gif" afterPath="$PROJECT_DIR$/src/images/20x20/NewPin.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/NewPlug.gif" afterPath="$PROJECT_DIR$/src/images/20x20/NewPlug.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/NewRow.gif" afterPath="$PROJECT_DIR$/src/images/20x20/NewRow.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/NewSheet.gif" afterPath="$PROJECT_DIR$/src/images/20x20/NewSheet.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Object.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Object.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Open.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Open.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/OpenArrow.gif" afterPath="$PROJECT_DIR$/src/images/20x20/OpenArrow.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/OpenDoc.gif" afterPath="$PROJECT_DIR$/src/images/20x20/OpenDoc.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/OpenLock.gif" afterPath="$PROJECT_DIR$/src/images/20x20/OpenLock.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/PDA.gif" afterPath="$PROJECT_DIR$/src/images/20x20/PDA.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/PDAIn.gif" afterPath="$PROJECT_DIR$/src/images/20x20/PDAIn.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/PDAOut.gif" afterPath="$PROJECT_DIR$/src/images/20x20/PDAOut.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Paint.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Paint.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Palette.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Palette.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/ParallelComputing.gif" afterPath="$PROJECT_DIR$/src/images/20x20/ParallelComputing.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Paste.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Paste.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/PeriodicTable.gif" afterPath="$PROJECT_DIR$/src/images/20x20/PeriodicTable.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/PieGraph.gif" afterPath="$PROJECT_DIR$/src/images/20x20/PieGraph.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Pin.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Pin.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/PinLeft.gif" afterPath="$PROJECT_DIR$/src/images/20x20/PinLeft.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Plug.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Plug.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Plus.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Plus.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/PlusMinus.gif" afterPath="$PROJECT_DIR$/src/images/20x20/PlusMinus.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/PlusPlus.gif" afterPath="$PROJECT_DIR$/src/images/20x20/PlusPlus.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Print.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Print.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/RedFlag.gif" afterPath="$PROJECT_DIR$/src/images/20x20/RedFlag.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Redo.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Redo.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Reply.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Reply.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/ReplyAll.gif" afterPath="$PROJECT_DIR$/src/images/20x20/ReplyAll.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Right.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Right.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/RotCCDown.gif" afterPath="$PROJECT_DIR$/src/images/20x20/RotCCDown.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/RotCCLeft.gif" afterPath="$PROJECT_DIR$/src/images/20x20/RotCCLeft.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/RotCCRight.gif" afterPath="$PROJECT_DIR$/src/images/20x20/RotCCRight.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/RotCCUp.gif" afterPath="$PROJECT_DIR$/src/images/20x20/RotCCUp.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/RotCWDown.gif" afterPath="$PROJECT_DIR$/src/images/20x20/RotCWDown.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/RotCWLeft.gif" afterPath="$PROJECT_DIR$/src/images/20x20/RotCWLeft.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/RotCWRight.gif" afterPath="$PROJECT_DIR$/src/images/20x20/RotCWRight.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/RotCWUp.gif" afterPath="$PROJECT_DIR$/src/images/20x20/RotCWUp.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Row.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Row.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Save.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Save.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/SaveAll.gif" afterPath="$PROJECT_DIR$/src/images/20x20/SaveAll.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/SaveDB.gif" afterPath="$PROJECT_DIR$/src/images/20x20/SaveDB.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Select.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Select.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Sheet.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Sheet.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/StartDaemon.gif" afterPath="$PROJECT_DIR$/src/images/20x20/StartDaemon.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/StopDaemon.gif" afterPath="$PROJECT_DIR$/src/images/20x20/StopDaemon.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Therm.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Therm.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/TileCascade.gif" afterPath="$PROJECT_DIR$/src/images/20x20/TileCascade.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/TileHorizontal.gif" afterPath="$PROJECT_DIR$/src/images/20x20/TileHorizontal.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/TileVertical.gif" afterPath="$PROJECT_DIR$/src/images/20x20/TileVertical.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/ToBack.gif" afterPath="$PROJECT_DIR$/src/images/20x20/ToBack.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/ToFront.gif" afterPath="$PROJECT_DIR$/src/images/20x20/ToFront.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/TrafficGreen.gif" afterPath="$PROJECT_DIR$/src/images/20x20/TrafficGreen.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/TrafficOff.gif" afterPath="$PROJECT_DIR$/src/images/20x20/TrafficOff.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/TrafficRed.gif" afterPath="$PROJECT_DIR$/src/images/20x20/TrafficRed.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/TrafficYellow.gif" afterPath="$PROJECT_DIR$/src/images/20x20/TrafficYellow.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/UnLock.gif" afterPath="$PROJECT_DIR$/src/images/20x20/UnLock.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/UnPlug.gif" afterPath="$PROJECT_DIR$/src/images/20x20/UnPlug.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Underline.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Underline.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Undo.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Undo.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Up.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Up.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/UpLeft.gif" afterPath="$PROJECT_DIR$/src/images/20x20/UpLeft.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/UpRight.gif" afterPath="$PROJECT_DIR$/src/images/20x20/UpRight.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/UpdateColumn.gif" afterPath="$PROJECT_DIR$/src/images/20x20/UpdateColumn.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/UpdateRow.gif" afterPath="$PROJECT_DIR$/src/images/20x20/UpdateRow.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/UpdateSheet.gif" afterPath="$PROJECT_DIR$/src/images/20x20/UpdateSheet.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/User.gif" afterPath="$PROJECT_DIR$/src/images/20x20/User.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Users.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Users.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Users2.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Users2.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/VCRBack.gif" afterPath="$PROJECT_DIR$/src/images/20x20/VCRBack.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/VCRFastForward.gif" afterPath="$PROJECT_DIR$/src/images/20x20/VCRFastForward.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/VCRForward.gif" afterPath="$PROJECT_DIR$/src/images/20x20/VCRForward.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/VCROpen.gif" afterPath="$PROJECT_DIR$/src/images/20x20/VCROpen.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/VCRPause.gif" afterPath="$PROJECT_DIR$/src/images/20x20/VCRPause.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/VCRRewind.gif" afterPath="$PROJECT_DIR$/src/images/20x20/VCRRewind.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/VCRStop.gif" afterPath="$PROJECT_DIR$/src/images/20x20/VCRStop.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Widen.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Widen.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/Workstation.gif" afterPath="$PROJECT_DIR$/src/images/20x20/Workstation.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/World.gif" afterPath="$PROJECT_DIR$/src/images/20x20/World.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/YellowCircle.gif" afterPath="$PROJECT_DIR$/src/images/20x20/YellowCircle.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/arrow_temp.gif" afterPath="$PROJECT_DIR$/src/images/20x20/arrow_temp.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/blank-20.gif" afterPath="$PROJECT_DIR$/src/images/20x20/blank-20.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/20x20/delete_temp.gif" afterPath="$PROJECT_DIR$/src/images/20x20/delete_temp.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/Peaks.jpg" afterPath="$PROJECT_DIR$/src/images/Peaks.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/Peaksleo.jpg" afterPath="$PROJECT_DIR$/src/images/Peaksleo.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/Peaksleos.jpg" afterPath="$PROJECT_DIR$/src/images/Peaksleos.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/lacms.jpg" afterPath="$PROJECT_DIR$/src/images/lacms.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/madeonmac.gif" afterPath="$PROJECT_DIR$/src/images/madeonmac.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/maud_icon16.gif" afterPath="$PROJECT_DIR$/src/images/maud_icon16.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/maud_logo.gif" afterPath="$PROJECT_DIR$/src/images/maud_logo.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/mb1s.jpg" afterPath="$PROJECT_DIR$/src/images/mb1s.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/peak.tif" afterPath="$PROJECT_DIR$/src/images/peak.tif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/team.jpg" afterPath="$PROJECT_DIR$/src/images/team.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/unibkl.jpg" afterPath="$PROJECT_DIR$/src/images/unibkl.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/unitndpm.jpg" afterPath="$PROJECT_DIR$/src/images/unitndpm.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/wizard/backIcon.gif" afterPath="$PROJECT_DIR$/src/it/unitn/ing/wizard/backIcon.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/wizard/cancelIcon.gif" afterPath="$PROJECT_DIR$/src/it/unitn/ing/wizard/cancelIcon.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/wizard/finishIcon.gif" afterPath="$PROJECT_DIR$/src/it/unitn/ing/wizard/finishIcon.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/wizard/nextIcon.gif" afterPath="$PROJECT_DIR$/src/it/unitn/ing/wizard/nextIcon.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Maud.iml" afterPath="$PROJECT_DIR$/Maud.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Maud.ipr" afterPath="$PROJECT_DIR$/Maud.ipr" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Todo.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/radiographema/FilmScreamer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/radiographema/Maud.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/radiographema/MaudApplet.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/radiographema/MaudText.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/radiographema/MaudWebStart.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/radiographema/Maudette.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/PhaseInfo.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Maud.iws" afterPath="$PROJECT_DIR$/Maud.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.xml" afterPath="$PROJECT_DIR$/build.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cctbxForMaud/it_unitn_ing_rista_util_SpaceGroups.cpp" afterPath="$PROJECT_DIR$/cctbxForMaud/it_unitn_ing_rista_util_SpaceGroups.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/CPD-1H.PRN" afterPath="$PROJECT_DIR$/src/examples/CPD-1H.PRN" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/CPD-Y2O3.PRN" afterPath="$PROJECT_DIR$/src/examples/CPD-Y2O3.PRN" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/G11.ddq" afterPath="$PROJECT_DIR$/src/examples/G11.ddq" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/Steel16CrNi4.par" afterPath="$PROJECT_DIR$/src/examples/Steel16CrNi4.par" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/alzrc.dat" afterPath="$PROJECT_DIR$/src/examples/alzrc.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/alzrc.par" afterPath="$PROJECT_DIR$/src/examples/alzrc.par" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/bbm48bis.dat" afterPath="$PROJECT_DIR$/src/examples/bbm48bis.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/bbm48bis.par" afterPath="$PROJECT_DIR$/src/examples/bbm48bis.par" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/cpd1h.par" afterPath="$PROJECT_DIR$/src/examples/cpd1h.par" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/default.par" afterPath="$PROJECT_DIR$/src/examples/default.par" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/film1.cif" afterPath="$PROJECT_DIR$/src/examples/film1.cif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/film1.par" afterPath="$PROJECT_DIR$/src/examples/film1.par" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/g11maud.par" afterPath="$PROJECT_DIR$/src/examples/g11maud.par" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/gtial1.F1B" afterPath="$PROJECT_DIR$/src/examples/gtial1.F1B" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/gtial1.par" afterPath="$PROJECT_DIR$/src/examples/gtial1.par" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/sio250.par" afterPath="$PROJECT_DIR$/src/examples/sio250.par" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/y2o3.par" afterPath="$PROJECT_DIR$/src/examples/y2o3.par" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/files/IADARRAY.DAT" afterPath="$PROJECT_DIR$/src/files/IADARRAY.DAT" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/files/Properties.3D" afterPath="$PROJECT_DIR$/src/files/Properties.3D" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/files/atominfo.cif" afterPath="$PROJECT_DIR$/src/files/atominfo.cif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/files/default.par" afterPath="$PROJECT_DIR$/src/files/default.par" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/files/marker.txt" afterPath="$PROJECT_DIR$/src/files/marker.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/help/DataFormat.txt" afterPath="$PROJECT_DIR$/src/help/DataFormat.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/help/content.txt" afterPath="$PROJECT_DIR$/src/help/content.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/help/intro.txt" afterPath="$PROJECT_DIR$/src/help/intro.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/help/null.txt" afterPath="$PROJECT_DIR$/src/help/null.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/help/popahelp.txt" afterPath="$PROJECT_DIR$/src/help/popahelp.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/help/readme.txt" afterPath="$PROJECT_DIR$/src/help/readme.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/help/texturePlotting.txt" afterPath="$PROJECT_DIR$/src/help/texturePlotting.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/help/tutorial.txt" afterPath="$PROJECT_DIR$/src/help/tutorial.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/help/wizard.txt" afterPath="$PROJECT_DIR$/src/help/wizard.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ij/AreaImage.java" afterPath="$PROJECT_DIR$/src/ij/AreaImage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ij/IJ_Props.txt" afterPath="$PROJECT_DIR$/src/ij/IJ_Props.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ij/gui/FlatCCDReflectionSquareRoi.java" afterPath="$PROJECT_DIR$/src/ij/gui/FlatCCDReflectionSquareRoi.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ij/gui/LaueCircleRoi.java" afterPath="$PROJECT_DIR$/src/ij/gui/LaueCircleRoi.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ij/gui/LaueCircleStepRoi.java" afterPath="$PROJECT_DIR$/src/ij/gui/LaueCircleStepRoi.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ij/gui/LaueOvalRoi.java" afterPath="$PROJECT_DIR$/src/ij/gui/LaueOvalRoi.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ij/gui/LaueOvalStepRoi.java" afterPath="$PROJECT_DIR$/src/ij/gui/LaueOvalStepRoi.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ij/plugin/BrukerImageReader.java" afterPath="$PROJECT_DIR$/src/ij/plugin/BrukerImageReader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ij/plugin/D19ImageReader.java" afterPath="$PROJECT_DIR$/src/ij/plugin/D19ImageReader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ij/plugin/D19ImageReaderASCII.java" afterPath="$PROJECT_DIR$/src/ij/plugin/D19ImageReaderASCII.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ij/plugin/KCDReader.java" afterPath="$PROJECT_DIR$/src/ij/plugin/KCDReader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ij/plugin/filter/MultiSpectraFromLinearImage.java" afterPath="$PROJECT_DIR$/src/ij/plugin/filter/MultiSpectraFromLinearImage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ij/plugin/filter/MultiSpectraFromReflectionFlatCCD.java" afterPath="$PROJECT_DIR$/src/ij/plugin/filter/MultiSpectraFromReflectionFlatCCD.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ij/plugin/filter/MultiSpectraGeneration.java" afterPath="$PROJECT_DIR$/src/ij/plugin/filter/MultiSpectraGeneration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ij/plugin/filter/MultiSpectraImage2D.java" afterPath="$PROJECT_DIR$/src/ij/plugin/filter/MultiSpectraImage2D.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/esqui/client/AnalysisFrame.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/esqui/client/AnalysisFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/esqui/client/AuthenticationConnection.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/esqui/client/AuthenticationConnection.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/esqui/client/AuthenticationFrame.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/esqui/client/AuthenticationFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/esqui/client/ClientAnalysis.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/esqui/client/ClientAnalysis.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/jgraph/BuildGraph.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/jgraph/BuildGraph.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/jgraph/Markers.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/jgraph/Markers.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/jgraph/SimpleGraph.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/jgraph/SimpleGraph.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/AtomPanel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/AtomPanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/ChooseAtomD.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/ChooseAtomD.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/DataD.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/DataD.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/DiffractionMainFrame.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/DiffractionMainFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/EFileChooser.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/EFileChooser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/ElectronMap2DPlot.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/ElectronMap2DPlot.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/JIconButton.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/JIconButton.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/LegendPoleFigureMap.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/LegendPoleFigureMap.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/MultiPlotFitting.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/MultiPlotFitting.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/MultiPlotFitting2D.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/MultiPlotFitting2D.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/MultiPlotFitting2DPanel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/MultiPlotFitting2DPanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/ODFMapPlot.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/ODFMapPlot.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PhaseD.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PhaseD.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PlotDataFile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PlotDataFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PlotFitting.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PlotFitting.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PlotPFCoverage.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PlotPFCoverage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PlotParameterFunction.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PlotParameterFunction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PlotSimpleData.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PlotSimpleData.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PoleFigureMap.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PoleFigureMap.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/ReflectivityMainFrame.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/ReflectivityMainFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/SampleD.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/SampleD.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/Slices2DPlotPanel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/Slices2DPlotPanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/SpectrumPlotPanel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/SpectrumPlotPanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/StartingAboutD.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/StartingAboutD.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/StructureAtomicEditPanel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/StructureAtomicEditPanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/TextViewer.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/TextViewer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/TexturePlot.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/TexturePlot.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/ThreeDMapPlot.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/ThreeDMapPlot.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/Utility.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/Utility.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/mainFrame.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/mainFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/myJFrame.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/myJFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/principalJFrame.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/principalJFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/refinementOptionsD.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/refinementOptionsD.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/AtomInfo.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/AtomInfo.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/Ck.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/Ck.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/FluorescenceEdge.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/FluorescenceEdge.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/FluorescenceElement.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/FluorescenceElement.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/Line.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/Line.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/XRayDataSqLite.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/XRayDataSqLite.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/comp/ArtificialNeuralNetwork.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/comp/ArtificialNeuralNetwork.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/comp/HybridMonteCarloRefinement.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/comp/HybridMonteCarloRefinement.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/comp/HybridRefinement.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/comp/HybridRefinement.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/comp/LeastSquareFit.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/comp/LeastSquareFit.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/comp/MetaDynamicsSearch.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/comp/MetaDynamicsSearch.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/comp/OptimizationAlgorithm.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/comp/OptimizationAlgorithm.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/comp/launchBasic.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/comp/launchBasic.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Atom.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Atom.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/DataFileSet.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/DataFileSet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/DiffrDataFile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/DiffrDataFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/FilePar.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/FilePar.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Geometry.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Geometry.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Layer.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Layer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Maincat.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Maincat.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Phase.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Phase.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/PseudoVoigtPeak.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/PseudoVoigtPeak.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/RadiationType.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/RadiationType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Sample.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Sample.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Strain.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Strain.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/StructureFactorModel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/StructureFactorModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Texture.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Texture.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/XRDcat.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/XRDcat.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/cal/AngularFlatImageTransmissionCalibration.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/cal/AngularFlatImageTransmissionCalibration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/cal/AngularInclinedFlatImageCalibration.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/cal/AngularInclinedFlatImageCalibration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/cal/AngularSplineCalibration.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/cal/AngularSplineCalibration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/cal/XSpiderAngularCalibration.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/cal/XSpiderAngularCalibration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/BrukerImageDatafile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/BrukerImageDatafile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/D19ImageDataFile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/D19ImageDataFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/D1BILLDataFile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/D1BILLDataFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/D20ILLDataFile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/D20ILLDataFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/DummyStressDatafile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/DummyStressDatafile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/EnixeDatafile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/EnixeDatafile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/EsquiGoCIFDataFile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/EsquiGoCIFDataFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/FdtDataFile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/FdtDataFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/FluorescenceDataFileSpm.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/FluorescenceDataFileSpm.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/GSASDataFile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/GSASDataFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/ILLDataFile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/ILLDataFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/ISISGemRotaxDatafile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/ISISGemRotaxDatafile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/InelDataFile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/InelDataFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/KCDDataFile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/KCDDataFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/MBinDataFile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/MBinDataFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/SiemensDataFile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/SiemensDataFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/StressX3000DataFile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/StressX3000DataFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/TIFFDataFile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/TIFFDataFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/XRDMLDataFile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/XRDMLDataFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/detector/XRFDetector.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/detector/XRFDetector.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/FluorescenceBase.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/FluorescenceBase.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/GIXRFModel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/GIXRFModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/QuantitativeEDXRF.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/QuantitativeEDXRF.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/QuantitativeXRF.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/QuantitativeXRF.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/TubeSpectrumTransmission.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/TubeSpectrumTransmission.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/forcefield/DistanceAngleBondRestraints.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/forcefield/DistanceAngleBondRestraints.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/forcefield/ForceFieldSimpleRepulsion.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/forcefield/ForceFieldSimpleRepulsion.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/geometry/GeometryTOFGeneric.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/geometry/GeometryTOFGeneric.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/geometry/GeometryXRFInstrument.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/geometry/GeometryXRFInstrument.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/instbroad/EDXRFInstrumentBroadening.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/instbroad/EDXRFInstrumentBroadening.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/radiation/XrayEbelTubeRadiation.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/radiation/XrayEbelTubeRadiation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/rta/DiscreteODFTexture.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/rta/DiscreteODFTexture.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/rta/ExpHarmonicTexture.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/rta/ExpHarmonicTexture.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/rta/FEMRodriguezTexture.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/rta/FEMRodriguezTexture.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/rta/HarmonicTexture.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/rta/HarmonicTexture.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/rta/MEMLTexture.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/rta/MEMLTexture.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/rta/WIMVTexture.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/rta/WIMVTexture.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/ArtificialNeuralNetworkIndexing.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/ArtificialNeuralNetworkIndexing.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/BasicIndexingUtilities.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/BasicIndexingUtilities.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/ChargeFlippingDensityMap.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/ChargeFlippingDensityMap.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/GiacovazzoSirIC.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/GiacovazzoSirIC.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/SDPDFourierMapsMEM.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/SDPDFourierMapsMEM.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/SDPDutilities.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/SDPDutilities.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/ShelxsSolution.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/ShelxsSolution.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/Superflip.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/Superflip.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sfm/FullProfStructureModel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sfm/FullProfStructureModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sfm/StructureFactorPawleyMethod.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sfm/StructureFactorPawleyMethod.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/shape/SampleShapeIntegral.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/shape/SampleShapeIntegral.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/ModulatedTurbostraticModel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/ModulatedTurbostraticModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/PlanarDefectsSingleLayerModel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/PlanarDefectsSingleLayerModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/SingleChainDefectsModel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/SingleChainDefectsModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/tds/TDSWarren.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/tds/TDSWarren.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/interfaces/BaseFactoryObject.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/interfaces/BaseFactoryObject.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/interfaces/PreferencesInterface.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/interfaces/PreferencesInterface.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/io/COD/CODCIFsubmitter.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/io/COD/CODCIFsubmitter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/jpvm/jpvmControlFrame.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/jpvm/jpvmControlFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/models/generalPosTableModel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/models/generalPosTableModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/models/prefTableModel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/models/prefTableModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/render3d/Map3DPanel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/render3d/Map3DPanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/render3d/Show3DShape.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/render3d/Show3DShape.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/Angles.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/Angles.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/AtomColorPreferences.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/AtomColorPreferences.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/Constants.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/Constants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/ConvertTextImageFromColumnsToArea.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/ConvertTextImageFromColumnsToArea.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/FluorescenceLine.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/FluorescenceLine.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/LastInputValues.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/LastInputValues.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/LogSystem.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/LogSystem.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/MaudPreferences.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/MaudPreferences.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/Misc.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/Misc.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/MoreMath.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/MoreMath.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/ParameterPreferences.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/ParameterPreferences.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/SimpleSite.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/SimpleSite.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/SpaceGroups.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/SpaceGroups.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/Spacegroup.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/Spacegroup.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/WindowPreferences.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/WindowPreferences.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/wizard/HIPPOWizard/ConfigData.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/wizard/HIPPOWizard/ConfigData.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/wizard/HIPPOWizard/HIPPOWizard.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/wizard/HIPPOWizard/HIPPOWizard.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/wizard/HIPPOWizard/IPRFileReader.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/wizard/HIPPOWizard/IPRFileReader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/wizard/HIPPOWizard/dataFilesPanel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/wizard/HIPPOWizard/dataFilesPanel.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/wizard/wizard.properties" afterPath="$PROJECT_DIR$/src/it/unitn/ing/wizard/wizard.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/license/SciMark.txt" afterPath="$PROJECT_DIR$/src/license/SciMark.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/AdditionExpressionNode.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/AdditionExpressionNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/ConstantExpressionNode.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/ConstantExpressionNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/EvaluationException.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/EvaluationException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/ExponentiationExpressionNode.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/ExponentiationExpressionNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/ExpressionNode.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/ExpressionNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/ExpressionNodeVisitor.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/ExpressionNodeVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/FunctionExpressionNode.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/FunctionExpressionNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/MultiplicationExpressionNode.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/MultiplicationExpressionNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/Parser.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/Parser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/ParserException.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/ParserException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/SequenceExpressionNode.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/SequenceExpressionNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/SetVariable.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/SetVariable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/Test.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/Test.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/Token.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/Token.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/Tokenizer.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/Tokenizer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/VariableExpressionNode.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/VariableExpressionNode.java" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -842,11 +395,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EDXRFInstrumentBroadening.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="EDXRFInstrumentBroadening.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/instbroad/EDXRFInstrumentBroadening.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="326">
               <caret line="427" column="0" selection-start-line="427" selection-start-column="0" selection-end-line="427" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Todo.txt" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Todo.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -930,6 +493,7 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="Luca Lutterotti" />
         <option value="luttero" />
       </list>
     </option>
@@ -1756,7 +1320,211 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="org/javadev">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="org/javadev">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="test">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="org/javadev">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="effects">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="META-INF">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="Maud">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="license">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="Jama">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="Jama">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="util">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
             <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="xgridcontroller">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="xgridclient">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="xgridagent">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="wizard">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="wizard">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="HIPPOWizard">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -1818,6 +1586,216 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="util">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="function">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="rista">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="render3d">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="rista">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="neuralnetwork">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="rista">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="models">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="rista">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="mdyn">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="rista">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="jpvm">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="rista">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="io">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="rista">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="io">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="COD">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="rista">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="io">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="cif">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="rista">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
             <PATH_ELEMENT USER_OBJECT="interfaces">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
@@ -1841,6 +1819,110 @@
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
             <PATH_ELEMENT USER_OBJECT="diffr">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="rista">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="diffr">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="tds">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="rista">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="diffr">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="structure">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="rista">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="diffr">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="sizestrain">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="rista">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="diffr">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="shape">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -1970,6 +2052,162 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="reflectivity">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="rista">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="diffr">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="radiation">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="rista">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="diffr">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="PrecessionError">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="rista">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="diffr">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="posext">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="rista">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="diffr">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="microabs">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="rista">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="diffr">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="measurement">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="rista">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="diffr">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
             <PATH_ELEMENT USER_OBJECT="magnetic">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
@@ -2049,6 +2287,32 @@
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
             <PATH_ELEMENT USER_OBJECT="instbroad">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="rista">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="diffr">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="geometry">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -2178,6 +2442,32 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="cal">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="rista">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="diffr">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
             <PATH_ELEMENT USER_OBJECT="absorption">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
@@ -2236,7 +2526,7 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="files">
+            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -2250,25 +2540,7 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="radiographema">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com">
+            <PATH_ELEMENT USER_OBJECT="HTTPClient">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -2738,7 +3010,14 @@
       <option name="project" value="LOCAL" />
       <updated>1438078999662</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="New version 2.60, first commit">
+      <created>1463760780029</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1463760780029</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -2763,7 +3042,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1137" height="873" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18755119" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22191273" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -2894,7 +3173,8 @@
     <MESSAGE value="Adding more files" />
     <MESSAGE value="Adding modified SGT library files" />
     <MESSAGE value="Adding some more libraries" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding some more libraries" />
+    <MESSAGE value="New version 2.60, first commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="New version 2.60, first commit" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
   <component name="VssConfiguration">
@@ -3066,13 +3346,6 @@
     <option name="myLastEditedConfigurable" value="Default" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/GiacovazzoSirIC.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-360">
-          <caret line="41" column="13" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/StructureSolutionGANew.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -3240,6 +3513,168 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="12630">
           <caret line="1041" column="30" selection-start-line="1041" selection-start-column="15" selection-end-line="1041" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#76272#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#4399#4562#0" expanded="false" />
+            <element signature="e#4561#4562#0" expanded="false" />
+            <element signature="e#7290#7410#0" expanded="false" />
+            <element signature="e#7409#7410#0" expanded="false" />
+            <element signature="e#7525#7644#0" expanded="false" />
+            <element signature="e#7643#7644#0" expanded="false" />
+            <element signature="e#7756#7874#0" expanded="false" />
+            <element signature="e#7873#7874#0" expanded="false" />
+            <element signature="e#9738#9866#0" expanded="false" />
+            <element signature="e#9865#9866#0" expanded="false" />
+            <element signature="e#10263#10390#0" expanded="false" />
+            <element signature="e#10389#10390#0" expanded="false" />
+            <element signature="e#10766#10888#0" expanded="false" />
+            <element signature="e#10887#10888#0" expanded="false" />
+            <element signature="e#11264#11386#0" expanded="false" />
+            <element signature="e#11385#11386#0" expanded="false" />
+            <element signature="e#12388#12577#0" expanded="false" />
+            <element signature="e#12576#12577#0" expanded="false" />
+            <element signature="e#13290#13405#0" expanded="false" />
+            <element signature="e#13404#13405#0" expanded="false" />
+            <element signature="e#13602#13721#0" expanded="false" />
+            <element signature="e#13720#13721#0" expanded="false" />
+            <element signature="e#13939#14159#0" expanded="false" />
+            <element signature="e#14158#14159#0" expanded="false" />
+            <element signature="e#14365#14488#0" expanded="false" />
+            <element signature="e#14487#14488#0" expanded="false" />
+            <element signature="e#14686#14819#0" expanded="false" />
+            <element signature="e#14818#14819#0" expanded="false" />
+            <element signature="e#15015#15138#0" expanded="false" />
+            <element signature="e#15137#15138#0" expanded="false" />
+            <element signature="e#15713#15834#0" expanded="false" />
+            <element signature="e#15833#15834#0" expanded="false" />
+            <element signature="e#16036#16162#0" expanded="false" />
+            <element signature="e#16161#16162#0" expanded="false" />
+            <element signature="e#16354#16483#0" expanded="false" />
+            <element signature="e#16482#16483#0" expanded="false" />
+            <element signature="e#16688#16809#0" expanded="false" />
+            <element signature="e#16808#16809#0" expanded="false" />
+            <element signature="e#16980#17104#0" expanded="false" />
+            <element signature="e#17103#17104#0" expanded="false" />
+            <element signature="e#18276#18508#0" expanded="false" />
+            <element signature="e#18507#18508#0" expanded="false" />
+            <element signature="e#19042#19187#0" expanded="false" />
+            <element signature="e#19186#19187#0" expanded="false" />
+            <element signature="e#19375#19495#0" expanded="false" />
+            <element signature="e#19494#19495#0" expanded="false" />
+            <element signature="e#19679#19804#0" expanded="false" />
+            <element signature="e#19803#19804#0" expanded="false" />
+            <element signature="e#19989#20104#0" expanded="false" />
+            <element signature="e#20103#20104#0" expanded="false" />
+            <element signature="e#20281#20406#0" expanded="false" />
+            <element signature="e#20405#20406#0" expanded="false" />
+            <element signature="e#20588#20703#0" expanded="false" />
+            <element signature="e#20702#20703#0" expanded="false" />
+            <element signature="e#20847#20960#0" expanded="false" />
+            <element signature="e#20959#20960#0" expanded="false" />
+            <element signature="e#21109#21228#0" expanded="false" />
+            <element signature="e#21227#21228#0" expanded="false" />
+            <element signature="e#21398#21515#0" expanded="false" />
+            <element signature="e#21514#21515#0" expanded="false" />
+            <element signature="e#21678#21799#0" expanded="false" />
+            <element signature="e#21798#21799#0" expanded="false" />
+            <element signature="e#23161#23308#0" expanded="false" />
+            <element signature="e#23307#23308#0" expanded="false" />
+            <element signature="e#23592#23740#0" expanded="false" />
+            <element signature="e#23739#23740#0" expanded="false" />
+            <element signature="e#24039#24175#0" expanded="false" />
+            <element signature="e#24174#24175#0" expanded="false" />
+            <element signature="e#24498#24648#0" expanded="false" />
+            <element signature="e#24647#24648#0" expanded="false" />
+            <element signature="e#27804#28327#0" expanded="false" />
+            <element signature="e#28326#28327#0" expanded="false" />
+            <element signature="e#28585#28999#0" expanded="false" />
+            <element signature="e#28998#28999#0" expanded="false" />
+            <element signature="e#29777#29911#0" expanded="false" />
+            <element signature="e#29910#29911#0" expanded="false" />
+            <element signature="e#30467#30583#0" expanded="false" />
+            <element signature="e#30582#30583#0" expanded="false" />
+            <element signature="e#30704#30828#0" expanded="false" />
+            <element signature="e#30827#30828#0" expanded="false" />
+            <element signature="e#30949#31066#0" expanded="false" />
+            <element signature="e#31065#31066#0" expanded="false" />
+            <element signature="e#31539#31775#0" expanded="false" />
+            <element signature="e#31622#31751#0" expanded="false" />
+            <element signature="e#31750#31751#0" expanded="false" />
+            <element signature="e#31774#31775#0" expanded="false" />
+            <element signature="e#35262#35401#0" expanded="false" />
+            <element signature="e#35400#35401#0" expanded="false" />
+            <element signature="e#35490#35637#0" expanded="false" />
+            <element signature="e#35636#35637#0" expanded="false" />
+            <element signature="e#35725#35869#0" expanded="false" />
+            <element signature="e#35868#35869#0" expanded="false" />
+            <element signature="e#38340#38341#0" expanded="false" />
+            <element signature="e#38364#38365#0" expanded="false" />
+            <element signature="e#41673#41674#0" expanded="false" />
+            <element signature="e#41722#41723#0" expanded="false" />
+            <element signature="e#45299#45300#0" expanded="false" />
+            <element signature="e#45341#45342#0" expanded="false" />
+            <element signature="e#45433#45434#0" expanded="false" />
+            <element signature="e#45467#45468#0" expanded="false" />
+            <element signature="e#46838#46839#0" expanded="false" />
+            <element signature="e#46886#46887#0" expanded="false" />
+            <element signature="e#47002#47003#0" expanded="false" />
+            <element signature="e#47055#47056#0" expanded="false" />
+            <element signature="e#47180#47181#0" expanded="false" />
+            <element signature="e#47236#47237#0" expanded="false" />
+            <element signature="e#47342#47343#0" expanded="false" />
+            <element signature="e#47390#47391#0" expanded="false" />
+            <element signature="e#47505#47506#0" expanded="false" />
+            <element signature="e#47556#47557#0" expanded="false" />
+            <element signature="e#47678#47679#0" expanded="false" />
+            <element signature="e#47718#47719#0" expanded="false" />
+            <element signature="e#47899#48250#0" expanded="false" />
+            <element signature="e#48249#48250#0" expanded="false" />
+            <element signature="e#48394#48602#0" expanded="false" />
+            <element signature="e#48601#48602#0" expanded="false" />
+            <element signature="e#48752#49099#0" expanded="false" />
+            <element signature="e#49098#49099#0" expanded="false" />
+            <element signature="e#49241#49365#0" expanded="false" />
+            <element signature="e#49364#49365#0" expanded="false" />
+            <element signature="e#49493#49494#0" expanded="false" />
+            <element signature="e#49534#49535#0" expanded="false" />
+            <element signature="e#49657#49658#0" expanded="false" />
+            <element signature="e#49715#49716#0" expanded="false" />
+            <element signature="e#51776#51777#0" expanded="false" />
+            <element signature="e#51832#51833#0" expanded="false" />
+            <element signature="e#51940#51941#0" expanded="false" />
+            <element signature="e#51996#51997#0" expanded="false" />
+            <element signature="e#58799#59578#0" expanded="false" />
+            <element signature="e#59577#59578#0" expanded="false" />
+            <element signature="e#59732#59929#0" expanded="false" />
+            <element signature="e#59928#59929#0" expanded="false" />
+            <element signature="e#62374#62567#0" expanded="false" />
+            <element signature="e#62566#62567#0" expanded="false" />
+            <element signature="e#62719#63665#0" expanded="false" />
+            <element signature="e#63664#63665#0" expanded="false" />
+            <element signature="e#65842#66020#0" expanded="false" />
+            <element signature="e#66019#66020#0" expanded="false" />
+            <element signature="e#66115#67183#0" expanded="false" />
+            <element signature="e#67182#67183#0" expanded="false" />
+            <element signature="e#69054#70081#0" expanded="false" />
+            <element signature="e#70080#70081#0" expanded="false" />
+            <element signature="e#70302#70495#0" expanded="false" />
+            <element signature="e#70494#70495#0" expanded="false" />
+            <element signature="e#70647#71020#0" expanded="false" />
+            <element signature="e#71019#71020#0" expanded="false" />
+            <element signature="e#73109#73631#0" expanded="false" />
+            <element signature="e#73630#73631#0" expanded="false" />
+            <element signature="e#73722#74242#0" expanded="false" />
+            <element signature="e#74241#74242#0" expanded="false" />
+            <element signature="e#74511#74787#0" expanded="false" />
+            <element signature="e#74786#74787#0" expanded="false" />
+            <element signature="e#74879#75155#0" expanded="false" />
+            <element signature="e#75154#75155#0" expanded="false" />
+            <element signature="e#75246#75521#0" expanded="false" />
+            <element signature="e#75520#75521#0" expanded="false" />
+            <element signature="e#75755#75952#0" expanded="false" />
+            <element signature="e#75951#75952#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -3440,6 +3875,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="326">
           <caret line="427" column="0" selection-start-line="427" selection-start-column="0" selection-end-line="427" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Todo.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
