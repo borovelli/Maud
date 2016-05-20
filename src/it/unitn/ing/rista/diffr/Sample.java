@@ -105,7 +105,7 @@ public class Sample extends Maincat {
 //  protected boolean oldBehaviour = false;
   public static String phaseRefinementModel[] = {"automatic", "phases", "films"};
 
-  public Sample(XRDcat afile, String alabel) {
+	public Sample(XRDcat afile, String alabel) {
     super(afile, alabel);
     initXRD();
     identifier = "sample";
@@ -1553,7 +1553,7 @@ public class Sample extends Maincat {
 //      System.out.println("Computing shape absorption.....");
 
       for (int i = 0; i < activeDatasetsNumber(); i++) {
-        if (getActiveDataSet(i) != null) {
+        if (getActiveDataSet(i) != null && getActiveDataSet(i).getFluorescence().identifier == "none fluorescence") { // todo now only for diffraction
 //          Instrument ainstrument = getActiveDataSet(i).getInstrument();
           for (int j = 0; j < getActiveDataSet(i).activedatafilesnumber(); j++) {
             DiffrDataFile adatafile = getActiveDataSet(i).getActiveDataFile(j);
@@ -2338,9 +2338,13 @@ public class Sample extends Maincat {
   public void transferAnglesToMeasurement() {
     for (int i = 0; i < datasetsNumber(); i++) {
       DataFileSet adataset = getDataSet(i);
-      if (adataset != null)
-        adataset.addAnglesToMeasurement(getomega().getValueD(), getchi().getValueD(),
-            getphi().getValueD());
+      if (adataset != null) {
+	      double[] angles = new double[DiffrDataFile.maxAngleNumber];
+	      angles[0] = getomega().getValueD();
+	      angles[1] = getchi().getValueD();
+			  angles[2] = getphi().getValueD();
+	      adataset.addAnglesToMeasurement(angles);
+      }
     }
   }
 

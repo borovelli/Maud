@@ -20,6 +20,7 @@
 
 package it.unitn.ing.rista.diffr.rta;
 
+import it.unitn.ing.rista.awt.principalJFrame;
 import it.unitn.ing.rista.diffr.*;
 import it.unitn.ing.rista.util.*;
 import it.unitn.ing.rista.io.cif.*;
@@ -445,7 +446,7 @@ public class DiscreteODFTexture extends Texture {
     resolution = getResolutionD();
     resolutionR = resolution * Constants.DEGTOPI;
     pi25g = resolutionR / 2.;
-    integrationStepPF = MaudPreferences.getDouble(Texture.prefs[1], Texture.prefVal[1]);
+    integrationStepPF = MaudPreferences.getDouble(Texture.prefs[1], Double.parseDouble(Texture.prefVal[1]));
     if (integrationStepPF <= 0.0)
       integrationStepPF = resolution / 2.0;
 	  if (integrationStepPF > 1.0)
@@ -554,7 +555,7 @@ public class DiscreteODFTexture extends Texture {
   public void loadPFandComputeODF(Frame aframe) {
     try {
       String filename = Utility.openFileDialog(aframe, "Open PF file (Beartex or CIF format)", FileDialog.LOAD,
-          (String) MaudPreferences.getPref(MaudPreferences.analysisPath),
+          MaudPreferences.getPref(FilePar.analysisPath, Constants.documentsDirectory),
           null, "");
       if (filename != null) {
         resetODF();

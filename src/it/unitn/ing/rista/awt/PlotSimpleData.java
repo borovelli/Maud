@@ -143,7 +143,7 @@ public class PlotSimpleData extends GraphFrame {
 
     Markers marker = null;
     try {
-      marker = new Markers(Misc.getFilesResource("marker.txt"));
+      marker = new Markers(Constants.documentsDirectory + "marker.txt");
     } catch (java.io.IOException ioe) {
       ioe.printStackTrace();
     }
@@ -234,7 +234,7 @@ public class PlotSimpleData extends GraphFrame {
     // nothing by default
     if (function == null)
       return;
-    BufferedWriter output = Misc.getWriter(Utility.browseFilename(this, "Save plot data as..."));
+    BufferedWriter output = Misc.getWriter(Utility.browseFilenametoSave(this, "Save plot data as..."));
     try {
       output.newLine();
       output.write("_pd_meas_number_of_points " + Integer.toString(function.length));

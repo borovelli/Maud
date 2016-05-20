@@ -71,16 +71,16 @@ public class BrukerImageDatafile extends it.unitn.ing.rista.diffr.MultDiffrDataF
         if (buffer != null) {
 //          double centerX = MaudPreferences.getDouble("pixelDetector.centerX", 0.5 * pixelDimension[0]);
 //          double centerY = MaudPreferences.getDouble("pixelDetector.centerY", 0.5 * pixelDimension[1]);
-          double coneInterval = MaudPreferences.getDouble("BrukerImage.defaultDiffractionConeInterval", 5.0);
-          double theta2Step = MaudPreferences.getDouble("BrukerImage.defaultDiffractionStepAngle", 0.02);
+          double coneInterval = MaudPreferences.getDouble("brukerImage.defaultDiffractionConeInterval", 5.0);
+          double theta2Step = MaudPreferences.getDouble("brukerImage.defaultDiffractionStepAngle", 0.02);
 //          double azimuthal = MaudPreferences.getDouble("pixelDetector.defaultAzimuthalAngle", 0.0);
 //          double phiDetector = MaudPreferences.getDouble("pixelDetector.defaultPhiAngle", 0.0);
 
-          int minX = MaudPreferences.getInteger("BrukerImage.xminValue", 0);
-          int maxX = MaudPreferences.getInteger("BrukerImage.xmaxValue", pixelDimension[0]);
-          int minY = MaudPreferences.getInteger("BrukerImage.yminValue", 0);
-          int maxY = MaudPreferences.getInteger("BrukerImage.ymaxValue", pixelDimension[1]);
-    System.out.println("Min max " + minX + " " + maxX + " " + minY + " " + maxY);
+          int minX = MaudPreferences.getInteger("brukerImage.xminValue", 0);
+          int maxX = MaudPreferences.getInteger("brukerImage.xmaxValue", pixelDimension[0]);
+          int minY = MaudPreferences.getInteger("brukerImage.yminValue", 0);
+          int maxY = MaudPreferences.getInteger("brukerImage.ymaxValue", pixelDimension[1]);
+//    System.out.println("Min max " + minX + " " + maxX + " " + minY + " " + maxY);
           int npointsX = maxX - minX;
           int npointsY = maxY - minY;
           double[] intensity = new double[npointsX * npointsY];
@@ -165,10 +165,10 @@ public class BrukerImageDatafile extends it.unitn.ing.rista.diffr.MultDiffrDataF
             datafile.isAbilitatetoRefresh = false;
 
             datafile.setDataType(DIFFRACTION_IMAGE);
-            datafile.setOmega(dimension[3]);
-            datafile.setChi(dimension[4]);
-            datafile.setPhi(dimension[6]);
-            datafile.setEta(etaStart + spectrumIndex * coneInterval);
+            datafile.setAngleValue(0, dimension[3]);
+            datafile.setAngleValue(1, dimension[4]);
+            datafile.setAngleValue(2, dimension[6]);
+            datafile.setAngleValue(3, etaStart + spectrumIndex * coneInterval);
 
 /*            datafile.setField("_riet_meas_datafile_calibrated", "true", "0", "0", "0", false, null, null, null, null,
                 false);

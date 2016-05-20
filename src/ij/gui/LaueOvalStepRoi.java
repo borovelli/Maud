@@ -34,8 +34,8 @@ public class LaueOvalStepRoi extends OpenRoi {
 	double pointsPerPixels = 1;
 
   public LaueOvalStepRoi(ImagePlus imp, double radius) {
-    this(MaudPreferences.getDouble("camera.startingPointX", "0.0"),
-            MaudPreferences.getDouble("camera.startingPointY", "64.0"),
+    this(MaudPreferences.getDouble("camera.startingPointX", 0.0),
+            MaudPreferences.getDouble("camera.startingPointY", 64.0),
             imp.getWidth() * imp.getCalibration().pixelWidth / 2.0,
             imp);
     setRadius(radius);
@@ -93,14 +93,6 @@ public class LaueOvalStepRoi extends OpenRoi {
 	public double getPointsPerPixels() {
 		return pointsPerPixels;
 	}
-
-/*  public double getSelHeight() {
-    return selHeight;
-  }
-
-  public void setSelHeight(double selHeight) {
-    this.selHeight = selHeight;
-  }*/
 
   public void setStartingPoint(double xNew, double yNew) {
     centerX = xNew;
@@ -168,24 +160,6 @@ public class LaueOvalStepRoi extends OpenRoi {
     oldHeight = height;
   }
 
-/*  protected void updateClipRect() {
-    // Finds the union of current and previous roi
-    clipX = 0;
-    clipY = (int) ((getY() - selHeight / 2.0) / coordTrasfY);
-    if (clipY < 0) clipY = 0;
-    clipWidth = xMax;
-    clipHeight = (int) (selHeight / coordTrasfY);
-  }
-
-  public Rectangle getBounds() {
-    int minY = (int) ((getY() - selHeight / 2.0) / coordTrasfY);
-    if (minY < 0) minY = 0;
-    if (minY >= yMax) minY = 0;
-    int maxY = (int) (selHeight / coordTrasfY);
-    if (minY + maxY > yMax) maxY = yMax - minY;
-    return new Rectangle(0, minY, xMax, maxY);
-  }*/
-
   protected void moveHandle(int ox, int oy) {
     if (clipboard!=null)
       return;
@@ -236,18 +210,6 @@ public class LaueOvalStepRoi extends OpenRoi {
     }
     g.setColor(Color.RED);
     mag = ic!=null?ic.getMagnification():1.0;
-/*    int x1 = (int) getXCoord(getX() / this.coordTrasfX + 1.0, y1);
-    int y2 = y1;
-    while (y2 < yMax) {
-      y2++;
-      int x2 = (int) getXCoord(getX() / this.coordTrasfX + 1.0, y2);
-      if (contains(x2, y2) && contains(x1, y1))
-        g.drawLine(ic.screenX(x1), ic.screenY(y1), ic.screenX(x2), ic.screenY(y2));
-      y1 = y2;
-      x1 = x2;
-    }
-    y1 = 0;*/
-//	  System.out.println("Pixels transf: " + coordTrasfX + ", " + coordTrasfY);
 	  double[] x1 = getXCoordSym(y1);
     int y2 = y1;
     while (y2 < yMax) {
@@ -270,38 +232,6 @@ public class LaueOvalStepRoi extends OpenRoi {
       showStatus();
   }
 
-/*  public void draw(Graphics g) {
-    if (ic==null) return;
-    g.setColor(ROIColor);
-    mag = ic!=null?ic.getMagnification():1.0;
-    int sw = (int)(width*mag);
-    int sh = (int)(height*mag);
-    int sw2 = (int)(0.14645*width*mag);
-    int sh2 = (int)(0.14645*height*mag);
-    int sx1 = ic.screenX(x);
-    int sy1 = ic.screenY(y);
-    int sx2 = sx1+sw/2;
-    int sy2 = sy1+sh/2;
-    int sx3 = sx1+sw;
-    int sy3 = sy1+sh;
-    g.drawOval(sx1, sy1, sw, sh);
-    if (state!=CONSTRUCTING && clipboard==null) {
-      int size2 = HANDLE_SIZE/2;
-      drawHandle(g, sx1+sw2-size2, sy1+sh2-size2);
-      drawHandle(g, sx3-sw2-size2, sy1+sh2-size2);
-      drawHandle(g, sx3-sw2-size2, sy3-sh2-size2);
-      drawHandle(g, sx1+sw2-size2, sy3-sh2-size2);
-      drawHandle(g, sx2-size2, sy1-size2);
-      drawHandle(g, sx3-size2, sy2-size2);
-      drawHandle(g, sx2-size2, sy3-size2);
-      drawHandle(g, sx1-size2, sy2-size2);
-    }
-    drawPreviousRoi(g);
-    if (updateFullWindow)
-      {updateFullWindow = false; imp.draw();}
-    if (state!=NORMAL) showStatus();
-  }*/
-
   public double getXCoord(double x, double ycoord) {
 	  double arg;
 	  double tan2theta = MoreMath.tand(x);
@@ -319,8 +249,8 @@ public class LaueOvalStepRoi extends OpenRoi {
   public double[] getXCoordSym(double ycoord) {
 	  double x = getXCoord(getCircle(), ycoord);
     double[] coordX = new double[2];
-    coordX[0] = x;
-    coordX[1] = -x;
+	  coordX[0] = x;
+	  coordX[1] = -x + getX() / coordTrasfX;
     return coordX;
   }
 
@@ -376,16 +306,6 @@ public class LaueOvalStepRoi extends OpenRoi {
     return -1;
   }
 
-/*  public int[] getMask() {
-    Image img = GUI.createBlankImage(width, height);
-    Graphics g = img.getGraphics();
-    g.setColor(Color.black);
-    g.fillOval(0, 0, width, height);
-    g.dispose();
-    ColorProcessor cp = new ColorProcessor(img);
-    return (int[]) cp.getPixels();
-  }*/
-
   public ImageProcessor getMask() {
     if (cachedMask!=null && cachedMask.getPixels()!=null)
       return cachedMask;
@@ -428,12 +348,12 @@ public class LaueOvalStepRoi extends OpenRoi {
 
     int counter = 0;
 
-	  double correctionExponent = MaudPreferences.getDouble("image2D.exponentCorrectionValue", 0.5);
+	  double correctionExponent = MaudPreferences.getDouble("image2D.exponentCorrectionValue", 0.0);
 
-    int minX = MaudPreferences.getInteger("OvalROI.minX", 0);
-    int maxX = MaudPreferences.getInteger("OvalROI.maxX", xMax);
-    int minY = MaudPreferences.getInteger("OvalROI.minY", 0);
-    int maxY = MaudPreferences.getInteger("OvalROI.maxY", yMax);
+    int minX = MaudPreferences.getInteger("ovalROI.minX", 0);
+    int maxX = MaudPreferences.getInteger("ovalROI.maxX", xMax);
+    int minY = MaudPreferences.getInteger("ovalROI.minY", 0);
+    int maxY = MaudPreferences.getInteger("ovalROI.maxY", yMax);
 
     if (usableRectangle != null) {
       minX = (int) usableRectangle.getMinX();
@@ -442,10 +362,10 @@ public class LaueOvalStepRoi extends OpenRoi {
       maxY = (int) usableRectangle.getMaxY();
     }
 
-    MaudPreferences.setPref("OvalROI.minX", minX);
-    MaudPreferences.setPref("OvalROI.maxX", maxX);
-    MaudPreferences.setPref("OvalROI.minY", minY);
-    MaudPreferences.setPref("OvalROI.maxY", maxY);
+    MaudPreferences.setPref("ovalROI.minX", minX);
+    MaudPreferences.setPref("ovalROI.maxX", maxX);
+    MaudPreferences.setPref("ovalROI.minY", minY);
+    MaudPreferences.setPref("ovalROI.maxY", maxY);
 
     int npoints = maxX - minX;
     double[][] profile = new double[nprofiles][npoints];
@@ -454,18 +374,8 @@ public class LaueOvalStepRoi extends OpenRoi {
         profile[etaIndex][ix - minX] = 0.0;
         numbAvg[etaIndex] = 0;
       }
-	    double xreal = ix * coordTrasfX - getX();
+	    double xreal = (1.0 / getPointsPerPixels() * ix + minX) * coordTrasfX - getX();
 	    double twoTheta = xreal / radius * Constants.PITODEG;
-//      setCircle(ix * coordTrasfX - getX());
-/*      if (counter == 100) {
-        updateSelection();
-        try {
-          Thread.currentThread().sleep(100);
-        } catch (InterruptedException ie) {
-        }
-        counter = -1;
-      }
-      counter++;*/
       for (int iy = minY; iy < maxY; iy++) {
 	      double x1 = getXCoord(twoTheta, iy);
         double y1 = getYCoord(iy);
@@ -482,8 +392,8 @@ public class LaueOvalStepRoi extends OpenRoi {
           if ((eta < 0.0 && twoTheta >= 90.0) || (eta > 0.0 && twoTheta < 90.0))
             sign = -1;
           etaIndex = centerIndex + sign * (int) ((Math.abs(eta) + halfConeStep) / coneStep);
-          if ((selroi != null && selroi.contains((int) x1, (int) y1)) ||
-		          (selroi == null && (x1 >= minX && x1 < maxX && y1 >= minY && y1 < maxY))) {
+          if ((selroi != null && selroi.contains((int) x1, iy)) ||
+		          (selroi == null && (x1 >= minX && x1 < maxX))) {
             profile[etaIndex][ix - minX] += ip.getInterpolatedPixel(x1, (double) iy) * coreta;
 //      System.out.println("x:  " + x1 + " " + y1 + " " + coreta + " " + profile[etaIndex][ix - minX]);
             numbAvg[etaIndex]++;
@@ -501,16 +411,6 @@ public class LaueOvalStepRoi extends OpenRoi {
 
     }
 
-/*    for (etaIndex = 0; etaIndex < nprofiles; etaIndex++) {
-      double coseta = MoreMath.cosd((etaIndex - centerIndex) * coneStep);
-      for (int ix = startX; ix < endX; ix++) {
-//        profile[etaIndex][ix - startX] *= coseta;
-        if (profile[etaIndex][ix - startX] < 0.0)
-          profile[etaIndex][ix - startX] = 0.0;
-//      else if (Constants.macosx)
-//        profile[ix] = maxGray - profile[ix];
-      }
-    }*/
     saveAsText(profile, nprofiles, minX, maxX, coneStep, centerIndex);
 //      System.out.println(profile[ix] + " " + maxGray);
     return profile;

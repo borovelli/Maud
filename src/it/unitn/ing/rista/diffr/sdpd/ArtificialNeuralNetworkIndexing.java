@@ -20,6 +20,7 @@
 
 package it.unitn.ing.rista.diffr.sdpd;
 
+import it.unitn.ing.rista.comp.ArtificialNeuralNetwork;
 import it.unitn.ing.rista.diffr.Phase;
 import it.unitn.ing.rista.diffr.Sample;
 import it.unitn.ing.rista.util.*;

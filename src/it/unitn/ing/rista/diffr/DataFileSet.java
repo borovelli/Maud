@@ -21,6 +21,8 @@
 package it.unitn.ing.rista.diffr;
 
 import java.util.*;
+
+import static java.lang.System.*;
 import static java.util.Collections.sort;
 import java.io.*;
 import java.awt.*;
@@ -128,23 +130,14 @@ public class DataFileSet extends XRDcat {
   public static boolean[] needDist = new boolean[]{false};
   public static int nFunction = 1;
   public static final int instrumentID = 0;
-//  public boolean refreshBkgComputation = true;
 
   int activedatanumber;
   private int[] datafileindex;
 
-//  Peak[] peaklist;
-//  public Radiation rad[];
-//  public RadiationType radtype;
   Vector<Peak> thepeaklist = new Vector<Peak>(0, 1);
-//  double[] wavelength;
 
   int theindex = -1;
-//  double absbkgScaleFactor = 0.0;
-//  double[] offsetAngles = new double[4];
-
-//  private boolean offsetUncheck = true;
-  public boolean omogeneousDataset = true;
+	public boolean omogeneousDataset = true;
 
   int interpolatedPoints = 5;
   public final static int bkgExpShift = 0;
@@ -206,10 +199,10 @@ public class DataFileSet extends XRDcat {
 
     @Override
   public void initDictionary() {
-    System.arraycopy(diclistc, 0, diclist, 0, totsubordinateloop);
-    System.arraycopy(diclistcrm, 0, diclistRealMeaning, 0, totsubordinateloop);
-    System.arraycopy(classlistc, 0, classlist, 0, totsubordinateloop - totsubordinate);
-    System.arraycopy(classlistcs, 0, classlists, 0, totsubordinate - totparameterloop);
+    arraycopy(diclistc, 0, diclist, 0, totsubordinateloop);
+    arraycopy(diclistcrm, 0, diclistRealMeaning, 0, totsubordinateloop);
+    arraycopy(classlistc, 0, classlist, 0, totsubordinateloop - totsubordinate);
+    arraycopy(classlistcs, 0, classlists, 0, totsubordinate - totparameterloop);
   }
 
     @Override
@@ -220,8 +213,8 @@ public class DataFileSet extends XRDcat {
     setEnabled("true");
     setReplaceDatafile(MaudPreferences.getPref("datafile.replaceOnAdd", "false"));
     setAutomaticPolynomialBackground(MaudPreferences.getPref("datafile.addOwnBackgroundPolynomial", "false"));
-    setInterpolatedPoints(MaudPreferences.getInteger("BackgroundSubtraction.interpolatedPointsInterval", 150));
-    setPeakCutoff(MaudPreferences.getPref("PseudoVoigt.defaultPeakCutoff", "30"));
+    setInterpolatedPoints(MaudPreferences.getInteger("backgroundSubtraction.interpolatedPointsInterval", 150));
+    setPeakCutoff(MaudPreferences.getPref("pseudoVoigt.defaultPeakCutoff", "30"));
     setMaxRange("0");
     setMinRange("0");
     setIntensityExtractor("Le Bail");
@@ -230,7 +223,7 @@ public class DataFileSet extends XRDcat {
     setFluorescence("none fluorescence");
     stringField[0] = "Date/time meas"; // to avoid the notify staff
     setRandomTexture("false");
-	  setBackgroundInterpolationIterations(MaudPreferences.getInteger("BackgroundSubtraction.iterations", 10));
+	  setBackgroundInterpolationIterations(MaudPreferences.getInteger("backgroundSubtraction.iterations", 10));
 	  setString(datasetWeightFieldID, "1.0");
 	    for (int i = 0; i < Nparameter; i++)
 		    parameterField[i] = new Parameter(this, getParameterString(i), 0);
@@ -245,7 +238,7 @@ public class DataFileSet extends XRDcat {
     setDataFileSetID(alabel);
   }*/
 
-  double[] backgroundChi, backgroundEta, backgroundPol;
+  double[] backgroundChi, backgroundEta, backgroundPol; // todo: background for 2theta and energy
   int nchibckgpar, netabckgpar, npolbckgpar;
   Vector bkgDatafiles = new Vector(0, 1);
 
@@ -266,32 +259,19 @@ public class DataFileSet extends XRDcat {
 	    for (int i = 0; i < 3; i++)
 		    displacement_errors[i] = getParameterValue(displacementxID + i);
 
-
-//    absbkgScaleFactor = getParameterValue(4);
-//    for (int i = 0; i < 4; i++)
-//      offsetAngles[i] = getParameterValue(i);
-
       backgroundChi = getParameterLoopVector(chiBackgroundID);
       backgroundEta = getParameterLoopVector(etaBackgroundID);
       backgroundPol = getParameterLoopVector(backgroundID);
-//    double bkgAbsScaleFactor = getBackgroundAbsorptionScaleFactor();
 
-//    boolean bkgInterpolated = isBackgroundInterpolated();
       nchibckgpar = numberOfLoopParameters[chiBackgroundID];
       netabckgpar = numberOfLoopParameters[etaBackgroundID];
       npolbckgpar = numberOfLoopParameters[backgroundID];
 
-/*      if (rad == null)
-        setRadiation();
-	    if (rad != null) {
-        wavelength = new double[rad.length];
-        for (int radindex = 0; radindex < rad.length; radindex++)
-          wavelength[radindex] = rad[radindex].getWavelength().getValueD();
-	    }*/
   }
 
     @Override
-  public void updateStringtoDoubleBuffering(boolean firstLoading) {
+
+    public void updateStringtoDoubleBuffering(boolean firstLoading) {
     if (getFilePar().isLoadingFile() || !isAbilitatetoRefresh)
       return;
 
@@ -320,7 +300,7 @@ public class DataFileSet extends XRDcat {
     replaceDatafile = mustReplace();
     automaticPolynomialBackground = isAutomaticPolynomialBackground();
     randomTexture = hasRandomTexture();
-      bkgDatafiles.removeAllElements();
+	    bkgDatafiles.removeAllElements();
       for (int i = 0; i < datafilesnumber(); i++) {
         DiffrDataFile tmpDatafile = getDataFile(i);
         if (tmpDatafile.getAsBackgroundPermission()) {
@@ -329,6 +309,216 @@ public class DataFileSet extends XRDcat {
       }
 	    datasetWeight = Double.parseDouble(getString(datasetWeightFieldID));
     }
+
+
+	public double[] dataForPlot = null;
+
+	public double[] getDataForPlot() {
+		return dataForPlot;
+	}
+
+	public double[] datafitForPlot = null;
+
+	public double[] getDatafitForPlot() {
+		return datafitForPlot;
+	}
+
+	public double[] backgroundForPlot = null;
+
+	public double[] getBackgroundForPlot() {
+		return backgroundForPlot;
+	}
+
+	public double[][] dataphaseForPlot = null;
+
+	public double[][] getDataphaseForPlot() {
+		return dataphaseForPlot;
+	}
+
+	public void updateDataForPlot() {
+
+		dataForPlot = null;
+		datafitForPlot = null;
+		backgroundForPlot = null;
+		dataphaseForPlot = null;
+
+		DiffrDataFile[] datafile = getActiveDataFiles();
+		if (datafile == null || datafile.length == 0)
+			return;
+
+		int ylength = datafile.length;
+		int startingIndex = datafile[0].startingindex;
+		int finalIndex = datafile[0].finalindex;
+		double xmin = 1.0E10, xmax = 0.0;
+
+		// minimum maximum range
+
+		if (datafile[0].increasingX()) {
+			if (xmin > datafile[0].getXDataForPlot(datafile[0].startingindex))
+				xmin = datafile[0].getXDataForPlot(datafile[0].startingindex);
+			if (xmax < datafile[0].getXDataForPlot(datafile[0].finalindex - 1))
+				xmax = datafile[0].getXDataForPlot(datafile[0].finalindex - 1);
+			if (xmin > datafile[0].getXDataForPlot(datafile[0].finalindex - 1))
+				xmin = datafile[0].getXDataForPlot(datafile[0].finalindex - 1);
+			if (xmax < datafile[0].getXDataForPlot(datafile[0].startingindex))
+				xmax = datafile[0].getXDataForPlot(datafile[0].startingindex);
+			for (int is1 = 1; is1 < ylength; is1++) {
+				if (startingIndex > datafile[is1].startingindex) {
+					startingIndex = datafile[is1].startingindex;
+				}
+				if (finalIndex < datafile[is1].finalindex) {
+					finalIndex = datafile[is1].finalindex;
+				}
+				if (xmin > datafile[is1].getXDataForPlot(datafile[is1].startingindex))
+					xmin = datafile[is1].getXDataForPlot(datafile[is1].startingindex);
+				if (xmax < datafile[is1].getXDataForPlot(datafile[is1].finalindex - 1))
+					xmax = datafile[is1].getXDataForPlot(datafile[is1].finalindex - 1);
+				if (xmin > datafile[is1].getXDataForPlot(datafile[is1].finalindex - 1))
+					xmin = datafile[is1].getXDataForPlot(datafile[is1].finalindex - 1);
+				if (xmax < datafile[is1].getXDataForPlot(datafile[is1].startingindex))
+					xmax = datafile[is1].getXDataForPlot(datafile[is1].startingindex);
+			}
+		} else {
+			xmin = 1.0E10;
+			xmax = 0.0;
+			if (xmin > datafile[0].getXDataForPlot(datafile[0].startingindex))
+				xmin = datafile[0].getXDataForPlot(datafile[0].startingindex);
+			if (xmax < datafile[0].getXDataForPlot(datafile[0].finalindex - 1))
+				xmax = datafile[0].getXDataForPlot(datafile[0].finalindex - 1);
+			if (xmin > datafile[0].getXDataForPlot(datafile[0].finalindex - 1))
+				xmin = datafile[0].getXDataForPlot(datafile[0].finalindex - 1);
+			if (xmax < datafile[0].getXDataForPlot(datafile[0].startingindex))
+				xmax = datafile[0].getXDataForPlot(datafile[0].startingindex);
+			for (int is1 = 1; is1 < ylength; is1++) {
+				if (startingIndex > datafile[is1].startingindex) {
+					startingIndex = datafile[is1].startingindex;
+				}
+				if (finalIndex < datafile[is1].finalindex) {
+					finalIndex = datafile[is1].finalindex;
+				}
+				if (xmin > datafile[is1].getXDataForPlot(datafile[is1].startingindex))
+					xmin = datafile[is1].getXDataForPlot(datafile[is1].startingindex);
+				if (xmax < datafile[is1].getXDataForPlot(datafile[is1].finalindex - 1))
+					xmax = datafile[is1].getXDataForPlot(datafile[is1].finalindex - 1);
+				if (xmin > datafile[is1].getXDataForPlot(datafile[is1].finalindex - 1))
+					xmin = datafile[is1].getXDataForPlot(datafile[is1].finalindex - 1);
+				if (xmax < datafile[is1].getXDataForPlot(datafile[is1].startingindex))
+					xmax = datafile[is1].getXDataForPlot(datafile[is1].startingindex);
+			}
+		}
+		int xlength = finalIndex - startingIndex;
+		double stepX = (xmax - xmin) / (xlength - 1);
+		int np = xlength;
+
+
+		if (np > 0) {
+			dataForPlot = new double[2 * np];
+			if (datafile[0].hasfit()/* || peaksLocated todo ripristinare */) {
+				datafitForPlot = new double[2 * np];
+			}
+			int mode = PlotDataFile.checkScaleModeX();
+			for (int is1 = 0; is1 < xlength; is1++) {
+				int is2 = is1 * 2;
+				dataForPlot[is2] = xmin + is1 * stepX;
+				int total = 0;
+				int totalFit = 0;
+
+// data
+
+				for (int sn = 0; sn < ylength; sn++) {
+					double xstartmin = datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode);
+					double xendmax = datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode);
+					if (xendmax < datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode))
+						xendmax = datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode);
+					if (xstartmin > datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode))
+						xstartmin = datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode);
+					if (dataForPlot[is2] >= xstartmin && dataForPlot[is2] <= xendmax) {
+						dataForPlot[is2 + 1] += datafile[sn].getInterpolatedYSqrtIntensity(dataForPlot[is2], 2, mode);
+						total++;
+					}
+				}
+				if (total > 0)
+					dataForPlot[is2 + 1] /= total;
+
+// fit
+
+				if (datafile[0].hasfit()) {
+					datafitForPlot[is2] = dataForPlot[is2];
+
+					for (int sn = 0; sn < ylength; sn++) {
+						double xstartmin = datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode);
+						double xendmax = datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode);
+						if (xendmax < datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode))
+							xendmax = datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode);
+						if (xstartmin > datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode))
+							xstartmin = datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode);
+						if (datafitForPlot[is2] >= xstartmin && datafitForPlot[is2] <= xendmax) {
+							datafitForPlot[is2 + 1] += datafile[sn].getInterpolatedFitSqrtIntensity(datafitForPlot[is2], 2, mode);
+							totalFit++;
+						}
+					}
+					if (totalFit > 0)
+						datafitForPlot[is2 + 1] /= totalFit;
+				}
+			}
+
+// Phases fit
+
+			if (datafitForPlot != null) {
+				int numberphases = getFilePar().getActiveSample().phasesNumber();
+				dataphaseForPlot = new double[numberphases][2 * np];
+				for (int s = 0; s < numberphases; s++) {
+					Phase phase = getFilePar().getActiveSample().getPhase(s);
+					if (phase.plotFit()) {
+						int j;
+						for (int i = j = 0; i < np; i++, j += 2) {
+							int totalFit = 0;
+							for (int sn = 0; sn < ylength; sn++) {
+								double xstartmin = datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode);
+								double xendmax = datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode);
+								if (xendmax < datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode))
+									xendmax = datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode);
+								if (xstartmin > datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode))
+									xstartmin = datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode);
+								if (datafitForPlot[j] >= xstartmin && datafitForPlot[j] <= xendmax) {
+									dataphaseForPlot[s][j + 1] += datafile[sn].getInterpolatedFitSqrtIntensity(datafitForPlot[j], 2, mode, s);
+									totalFit++;
+								}
+							}
+							if (totalFit > 0)
+								dataphaseForPlot[s][j + 1] /= totalFit;
+							dataphaseForPlot[s][j] = datafitForPlot[j];
+
+						}
+					}
+				}
+
+// Background
+
+				backgroundForPlot = new double[2 * np];
+				int j;
+				for (int i = j = 0; i < np; i++, j += 2) {
+					int totalFit = 0;
+					for (int sn = 0; sn < ylength; sn++) {
+						double xstartmin = datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode);
+						double xendmax = datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode);
+						if (xendmax < datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode))
+							xendmax = datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode);
+						if (xstartmin > datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode))
+							xstartmin = datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode);
+						if (datafitForPlot[j] >= xstartmin && datafitForPlot[j] <= xendmax) {
+							backgroundForPlot[j + 1] += datafile[sn].getInterpolatedBkgFitSqrtIntensity(datafitForPlot[j], 2, mode);
+							totalFit++;
+						}
+					}
+					if (totalFit > 0)
+						backgroundForPlot[j + 1] /= totalFit;
+					backgroundForPlot[j] = datafitForPlot[j];
+				}
+			}
+
+		}
+	}
 
 	public double getDatasetWeight() {
 		return datasetWeight;
@@ -446,22 +636,6 @@ public class DataFileSet extends XRDcat {
   }
 
 
-// --Commented out by Inspection START (7/4/04 10:37 AM):
-//  public void setAngleOffset(int index, String angle) {
-//    parameterField[index].setValue(angle);
-//  }
-// --Commented out by Inspection STOP (7/4/04 10:37 AM)
-
-// --Commented out by Inspection START (7/4/04 10:37 AM):
-//  public Parameter getAngleOffset(int index) {
-//    return parameterField[index];
-//  }
-// --Commented out by Inspection STOP (7/4/04 10:37 AM)
-
-//  public double getAngleOffsetValue(int index) {
-//    return offsetAngles[index];
-//  }
-
   public ListVector getDataFileList() {
     return subordinateloopField[2];
   }
@@ -521,23 +695,7 @@ public class DataFileSet extends XRDcat {
     int numberDatafiles = datafiles.size();
     for (int i = 0; i < numberDatafiles; i++) {
       DiffrDataFile diffrDatafile = (DiffrDataFile) datafiles.elementAt(i);
-      switch (angleNumber) {
-        case 0:
-          angle = diffrDatafile.getOmegaValue();
-          break;
-        case 1:
-          angle = diffrDatafile.getChiValue();
-          break;
-        case 2:
-          angle = diffrDatafile.getPhiValue();
-          break;
-        case 3:
-          angle = diffrDatafile.getEtaValue();
-          break;
-        default: {
-          angle = -9999999.99;
-        }
-      }
+	    angle = diffrDatafile.getAngleValue(angleNumber);
       if (angle < finalAngle && angle > startingAngle)
         disable(diffrDatafile);
     }
@@ -553,23 +711,7 @@ public class DataFileSet extends XRDcat {
 		for (double angleIncremented = startingAngle; angleIncremented < finalAngle; angleIncremented += everyAngle) {
 			for (int i = 0; i < numberDatafiles; i++) {
 				DiffrDataFile diffrDatafile = (DiffrDataFile) datafiles.elementAt(i);
-				switch (angleNumber) {
-					case 0:
-						angle = diffrDatafile.getOmegaValue();
-						break;
-					case 1:
-						angle = diffrDatafile.getChiValue();
-						break;
-					case 2:
-						angle = diffrDatafile.getPhiValue();
-						break;
-					case 3:
-						angle = diffrDatafile.getEtaValue();
-						break;
-					default: {
-						angle = -9999999.99;
-					}
-				}
+				angle = diffrDatafile.getAngleValue(angleNumber);
 				if (Math.abs(angle - angleIncremented) < Math.abs(everyAngle/1000))
 					disable(diffrDatafile);
 			}
@@ -586,23 +728,7 @@ public class DataFileSet extends XRDcat {
 		for (double angleIncremented = startingAngle; angleIncremented < finalAngle; angleIncremented += everyAngle) {
 			for (int i = 0; i < numberDatafiles; i++) {
 				DiffrDataFile diffrDatafile = (DiffrDataFile) datafiles.elementAt(i);
-				switch (angleNumber) {
-					case 0:
-						angle = diffrDatafile.getOmegaValue();
-						break;
-					case 1:
-						angle = diffrDatafile.getChiValue();
-						break;
-					case 2:
-						angle = diffrDatafile.getPhiValue();
-						break;
-					case 3:
-						angle = diffrDatafile.getEtaValue();
-						break;
-					default: {
-						angle = -9999999.99;
-					}
-				}
+				angle = diffrDatafile.getAngleValue(angleNumber);
 				if (Math.abs(angle - angleIncremented) < Math.abs(everyAngle/1000))
 					disable(diffrDatafile);
 			}
@@ -833,13 +959,11 @@ public class DataFileSet extends XRDcat {
 		int numberOfReflections = phase.gethklNumber();
 //		System.out.println("Refreshing structure factors -------------------- " + numberOfReflections);
 		double[][] structureFactors = phaseStructureFactors.get(phase);
-		boolean resetScatFactors = false;
 		if (structureFactors == null) {
 			structureFactors = new double[4][numberOfReflections];
 			phaseStructureFactors.put(phase, structureFactors);
 //			System.out.println("Resetting structure factors");
 			resetStructureFactors(phase);
-			resetScatFactors = true;
 		} else if (structureFactors[0].length != numberOfReflections) {
 //			System.out.println("Problem here, to be implemented");
 //			System.out.println("Updating structure factors");
@@ -850,9 +974,9 @@ public class DataFileSet extends XRDcat {
 			phaseStructureFactors.remove(phase);
 			phaseStructureFactors.put(phase, newStructureFactors);
 //			resetStructureFactors(phase);
-			resetScatFactors = true;
 		}
-		double[][][][] scatFactors = phaseScatFactors.get(phase);
+		reloadScatteringFactors(phase);
+/*		double[][][][] scatFactors = phaseScatFactors.get(phase);
 		int linesCount = 1; // todo, should be this in the end: getInstrument().getRadiationType().getLinesCount();
 		if (scatFactors == null) {
 			scatFactors = new double[numberOfReflections][linesCount][phase.getFullAtomList().size()][2];
@@ -866,7 +990,7 @@ public class DataFileSet extends XRDcat {
 			scatFactors = new double[numberOfReflections][linesCount][phase.getFullAtomList().size()][2];
 			phaseScatFactors.put(phase, scatFactors);
 			reloadScatteringFactors(phase);
-		}
+		}*/
 
 		for (int i = 0; i < activedatafilesnumber(); i++) {
 			getActiveDataFile(i).refreshIndices(phase);
@@ -992,7 +1116,7 @@ public class DataFileSet extends XRDcat {
 								structureFactors[2][j] = ((double[]) tmpVector[5].elementAt(index))[0];
 							structureFactors[3][j] = Reflection.getUniqueIdFor(refl.getH(), refl.getK(), refl.getL());
 						} else
-							System.out.println("Reflection: " + h + "," + k + "," + l + " not corresponding on loading structure factors");
+							out.println("Reflection: " + h + "," + k + "," + l + " not corresponding on loading structure factors");
 					}
 				}
 				needRestore[phaseIndex] = false;
@@ -1010,14 +1134,12 @@ public class DataFileSet extends XRDcat {
 
 	public void storeComputedStructureFactors(Phase phase, double[] fhkl) {
 		double[][] structureFactors = phaseStructureFactors.get(phase);
-		for (int i1 = 0; i1 < structureFactors[0].length; i1++)
-			structureFactors[1][i1] = fhkl[i1];
+		arraycopy(fhkl, 0, structureFactors[1], 0, structureFactors[0].length);
 	}
 
 	public void storeExperimentalStructureFactors(Phase phase, double[] fhkl) {
 		double[][] structureFactors = phaseStructureFactors.get(phase);
-		for (int i1 = 0; i1 < structureFactors[0].length; i1++)
-			structureFactors[0][i1] = fhkl[i1];
+		arraycopy(fhkl, 0, structureFactors[0], 0, structureFactors[0].length);
 	}
 
 	public void storeComputedOverExperimentalStructureFactors() {
@@ -1028,8 +1150,7 @@ public class DataFileSet extends XRDcat {
 
 	public void storeComputedOverExperimentalStructureFactors(Phase phase) {
 		double[][] structureFactors = phaseStructureFactors.get(phase);
-		for (int i1 = 0; i1 < structureFactors[0].length; i1++)
-			structureFactors[0][i1] = structureFactors[1][i1];
+		arraycopy(structureFactors[1], 0, structureFactors[0], 0, structureFactors[0].length);
 	}
 
 	public void storeExperimentalOverComputedStructureFactors() {
@@ -1040,55 +1161,13 @@ public class DataFileSet extends XRDcat {
 
 	public void storeExperimentalOverComputedStructureFactors(Phase phase) {
 		double[][] structureFactors = phaseStructureFactors.get(phase);
-		for (int i1 = 0; i1 < structureFactors[0].length; i1++)
-			structureFactors[1][i1] = structureFactors[0][i1];
+		arraycopy(structureFactors[0], 0, structureFactors[1], 0, structureFactors[0].length);
 	}
 
 		public double[][] getStructureFactors(Phase phase) {
 		 return phaseStructureFactors.get(phase);
 	 }
 
-	/*
-	  public void setStructureFactor(int reflection, double value) {
-			 if (structureFactors != null && reflection < structureFactors.length) {
-				 structureFactors[reflection] = value;
-			 }
-		 }
-
-		 public double getExpStructureFactor(int reflectionIndex) {
-				 return expStructureFactors[reflectionIndex];
-		 }
-
-		 public void setExpStructureFactor(int reflection, double value) {
-			 if (expStructureFactors != null && reflection < expStructureFactors.length)
-				 expStructureFactors[reflection] = value;
-		 }
-
-		 public void expToStructureFactor() {
-			 if (expStructureFactors != null) {
-				 for (int i1 = 0; i1 < expStructureFactors.length; i1++) {
-	 //				System.out.println("From all exp to struct " + getExpStructureFactor(i1) + " " + h + " " + k + " " + l);
-					 setStructureFactor(i1, getExpStructureFactor(i1));
-				 }
-			 }
-		 }
-
-		 public void expToStructureFactor(int reflectionIndex) {
-			 if (expStructureFactors != null) {
-	 //			System.out.println("From exp to struct " + getExpStructureFactor(datasetindex) + " " + h + " " + k + " " + l);
-				 setStructureFactor(reflectionIndex, getExpStructureFactor(reflectionIndex));
-			 }
-		 }
-
-		 public double getEsdStructureFactor(int reflectionIndex) {
-				 return esdStructureFactors[reflectionIndex];
-		 }
-
-		 public void setEsdStructureFactor(int reflectionIndex, double value) {
-			 if (esdStructureFactors != null && reflectionIndex < esdStructureFactors.length)
-				 esdStructureFactors[reflectionIndex] = value;
-		 }
-	 */
 	public void reloadScatteringFactors(Phase phase) {
 		Vector<Atom> atoms = phase.getFullAtomList();
 		int atomsNumber = atoms.size();
@@ -1138,13 +1217,6 @@ public class DataFileSet extends XRDcat {
 	public double[][][][] getScatteringFactor(Phase phase) {
 		return phaseScatFactors.get(phase);
 	}
-
-/*	public void setScatteringFactor(double[] value, int atom) {
-		if (scatFactors != null) {
-			scatFactors[atom][0] = value[0];
-			scatFactors[atom][1] = value[1];
-		}
-	}*/
 
 	public void removingPhase(Phase phase) {
 		phaseScatFactors.remove(phase);
@@ -1317,7 +1389,7 @@ public class DataFileSet extends XRDcat {
 				needRestore = null;
 //			notLoaded = false;
 		} catch (IOException ioe) {
-			System.out.println("IO exception in custom object for " + toXRDcatString());
+			out.println("IO exception in custom object for " + toXRDcatString());
 		}
 
 /*		if (theobj != null)
@@ -1382,12 +1454,12 @@ public class DataFileSet extends XRDcat {
       }
       int xlength = finalIndex - startingIndex;
       double stepX = (xmax - xmin) / (xlength - 1);
-      int np = xlength;
-      if (np <= 0) {
+//      int np = xlength;
+      if (xlength <= 0) {
         return;
       }
-      xcoord = new double[np];
-      intensity = new double[np];
+      xcoord = new double[xlength];
+      intensity = new double[xlength];
       int mode = 0;  // default
       for (int is1 = 0; is1 < xlength; is1++) {
         xcoord[is1] = (double) (xmin + is1 * stepX);
@@ -1413,8 +1485,8 @@ public class DataFileSet extends XRDcat {
       }
       boolean first = true;
 
-      boolean[] verifySameAngles = new boolean[4];
-      for (int ib = 0; ib < 4; ib++)
+      boolean[] verifySameAngles = new boolean[DiffrDataFile.maxAngleNumber];
+      for (int ib = 0; ib < DiffrDataFile.maxAngleNumber; ib++)
         verifySameAngles[ib] = true;
       double[] firstTilt = null;
       int start = 0, end = 0;
@@ -1426,7 +1498,7 @@ public class DataFileSet extends XRDcat {
           if (i == 0) {
             firstTilt = tilt;
           }
-          for (int ib = 0; ib < 4; ib++)
+          for (int ib = 0; ib < DiffrDataFile.maxAngleNumber; ib++)
             if (tilt[ib] != firstTilt[ib])
               verifySameAngles[ib] = false;
 //				if (tmpdatafile.getComputePermission()) {
@@ -1441,8 +1513,8 @@ public class DataFileSet extends XRDcat {
 
         } catch (Exception e) {
           e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-          System.out.println("File number: " + i + ", start: " + start + ", end: " + end);
-          System.out.println("Error summing files, may be they are uncompatible?");
+          out.println("File number: " + i + ", start: " + start + ", end: " + end);
+          out.println("Error summing files, may be they are uncompatible?");
         }
       }
 
@@ -1454,7 +1526,7 @@ public class DataFileSet extends XRDcat {
         output.newLine();
       }*/
       output.newLine();
-      for (int ib = 0; ib < 4; ib++) {
+      for (int ib = 0; ib < DiffrDataFile.maxAngleNumber; ib++) {
         if (verifySameAngles[ib]) {
           output.write(DiffrDataFile.diclistc[ib + 1] + ' ');
           output.write(Fmt.format(firstTilt[ib]));
@@ -1476,7 +1548,7 @@ public class DataFileSet extends XRDcat {
         output.write(' ' + Fmt.format(xcoord[i]) + ' ' + Fmt.format(intensity[i]));
         output.newLine();
       }
-    } catch (IOException io) {
+    } catch (Exception io) {
     }
     try {
       output.flush();
@@ -1485,12 +1557,12 @@ public class DataFileSet extends XRDcat {
     }
   }
 
-  public void SumDatafileOutput(Frame aframe, boolean sameChi, boolean samePhi, boolean sameOmega,
-                                double chi, double phi, double omega) {
+  public void SumDatafileOutput(Frame aframe, boolean[] sameAngle,
+                                double[] angle) {
     int datanumber = 0;
     double[] xcoord = null;
     double[] intensity = null;
-    double[] angleRange = {Math.abs(omega), Math.abs(chi), Math.abs(phi)};
+    double[] angleRange = MoreMath.abs(angle);
 
     String filename = Utility.openFileDialog(aframe, "Save summed datafile as (group CIF file)",
         FileDialog.SAVE, getFilePar().getDirectory(), null, "put a name (no extension)");
@@ -1498,15 +1570,11 @@ public class DataFileSet extends XRDcat {
       return;
 
     String[] folderAndName = Misc.getFolderandName(filename);
-
     String folder = folderAndName[0];
     filename = folderAndName[1];
 
-//    int numberOfFilesTotal = 0;
-
     if (filename.endsWith(".cif"))
       filename = filename.substring(0, filename.length() - 4);
-//		BufferedWriter output = Misc.getWriter(folder, filename);
 
     DiffrDataFile tmpdatafile = null;
 
@@ -1519,15 +1587,15 @@ public class DataFileSet extends XRDcat {
     Vector<double[]> angles = new Vector<double[]>(10, 10);
     Vector<Vector<DiffrDataFile>> datafileTable = new Vector<Vector<DiffrDataFile>>(10, 10);
     int check;
-    boolean[] alreadyPickedUp = new boolean[datafilenumber];
-    for (int i = 0; i < datafilenumber; i++)
-      alreadyPickedUp[i] = false;
+//    boolean[] alreadyPickedUp = new boolean[datafilenumber];
+//    for (int i = 0; i < datafilenumber; i++)
+//      alreadyPickedUp[i] = false;
 
     for (int i = 0; i < datafilenumber; i++) {
       tmpdatafile = getDataFile(i);
       if (tmpdatafile.getComputePermission()) {
         double[] tilt = tmpdatafile.getTiltingAngle();
-        check = getAnglesPosition(angles, tilt, sameOmega, sameChi, samePhi, angleRange);
+        check = getAnglesPosition(angles, tilt, sameAngle, angleRange);
         if (check == -1) {
           angles.addElement(tilt);
           Vector<DiffrDataFile> datalist = new Vector<DiffrDataFile>(0, 1);
@@ -1542,7 +1610,7 @@ public class DataFileSet extends XRDcat {
 
     int groupfilenumber = datafileTable.size();
 
-    StringBuffer groupfilename = new StringBuffer("");
+    StringBuilder groupfilename = new StringBuilder("");
     groupfilename.append(filename);
     groupfilename.append("Group.cif");
     BufferedWriter groupoutput = null;
@@ -1552,16 +1620,16 @@ public class DataFileSet extends XRDcat {
       groupoutput.newLine();
       groupoutput.write(diclistc[totsubordinate + 2]);
       groupoutput.newLine();
-    } catch (IOException gio) {
+    } catch (IOException ignored) {
     }
 
-    boolean[] verifySameAngles = new boolean[3];
-    double[] meanAngles = new double[3];
+    boolean[] verifySameAngles = new boolean[sameAngle.length];
+    double[] meanAngles = new double[sameAngle.length];
     for (int ij = 0; ij < groupfilenumber; ij++) {
 
       Vector<DiffrDataFile> datalist = datafileTable.elementAt(ij);
 
-      StringBuffer newfilename = new StringBuffer("");
+      StringBuilder newfilename = new StringBuilder("");
       newfilename.append(filename);
 
       BufferedWriter output = null;
@@ -1570,7 +1638,7 @@ public class DataFileSet extends XRDcat {
         boolean first = true;
 
         datafilenumber = datalist.size();
-        for (int ib = 0; ib < 3; ib++)
+        for (int ib = 0; ib < sameAngle.length; ib++)
           verifySameAngles[ib] = true;
         double[] firstTilt = null;
         for (int i = 0; i < datafilenumber; i++) {
@@ -1578,19 +1646,16 @@ public class DataFileSet extends XRDcat {
           double[] tilt = tmpdatafile.getTiltingAngle();
           if (i == 0) {
             firstTilt = tilt;
-            System.arraycopy(tilt, 0, meanAngles, 0, 3);
+            arraycopy(tilt, 0, meanAngles, 0, sameAngle.length);
           }
-          for (int ib = 0; ib < 3; ib++)
+          for (int ib = 0; ib < sameAngle.length; ib++)
             if (!(tilt[ib] >= firstTilt[ib] - angleRange[ib] && tilt[ib] <= firstTilt[ib] + angleRange[ib]))
               verifySameAngles[ib] = false;
 //					if (tmpdatafile.getComputePermission()) {
           if (first) {
-            if (sameOmega)
-              newfilename.append('_').append(Integer.toString((int) tilt[0]));
-            if (sameChi)
-              newfilename.append('_').append(Integer.toString((int) tilt[1]));
-            if (samePhi)
-              newfilename.append('_').append(Integer.toString((int) tilt[2]));
+	          for (int j = 0; j < sameAngle.length; j++)
+            if (sameAngle[j])
+              newfilename.append('_').append(Integer.toString((int) tilt[j]));
             newfilename.append(".cif");
             groupoutput.write(" '" + newfilename + '\'');
             groupoutput.newLine();
@@ -1604,7 +1669,7 @@ public class DataFileSet extends XRDcat {
               intensity[j - tmpdatafile.startingindex] = tmpdatafile.getYData(j);
             }
           } else {
-            for (int kj = 0; kj < 3; kj++)
+            for (int kj = 0; kj < sameAngle.length; kj++)
               meanAngles[kj] += tilt[kj];
             for (int j = tmpdatafile.startingindex; j < tmpdatafile.finalindex; j++) {
               intensity[j - tmpdatafile.startingindex] += tmpdatafile.getYData(j);
@@ -1619,7 +1684,7 @@ public class DataFileSet extends XRDcat {
         output.write("_riet_meas_datafile_calibrated false");
         output.newLine();
         output.newLine();
-        for (int ib = 0; ib < 3; ib++) {
+        for (int ib = 0; ib < sameAngle.length; ib++) {
           if (verifySameAngles[ib]) {
             output.write(DiffrDataFile.diclistc[ib + 1] + ' ');
             output.write(Fmt.format(meanAngles[ib] / datafilenumber));
@@ -1640,12 +1705,12 @@ public class DataFileSet extends XRDcat {
           output.write(' ' + Fmt.format(xcoord[i]) + ' ' + Fmt.format(intensity[i] / datafilenumber));
           output.newLine();
         }
-      } catch (IOException io) {
+      } catch (IOException ignored) {
       }
       try {
         output.flush();
         output.close();
-      } catch (IOException io) {
+      } catch (IOException ignored) {
       }
       datalist.removeAllElements();
 //      datalist = null;
@@ -1653,7 +1718,7 @@ public class DataFileSet extends XRDcat {
     try {
       groupoutput.flush();
       groupoutput.close();
-    } catch (IOException io) {
+    } catch (IOException ignored) {
     }
     datafileTable.removeAllElements();
 //    datafileTable = null;
@@ -1664,62 +1729,21 @@ public class DataFileSet extends XRDcat {
   }
 
   public int getAnglesPosition(Vector<double[]> angles, double[] tilt,
-                               boolean sameOmega, boolean sameChi, boolean samePhi, double[] rangeAngles) {
-    int result = -1;
+                               boolean[] sameAngle, double[] rangeAngles) {
     int size = angles.size();
     double[] angle;
 
-    if (sameOmega && sameChi && samePhi) {
-      for (int i = 0; i < size; i++) {
-        angle = angles.elementAt(i);
-        if (checkAngle(tilt[2], angle[2], rangeAngles[2])
-            && checkAngle(tilt[1], angle[1], rangeAngles[1])
-            && checkAngle(tilt[0], angle[0], rangeAngles[0]))
-          return i;
-      }
-    } else if (sameOmega && sameChi) {
-      for (int i = 0; i < size; i++) {
-        angle = angles.elementAt(i);
-        if (checkAngle(tilt[1], angle[1], rangeAngles[1])
-            && checkAngle(tilt[0], angle[0], rangeAngles[0]))
-          return i;
-      }
-    } else if (sameOmega && samePhi) {
-      for (int i = 0; i < size; i++) {
-        angle = angles.elementAt(i);
-        if (checkAngle(tilt[2], angle[2], rangeAngles[2])
-            && checkAngle(tilt[0], angle[0], rangeAngles[0]))
-          return i;
-      }
-    } else if (sameChi && samePhi) {
-      for (int i = 0; i < size; i++) {
-        angle = angles.elementAt(i);
-        if (checkAngle(tilt[2], angle[2], rangeAngles[2])
-            && checkAngle(tilt[1], angle[1], rangeAngles[1]))
-          return i;
-      }
-    } else if (sameOmega) {
-      for (int i = 0; i < size; i++) {
-        angle = angles.elementAt(i);
-        if (checkAngle(tilt[0], angle[0], rangeAngles[0]))
-          return i;
-      }
-    } else if (sameChi) {
-      for (int i = 0; i < size; i++) {
-        angle = angles.elementAt(i);
-        if (checkAngle(tilt[1], angle[1], rangeAngles[1]))
-          return i;
-      }
-    } else if (samePhi) {
-      for (int i = 0; i < size; i++) {
-        angle = angles.elementAt(i);
-        if (checkAngle(tilt[2], angle[2], rangeAngles[2]))
-          return i;
-      }
-    } else
-      result = size - 1;
-    return result;
+	  for (int i = 0; i < size; i++) {
+		  angle = angles.elementAt(i);
+		  boolean check = true;
+		  for (int j = 0; j < sameAngle.length; j++)
+			  if (sameAngle[j] && !checkAngle(tilt[j], angle[j], rangeAngles[j]))
+				  check = false;
 
+		  if (check)
+			  return i;
+	  }
+    return size - 1;
   }
 
   public void mergeReflectivityDatafile(Frame aframe) {
@@ -1808,15 +1832,8 @@ public class DataFileSet extends XRDcat {
       datafile = (DiffrDataFile) datafiles.elementAt(0);
       startingangle = datafile.getXData(datafile.startingindex);
       DiffrDataFile datafile2 = (DiffrDataFile) datafiles.elementAt(datafilenumber - 1);
-//      finalangle = datafile2.getXData(datafile2.finalindex-1);
-//      scanstepsize = datafile.measurementstep;
-//		wavelength1 = (datafile[0].wavelength1 + datafile[0].wavelength2
-//                          * datafile[0].ratio21) / (1.0 + datafile[0].ratio21);
-//		datasetsNumber = (int) ((finalangle - startingangle) / scanstepsize) + 1;
 
       Vector<double[]> data = new Vector<double[]>(0, 100);
-//      wgt = new Vector(0, 100);
-//      sqrtdata = new Vector(0, 100);
 
       // computing attenuator factor
 
@@ -1853,7 +1870,7 @@ public class DataFileSet extends XRDcat {
           xdata[1] = (datafile.getYData(dataindex) * attenuatorfactor
               + datafile2.getYData(index2) * newattenuatorfactor) / 2.0;
           if (datafile.getXData(dataindex) != datafile2.getXData(index2))
-            System.out.println("Different: " + datafile.getXData(dataindex) + ' ' +
+            out.println("Different: " + datafile.getXData(dataindex) + ' ' +
                 datafile2.getXData(index2));
           xdata[0] = (datafile.getXData(dataindex++) + datafile2.getXData(index2++)) / 2.0;
           data.addElement(xdata);
@@ -1877,7 +1894,7 @@ public class DataFileSet extends XRDcat {
       output.newLine();
       output.newLine();
       double[] tilt = datafile.getTiltingAngle();
-      for (int ib = 0; ib < 3; ib++) {
+      for (int ib = 0; ib < tilt.length; ib++) {
         output.write(DiffrDataFile.diclistc[ib + 1] + ' ');
         output.write(Fmt.format(tilt[ib]));
         output.newLine();
@@ -1894,12 +1911,12 @@ public class DataFileSet extends XRDcat {
         output.write(' ' + Fmt.format(xdata[0]) + ' ' + Fmt.format(xdata[1]));
         output.newLine();
       }
-    } catch (IOException io) {
+    } catch (IOException ignored) {
     }
     try {
       output.flush();
       output.close();
-    } catch (IOException io) {
+    } catch (IOException ignored) {
     }
   }
 
@@ -2277,11 +2294,9 @@ public class DataFileSet extends XRDcat {
     return (Region) subordinateloopField[0].elementAt(index);
   }
 
-// --Commented out by Inspection START (7/4/04 10:37 AM):
-//  public void setPeakFunction(String value) {
-//    setString(4, value);
-//  }
-// --Commented out by Inspection STOP (7/4/04 10:37 AM)
+  public void setPeakFunction(String value) {
+    setString(4, value);
+  }
 
   public String getPeakFunction() {
     return getString(4);
@@ -2298,26 +2313,6 @@ public class DataFileSet extends XRDcat {
   public double getPeakCutoffD() {
     return Double.valueOf(getPeakCutoff());
   }
-
-/*  public double getMeanRadiationWavelength() {
-    return getInstrument().getRadiationType().getMeanRadiationWavelength();
-  }
-
-  public double getRadiationWavelength() {
-    return getInstrument().getRadiationType().getRadiationWavelength();
-  }
-
-  public double getRadiationWavelength(int index) {
-    return getInstrument().getRadiationType().getRadiationWavelength(index);
-  }
-
-  public double getRadiationWeigth(int index) {
-    return getInstrument().getRadiationType().getRadiationWeigth(index);
-  }
-
-  public int getradiationnumber() {
-    return getInstrument().getRadiationType().getLinesCount();
-  }*/
 
   public boolean hasSimilarRadiationTo(DataFileSet adataset) {
     RadiationType radtypeThis = getInstrument().getRadiationType();
@@ -2359,7 +2354,7 @@ public class DataFileSet extends XRDcat {
       DiffrDataFile adfile = getActiveDataFile(i);
       int apnumber = adfile.getNumberOfData();
       double adta[] = adfile.getDataForStatistic();
-      System.arraycopy(adta, 0, dta, dnumber, apnumber);
+      arraycopy(adta, 0, dta, dnumber, apnumber);
       dnumber += apnumber;
     }
     return dta;
@@ -2402,7 +2397,7 @@ public class DataFileSet extends XRDcat {
       DiffrDataFile adfile = getActiveDataFile(i);
       int apnumber = adfile.getNumberOfData();
       double adta[] = adfile.getFitForStatistic();
-      System.arraycopy(adta, 0, dta, dnumber, apnumber);
+      arraycopy(adta, 0, dta, dnumber, apnumber);
       dnumber += apnumber;
     }
     return dta;
@@ -2419,14 +2414,6 @@ public class DataFileSet extends XRDcat {
     }
     return adfile;
   }
-
-/*  public int getNumberOfTexturePoints() {
-    int datafilenumber = activedatafilesnumber();
-	  int totNumber = 0;
-	  for (int i = 0; i < datafilenumber; i++)
-	    totNumber += getActiveDataFile(i).positionsPerPattern;
-    return totNumber;
-  }*/
 
   public void multiPlot(Frame aframe) {
     int datafilenumber = activedatafilesnumber();
@@ -2467,9 +2454,6 @@ public class DataFileSet extends XRDcat {
     }).start();
   }
 
-//  public PolarPlotData2D(Frame parent, DataFileSet adataset,
-//                        int numberofPoints, double zoom, double filterWidth,
-//                        boolean grayScale, double maxAngle, boolean logScale, int colrsNumber) {
   public void polarPlot2D(Frame aframe) {
     final Frame newFrame = aframe;
 
@@ -2550,7 +2534,6 @@ public class DataFileSet extends XRDcat {
 			}
 		}).start();
 	}
-
 
 	//  DiffrDataFile adatafile[];
   int minindex[];
@@ -2743,7 +2726,16 @@ public class DataFileSet extends XRDcat {
     return total;
   }
 
-  public void forceRangeCut() {
+	public double[] get2ThetaForActiveSpectra() {
+		update(false);
+
+		double[] total = new double[activedatanumber];
+		for (int i = 0; i < activedatanumber; i++)
+			total[i] = getActiveDataFile(i).getAngleValue(4) + getActiveDataFile(i).getAngleValue(0);
+		return total;
+	}
+
+	public void forceRangeCut() {
 
     double drange0 = getMinRangeD();
     double drange1 = getMaxRangeD();
@@ -2763,141 +2755,7 @@ public class DataFileSet extends XRDcat {
 
   }
 
-
   double drange_final[] = new double[2];
-
-// --Commented out by Inspection START (7/4/04 10:37 AM):
-//  public void setRange(double drange[]) {
-//    if (drange[0] < drange_final[0])
-//      drange_final[0] = drange[0];
-//    if (drange[1] > drange_final[1])
-//      drange_final[1] = drange[1];
-//  }
-// --Commented out by Inspection STOP (7/4/04 10:37 AM)
-
-
-  @Override
-  public void prepareComputation() {
-    // to be implemented in subclasses
-  }
-
-  @Override
-  public void prepareComputationPost() {
-    // to be implemented in subclasses
-  }
-
-  @Override
-  public void computeBefore() {
-    // to be implemented in subclasses
-  }
-
-  @Override
-  public void computeBeforePost() {
-    // to be implemented in subclasses
-  }
-
-  @Override
-  public void computeAll() {
-    // to be implemented in subclasses
-  }
-
-  @Override
-  public void computeAllPost() {
-    // to be implemented in subclasses
-  }
-
-  @Override
-  public void computeAfter() {
-    // to be implemented in subclasses
-  }
-
-  @Override
-  public void computeAfterPost() {
-    // to be implemented in subclasses
-  }
-
-  @Override
-  public void closeComputation() {
-    // to be implemented in subclasses
-  }
-
-  @Override
-  public void closeComputationPost() {
-    // to be implemented in subclasses
-  }
-
-  @Override
-  public void preparePartialComputation() {
-    // to be implemented in subclasses
-  }
-
-  @Override
-  public void preparePartialComputationPost() {
-    // to be implemented in subclasses
-  }
-
-  @Override
-  public void computePartial() {
-    // to be implemented in subclasses
-  }
-
-  @Override
-  public void computePartialPost() {
-    // to be implemented in subclasses
-  }
-
-  @Override
-  public void closePartialComputation() {
-    // to be implemented in subclasses
-  }
-
-  @Override
-  public void closePartialComputationPost() {
-    // to be implemented in subclasses
-  }
-
-/*  public Radiation setRadiation() {
-    Instrument ainstrument = getInstrument();
-
-    radtype = ainstrument.getRadiationType();
-
-    int numberofradiation = radtype.getLinesCount();
-
-	  if (numberofradiation <= 0)
-		  return null;
-
-    rad = new Radiation[numberofradiation];
-    for (int j = 0; j < numberofradiation; j++)
-      rad[j] = radtype.getRadiation(j);
-
-    return rad[0];
-  }
-
-  // return the first radiation that should be the principal one
-  // Be carefull, there is no check and you must be sure the method
-  // setRadiation() has already be called at least one.
-
-  public Radiation getRadiation() {
-    return getInstrument().getRadiationType().getRadiation(0);
-  }
-
-  public Radiation[] getRadiations() {
-    return rad;
-  }*/
-
-/*  public double getBackgroundAbsorptionScaleFactor() {
-    return absbkgScaleFactor;
-  }*/
-
-// --Commented out by Inspection START (7/4/04 10:37 AM):
-//  public void postComputation(Sample asample) {
-//    int datafilenumber = activedatafilesnumber();
-//    for (int i = 0; i < datafilenumber; i++) {
-//      adatafile[i].postComputation(asample);
-//    }
-////    refreshBkgComputation = false;
-//  }
-// --Commented out by Inspection STOP (7/4/04 10:37 AM)
 
   public DiffrDataFile getBackgroundDataFile(DiffrDataFile requestingDataFile) {
     int banknumber = requestingDataFile.getBankNumber();
@@ -2913,28 +2771,6 @@ public class DataFileSet extends XRDcat {
   public boolean isBackgroundExperimental() {
     return isBackgroundExperimental;
   }
-
-
-// --Commented out by Inspection START (7/4/04 10:36 AM):
-//  /**
-//   * It delegate the datafile to compute the asymmetry part for the entire spectra
-//   */
-///*  public void computeAsymmetry(Sample asample) {
-//    int datafilenumber = activedatafilesnumber();
-//
-//    for (int i = 0; i < datafilenumber; i++)
-////      if (adatafile[i].refreshComputation)
-//      adatafile[i].computeasymmetry(asample);
-//  } */
-//
-//  public void computeReflectivityBroadening(Sample asample) {
-//    int datafilenumber = activedatafilesnumber();
-//
-//    for (int i = 0; i < datafilenumber; i++)
-////      if (adatafile[i].refreshComputation)
-//      adatafile[i].computeReflectivityBroadening(asample);
-//  }
-// --Commented out by Inspection STOP (7/4/04 10:36 AM)
 
   public void setRefreshComputation(boolean value) {
     refreshComputation = false;
@@ -2965,7 +2801,7 @@ public class DataFileSet extends XRDcat {
   boolean indexesComputed = false;
   double[] refinementIndexes = new double[18];
 
-  public double[] getRefinementIndexes() {
+  public double[] getRefinementIndexes() { // todo: add WSS
 
     if (!indexesComputed) {
 
@@ -2996,12 +2832,8 @@ public class DataFileSet extends XRDcat {
 
   public void computeRange() {
 
-//    if (getFilePar().isRefinement)
-//      return;
-
     // preparing computation
 
-//		forceRangeCut(); Luca_remove 14/03/2002
     int datafilenumber = activedatafilesnumber();
 //    System.out.println(datafilenumber);
 //    adatafile = new DiffrDataFile[datafilenumber];
@@ -3166,14 +2998,6 @@ public class DataFileSet extends XRDcat {
           }
 
           background *= tmpDatafile.getIntensityCalibration(j);
-/*        if (Constants.testing) {
-          if (absBkgSum)
-            background += adatafile[i].getShapeAbsorptionCorrection(ainstrument, asample, thetaord) *
-                          bkgAbsScaleFactor;
-          else
-            background *= adatafile[i].getShapeAbsorptionCorrection(ainstrument, asample, thetaord) *
-                          bkgAbsScaleFactor;
-        }*/
           tmpDatafile.addtoBkgFit(j, background);
         }
         tmpDatafile.spectrumModified = true;
@@ -3212,6 +3036,7 @@ public class DataFileSet extends XRDcat {
     for (int j = 0; j < numberofradiation; j++) {
 	    wavelength[j] = ainstrument.getRadiationType().getRadiationWavelength(j);
 	    radweight[j] = ainstrument.getRadiationType().getRadiationWeigth(j);
+//	    System.out.println("Rad: " + j + " " + wavelength[j] + " " + radweight[j]);
     }
 
     int numberofpeaks = aphase.gethklNumber();
@@ -3280,7 +3105,7 @@ public class DataFileSet extends XRDcat {
 	  final int maxThreads = Math.min(Constants.maxNumberOfThreads, datafilenumber);
     if (maxThreads > 1 && Constants.threadingGranularity >= Constants.MEDIUM_GRANULARITY) {
       if (Constants.debugThreads)
-        System.out.println("Thread datafileset " + getLabel());
+        out.println("Thread datafileset " + getLabel());
       int i;
       PersistentThread[] threads = new PersistentThread[maxThreads];
       for (i = 0; i < maxThreads; i++) {
@@ -3326,14 +3151,6 @@ public class DataFileSet extends XRDcat {
 
   }
 
-/*  public boolean needDistribution() {
-    boolean distribution = false;
-    for (int i = 0; i < nFunction; i++)
-      if (getPeakFunction().equalsIgnoreCase(peakFunctionClass[i]))
-        return needDist[i];
-    return distribution;
-  }*/
-
   public double meanAbsorptionScaleFactor = 1.0;
 
   public void setMeanAbsorption(double value) {
@@ -3343,32 +3160,6 @@ public class DataFileSet extends XRDcat {
   public double getMeanAbsorption() {
     return meanAbsorptionScaleFactor;
   }
-
-//  public double totalAbsorptionScaleFactor = 1.0;
-
-/*  public void setTotalLayerAbsorption(double value) {
-    totalAbsorptionScaleFactor = value;
-  }
-
-  public double getTotalLayerAbsorption() {
-    return totalAbsorptionScaleFactor;
-  }*/
-
-/*  public double[] getInstrumentalBroadeningAt(double x, DiffrDataFile datafile) {
-    return getInstrument().getInstrumentalBroadeningAt(x, datafile);
-  }*/
-
-// --Commented out by Inspection START (7/4/04 10:37 AM):
-//  public double getInstrumentalAsymmetry(double x, double[] tilting_angles, boolean dspacingbase) {
-//    return getInstrument().getInstrumentalAsymmetry(x, tilting_angles, dspacingbase);
-//  }
-// --Commented out by Inspection STOP (7/4/04 10:37 AM)
-
-// --Commented out by Inspection START (7/4/04 10:37 AM):
-//  public double getConvolutedBroadening(double x, double[] tilting_angles, boolean dspacingbase) {
-//    return getInstrument().getConvolutedBroadening(x, tilting_angles, dspacingbase);
-//  }
-// --Commented out by Inspection STOP (7/4/04 10:37 AM)
 
   public double getSampleAsymmetry(double x, double[] tilting_angles) {
     return getSample().getSampleAsymmetry(x, tilting_angles);
@@ -3403,62 +3194,10 @@ public class DataFileSet extends XRDcat {
 		return getSample().getZshift() + getDisplacementErrors()[2];
 	}
 
-// --Commented out by Inspection START (7/4/04 10:36 AM):
-//  public void computeActiveTextureAngles(Sample asample, double dspace, double[][] texture_angles) {
-//    double position = 0.0f;
-//    Instrument ainstrument = getInstrument();
-//    int datafilenumber = activedatafilesnumber();
-//    for (int i1 = 0; i1 < datafilenumber; i1++) {
-//      DiffrDataFile adatafile = getActiveDataFile(i1);
-//      if (adatafile.dspacingbase)
-//        position = dspace;
-//      else
-//        position = (double) computeposition(dspace, 0);
-//      position = (double) adatafile.getCorrectedPosition(asample, position);
-//      double[] tilting_angles = adatafile.getTiltingAngle();
-//      for (int i = 0; i < 4; i++) {
-//        texture_angles[i][i1] = tilting_angles[i];
-//      }
-//      texture_angles[3][i1] += ainstrument.getDetector().getEtaDetector(adatafile, position);
-//    }
-//    ainstrument.computeActiveTextureAngles(texture_angles, asample.getSampleAngles(), position);
-//
-//  }
-// --Commented out by Inspection STOP (7/4/04 10:36 AM)
-
-// --Commented out by Inspection START (7/4/04 10:37 AM):
-//  public double computeposition(double dspace) {
-//    return computeposition(dspace, 0);
-//  }
-// --Commented out by Inspection STOP (7/4/04 10:37 AM)
-
-// --Commented out by Inspection START (7/4/04 10:37 AM):
-//  public double computedtheta(double deltad, double dspace, int radindex) {
-//    if (rad == null)
-//      setRadiation();
-//    double wavelength = rad[radindex].getWavelength().getValueD();
-//    double t1 = computeposition(dspace, wavelength);
-//    double t2 = computeposition(dspace + deltad, wavelength);
-//
-//    return t1 - t2;
-//  }
-// --Commented out by Inspection STOP (7/4/04 10:37 AM)
-
   public double getCorrectedPosition(Sample asample, double x, double[] tilting_angles,
                                      DiffrDataFile adatafile) {
     return getInstrument().getCorrectedPosition(asample, x, tilting_angles, adatafile);
   }
-
-/*	public double getCorrectedCoordinate(double x) {
-
-		return getInstrument().getCorrectedCoordinate(x);
-	}*/
-
-/*	public void update2thetaValues() {
-		int datafilenumber = activedatafilesnumber();
-		for (int k = 0; k < datafilenumber; k++)
-			getActiveDataFile(k).update2thetaValues();
-	}*/
 
 	public boolean extractIntensity() {
     return !getIntensityExtractorMethod().equalsIgnoreCase("none ie") && getFilePar().isTextureFactorsExtractionPermitted();
@@ -3536,12 +3275,6 @@ public class DataFileSet extends XRDcat {
       }
     }
 
-/*    for (int k = 0; k < datafilenumber; k++) {
-      if (adatafile[k].computeExpTextureFactor(asample))
-        computed = true;
-      if (prF != null)
-        prF.increaseProgressBarValue();
-    }*/
     if (prF != null) {
       prF.setVisible(false);
       prF.dispose();
@@ -3564,7 +3297,7 @@ public class DataFileSet extends XRDcat {
       try {
           prF = new ProgressFrame(datafilenumber);
       } catch (NullPointerException npe) {
-        System.out.println("Not able to create frame, MacOSX display sleep bug?");
+        out.println("Not able to create frame, MacOSX display sleep bug?");
       }
     printf("Extracting positions for dataset: " + toXRDcatString(), prF);
     boolean computed1 = false;
@@ -3723,44 +3456,17 @@ public class DataFileSet extends XRDcat {
   public void boundMonitorsByBank() {
     int datafilenumber = activedatafilesnumber();
     for (int i = 0; i < datafilenumber; i++) {
-      DiffrDataFile adatafile1 = getActiveDataFile(i);
-      int bankNumber = adatafile1.getBankNumber();
-      for (int j = 0; j < i; j++) {
-        DiffrDataFile adatafile2 = getActiveDataFile(j);
-        int bankNumber2 = adatafile2.getBankNumber();
-        if (bankNumber == bankNumber2) {
-          adatafile1.setEqualTo(adatafile2, false);
-          break;
-        }
-      }
+	    DiffrDataFile adatafile1 = getActiveDataFile(i);
+	    int bankNumber = adatafile1.getBankNumber();
+	    for (int j = 0; j < i; j++) {
+		    DiffrDataFile adatafile2 = getActiveDataFile(j);
+		    int bankNumber2 = adatafile2.getBankNumber();
+		    if (bankNumber == bankNumber2) {
+			    adatafile1.setEqualTo(adatafile2, false);
+			    break;
+		    }
+	    }
     }
-    /*  int[] bankNumbers = new int[datafilenumber];
-      int[] spectraNumbers = new int[datafilenumber];
-      for (int i = 0; i < datafilenumber; i++) {
-        bankNumbers[i] = -1;
-        spectraNumbers[i] = -1;
-      }
-      boolean first = true;
-      int bankNumber = -2;
-      int uniqueBankNumbers = 0;
-      for (int i = 0; i < datafilenumber; i++) {
-        DiffrDataFile adatafile = getActiveDataFile(i);
-        bankNumber = adatafile.getBankNumber();
-        boolean notFound = true;
-        int masterBank = -1;
-        for (int j = 0; j < uniqueBankNumbers; j++)
-          if (bankNumbers[j] == bankNumber) {
-            notFound = false;
-            masterBank = j;
-            break;
-          }
-        if (notFound) {
-          bankNumbers[uniqueBankNumbers] = bankNumber;
-          spectraNumbers[uniqueBankNumbers++] = i;
-        } else {
-
-        }
-      }*/
   }
 
   public void boundMonitorsByAngles(boolean[] useAngle) {
@@ -3811,52 +3517,34 @@ public class DataFileSet extends XRDcat {
     for (int k = 0; k < numberofpeak1; k++)
       getBkgPeak(k).fixAllParametersPreserveBound();
 
-    int datafilenumber = activedatafilesnumber();
-
-    for (int i = 0; i < datafilenumber; i++) {
+    for (int i = 0; i < activedatafilesnumber(); i++)
       getActiveDataFile(i).fixAllBackgroundParametersPreserveBound();
-    }
   }
 
   public void freeAllCountMonitors() {
-    int datafilenumber = activedatafilesnumber();
-
-    for (int i = 0; i < datafilenumber; i++)
+    for (int i = 0; i < activedatafilesnumber(); i++)
       getActiveDataFile(i).freeAllCountMonitors();
   }
 
   public void freeAllShiftsParameters(boolean forceFree) {
-    boolean done = getInstrument().refineAllZEROBankCoefficients(forceFree);
-
-    if (!done) {
-
-    int datafilenumber = activedatafilesnumber();
-
-    for (int i = 0; i < datafilenumber; i++)
-      getActiveDataFile(i).freeThetaParameters();
-    }
+    if (!getInstrument().refineAllZEROBankCoefficients(forceFree))
+      for (int i = 0; i < activedatafilesnumber(); i++)
+        getActiveDataFile(i).freeThetaParameters();
   }
 
   public void freeAllShiftsParameters() {
-    int datafilenumber = activedatafilesnumber();
-
-    for (int i = 0; i < datafilenumber; i++)
+    for (int i = 0; i < activedatafilesnumber(); i++)
       getActiveDataFile(i).freeThetaParameters();
-
-}
+	}
 
   public void refineAllXYSampleDisplacements() {
-    int datafilenumber = activedatafilesnumber();
-
-    for (int i = 0; i < datafilenumber; i++)
+    for (int i = 0; i < activedatafilesnumber(); i++)
       getActiveDataFile(i).refineAllXYSampleDisplacements();
 
   }
 
   public void fixAllCountMonitorsPreserveBound() {
-    int datafilenumber = activedatafilesnumber();
-
-    for (int i = 0; i < datafilenumber; i++)
+    for (int i = 0; i < activedatafilesnumber(); i++)
       getActiveDataFile(i).fixAllCountMonitorsPreserveBound();
   }
 
@@ -3927,19 +3615,14 @@ public class DataFileSet extends XRDcat {
     getDataFileList().updateList();
   }
 
-  public void addAnglesToMeasurement(double omega, double chi, double phi) {
-    int[] mult = new int[5];
-    double[] offset = new double[5];
-    mult[0] = 1;
-    mult[1] = 1;
-    mult[2] = 1;
-    mult[3] = 1;
-    mult[4] = 1;
-    offset[0] = omega;
-    offset[1] = chi;
-    offset[2] = phi;
-    offset[3] = 0;
-    offset[4] = 0;
+  public void addAnglesToMeasurement(double[] angles) {
+	  int maxNumber = angles.length;
+    int[] mult = new int[maxNumber];
+    double[] offset = new double[maxNumber];
+	  for (int i = 0; i < maxNumber; i++) {
+		  mult[i] = 1;
+		  offset[i] = angles[i];
+	  }
     for (int i = 0; i < datafilesnumber(); i++) {
       DiffrDataFile tmpdatafile = getDataFile(i);
       tmpdatafile.setNewAngles(mult, offset);
@@ -3972,6 +3655,19 @@ public class DataFileSet extends XRDcat {
 					total++;
 		}
 		return total;
+	}
+
+	public void useCountTimeAllSelectedFiles(boolean status) {
+		Vector datafiles = getSelectedDatafiles();
+		if (datafiles == null) {
+			(new AttentionD(new Frame(), "No item from the list selected!")).setVisible(true);
+			return;
+		}
+		int datafilenumber = datafiles.size();
+		for (int i = 0; i < datafilenumber; i++) {
+			DiffrDataFile tmpdatafile = (DiffrDataFile) datafiles.elementAt(i);
+			tmpdatafile.useCountTimeToScale(status);
+		}
 	}
 
 	static class datafileAnglesComparer implements Comparator {

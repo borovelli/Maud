@@ -20,13 +20,11 @@
 
 package it.unitn.ing.rista.awt;
 
-import it.unitn.ing.rista.MaudITS;
 import it.unitn.ing.rista.awt.treetable.*;
 import it.unitn.ing.rista.comp.OutputPanel;
 import it.unitn.ing.rista.comp.ParallelComputationController;
 import it.unitn.ing.rista.diffr.*;
 import it.unitn.ing.rista.io.COD.CODdatabaseConnector;
-import it.unitn.ing.rista.io.RSSFeedLoader;
 import it.unitn.ing.rista.util.*;
 import it.unitn.ing.wizard.HIPPOWizard.HIPPOWizard;
 import it.unitn.ing.xgridclient.Client;
@@ -410,17 +408,6 @@ public class DiffractionMainFrame extends principalJFrame implements TreeEventRe
     JMenuBar mb = new JMenuBar();
     setJMenuBar(mb);
 
-/*    if (Constants.ITS) {
-      mainMenuLabels[2] = MaudITS.instrument + ANALYSIS_DEFAULT;
-      mainMenuLabels[3] = MaudITS.instrument + ANALYSIS_ALTERNATE;
-      if (MaudITS.instrument.equalsIgnoreCase(Constants.IPD3000))
-        mainMenuLabels[3] = MaudITS.instrument + ANALYSIS_CAPILLARY;
-      else if (MaudITS.instrument.equalsIgnoreCase(Constants.APD2000) ||
-          MaudITS.instrument.equalsIgnoreCase(Constants.MPD3000) ||
-          MaudITS.instrument.equalsIgnoreCase(Constants.HRD3000))
-        mainMenuLabels[3] = MaudITS.instrument + ANALYSIS_GOEBBELS;
-    }*/
-
     int pos;
     int maxMenuIndex = mainMenuLabels.length;
     while (menuIndex < maxMenuIndex) {
@@ -488,7 +475,7 @@ public class DiffractionMainFrame extends principalJFrame implements TreeEventRe
         "Eyeball.gif", null,
         "Box.gif", "DataExtract.gif", "DataStore.gif", null, "Delete.gif",
         null, null,
-        "Bulb.gif", "Calculator.gif", "Hammer.gif", null, null,
+        "Bulb.gif", "Calculator.gif", Constants.refineIcon, null, null,
         "LineGraph.gif", null, null,
         "Help.gif"};
     String[] tbToolTipText = {"New Analysis: load the default analysis file",
@@ -506,7 +493,7 @@ public class DiffractionMainFrame extends principalJFrame implements TreeEventRe
         "-", "-",
         "Open refine wizard panel",
         "Compute spectra",
-        "Launch parameters refinement (refine)",
+        "Launch parameters refinement (I feel lucky!)",
         "-", "-",
         "Plot selected dataset",
         "-", "-",
@@ -634,7 +621,7 @@ public class DiffractionMainFrame extends principalJFrame implements TreeEventRe
         "Eyeball.gif", null,
         "Box.gif", "DataExtract.gif", "DataStore.gif", null, "Delete.gif",
         null, null,
-        "Bulb.gif", "Calculator.gif", "Hammer.gif", null, null,
+        "Bulb.gif", "Calculator.gif", Constants.refineIcon, null, null,
         "LineGraph.gif", null, null,
         "Help.gif"};
     String[] tbToolTipText = {"New Analysis: load the default analysis file",
@@ -652,7 +639,7 @@ public class DiffractionMainFrame extends principalJFrame implements TreeEventRe
         "-", "-",
         "Open refine wizard panel",
         "Compute spectra",
-        "Launch parameters refinement (refine)",
+        "Launch parameters refinement (I feel lucky!)",
         "-", "-",
         "Plot selected dataset",
         "-", "-",
@@ -812,7 +799,7 @@ public class DiffractionMainFrame extends principalJFrame implements TreeEventRe
       }   // end filesDropped
     }); // end FileDrop.Listener
 
-    if (MaudPreferences.getBoolean("Interface.show2DPlotTabPanel", true)) {
+    if (MaudPreferences.getBoolean("interface.show2DPlotTabPanel", true)) {
       datafile2DPlotPanel = new MultiPlotFitting2DPanel(this);
       plotPanel.setMinimumSize(new Dimension(10, 10));
       plotPanel.addTab("Plot 2D", new ImageIcon(Misc.getResourceURL(Constants.imagesJar, Constants.iconfolder + "BarGraph.gif")),
@@ -830,7 +817,7 @@ public class DiffractionMainFrame extends principalJFrame implements TreeEventRe
       });
     }
 
-    if (MaudPreferences.getBoolean("Interface.show2DResidualPlotTabPanel", true)) {
+    if (MaudPreferences.getBoolean("interface.show2DResidualPlotTabPanel", true)) {
       residuals2DPlotPanel = new DifferencePlot2DPanel(this);
       plotPanel.setMinimumSize(new Dimension(10, 10));
       plotPanel.addTab("Residuals 2D", new ImageIcon(Misc.getResourceURL(Constants.imagesJar, Constants.iconfolder + "PieGraph.gif")),
@@ -858,7 +845,7 @@ public class DiffractionMainFrame extends principalJFrame implements TreeEventRe
       }   // end filesDropped
     }); // end FileDrop.Listener
 
-    parListPaneSouth = MaudPreferences.getBoolean("parameterListPanel.fullBottom", "true");
+    parListPaneSouth = MaudPreferences.getBoolean("parameterListPanel.fullBottom", true);
 
     if (parListPaneSouth) {
       int dividerE = WindowPreferences.getInteger(dividerEstring, 200);
@@ -1000,9 +987,11 @@ public class DiffractionMainFrame extends principalJFrame implements TreeEventRe
     if (parameterfile != null && parameterfile.getActiveSample() != null &&
         parameterfile.getActiveSample().getSelectedDataSet() != null) {
       DataFileSet adata = parameterfile.getActiveSample().getSelectedDataSet();
+	    adata.updateDataForPlot();
       DiffrDataFile[] datafiles = adata.getActiveDataFiles();
-      if (datafilePlotPanel.isVisible())
-        datafilePlotPanel.setNewData(datafiles, null, null, keepMaxima);
+      if (datafilePlotPanel.isVisible()) {
+	      datafilePlotPanel.setNewData(adata, keepMaxima);
+      }
 
       boolean isVisible = (datafile2DPlotPanel != null && datafile2DPlotPanel.isVisible());
       boolean isResVisible = (residuals2DPlotPanel != null && residuals2DPlotPanel.isVisible());
@@ -1043,7 +1032,6 @@ public class DiffractionMainFrame extends principalJFrame implements TreeEventRe
           parameterfile.getActiveSample().getDatasetsList().setList(datasetsList);
       }
     }
-
     updateDataFilePlot(false);
     outputPanel.reset();
     outputPanel.removeAllButtons();
@@ -1272,10 +1260,10 @@ public class DiffractionMainFrame extends principalJFrame implements TreeEventRe
     if (index == 2)
       return;
     String filename = Utility.openFileDialog(this, "Open CIF file or database", FileDialog.LOAD,
-        (String) MaudPreferences.getPref(MaudPreferences.databasePath),
-        null, Constants.filesfolder + FilePar.database[1]);
+        MaudPreferences.getPref(databasePath, Constants.documentsDirectory),
+        null, Constants.documentsDirectory + FilePar.database[1]);
     final String[] folderAndName = Misc.getFolderandName(filename);
-    MaudPreferences.setPref(MaudPreferences.databasePath, folderAndName[0]);
+    MaudPreferences.setPref(databasePath, folderAndName[0]);
     switch (index) {
       case 0: // datasets
         parameterfile.getActiveSample().loadDataSet(folderAndName[0] + folderAndName[1]);
@@ -1328,11 +1316,11 @@ public class DiffractionMainFrame extends principalJFrame implements TreeEventRe
     }
 
     String filename = Utility.openFileDialog(this, "Select the CIF database", FileDialog.LOAD,
-        (String) MaudPreferences.getPref(MaudPreferences.databasePath),
-        null, Constants.filesfolder + FilePar.database[index]);
+        MaudPreferences.getPref(databasePath, Constants.documentsDirectory),
+        null, Constants.documentsDirectory + FilePar.database[index]);
     if (filename != null) {
       String[] folderAndName = Misc.getFolderandName(filename);
-      MaudPreferences.setPref(MaudPreferences.databasePath, folderAndName[0]);
+      MaudPreferences.setPref(databasePath, folderAndName[0]);
       aobject.storeOnDB(folderAndName[0] + folderAndName[1]);
     }
 
@@ -1498,7 +1486,7 @@ public class DiffractionMainFrame extends principalJFrame implements TreeEventRe
 
     // check file existing
     String[] folderAndName = new String[2];
-        folderAndName[0] = Constants.filesfolder;
+        folderAndName[0] = Constants.documentsDirectory;
         folderAndName[1] = "noname.par";
 
     parameterfile = new FilePar(folderAndName[1], this);

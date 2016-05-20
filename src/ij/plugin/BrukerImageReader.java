@@ -270,14 +270,14 @@ public class BrukerImageReader implements PlugIn {
               turnedBuffer[i] = (short) (floatBuffer[floatBuffer.length - i - 1] / normalize);
 
             // check for circular or square image
-            if (MaudPreferences.getBoolean("Image.cutValuesOutOfMaxRadius", true)) {
+            if (MaudPreferences.getBoolean("image.cutValuesOutOfMaxRadius", true)) {
 
             int maxDistance = (int) Math.sqrt(width * width / 4 + height * height / 4) + 1;
             maxDistance++;
             boolean allZeros = true;
             double cX = 0.5 * width;
             double cY = 0.5 * height;
-            double maxZerosPermitted = MaudPreferences.getDouble("Image.maxZerosPermitted", 0.05);
+            double maxZerosPermitted = MaudPreferences.getDouble("image.maxZerosPermitted", 0.05);
             while (allZeros && maxDistance > cX && maxDistance > cY) {
               maxDistance--;
               double maxD2 = maxDistance * maxDistance;
@@ -520,14 +520,14 @@ public class BrukerImageReader implements PlugIn {
           turnedBuffer[i] = /*(short) (*/floatBuffer[floatBuffer.length - i - 1];// / normalize);
 
         // check for circular or square image
-        if (MaudPreferences.getBoolean("Image.cutValuesOutOfMaxRadius", true)) {
+        if (MaudPreferences.getBoolean("image.cutValuesOutOfMaxRadius", true)) {
 
         int maxDistance = (int) Math.sqrt(width * width / 4 + height * height / 4) + 1;
         maxDistance++;
         boolean allZeros = true;
         double cX = 0.5 * width;
         double cY = 0.5 * height;
-        double maxZerosPermitted = MaudPreferences.getDouble("Image.maxZerosPermitted", 0.05);
+        double maxZerosPermitted = MaudPreferences.getDouble("image.maxZerosPermitted", 0.05);
         while (allZeros && maxDistance > cX && maxDistance > cY) {
           maxDistance--;
           double maxD2 = maxDistance * maxDistance;
@@ -578,7 +578,7 @@ public class BrukerImageReader implements PlugIn {
       dimension[13] = formatNumber;
     }
     if (properties != null) {
-      if (MaudPreferences.getBoolean("Image.cutValuesOutOfMaxRadius", true))
+      if (MaudPreferences.getBoolean("image.cutValuesOutOfMaxRadius", true))
         properties[0] = "true";
       else
         properties[0] = "false";
@@ -603,7 +603,7 @@ public class BrukerImageReader implements PlugIn {
     setProperty(imp, chiString, chi - 90);
     setProperty(imp, phiString, phi);
     setProperty(imp, brukerImage, formatNumber);
-    if (MaudPreferences.getBoolean("Image.cutValuesOutOfMaxRadius", true))
+    if (MaudPreferences.getBoolean("image.cutValuesOutOfMaxRadius", true))
       setProperty(imp, radiusToCutString, radiusToCut);
   }
 

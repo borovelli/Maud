@@ -136,7 +136,7 @@ public class MultiPlotFitting extends PlotFitting {
 */
       Markers marker = null;
       try {
-        marker = new Markers(Misc.getFilesResource("marker.txt"));
+        marker = new Markers(Constants.documentsDirectory + "marker.txt");
       } catch (java.io.IOException ioe) {
         ioe.printStackTrace();
       }

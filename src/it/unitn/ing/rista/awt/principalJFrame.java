@@ -54,6 +54,13 @@ public class principalJFrame extends myJFrame {
   public static String titlePrefix = "Maud";
   public boolean initDone = false;
   JCheckBoxMenuItem cb;
+	public static String datafilePath = "datafile.path";
+	public static String databasePath = "database.path";
+	public static String removeConfirm = "remove.confirm";
+	public static String showTooltip = "tooltip.show";
+	public static String plotScale = "plot.scale";
+	public static String showProgressFrame = "shows.floatingProgressWindow";
+	public static String swingLF = "swing.defaultL&F";
 
   public principalJFrame() {
     super(null);
@@ -85,15 +92,15 @@ public class principalJFrame extends myJFrame {
   }
 
   public URL getCodeBase() {
-    if (it.unitn.ing.rista.MaudApplet.fromApplet || Constants.webStart)
+    if (com.radiographema.MaudApplet.fromApplet || Constants.webStart)
       return Constants.ourCodebase;
     else
       return null;
   }
 
   public Container getRootParent() {
-    if (it.unitn.ing.rista.MaudApplet.fromApplet)
-      return it.unitn.ing.rista.MaudApplet.theApplet;
+    if (com.radiographema.MaudApplet.fromApplet)
+      return com.radiographema.MaudApplet.theApplet;
     else
       return this;
   }
@@ -110,9 +117,9 @@ public class principalJFrame extends myJFrame {
   public void retrieveParameters() {}
 
   public void restoreFile_Action() {
-    if (!it.unitn.ing.rista.MaudApplet.fromApplet || Constants.macos) {
+    if (!com.radiographema.MaudApplet.fromApplet || Constants.macos) {
       String folderAndName[] = new String[2];
-      folderAndName[0] = Constants.filesfolder;
+      folderAndName[0] = Constants.documentsDirectory;
       folderAndName[1] = Constants.backupFile;
       openParameterFile(folderAndName, null);
     }
@@ -120,7 +127,7 @@ public class principalJFrame extends myJFrame {
 
   public void openFile_Action() {
     String filename = Utility.openFileDialog(this, "Open parameter file", FileDialog.LOAD,
-            (String) MaudPreferences.getPref(MaudPreferences.analysisPath),
+            MaudPreferences.getPref(FilePar.analysisPath, "default.par"),
             null, "default.par");
     if (filename != null) {
       String[] folderAndName = Misc.getFolderandName(filename);
@@ -145,7 +152,7 @@ public class principalJFrame extends myJFrame {
 
       if (in == null) {
         (new AttentionD("Parameter file not found, the default one will be loaded instead")).setVisible(true);
-        folderAndName[0] = Constants.filesfolder;
+        folderAndName[0] = Constants.documentsDirectory;
         folderAndName[1] = "default.par";
       }
     setCursor(new Cursor(Cursor.WAIT_CURSOR));
@@ -202,12 +209,12 @@ public class principalJFrame extends myJFrame {
     String folderAndName[] = null;
     if (filename == null) {
       filename = "default.par";
-      boolean loadLastAnalysisFile = MaudPreferences.getBoolean("analysis.loadLastAnalysisAtStart", true);
+      boolean loadLastAnalysisFile = (!Constants.sandboxEnabled && MaudPreferences.getBoolean("analysis.loadLastAnalysisAtStart", false));
       if (pcontrol != null && loadLastAnalysisFile)
-        filename = (String) MaudPreferences.getPref(MaudPreferences.analysisFile);
-      String dir = Constants.filesfolder;
+        filename = MaudPreferences.getPref(FilePar.analysisFile, filename);
+      String dir = Constants.documentsDirectory;
       if (pcontrol != null && loadLastAnalysisFile)
-        dir = (String) MaudPreferences.getPref(MaudPreferences.analysisPath);
+        dir = MaudPreferences.getPref(FilePar.analysisPath, Constants.userHomeDirectory);
       folderAndName = new String[2];
       folderAndName[0] = dir;
       folderAndName[1] = filename;
@@ -243,9 +250,8 @@ public class principalJFrame extends myJFrame {
       return;
     BufferedWriter out = Misc.getWriter(parameterfile.getDirectory(), parameterfile.getNameToSave(false));
     parameterfile.writeall(out);
-	  MaudPreferences.setPref(MaudPreferences.analysisPath, parameterfile.getDirectory());
-	  MaudPreferences.setPref(MaudPreferences.analysisFile, parameterfile.getNameToSave(increment));
-	  MaudPreferences.savePreferences();
+	  MaudPreferences.setPref(FilePar.analysisPath, parameterfile.getDirectory());
+	  MaudPreferences.setPref(FilePar.analysisFile, parameterfile.getNameToSave(increment));
   }
 
   void results_Action() {
@@ -256,7 +262,7 @@ public class principalJFrame extends myJFrame {
 
   void appendResults_Action(boolean simple) {
     String filename = Utility.browseFilenameForAppend("Append results to", MaudPreferences.getPref("results.appendFolder",
-        Constants.filesfolder) + MaudPreferences.getPref("results.appendFilename", "results.dat"));
+        "") + MaudPreferences.getPref("results.appendFilename", "results.dat"));
 
     /*  Misc.openFileDialog(this, "Append results to", FileDialog.SAVE,
           MaudPreferences.getPref("results.appendFolder",
@@ -418,19 +424,13 @@ public class principalJFrame extends myJFrame {
     setVisible(false);         // hide the Frame
     Constants.close();
 	  dispose();      // tell windowing system to free resources
-    if (!it.unitn.ing.rista.MaudApplet.fromApplet)
+    if (!com.radiographema.MaudApplet.fromApplet)
       System.exit(0);
   }
 
   public void dispose() {
 
     ParallelComputationController.disposeJPVM();
-
-    MaudPreferences.savePreferences();
-    WindowPreferences.savePreferences();
-    ParameterPreferences.savePreferences();
-    AtomColorPreferences.savePreferences();
-    LastInputValues.savePreferences();
 
 //		if (voyagerActive)
 //			Voyager.shutdown();
@@ -493,7 +493,7 @@ public class principalJFrame extends myJFrame {
             newLookAndFeel = null;
           }
           if (newLookAndFeel != null)
-            MaudPreferences.setPref(MaudPreferences.swingLF, newLookAndFeel);
+            MaudPreferences.setPref(swingLF, newLookAndFeel);
           root.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         }
 
@@ -503,7 +503,7 @@ public class principalJFrame extends myJFrame {
     options.add(new JSeparator());
 
     cb = (JCheckBoxMenuItem) options.add(new JCheckBoxMenuItem("Show ToolTips"));
-    boolean showt = MaudPreferences.getBoolean(MaudPreferences.showTooltip, "true");
+    boolean showt = MaudPreferences.getBoolean(showTooltip, true);
     cb.setSelected(showt);
     ToolTipManager.sharedInstance().setEnabled(showt);
 
@@ -511,40 +511,40 @@ public class principalJFrame extends myJFrame {
       public void actionPerformed(ActionEvent e) {
         if (cb.isSelected()) {
           ToolTipManager.sharedInstance().setEnabled(true);
-          MaudPreferences.setPref(MaudPreferences.showTooltip, "true");
+          MaudPreferences.setPref(showTooltip, true);
         } else {
           ToolTipManager.sharedInstance().setEnabled(false);
-          MaudPreferences.setPref(MaudPreferences.showTooltip, "false");
+          MaudPreferences.setPref(showTooltip, false);
         }
       }
     });
 
     final JCheckBoxMenuItem cb1 = (JCheckBoxMenuItem) options.add(new JCheckBoxMenuItem("Confirm on remove"));
-    Constants.confirmation = MaudPreferences.getBoolean(MaudPreferences.removeConfirm);
+    Constants.confirmation = MaudPreferences.getBoolean(removeConfirm, Constants.confirmation);
     cb1.setSelected(Constants.confirmation);
     cb1.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         if (cb1.isSelected()) {
           Constants.confirmation = true;
-          MaudPreferences.setPref(MaudPreferences.removeConfirm, "true");
+          MaudPreferences.setPref(removeConfirm, Constants.confirmation);
         } else {
           Constants.confirmation = false;
-          MaudPreferences.setPref(MaudPreferences.removeConfirm, "false");
+          MaudPreferences.setPref(removeConfirm, Constants.confirmation);
         }
       }
     });
 
     final JCheckBoxMenuItem cb3 = (JCheckBoxMenuItem) options.add(new JCheckBoxMenuItem("Shows progress windows"));
-    Constants.showProgressFrame = MaudPreferences.getBoolean(MaudPreferences.showProgressFrame, "true");
+    Constants.showProgressFrame = MaudPreferences.getBoolean(showProgressFrame, Constants.showProgressFrame);
     cb3.setSelected(Constants.showProgressFrame);
     cb3.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         if (cb3.isSelected()) {
           Constants.showProgressFrame = true;
-          MaudPreferences.setPref(MaudPreferences.showProgressFrame, "true");
+          MaudPreferences.setPref(showProgressFrame, Constants.showProgressFrame);
         } else {
           Constants.showProgressFrame = false;
-          MaudPreferences.setPref(MaudPreferences.showProgressFrame, "false");
+          MaudPreferences.setPref(showProgressFrame, Constants.showProgressFrame);
         }
       }
     });

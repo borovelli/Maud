@@ -38,6 +38,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static java.lang.System.*;
+
 /**
  * The DiffrDataFile is a class to compute and store a spectrum and its fit.
  * <p/>
@@ -61,6 +63,8 @@ public class DiffrDataFile extends XRDcat {
       "_pd_meas_orientation_chi",
       "_pd_meas_orientation_phi",
       "_pd_meas_orientation_eta",
+			"_pd_meas_orientation_2theta",
+			"_pd_meas_energy_kev",
       "_riet_meas_datafile_compute",
       "_riet_meas_datafile_fitting",
       "_pd_meas_detector_id",
@@ -75,10 +79,12 @@ public class DiffrDataFile extends XRDcat {
       "_riet_background_interpolated_manual",
 		  "_pd_meas_datetime_initiated",
 		  "_pd_proc_ls_datafile_weight",
+			"_riet_use_count_time",
 
       "_pd_meas_counts_monitor",
       "_riet_par_spec_displac_x_2R",
       "_riet_par_spec_displac_z_2R",
+			"_riet_par_fluo_diffr_scale",
 
       "_riet_par_background_pol",
       "_riet_par_2-theta_offset",
@@ -93,6 +99,8 @@ public class DiffrDataFile extends XRDcat {
       "chi angle (deg)",
       "phi angle (deg)",
       "eta angle (deg)",
+		  "2theta detector (deg)",
+		  "radiation energy (keV)",
       "_riet_meas_datafile_compute",
       "_riet_meas_datafile_fitting",
       "_pd_meas_detector_id",
@@ -107,10 +115,12 @@ public class DiffrDataFile extends XRDcat {
 		  "manual selection of background interpolation points",
 		  "_pd_meas_datetime_initiated",
 		  "_pd_proc_ls_datafile_weight",
+		  "use count time to scale",
 
       "monitor value (optional scale factor)",
       "sample displacement x/2R",
       "sample displacement z/2R",
+		  "scale factor for diffraction in XRF",
 
       "background polynomial additional coeff ",
       "2-theta or d-spacing offset additional coeff ",
@@ -160,12 +170,15 @@ public class DiffrDataFile extends XRDcat {
   public boolean spectrumModified = false;
   boolean generatePlotfile = false;
 //  boolean asBackground = false;
-  final static int asBackgroundID = 10;
+  public static int maxAngleNumber = 6;
+  final static int asBackgroundID = maxAngleNumber + 6;
   boolean manualBkgInterpolation = false;
-  final static int manualBkgInterpolationID = 15;
+  final static int manualBkgInterpolationID = maxAngleNumber + 11;
+	final static int useCountTimeToScaleID = maxAngleNumber + 14;
   double[] manualBkgPoints = null;
   final static int sampleDisplacementYID = 1;
   final static int sampleDisplacementZID = 2;
+	boolean useCountTimeToScale = false;
   //	boolean tobeloaded = true;
   String folder = ".";
   public boolean lorentzRestricted = true;
@@ -176,13 +189,15 @@ public class DiffrDataFile extends XRDcat {
 	public static String intensityCalcCIFstring = "_pd_calc_intensity_total";
 	public static String intensityExpCIFstring = "_pd_meas_intensity_total";
   public static String backgroundCIFstring = "_pd_calc_intensity_bkg";
-  double tilting_angles[] = new double[4];
+  private double tilting_angles[] = new double[maxAngleNumber];
+	private double corrected_tilting_angles[] = new double[maxAngleNumber];
   boolean increasingX = true;
 	int lastIndex = 0;
 	int oscillatorsNumber = 0;
   double monitorCounts = 1.0;
   public static String[] meas_intensity_unit = {"counts", "cps"};
   double countingTime = 1.0;
+	double countingTimeStat = 1.0;
 	double datafileWeight = 1.0;
   int groupCount = 1;
   int oldGroupCount = 1;
@@ -193,13 +208,13 @@ public class DiffrDataFile extends XRDcat {
   public static int DIFFRACTION_IMAGE = 1;
   int type = DIFFRACTION_PATTERN;
   int dataType = DIFFRACTION_PATTERN;
-  public int saveCustomID = 13;
+  public int saveCustomID = maxAngleNumber + 9;
   static int thetaDisplacementID = 1;
   double thetaDisplacement[] = null;
   int thetaDisplacementN = 0;
-  static int monitorAsBackgroundID = 2;
-  double monitorAsBackground[] = null;
-  int monitorAsBackgroundN = 0;
+//  static int monitorAsBackgroundID = 2;
+//  double monitorAsBackground[] = null;
+//  int monitorAsBackgroundN = 0;
 
   boolean reflectivityStats = false;
 
@@ -215,7 +230,7 @@ public class DiffrDataFile extends XRDcat {
 //	boolean resetManualInterpolationWithRangeChange = false;
 
 	public int positionsPerPattern = 1;
-	int instrumentBroadeningParNumber = 3;
+	int instrumentBroadeningParNumber = 5;
 
 	boolean[] needRestore = null;
 	Vector overallVector = null;
@@ -235,8 +250,9 @@ public class DiffrDataFile extends XRDcat {
 	// phasePositions[radnumber][number of reflection][number of points per pattern]
 	private Map<Phase, double[][][]> phasePositions = new Hashtable<Phase, double[][][]>();
 	private Map<Phase, int[][][][]> phaseMinMaxIndices = new Hashtable<Phase, int[][][][]>();
-	static final int dateTimeFieldID = 16;
-	static final int datafileWeightFieldID = 17;
+	static final int dateTimeFieldID = maxAngleNumber + 12;
+	static final int datafileWeightFieldID = maxAngleNumber + 13;
+	static final int scaleFactorDiffractionFluoID = 3;
 //	private String measurementDate;
 //	private String measurementTime;
 
@@ -280,9 +296,9 @@ public class DiffrDataFile extends XRDcat {
 
   @Override
   public void initConstant() {
-    Nstring = 18;
+    Nstring = 21;
     Nstringloop = 0;
-    Nparameter = 3;
+    Nparameter = 4;
     Nparameterloop = 3;
     Nsubordinate = 0;
     Nsubordinateloop = 1;
@@ -290,19 +306,17 @@ public class DiffrDataFile extends XRDcat {
 
   @Override
   public void initDictionary() {
-    System.arraycopy(diclistc, 0, diclist, 0, totsubordinateloop);
-    System.arraycopy(diclistcrm, 0, diclistRealMeaning, 0, totsubordinateloop);
-    System.arraycopy(classlistcs, 0, classlists, 0, totsubordinate - totparameterloop);
-    System.arraycopy(classlistc, 0, classlist, 0, totsubordinateloop - totsubordinate);
+    arraycopy(diclistc, 0, diclist, 0, totsubordinateloop);
+    arraycopy(diclistcrm, 0, diclistRealMeaning, 0, totsubordinateloop);
+    arraycopy(classlistcs, 0, classlists, 0, totsubordinate - totparameterloop);
+    arraycopy(classlistc, 0, classlist, 0, totsubordinateloop - totsubordinate);
   }
 
   @Override
   public void initParameters() {
     super.initParameters();
-    setChi("0");
-    setPhi("0");
-    setOmega("0");
-    setEta("0");
+	  for (int i = 0; i < maxAngleNumber; i++)
+		  setString(i + 1, "0");
     setCompute(true);
     setBankID("none");
     setGeneratePlotfile(false);
@@ -311,7 +325,9 @@ public class DiffrDataFile extends XRDcat {
     initializeParameter(0, 1.0, 0.0, 10.0);
     initializeParameter(sampleDisplacementYID, 0.0, -10.0, 10.0);
     initializeParameter(sampleDisplacementZID, 0.0, -10.0, 10.0);
+	  initializeParameter(scaleFactorDiffractionFluoID, 1.0, 0.0, 100.0);
     setCountTime("1.0");
+	  useCountTimeToScale(false);
     setIntensityUnit(meas_intensity_unit[0]);
     setGroupCount(1);
     setDataType(DIFFRACTION_PATTERN);
@@ -319,7 +335,7 @@ public class DiffrDataFile extends XRDcat {
 	  setString(datafileWeightFieldID, "1.0");
   }
 
-  @Override
+	@Override
   public void setParent(XRDcat obj) {
     super.setParent(obj);
     theDataFileSet = (DataFileSet) obj;
@@ -428,7 +444,7 @@ public class DiffrDataFile extends XRDcat {
 
     double[] newvector = new double[datanumber];
 
-    System.arraycopy(oldvector, min, newvector, 0, datanumber);
+    arraycopy(oldvector, min, newvector, 0, datanumber);
 
     return newvector;
   }
@@ -454,7 +470,7 @@ public class DiffrDataFile extends XRDcat {
   }
 
   public void setImageIndex(int index) {
-    setString(14, Integer.toString(index));
+    setString(maxAngleNumber + 10, Integer.toString(index));
   }
 
   public int getImageIndex() {
@@ -633,7 +649,7 @@ public class DiffrDataFile extends XRDcat {
                 if (newtoken == CIFtoken.TT_NUMBER)
                   initData(Integer.parseInt(ciffile.thestring));
                 else {
-                  System.out.println("No number of data points for spectrum " + this.toXRDcatString());
+                  out.println("No number of data points for spectrum " + this.toXRDcatString());
                   return;
                 }
               } else if (thecife.equalsIgnoreCase("_riet_meas_datafile_calibrated")) {
@@ -708,7 +724,7 @@ public class DiffrDataFile extends XRDcat {
         dataLoaded = true;
       } catch (IOException ioe) {
         ioe.printStackTrace();
-        System.out.println("IO exception in custom object for " + toXRDcatString());
+        out.println("IO exception in custom object for " + toXRDcatString());
       }
     } else if (ciffile.thestring.indexOf("background_interpolated_points") > 0) {
       int tokentype;
@@ -766,7 +782,7 @@ public class DiffrDataFile extends XRDcat {
         }
       } catch (IOException ioe) {
         ioe.printStackTrace();
-        System.out.println("IO exception in custom object for " + toXRDcatString());
+        out.println("IO exception in custom object for " + toXRDcatString());
       }
     } else if (ciffile.thestring.indexOf("texture_factors") > 0) {
 
@@ -879,7 +895,7 @@ public class DiffrDataFile extends XRDcat {
 			  needRestore = null;
 //			notLoaded = false;
 	  } catch (IOException ioe) {
-		  System.out.println("IO exception in custom object for " + toXRDcatString());
+		  out.println("IO exception in custom object for " + toXRDcatString());
 	  }
     }
 
@@ -960,15 +976,18 @@ public class DiffrDataFile extends XRDcat {
     generatePlotfile = getPlotfileString().equalsIgnoreCase("true");
 //    asBackground = getAsBackgroundString().equalsIgnoreCase("true");
     manualBkgInterpolation = getManualBkgInterpolationString().equalsIgnoreCase("true");
+	  useCountTimeToScale = useCountTimeToScaleString().equalsIgnoreCase("true");
 //  computeSpectrum = !getAsBackgroundString().equalsIgnoreCase("true") && getComputeString().equalsIgnoreCase("true");
     dataType = Integer.parseInt(getDataType());
 
     DataFileSet dataset = getDataFileSet(); //(DataFileSet) getParent();
 //    dataset.updateStringtoDoubleBuffering();
-    tilting_angles[0] = Double.valueOf(getOmega()).doubleValue(); // + dataset.getAngleOffsetValue(0));
-    tilting_angles[1] = Double.valueOf(getChi()).doubleValue(); // + dataset.getAngleOffsetValue(1));
-    tilting_angles[2] = Double.valueOf(getPhi()).doubleValue(); // + dataset.getAngleOffsetValue(2));
-    tilting_angles[3] = Double.valueOf(getEta()).doubleValue(); // + dataset.getAngleOffsetValue(3));
+	  for (int i = 0; i < maxAngleNumber; i++)
+		  tilting_angles[i] = Double.parseDouble(getString(i + 1));
+	  for (int i = 0; i < 4; i++)
+		  corrected_tilting_angles[i] = tilting_angles[i] + getDataFileSet().getDisalignementAngles()[i];
+	  for (int i = 4; i < maxAngleNumber; i++)
+		  corrected_tilting_angles[i] = tilting_angles[i];
 
     lorentzRestricted = dataset.isLorentzRestricted();
     oscillatorsNumber = backgOscillatorsNumber();
@@ -1001,17 +1020,18 @@ public class DiffrDataFile extends XRDcat {
       }
 
     }
+	  countingTime = Double.valueOf(getCountTime());
     switch (getIntensityUnitControl()) {
       case 0:
-        countingTime = 1.0;
+        countingTimeStat = 1.0;
         break;
       case 1:
-        countingTime = Double.valueOf(getCountTime());
+        countingTimeStat = countingTime;
         break;
       default: {
       }
     }
-    imageIndex = Integer.parseInt(getString(14));
+    imageIndex = Integer.parseInt(getString(maxAngleNumber + 10));
     checkGroupCount();
     checkStep();
     theta2thetaMeasurement = ainstrument.getMeasurement() instanceof Theta2ThetaMeasurement;
@@ -1052,7 +1072,7 @@ public class DiffrDataFile extends XRDcat {
     groupCount = Integer.parseInt(getGroupCount());
     if (groupCount != oldGroupCount) {
       if (oldGroupCount != 1) {
-        System.out.println("Warning: data was already grouped differently! Save the analysis and reload it to " +
+        out.println("Warning: data was already grouped differently! Save the analysis and reload it to " +
                       "complete the different grouping");
       } else {
         groupData(groupCount);
@@ -1110,6 +1130,7 @@ public class DiffrDataFile extends XRDcat {
       monitorCounts = getMonitorCountsValue();
     thetaDisplacement = getParameterLoopVector(thetaDisplacementID);
     thetaDisplacementN = numberOfLoopParameters[thetaDisplacementID];
+
     for (int i = 0; i < thetaDisplacementN; i++)
       ((Parameter) getThetaDisplacementList().elementAt(i)).setMinimumSignificantValue(Math.pow(0.001, i + 1));
 
@@ -1128,14 +1149,14 @@ public class DiffrDataFile extends XRDcat {
 
   public void setCompute(boolean control) {
     if (control) {
-      setString(5, "true");
+      setString(maxAngleNumber + 1, "true");
       setAsBackground(false);
     } else
-      setString(5, "false");
+      setString(maxAngleNumber + 1, "false");
   }
 
   public String getComputeString() {
-    return getString(5);
+    return getString(maxAngleNumber + 1);
   }
 
   public boolean getComputePermission() {
@@ -1144,13 +1165,13 @@ public class DiffrDataFile extends XRDcat {
 
   public void setGeneratePlotfile(boolean control) {
     if (control)
-      setString(6, "true");
+      setString(maxAngleNumber + 2, "true");
     else
-      setString(6, "false");
+      setString(maxAngleNumber + 2, "false");
   }
 
   public String getPlotfileString() {
-    return getString(6);
+    return getString(maxAngleNumber + 2);
   }
 
   public boolean getPlotfilePermission() {
@@ -1208,35 +1229,56 @@ public class DiffrDataFile extends XRDcat {
   }
 
   public void setBankID(String bankID) {
-    setString(7, bankID);
+    setString(maxAngleNumber + 3, bankID);
   }
 
   public String getBankID() {
-    return getString(7);
+    return getString(maxAngleNumber + 3);
   }
 
   public void setCountTime(String time) {
-    setString(8, time);
+    setString(maxAngleNumber + 4, time);
   }
 
   public String getCountTime() {
-    return getString(8);
+    return getString(maxAngleNumber + 4);
   }
 
   public double getCountTimeValue() {
     return countingTime;
   }
 
+	public double getCountTimeValueForStatistic() {
+		return countingTimeStat;
+	}
+
+	public void useCountTimeToScale(boolean value)
+	{
+		if (value)
+			setString(useCountTimeToScaleID, "true");
+		else
+			setString(useCountTimeToScaleID, "false");
+	}
+
+	public String useCountTimeToScaleString() {
+		return getString(useCountTimeToScaleID);
+	}
+
+	public boolean useCountTimeToScale() {
+//		System.out.println("useCountTimeToScale = " + useCountTimeToScale);
+		return useCountTimeToScale;
+	}
+
   public void setCPSmeasurement() {
     setIntensityUnit(meas_intensity_unit[1]);
   }
 
   public void setIntensityUnit(String unit) {
-    setString(9, unit);
+    setString(maxAngleNumber + 5, unit);
   }
 
   public String getIntensityUnit() {
-    return getString(9);
+    return getString(maxAngleNumber + 5);
   }
 
   public int getIntensityUnitControl() {
@@ -1248,15 +1290,15 @@ public class DiffrDataFile extends XRDcat {
   }
 
   public void setGroupCount(String count) {
-    setString(11, count);
+    setString(maxAngleNumber + 7, count);
   }
 
   public void setGroupCount(int count) {
-    setString(11, Integer.toString(count));
+    setString(maxAngleNumber + 7, Integer.toString(count));
   }
 
   public String getGroupCount() {
-    return getString(11);
+    return getString(maxAngleNumber + 7);
   }
 
 /*  public double getGroupCountValue() {
@@ -1264,14 +1306,49 @@ public class DiffrDataFile extends XRDcat {
   }*/
 
   public void setDataType(int type) {
-    setString(12, Integer.toString(type));
+    setString(maxAngleNumber + 8, Integer.toString(type));
   }
 
   public String getDataType() {
-    return getString(12);
+    return getString(maxAngleNumber + 8);
   }
 
-  public void setOmega(String angle) {
+	public double getAngleValue(int order) {
+		if (order < 0 || order >= maxAngleNumber)
+			return -9999999.99;
+		return Double.parseDouble(getString(order + 1));
+	}
+
+	public void setAngleValue(int order, double value) {
+		if (order < 0 || order >= maxAngleNumber)
+			return;
+		setString(order + 1, Double.toString(value));
+	}
+
+	public double getOmegaValue() {
+		return corrected_tilting_angles[0];
+	}
+
+	public double getChiValue() {
+		return corrected_tilting_angles[1];
+	}
+
+	public double getPhiValue() {
+		return corrected_tilting_angles[2];
+	}
+
+	public double getEtaValue() {
+		return corrected_tilting_angles[3];
+	}
+
+	public double get2ThetaValue() {
+		return corrected_tilting_angles[4];
+	}
+
+	public double getValueEnergyInKeV() {
+		return corrected_tilting_angles[5];
+	}
+ /* public void setOmega(String angle) {
     setString(1, angle);
   }
 
@@ -1286,10 +1363,6 @@ public class DiffrDataFile extends XRDcat {
   public String getFormattedOmega() {
     float omega = (float) Double.valueOf(getString(1)).doubleValue();
     return Float.toString(omega);
-  }
-
-  public double getOmegaValue() {
-    return tilting_angles[0];
   }
 
   public void setChi(String angle) {
@@ -1309,10 +1382,6 @@ public class DiffrDataFile extends XRDcat {
     return Float.toString(chi);
   }
 
-  public double getChiValue() {
-    return tilting_angles[1];
-  }
-
   public void setPhi(String angle) {
     setString(3, angle);
   }
@@ -1328,10 +1397,6 @@ public class DiffrDataFile extends XRDcat {
   public String getFormattedPhi() {
     float phi = (float) Double.valueOf(getString(3)).doubleValue();
     return Float.toString(phi);
-  }
-
-  public double getPhiValue() {
-    return tilting_angles[2];
   }
 
   public void setEta(String angle) {
@@ -1351,16 +1416,44 @@ public class DiffrDataFile extends XRDcat {
     return Float.toString(eta);
   }
 
-  public double getEtaValue() {
-    return tilting_angles[3];
-  }
+	public void set2Theta(String angle) {
+		setString(5, angle);
+	}
 
-  public void setNewAngles(int[] mult, double[] offset) {
+	public void set2Theta(double angle) {
+		set2Theta(Double.toString(angle));
+	}
+
+	public String get2Theta() {
+		return getString(5);
+	}
+
+	public String getFormatted2Theta() {
+		return Float.toString((float) Double.valueOf(getString(5)).doubleValue());
+	}
+
+	public void setEnergyInKeV(String energy) {
+		setString(6, energy);
+	}
+
+	public void setEnergyInKeV(double energy) {
+		setEnergyInKeV(Double.toString(energy));
+	}
+
+	public String getEnergyInKeV() {
+		return getString(6);
+	}
+
+	public String getFormattedEnergyInKeV() {
+		return Float.toString((float) Double.valueOf(getString(6)).doubleValue());
+	}
+
+	*/
+
+	public void setNewAngles(int[] mult, double[] offset) {
     updateStringtoDoubleBuffering(false);
-    setOmega(offset[0] + Double.valueOf(getOmega()) * mult[0]);
-    setChi(offset[1] + Double.valueOf(getChi()) * mult[1]);
-    setPhi(offset[2] + Double.valueOf(getPhi()) * mult[2]);
-    setEta(offset[3] + Double.valueOf(getEta()) * mult[3]);
+		for (int i = 0; i < maxAngleNumber; i++)
+			setString(i + 1, Double.toString(offset[i] + Double.valueOf(getString(i + 1)) * mult[i]));
     for (int i = 0; i < this.datanumber; i++)
       setCalibratedXData(i, this.getXDataOriginal(i) * mult[4] + offset[4]);
   }
@@ -1528,20 +1621,20 @@ public class DiffrDataFile extends XRDcat {
       if (twothetacalibrated != null)
         return twothetacalibrated[index];
       else {
-        System.out.println(this.toXRDcatString() + ", data vector not initialize!!");
+        out.println(this.toXRDcatString() + ", data vector not initialize!!");
         return twotheta[index];
       }
     } catch (Exception e) {
       if (twothetacalibrated != null) {
         if (startingindex >= twothetacalibrated.length) {
-          System.out.println("Warning, datafile " + toXRDcatString() +
+          out.println("Warning, datafile " + toXRDcatString() +
               " is out of the imposed range for the dataset, will be disabled!");
-          System.out.println("Check also the calibration, if present in the instrument.");
+          out.println("Check also the calibration, if present in the instrument.");
           setCompute(false);
           e.printStackTrace();
           return index;
         }
-        System.out.println(this.getLabel() + ", warning, index " + index + ">= " + twothetacalibrated.length +
+        out.println(this.getLabel() + ", warning, index " + index + ">= " + twothetacalibrated.length +
             "(maximum for the range)? If not check also the subsequent stack trace");
 	      e.printStackTrace();
 	      // recalibrating
@@ -1794,7 +1887,7 @@ public class DiffrDataFile extends XRDcat {
       angcal.calibrateX(this);
       calibrated = true;
     } else
-      System.out.println("Warning: uncalibrated x coordinate");
+      out.println("Warning: uncalibrated x coordinate");
   }
 
   public double notCalibrated(double x) {
@@ -1833,6 +1926,12 @@ public class DiffrDataFile extends XRDcat {
     double total = 0.0;
     for (int i = startingindex; i < finalindex; i++)
       total += getYData(i);
+//	  System.out.print("Total:" + total + " ");
+	  if (useCountTimeToScale()) {
+		  total /= getCountTimeValue();
+//		  System.out.print(getCountTimeValue() + " ");
+	  }
+//	  System.out.println(total);
     return total;
   }
 
@@ -1844,7 +1943,7 @@ public class DiffrDataFile extends XRDcat {
         return 1.0E-79;
     }
 
-    double corr = getCountTimeValue();
+    double corr = getCountTimeValueForStatistic();
       int weightSwitch = getFilePar().getWeightingSchemeSwitch();
       double yint = getYData(index) * corr;
       switch (weightSwitch) {
@@ -2015,7 +2114,7 @@ public class DiffrDataFile extends XRDcat {
         return 1.0E-79;
     }
 
-    double corr = getCountTimeValue();
+    double corr = 1; // getCountTimeValue();
       int weightSwitch = getFilePar().getWeightingSchemeSwitch();
       double yint = getFit(index) * corr;
       switch (weightSwitch) {
@@ -2140,7 +2239,7 @@ public class DiffrDataFile extends XRDcat {
       return MoreMath.log10(getBkgFit(index));
     }
 
-    double corr = getCountTimeValue();
+    double corr = 1; // getCountTimeValue();
       int weightSwitch = getFilePar().getWeightingSchemeSwitch();
       double yint = getBkgFit(index) * corr;
       switch (weightSwitch) {
@@ -2274,7 +2373,7 @@ public class DiffrDataFile extends XRDcat {
     double value = 0.0;
 
     if (getDataFileSet().getInstrument().getIntensityCalibration().validX(this, x, index)) {
-      double corr = getCountTimeValue() * getDatafileWeight();
+      double corr = getCountTimeValueForStatistic() * getDatafileWeight();
       if (corr == 0)
         corr = 1;
       boolean theoreticalWeights = getFilePar().theoreticalWeight();
@@ -3012,7 +3111,7 @@ public class DiffrDataFile extends XRDcat {
     deltaindex = finalindex - startingindex;
     if (deltaindex < 4) {
       setCompute(false);
-      System.out.println("Datafile " + this.getLabel() +
+      out.println("Datafile " + this.getLabel() +
           ": computation range too small or out of imposed limits, it's being disabled!");
     }
     i_deltaX = 1.0 / (finalX - startingX);
@@ -3109,7 +3208,7 @@ public class DiffrDataFile extends XRDcat {
       } else {
         radiation = getMeanRadiationWavelength();
         if (radiation == 0.0)
-          System.out.println("Error, unable to get radiation wavelength!");
+          out.println("Error, unable to get radiation wavelength!");
         else {
 //	        System.out.println(rangemin + " - " + rangemax);
           if (rangemax > 0.0 && rangemax < 180.0)
@@ -3153,10 +3252,8 @@ public class DiffrDataFile extends XRDcat {
   }
 
   public double[] getTiltingAngle() {
-    double[] newAngles = new double[4];
-    System.arraycopy(tilting_angles, 0, newAngles, 0, newAngles.length);
-	  for (int i = 0; i < 4; i++)
-		  newAngles[i] += getDataFileSet().getDisalignementAngles()[i];
+    double[] newAngles = new double[maxAngleNumber];
+    arraycopy(corrected_tilting_angles, 0, newAngles, 0, newAngles.length);
     return newAngles;
   }
 
@@ -3317,7 +3414,7 @@ public class DiffrDataFile extends XRDcat {
 	  int[] minmaxindex = new int[2];
 	  minmaxindex[0] = finalindex - 1;
 	  minmaxindex[1] = startingindex;
-    System.arraycopy(minmaxindex, 0, tmpminmax, 0, 2);
+    arraycopy(minmaxindex, 0, tmpminmax, 0, 2);
 
 //    System.out.println(peaklist.length);  // todo
     for (int i = 0; i < peaklist.size(); i++) {
@@ -3326,7 +3423,7 @@ public class DiffrDataFile extends XRDcat {
 		        computeTexture, computeStrain, computeFhkl, leBailExtraction, tmpminmax,
 		        computeBroadening, !increasingX());
 	      if (i == 0)
-		      System.arraycopy(tmpminmax, 0, minmaxindex, 0, 2);
+		      arraycopy(tmpminmax, 0, minmaxindex, 0, 2);
         else if (!leBailExtraction) {
           if (minmaxindex[0] > tmpminmax[0])
             minmaxindex[0] = tmpminmax[0];
@@ -3477,11 +3574,15 @@ public class DiffrDataFile extends XRDcat {
         intensityCalibrated = null;
       }
     }
+	  double countTime = 1;
+	  if (useCountTimeToScale())
+		  countTime = getCountTimeValue();
+	  countTime *= monitorCounts;
     if (!needRealCalibration)
-      return monitorCounts;
+      return countTime;
     if (intensityNotCalibrated)
       calibrateIntensity();
-    return intensityCalibrated[j] * monitorCounts;
+    return intensityCalibrated[j] * countTime;
   }
 
   public void calibrateIntensity() {
@@ -3655,11 +3756,12 @@ public class DiffrDataFile extends XRDcat {
 		return false;
 	}
 
-  public void setStartingPointForTools() {
+  public void setStartingPointForTools(boolean setData) {
     if (!dspacingbase) {
       int dtanumber = computeDataNumber();
       for (int j = 0; j < dtanumber; j++) {
-        setPhasesFit(j + startingindex, getYData(j + startingindex));
+	      if (setData)
+          setPhasesFit(j + startingindex, getYData(j + startingindex));
         setBkgFit(j + startingindex, 0.0);
       }
     }
@@ -3737,7 +3839,7 @@ public class DiffrDataFile extends XRDcat {
     int pointsToInterpolate = getDataFileSet().getInterpolatedPointsValue();
     int pointToSmooth = pointsToInterpolate / 20;
     int minimumNumberOfPointForSmooth =
-        MaudPreferences.getInteger("InterpolateBackground.minimumNumberOfPointToSmooth", 10);
+        MaudPreferences.getInteger("interpolateBackground.minimumNumberOfPointToSmooth", 10);
     if (pointToSmooth < minimumNumberOfPointForSmooth) {
       pointToSmooth = minimumNumberOfPointForSmooth;
     }
@@ -3834,7 +3936,7 @@ public class DiffrDataFile extends XRDcat {
 	    }
 	    if (sampledPointsNumber <= 1)
 		    sampledPointsNumber = 2;
-      System.out.println("Points " + pointsToInterpolate + " " + sampledPointsNumber + " " + pointToSmooth);
+      out.println("Points " + pointsToInterpolate + " " + sampledPointsNumber + " " + pointToSmooth);
 
       sampledPoints = new int[sampledPointsNumber];
 	    double[] sampledIntensity = new double[sampledPointsNumber];
@@ -3859,9 +3961,9 @@ public class DiffrDataFile extends XRDcat {
 	    // now we find the best points in the background
 
 	    int iterationNumber = getDataFileSet().getInterpolationIterationsValue();
-	    //MaudPreferences.getInteger("BackgroundSubtraction.iterations", 10);
+	    //MaudPreferences.getInteger("backgroundSubtraction.iterations", 10);
 	    double intensityMax = getMaxIntensity();
-	    double curvature = MaudPreferences.getDouble("BackgroundSubtraction.curvature%", 0.00001);
+	    double curvature = MaudPreferences.getDouble("backgroundSubtraction.curvature%", 0.00001);
 	    double c = intensityMax * curvature;
 
 	    double mi;
@@ -3995,9 +4097,12 @@ public class DiffrDataFile extends XRDcat {
 	public void addExperimentalBackground() {
 
     DiffrDataFile expDataFile = getDataFileSet().getBackgroundDataFile(this);
+		double countTime = monitorCounts;
+		if (useCountTimeToScale())
+			countTime *= getCountTimeValue();
     if (getDataFileSet().omogeneousDataset) {
       for (int i = startingindex; i < finalindex; i++) {
-        double bkgIntensity = expDataFile.getInterpolatedIntensity(i) * monitorCounts;
+        double bkgIntensity = expDataFile.getInterpolatedIntensity(i) * countTime;
 //        System.out.println("Computing experimental background " + i + " " + bkgIntensity);
         addtoBkgFit(i, bkgIntensity);
       }
@@ -4169,9 +4274,9 @@ public class DiffrDataFile extends XRDcat {
         sampledIntensity[index] = getFit(i);
     }
 
-    int iterationNumber = MaudPreferences.getInteger("BackgroundSubtraction.iterations", 10);
+    int iterationNumber = MaudPreferences.getInteger("backgroundSubtraction.iterations", 10);
     double intensityMax = getMaxIntensity();
-    double curvature = MaudPreferences.getDouble("BackgroundSubtraction.curvature%", 0.00001);
+    double curvature = MaudPreferences.getDouble("backgroundSubtraction.curvature%", 0.00001);
     double c = intensityMax * curvature;
 
     double mi;
@@ -4221,7 +4326,7 @@ public class DiffrDataFile extends XRDcat {
   }
 
   public boolean kalpha2Stripping() {
-    int pointsToInterpolate = MaudPreferences.getInteger("LineStripping.interpolatedPoints", 2);
+    int pointsToInterpolate = MaudPreferences.getInteger("lineStripping.interpolatedPoints", 2);
     if (!dspacingbase) {
 	    RadiationType radType = getDataFileSet().getInstrument().getRadiationType();
 //      double meanRadWavelength = getDataFileSet().getMeanRadiationWavelength();
@@ -4560,15 +4665,15 @@ public class DiffrDataFile extends XRDcat {
   }
 
   public double[][] peaksLocation(double[] derivative2) {
-    int pointsToInterpolate = MaudPreferences.getInteger("PeaksLocation.interpolatedPoints", 7);
+    int pointsToInterpolate = MaudPreferences.getInteger("peaksLocation.interpolatedPoints", 7);
     int dtanumber = computeDataNumber();
     for (int i = 0; i < dtanumber; i++) {
       derivative2[i] = getSecondDerivativeFitAt(getXData(i + startingindex), pointsToInterpolate);
     }
     double intensityMax = 1.0; //getMaxIntensity();
-    double curvature = MaudPreferences.getDouble("PeaksLocation.minimum2derivative%", 1);
+    double curvature = MaudPreferences.getDouble("peaksLocation.minimum2derivative%", 1);
     double c = intensityMax * curvature;
-    double factor = MaudPreferences.getDouble("PeaksLocation.noiseFactor", 10);
+    double factor = MaudPreferences.getDouble("peaksLocation.noiseFactor", 10);
 
     boolean wasPositive = false;
     int imin = 0;
@@ -5210,11 +5315,11 @@ public class DiffrDataFile extends XRDcat {
 	}
 
 	private void updatePositions(double[][][] positions, double[][][] newPositions, int[] indices) {
-		if (indices != null)
-		for (int j = 0; j < indices.length; j++) {
-			if (indices[j] >= 0)
-				for (int i = 0; i < newPositions.length; i++)
-					for (int k = 0; k < newPositions[0][0].length; k++)
+		if (indices != null) {
+		for (int j = 0; j < indices.length; j++)
+			if (indices[j] >= 0 && j < newPositions[0].length && indices[j] < positions[0].length)
+				for (int i = 0; i < newPositions.length && i < positions.length; i++)
+					for (int k = 0; k < newPositions[0][0].length && k < positions[0][0].length; k++)
 						newPositions[i][j][k] = positions[i][indices[j]][k];
 		}
 	}
@@ -5234,10 +5339,10 @@ public class DiffrDataFile extends XRDcat {
 	private void updateMinMaxIndices(int[][][][] minmaxIndices, int[][][][] newMinmaxIndices, int[] indices) {
 		if (indices != null)
 		for (int j = 0; j < indices.length; j++) {
-			if (indices[j] >= 0)
-				for (int i = 0; i < newMinmaxIndices.length; i++)
-					for (int l = 0; l < newMinmaxIndices[0].length; l++)
-						for (int k = 0; k < newMinmaxIndices[0][0][0].length; k++)
+			if (indices[j] >= 0 && j < newMinmaxIndices[0][0].length && indices[j] < minmaxIndices[0][0].length)
+				for (int i = 0; i < newMinmaxIndices.length && i < minmaxIndices.length; i++)
+					for (int l = 0; l < newMinmaxIndices[0].length && l < minmaxIndices[0].length; l++)
+						for (int k = 0; k < newMinmaxIndices[0][0][0].length && k < minmaxIndices[0][0][0].length; k++)
 							newMinmaxIndices[i][l][j][k] = minmaxIndices[i][l][indices[j]][k];
 		}
 	}
@@ -5254,8 +5359,8 @@ public class DiffrDataFile extends XRDcat {
 	private void updateLorentzPolarization(double[][] lorentzPolarizations, double[][] newLorentzPolarizations, int[] indices) {
 		if (indices != null)
 		for (int j = 0; j < indices.length; j++) {
-			if (indices[j] >= 0)
-				for (int i = 0; i < newLorentzPolarizations[0].length; i++)
+			if (indices[j] >= 0 && j < newLorentzPolarizations.length && indices[j] < lorentzPolarizations.length)
+				for (int i = 0; i < newLorentzPolarizations[0].length && i < lorentzPolarizations[0].length; i++)
 					newLorentzPolarizations[j][i] = lorentzPolarizations[indices[j]][i];
 		}
 	}
@@ -5272,8 +5377,8 @@ public class DiffrDataFile extends XRDcat {
 	private void updateShapeAbsFactors(double[][] shapeAbsorption, double[][] newShapeAbsorption, int[] indices) {
 		if (indices != null)
 		for (int j = 0; j < indices.length; j++) {
-			if (indices[j] >= 0)
-				for (int i = 0; i < newShapeAbsorption[0].length; i++)
+			if (indices[j] >= 0 && j < newShapeAbsorption.length && indices[j] < shapeAbsorption.length)
+				for (int i = 0; i < newShapeAbsorption[0].length && i < shapeAbsorption[0].length; i++)
 					newShapeAbsorption[j][i] = shapeAbsorption[indices[j]][i];
 		}
 	}
@@ -5291,9 +5396,9 @@ public class DiffrDataFile extends XRDcat {
 	private void updateCrystallitesMicrostrains(double[][][] crystallitesMicrostrains, double[][][] newCrystallitesMicrostrains, int[] indices) {
 		if (indices != null)
 		for (int j = 0; j < indices.length; j++) {
-			if (indices[j] >= 0)
-				for (int i = 0; i < newCrystallitesMicrostrains.length; i++)
-					for (int k = 0; k < newCrystallitesMicrostrains[0][0].length; k++)
+			if (indices[j] >= 0 && j < newCrystallitesMicrostrains[0].length && indices[j] < crystallitesMicrostrains[0].length)
+				for (int i = 0; i < newCrystallitesMicrostrains.length && i < crystallitesMicrostrains.length; i++)
+					for (int k = 0; k < newCrystallitesMicrostrains[0][0].length && k < crystallitesMicrostrains[0][0].length; k++)
 						newCrystallitesMicrostrains[i][j][k] = crystallitesMicrostrains[i][indices[j]][k];
 		}
 	}
@@ -5311,9 +5416,9 @@ public class DiffrDataFile extends XRDcat {
 	private void updateInstBroadFactors(double[][][] instrumentBroadening, double[][][] newInstrumentBroadening, int[] indices) {
 		if (indices != null)
 		for (int j = 0; j < indices.length; j++) {
-			if (indices[j] >= 0)
-				for (int i = 0; i < newInstrumentBroadening.length; i++)
-					for (int k = 0; k < newInstrumentBroadening[0][0].length; k++)
+			if (indices[j] >= 0 && j < newInstrumentBroadening[0].length && indices[j] < instrumentBroadening[0].length)
+				for (int i = 0; i < newInstrumentBroadening.length && i < instrumentBroadening.length; i++)
+					for (int k = 0; k < newInstrumentBroadening[0][0].length && k < instrumentBroadening[0][0].length; k++)
 						newInstrumentBroadening[i][j][k] = instrumentBroadening[i][indices[j]][k];
 		}
 	}
@@ -5331,9 +5436,9 @@ public class DiffrDataFile extends XRDcat {
 	private void updateBroadFactors(double[][][] phaseBroadening, double[][][] newPhaseBroadening, int[] indices) {
 		if (indices != null)
 		for (int j = 0; j < indices.length; j++) {
-			if (indices[j] >= 0)
-				for (int i = 0; i < phaseBroadening.length; i++)
-					for (int k = 0; k < phaseBroadening[0][0].length; k++)
+			if (indices[j] >= 0 && j < newPhaseBroadening[0].length && indices[j] < phaseBroadening[0].length)
+				for (int i = 0; i < phaseBroadening.length &&  i < newPhaseBroadening.length; i++)
+					for (int k = 0; k < phaseBroadening[0][0].length && k < newPhaseBroadening[0][0].length; k++)
 						newPhaseBroadening[i][j][k] = phaseBroadening[i][indices[j]][k];
 		}
 	}
@@ -5350,8 +5455,8 @@ public class DiffrDataFile extends XRDcat {
 	private void updateStrainFactors(double[][] strainFactors, double[][] newStrainFactors, int[] indices) {
 		if (indices != null)
 		for (int j = 0; j < indices.length; j++) {
-			if (indices[j] >= 0)
-				for (int i = 0; i < strainFactors[0].length; i++)
+			if (indices[j] >= 0 && j < newStrainFactors.length && indices[j] < strainFactors.length)
+				for (int i = 0; i < strainFactors[0].length && i < newStrainFactors[0].length; i++)
 					newStrainFactors[j][i] = strainFactors[indices[j]][i];
 		}
 	}
@@ -5505,24 +5610,24 @@ public class DiffrDataFile extends XRDcat {
 
 	private void updateTextureFactors(double[][][] textureFactors, double[][][] newTextureFactors, int[] indices) {
 		for (int j = 0; j < indices.length; j++) {
-			if (indices[j] >= 0)
+			if (indices[j] >= 0 && indices[j] < textureFactors[0].length)
 				for (int i = 0; i < 2; i++)
-					for (int k = 0; k < positionsPerPattern; k++)
+					for (int k = 0; k < positionsPerPattern && k < textureFactors[0][0].length && k < newTextureFactors[0][0].length; k++)
 						newTextureFactors[i][j][k] = textureFactors[i][indices[j]][k];
 		}
 	}
 
 	public void storeComputedTextureFactors(Phase phase, double[][] thkl) {
 		double[][][] textureFactors = getTextureFactors(phase);
-		for (int i = 0; i < textureFactors[0].length; i++)
-			for (int i1 = 0; i1 < textureFactors[0][0].length; i1++)
+		for (int i = 0; i < textureFactors[0].length &&  i < thkl.length; i++)
+			for (int i1 = 0; i1 < textureFactors[0][0].length &&  i1 < thkl[0].length; i1++)
 				textureFactors[1][i][i1] = thkl[i][i1];
 	}
 
 	public void storeExperimentalTextureFactors(Phase phase, double[][] thkl) {
 		double[][][] textureFactors = getTextureFactors(phase);
-		for (int i = 0; i < textureFactors[0].length; i++)
-			for (int i1 = 0; i1 < textureFactors[0][0].length; i1++)
+		for (int i = 0; i < textureFactors[0].length &&  i < thkl.length; i++)
+			for (int i1 = 0; i1 < textureFactors[0][0].length &&  i1 < thkl[0].length; i1++)
 				textureFactors[0][i][i1] = thkl[i][i1];
 	}
 
@@ -5671,21 +5776,21 @@ public class DiffrDataFile extends XRDcat {
 //		Sample sample = aphase.getSample();
 
 		if (dspacingbase || energyDispersive) {
-			for (int j = 0; j < positionsPerPattern; j++)
-				for (int rad = 0; rad < radNumber; rad++) {
+			for (int j = 0; j < positionsPerPattern && j < positions[0][0].length; j++)
+				for (int rad = 0; rad < radNumber && rad < positions.length; rad++) {
 					int reflNumber = aphase.gethklNumber();
-					for (int i = 0; i < reflNumber; i++) {
+					for (int i = 0; i < reflNumber &&  i < positions[0].length; i++) {
 						Reflection refl = aphase.getReflex(i);
 						positions[rad][i][j] = refl.d_space;
 //						positions[rad][i][j] = computeFinalPosition(sample, refl, 0, positions[rad][i][j]);
 					}
 				}
 		} else {
-			for (int j = 0; j < positionsPerPattern; j++)
-				for (int rad = 0; rad < radNumber; rad++) {
+			for (int j = 0; j < positionsPerPattern && j < positions[0][0].length; j++)
+				for (int rad = 0; rad < radNumber && rad < positions.length; rad++) {
 					double wavelength = getDataFileSet().getInstrument().getRadiationType().getRadiationWavelength(rad);
 					int reflNumber = aphase.gethklNumber();
-					for (int i = 0; i < reflNumber; i++) {
+					for (int i = 0; i < reflNumber &&  i < positions[0].length; i++) {
 						Reflection refl = aphase.getReflex(i);
 						double ratioposition = wavelength / (2.0 * refl.d_space);
 						positions[rad][i][j] = 180.0;
@@ -5706,21 +5811,21 @@ public class DiffrDataFile extends XRDcat {
 		Sample sample = aphase.getSample();
 
 		if (dspacingbase || energyDispersive) {
-			for (int j = 0; j < positionsPerPattern; j++)
-				for (int rad = 0; rad < radNumber; rad++) {
+			for (int j = 0; j < positionsPerPattern && j < positions[0][0].length; j++)
+				for (int rad = 0; rad < radNumber && rad < positions.length; rad++) {
 					int reflNumber = aphase.gethklNumber();
-					for (int i = 0; i < reflNumber; i++) {
+					for (int i = 0; i < reflNumber && i < positions[0].length; i++) {
 						Reflection refl = aphase.getReflex(i);
 //						positions[rad][i][j] = refl.d_space;
 						positions[rad][i][j] = computeFinalPosition(sample, refl, strain[i][j], positions[rad][i][j]);
 					}
 				}
 		} else {
-			for (int j = 0; j < positionsPerPattern; j++)
-				for (int rad = 0; rad < radNumber; rad++) {
+			for (int j = 0; j < positionsPerPattern && j < positions[0][0].length; j++)
+				for (int rad = 0; rad < radNumber && rad < positions.length; rad++) {
 //					double wavelength = radiationt[rad].getWavelengthValue();
 					int reflNumber = aphase.gethklNumber();
-					for (int i = 0; i < reflNumber; i++) {
+					for (int i = 0; i < reflNumber && i < positions[0].length; i++) {
 						Reflection refl = aphase.getReflex(i);
 /*						double ratioposition = wavelength / (2.0 * refl.d_space);
 						positions[rad][i][j] = 180.0;
@@ -5867,7 +5972,7 @@ public class DiffrDataFile extends XRDcat {
 				for (int j = 0; j < positionsPerPattern; j++) {
 					double layer_abs = computeAbsorptionAndPhaseQuantity(ainstrument, aphase.getSample(), aphase,
 							positions[0][i][j]);
-//					System.out.println(intensity[j] + " " + layer_abs);
+//					System.out.println(i + " " + intensity[j] + " " + layer_abs);
 					shapeAbsorption[i][j] = intensity[j] * layer_abs;
 			}
 		}
@@ -6050,7 +6155,7 @@ public class DiffrDataFile extends XRDcat {
 
 	public double[] getTextureFactors(Phase aphase, int j) {
 		if (j > getTextureFactors(aphase)[1].length)
-			System.out.println(aphase.getPhaseName() + " " + aphase.gethklNumber() + " " + j + " " + getTextureFactors(aphase)[1].length);
+			out.println(aphase.getPhaseName() + " " + aphase.gethklNumber() + " " + j + " " + getTextureFactors(aphase)[1].length);
 		return getTextureFactors(aphase)[1][j];  //To change body of created methods use File | Settings | File Templates.
 	}
 
@@ -6113,6 +6218,7 @@ public class DiffrDataFile extends XRDcat {
 		intbkgfit = null;
 		classlistcs = null;
 		tilting_angles = null;
+		corrected_tilting_angles = null;
 		phaseLorentzPolarization = null;
 		phaseBroadFactors = null;
 		phaseInstBroadFactors = null;
@@ -6186,39 +6292,35 @@ public class DiffrDataFile extends XRDcat {
 			t = ft.parse(dateTime);
 			return t.getTime();
 		} catch (ParseException e) {
-			System.out.println(dateTime + " is an unparseable date using " + ft);
+			out.println(dateTime + " is an unparseable date using " + ft);
 		}
 		return 0l;
 	}
 
 	public void addAndMean(Vector<DiffrDataFile> groupOfDatafiles) {
 		int total = groupOfDatafiles.size() + 1;
-		double[] angles = new double[4];
-		angles[0] = getOmegaValue();
-		angles[1] = getChiValue();
-		angles[2] = getPhiValue();
-		angles[3] = getEtaValue();
+		double[] angles = new double[maxAngleNumber];
+		for (int j = 0; j < maxAngleNumber; j++)
+			angles[j] = tilting_angles[j];
 		double countTime = getCountTimeValue();
 		double dataWeight = datafileWeight;
 		int minSetSize = getTotalNumberOfData();
 		for (int i = 0; i < groupOfDatafiles.size(); i++) {
 			DiffrDataFile datafileToAdd = groupOfDatafiles.elementAt(i);
-			angles[0] += datafileToAdd.getOmegaValue();
-			angles[1] += datafileToAdd.getChiValue();
-			angles[2] += datafileToAdd.getPhiValue();
-			angles[3] += datafileToAdd.getEtaValue();
+			for (int j = 0; j < maxAngleNumber; j++)
+				angles[j] += datafileToAdd.tilting_angles[j];
 			countTime += datafileToAdd.getCountTimeValue();
 			dataWeight += datafileToAdd.datafileWeight;
 			int setSize = getTotalNumberOfData();
 			if (setSize < minSetSize)
 				minSetSize = setSize;
 		}
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < maxAngleNumber; i++)
 			angles[i] /= total;
-		setOmega(angles[0]);
-		setChi(angles[1]);
-		setPhi(angles[2]);
-		setEta(angles[3]);
+		for (int j = 0; j < maxAngleNumber; j++) {
+			tilting_angles[j] = angles[j];
+			setString(j + 1, Double.toString(angles[j]));
+		}
 		setCountTime(Double.toString(countTime));  // we set this or the weight as summed and not the mean value
 		setDatafileWeight(Double.toString(dataWeight / total));
 
@@ -6267,13 +6369,17 @@ public class DiffrDataFile extends XRDcat {
 		AngularCalibration angcal = getDataFileSet().getInstrument().getAngularCalibration();
 		double[][] tmat = null;
 		if (angcal instanceof AngularInclinedFlatImageCalibration)
-			tmat = ((AngularInclinedFlatImageCalibration) angcal).getTmat(getOmegaValue());
+			tmat = ((AngularInclinedFlatImageCalibration) angcal).getTmat(corrected_tilting_angles[0]);
 		return angcal.getBeamInclination(this, pointIndex, tmat);
 	}
 
 	@Override
 	public JOptionsDialog getOptionsDialog(Frame parent) {
 		return new JDataFileOptionsD(parent, this);
+	}
+
+	public double getDiffractionIntensityForFluorescence(double energyInKeV, double twothetadetector) {
+		return getParameterValue(scaleFactorDiffractionFluoID);
 	}
 
 	class JDataFileOptionsD extends JOptionsDialog {

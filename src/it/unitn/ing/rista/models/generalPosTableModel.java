@@ -69,7 +69,7 @@ public class generalPosTableModel extends AbstractTableModel {
 
   public generalPosTableModel(Phase aphase) {
     thephase = aphase;
-    numRows = thephase.getSitePositionNumber();
+    numRows = thephase.getPhaseInfo().getSitePositionNumber();
   }
 
   /**
@@ -105,11 +105,11 @@ public class generalPosTableModel extends AbstractTableModel {
       case 0:
         return new Integer(row + 1);
       case 1:
-        return thephase.sitePositionv.elementAt(row).getx();
+        return thephase.getPhaseInfo().getSitePosition(row).getx();
       case 2:
-        return thephase.sitePositionv.elementAt(row).gety();
+        return thephase.getPhaseInfo().getSitePosition(row).gety();
       case 3:
-        return thephase.sitePositionv.elementAt(row).getz();
+        return thephase.getPhaseInfo().getSitePosition(row).getz();
       default:
         {
           return null;

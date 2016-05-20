@@ -566,7 +566,7 @@ public class HarmonicTexture extends Texture implements Function {
   public void loadPFandComputeODF(Frame aframe) {
     try {
       String filename = Utility.openFileDialog(aframe, "Open PF file (Beartex or CIF format)", FileDialog.LOAD,
-          (String) MaudPreferences.getPref(MaudPreferences.analysisPath),
+          MaudPreferences.getPref(FilePar.analysisPath, Constants.documentsDirectory),
           null, "");
       if (filename != null) {
         fromPF = true;
@@ -2430,7 +2430,7 @@ public class HarmonicTexture extends Texture implements Function {
       int[][] hkl = null;
       double[] coeff = null;
       String filename = Utility.openFileDialog(JHTextureOptionsD.this, "Load GSAS Exp file", FileDialog.LOAD,
-          (String) MaudPreferences.getPref(MaudPreferences.analysisPath),
+          (String) MaudPreferences.getPref(FilePar.analysisPath, Constants.documentsDirectory),
           null, "");
       if (filename != null) {
         Vector phaseList = new Vector(0, 1);

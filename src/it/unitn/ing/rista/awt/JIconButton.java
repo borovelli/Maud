@@ -40,7 +40,7 @@ public class JIconButton extends JButton {
   public JIconButton(String icon, String text) {
     super(text);
     if (icon != null &&
-          (text.equals("") || MaudPreferences.getBoolean("GUI.useIconsInButtons", !Constants.macosx)))
+          (text.equals("") || MaudPreferences.getBoolean("gui.useIconsInButtons", !Constants.macosx)))
       setIcon(new ImageIcon(Misc.getResourceURL(Constants.imagesJar, Constants.iconfolder + icon)));
   }
 

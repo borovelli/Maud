@@ -31,6 +31,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.*;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
 
 /**
@@ -42,8 +44,6 @@ import java.util.*;
  */
 
 public class AtomColorPreferences extends PreferencesInterface {
-
-  static SortedProperties prefs = null;
 
   static String[][] defaultColors = {{"Ac", "122,196,146,255"},
                                      {"Al", "187,231,173,255"},
@@ -129,92 +129,51 @@ public class AtomColorPreferences extends PreferencesInterface {
 																		 {"Y", "128,154,65,255"}};
 
 
-  private AtomColorPreferences() {
+	public static Preferences prefs;
+
+  public AtomColorPreferences() {
   }
 
   public static void loadPreferences() {
 
-    InputStream preferencesFile = Misc.getInputStream(Constants.filesfolder, "preferences.AtomColor");
-    prefs = new SortedProperties();
-    // Default values
+	  prefs = Preferences.userRoot().node(AtomColorPreferences.class.getName());
 
-    if (preferencesFile != null) {
-      try {
-        prefs.load(preferencesFile);
-//        if (Constants.testing)
-//          prefs.list(System.out);
-      } catch (Exception e) {
-        System.out.println("AtomColor preferences file not found (first run?), a new one will be created on exit");
-//				e.printStackTrace();
-      }
+    for (int i = 0; i < 82; i++) {
+	    String key = "Color." + defaultColors[i][0];
+	    if (!contains(key))
+		    prefs.put(key, defaultColors[i][1]);
+	    prefs.get(key, defaultColors[i][1]);
     }
-
-    for (int i = 0; i < 82; i++)
-      getPref("Color." + defaultColors[i][0], defaultColors[i][1]);
-
   }
 
-  public static void listPrefs() {
-    prefs.list(System.out);
-  }
+	public static boolean contains(String key) {
+		return prefs.get(key, null) != null;
+	}
 
-  public Object getValue(String key) {
-    return AtomColorPreferences.getPref(key);
+	public Object getValue(String key) {
+    return AtomColorPreferences.getColor(key);
   }
 
   public void setValue(String key, Object value) {
-    AtomColorPreferences.setPref(key, value);
+	  if (value instanceof Color)
+		  setPref(key, (Color) value);
+	  else
+      prefs.put(key, value.toString());
   }
 
   public static Color getColor(String key) {
-    return getPref("Color." + key, "128,65,65,255");
-  }
-
-  public static Object getPref(String key) {
-    return StringToColor(prefs.getProperty(key));
-  }
-
-  public static Color getPref(String key, String defaultValue) {
-    if (prefs.getProperty(key) == null) {
-      setPref(key, defaultValue);
-      if (Constants.testing)
-        System.out.println("Adding preference: " + key + ", value: " + defaultValue);
-    }
-    return (Color) getPref(key);
-  }
-
-  public static Color getPref(String key, Color defaultValue) {
-    if (prefs.getProperty(key) == null) {
-      setPref(key, defaultValue);
-      if (Constants.testing)
-        System.out.println("Adding preference: " + key + ", value: " + defaultValue);
-    }
-    return (Color) getPref(key);
-  }
-
-  public static void setPref(String key, Object value) {
-    setPref(key, ColorToString((Color) value));
+    return stringToColor(prefs.get(key, "128,65,65,255"));
   }
 
   public static void setPref(String key, String value) {
-    prefs.setProperty(key, value);
+    prefs.put(key, value);
   }
 
   public static void setPref(String key, Color value) {
-    prefs.setProperty(key, ColorToString(value));
+    prefs.put(key, colorToString(value));
   }
 
-  public static void savePreferences() {
-    FileOutputStream preferencesFile = Misc.getFileOutputStream(Constants.filesfolder, "preferences.AtomColor");
-    if (preferencesFile != null)
-      try {
-        prefs.store(preferencesFile, " AtomColor preferences, version " + Constants.getVersion());
-      } catch (IOException e) {
-      }
-  }
-
-
-  private static Color StringToColor(String color) {
+  private static Color stringToColor(String color) {
     StringTokenizer str_tok = new StringTokenizer(color, ",");
     int r = Integer.parseInt(str_tok.nextToken());
     int g = Integer.parseInt(str_tok.nextToken());
@@ -223,7 +182,7 @@ public class AtomColorPreferences extends PreferencesInterface {
     return new Color(r, g, b, a);
   }
 
-  private static String ColorToString(Color color) {
+  private static String colorToString(Color color) {
     return new String(color.getRed() + "," + color.getGreen() + "," + color.getBlue() + "," + color.getAlpha());
   }
 
@@ -243,13 +202,13 @@ public class AtomColorPreferences extends PreferencesInterface {
     public ColorPreferencesDialog(Frame parent, String title) {
       super(parent, title);
 
-      frameWLabel = "preferencesFrame.frameWidth";
-      frameHLabel = "preferencesFrame.frameHeight";
+      frameWLabel = "ColorPreferencesDialog.frameWidth";
+      frameHLabel = "ColorPreferencesDialog.frameHeight";
       defaultFrameW = 500;
       defaultFrameH = 300;
       setOwnSize = true;
-      framePositionX = "preferencesFrame.framePositionX";
-      framePositionY = "preferencesFrame.framePositionY";
+      framePositionX = "ColorPreferencesDialog.framePositionX";
+      framePositionY = "ColorPreferencesDialog.framePositionY";
       defaultFramePositionX = 100;
       defaultFramePositionY = 20;
       setOwnPosition = true;
@@ -269,15 +228,6 @@ public class AtomColorPreferences extends PreferencesInterface {
       c1.add(scrollpane, BorderLayout.CENTER);
       JPanel jp = new JPanel();
       jp.setLayout(new FlowLayout(FlowLayout.RIGHT, 6, 6));
-
-      JButton btnSave = new JButton("Save on disk");
-      btnSave.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent event) {
-          AtomColorPreferences.savePreferences();
-          setVisible(false);
-        }
-      });
-      jp.add(btnSave);
 
       JCloseButton btnClose = new JCloseButton();
       btnClose.addActionListener(new ActionListener() {

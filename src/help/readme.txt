@@ -43,6 +43,10 @@ from the older one.
 
 Maud Version notes:
 
+(2/04/2015):    2.57. The "Montparnasse" release.
+								Should say everything.....
+								Switched to java 1.7 as a requirement.
+
 (7/26/2015):    2.56. The "Insomnia" release.
 								I like when is only the computer not sleeping...
 								Corrected a bug for tensor homogenization when using spherical
@@ -914,7 +918,7 @@ Maud Version notes:
                 using the edit menu you can edit each pole figure individually
                 to plot or not contours, labels etc. To get the old way
                 of plotting you have to change in the Maud Preferences the
-                "PlotPF.classicalPlot" to true (false is the default).
+                "plotPF.classicalPlot" to true (false is the default).
                 Maud and the new Beartex (experimental version in the 
                 downloading page) can now fully exchange ODFs back and
                 forth. Only one format is used now for exporting and 

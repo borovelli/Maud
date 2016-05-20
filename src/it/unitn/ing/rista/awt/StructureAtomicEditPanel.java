@@ -278,7 +278,7 @@ public class StructureAtomicEditPanel extends iJPanel {
 
       setLayout(new BorderLayout());
 
-      if (Constants.OpenGL) {
+/*      if (Constants.OpenGL) {
         try {
           canvasStruct3d = new Structure3Dgl(m_Struct, 400, 400, true);
           GLProfile glp = GLProfile.getDefault();
@@ -293,10 +293,10 @@ public class StructureAtomicEditPanel extends iJPanel {
           canvasStruct3d = new Structure3Djgl(m_Struct, 400, 400, true);
           add((Component) canvasStruct3d, BorderLayout.CENTER);
         }
-      } else {
+      } else {*/
         canvasStruct3d = new Structure3Djgl(m_Struct, 400, 400, true);
         add((Component) canvasStruct3d, BorderLayout.CENTER);
-      }
+//      }
 
 //      canvasStruct3d.setSize(new Dimension(300, 300));
 

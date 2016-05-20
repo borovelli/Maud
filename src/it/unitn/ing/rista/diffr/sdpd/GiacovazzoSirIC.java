@@ -220,7 +220,7 @@ VLD
 
 //            Lambda1 = Lambda2 = (double) getFilePar().getSample(0).getDataSet(0).getInstrument().getRadiationType().
 //                getMeanRadiationWavelength();
-        T_SgInfo sgInfo = aphase.getSgInfo();
+        T_SgInfo sgInfo = aphase.getPhaseInfo().SgInfo;
         String hallSymbol = sgInfo.getHallSymbolAsString();
         String spaceGroup = SpaceGroups.getSpaceGroupWithSpaces(aphase.getSpaceGroup(), 2);
         output.write("Cell ");

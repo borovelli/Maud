@@ -47,20 +47,20 @@ public class FEMRodriguezTexture extends Texture {
   public FEMRodriguezTexture(XRDcat obj, String alabel) {
     super(obj, alabel);
     initXRD();
-    identifier = "FEM Rodriguez Space";
+    identifier = "FEM Rodriguez Space (disabled)";
     IDlabel = "FEM Rodriguez Space";
     description = "select this to apply the FEM over Rodriguez Space";
   }
 
   public FEMRodriguezTexture(XRDcat afile) {
     this(afile, "FEM Rodriguez Texture");
-    identifier = "FEM Rodriguez Space";
+    identifier = "FEM Rodriguez Space (disabled)";
     IDlabel = "FEM Rodriguez Space";
     description = "select this to apply the FEM over Rodriguez Space";
   }
 
   public FEMRodriguezTexture() {
-    identifier = "FEM Rodriguez Space";
+    identifier = "FEM Rodriguez Space (disabled)";
     IDlabel = "FEM Rodriguez Space";
     description = "select this to apply the FEM over Rodriguez Space";
   }
@@ -99,14 +99,14 @@ public class FEMRodriguezTexture extends Texture {
     String command = null;
     command = getShellCommandForPlatform();
     Runtime runtime = Runtime.getRuntime();
-    Misc.deleteFile(Constants.filesfolder + "FEMRodriguez.ended");
+    Misc.deleteFile(Constants.cachesDirectory + "FEMRodriguez.ended");
     try {
       Process proc = runtime.exec(command);
     } catch (IOException ioe) {
       ioe.printStackTrace();
     }
     try {
-      while (!Misc.checkForFile(Constants.filesfolder + "FEMRodriguez.ended"))
+      while (!Misc.checkForFile(Constants.cachesDirectory + "FEMRodriguez.ended"))
         Thread.sleep(1000);
     } catch (InterruptedException it) {
       it.printStackTrace();
@@ -116,7 +116,7 @@ public class FEMRodriguezTexture extends Texture {
   }
 
   public String getShellCommandForPlatform() {
-    String command = Constants.filesfolder + "/FEMRodriguez.";
+    String command = Constants.cachesDirectory + "/FEMRodriguez.";
     switch (Constants.osType) {
       case Constants.OsUnix:
       case Constants.OsLinux:

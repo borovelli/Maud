@@ -131,9 +131,9 @@ public class D20ILLDataFile extends it.unitn.ing.rista.diffr.MultDiffrDataFile {
           boolean atmpB = datafile.isAbilitatetoRefresh;
           datafile.isAbilitatetoRefresh = false;
 
-          datafile.setOmega(d20omegaStatus - 90.0);
-          datafile.setChi(d20chiStatus - 90.0);
-          datafile.setPhi(d20phiStatus);
+          datafile.setAngleValue(0, d20omegaStatus - 90.0);
+          datafile.setAngleValue(1, d20chiStatus - 90.0);
+          datafile.setAngleValue(2, d20phiStatus);
 
           while (linedata != null && (!linedata.startsWith("FFFFFFF") && !linedata.startsWith("JJJJJJJ")))
             linedata = reader.readLine();
@@ -159,14 +159,14 @@ public class D20ILLDataFile extends it.unitn.ing.rista.diffr.MultDiffrDataFile {
                 }
                 if (i == 15) {
                   double d20omega = Double.valueOf(token).doubleValue();
-                  datafile.setOmega(d20omega - 90.0);
+                  datafile.setAngleValue(0, d20omega - 90.0);
                 }
                 if (i == 16) {
                   double d20chi = Double.valueOf(token).doubleValue();
-                  datafile.setChi(d20chi - 90.0);
+                  datafile.setAngleValue(1, d20chi - 90.0);
                 }
                 if (i == 17)
-                  datafile.setPhi(token);
+                  datafile.setString(3, token);
                 i++;
               }
             }

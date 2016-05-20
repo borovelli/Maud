@@ -998,9 +998,6 @@ public class PhaseD extends myJFrame {
     }
   }
 
-  public void dispose(myJFrame child) {
-  }
-
   void spacegrouplist_ListSelect() {
     if (spacegrouplist.getSelectedItem() != null && !manualSelection) {
       thephase.refreshAll(false);

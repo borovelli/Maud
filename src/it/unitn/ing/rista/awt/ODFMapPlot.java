@@ -427,13 +427,13 @@ public class ODFMapPlot extends myJFrame {
     public void initParameters() {
       legendMinTF.setText(new String(Double.toString(IntensityMin)));
       legendMaxTF.setText(new String(Double.toString(IntensityMax)));
-      plotModeCB.setSelectedItem(MaudPreferences.getPref(MaudPreferences.plotScale, PlotDataFile.plotMode[0]));
+      plotModeCB.setSelectedItem(MaudPreferences.getPref(principalJFrame.plotScale, PlotDataFile.plotMode[0]));
     }
 
     public void retrieveParameters() {
       IntensityMin = Float.valueOf(legendMinTF.getText()).floatValue();
       IntensityMax = Float.valueOf(legendMaxTF.getText()).floatValue();
-      MaudPreferences.setPref(MaudPreferences.plotScale, plotModeCB.getSelectedItem().toString());
+      MaudPreferences.setPref(principalJFrame.plotScale, plotModeCB.getSelectedItem().toString());
 
       showNewFrame();
     }

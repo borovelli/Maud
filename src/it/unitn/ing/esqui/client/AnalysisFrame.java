@@ -1,8 +1,5 @@
 package it.unitn.ing.esqui.client;
 
-import it.unitn.ing.rista.util.Constants;
-import it.unitn.ing.rista.util.Misc;
-import it.unitn.ing.rista.Maud;
 import it.unitn.ing.rista.awt.myJFrame;
 
 import java.awt.*;

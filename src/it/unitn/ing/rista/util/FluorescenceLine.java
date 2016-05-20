@@ -30,35 +30,48 @@ import it.unitn.ing.rista.chemistry.XRayDataSqLite;
  */
 public class FluorescenceLine {
 
-  double dgx = 1.0;
-  double dcx = 1.0;
+  double dgx_dx = 1.0;
+  double dcx_dx = 1.0;
+	double eta_dx;
+	double hwhm_dx;
+	double one_over_hwhm_dx;
+	double dgx_sx = 1.0;
+	double dcx_sx = 1.0;
+	double eta_sx;
+	double hwhm_sx;
+	double one_over_hwhm_sx;
 
   double energy;
   double intensity = 1.0;
-  double eta;
-  double hwhm;
-	double one_over_hwhm;
 	private double transitionProbability;
-	int innerShellID = -1;
-	double fluorescenceYeld = 0;
+	int coreShellID = -1;
+	double fluorescenceYield = 0;
+	double coreShellEnergy = 0;
 
-	public FluorescenceLine(double energyPosition, int inner_shell_ID) {
+	public FluorescenceLine(double energyPosition, int inner_shell_ID, double innerShellEnergy) {
     energy = energyPosition;
     intensity = 1.0;
-		innerShellID = inner_shell_ID;
+		coreShellID = inner_shell_ID;
+		coreShellEnergy = innerShellEnergy;
   }
 
 	public FluorescenceLine(FluorescenceLine lineToCopy) {
 		energy = lineToCopy.energy;
 		intensity = lineToCopy.intensity;
-		eta = lineToCopy.eta;
-		hwhm = lineToCopy.hwhm;
-		innerShellID = lineToCopy.innerShellID;
+		coreShellID = lineToCopy.coreShellID;
 		transitionProbability = lineToCopy.transitionProbability;
-		fluorescenceYeld = lineToCopy.fluorescenceYeld;
-		one_over_hwhm = 1.0 / hwhm;
-		dgx = (1.0 - eta) * Constants.sqrtln2pi * one_over_hwhm;
-		dcx = eta * one_over_hwhm / Math.PI;
+		fluorescenceYield = lineToCopy.fluorescenceYield;
+		coreShellEnergy = lineToCopy.coreShellEnergy;
+		eta_dx = lineToCopy.eta_dx;
+		hwhm_dx = lineToCopy.hwhm_dx;
+		one_over_hwhm_dx = 1.0 / hwhm_dx;
+		dgx_dx = (1.0 - eta_dx) * Constants.sqrtln2pi * one_over_hwhm_dx;
+		dcx_dx = eta_dx * one_over_hwhm_dx / Math.PI;
+		eta_sx = lineToCopy.eta_sx;
+		hwhm_sx = lineToCopy.hwhm_sx;
+		one_over_hwhm_sx = 1.0 / hwhm_sx;
+		dgx_sx = (1.0 - eta_sx) * Constants.sqrtln2pi * one_over_hwhm_sx;
+		dcx_sx = eta_sx * one_over_hwhm_sx / Math.PI;
 	}
 
   public void setIntensity(double intensity) {
@@ -77,22 +90,38 @@ public class FluorescenceLine {
     return energy;
   }
 
-  public void setShape(double hwhm, double eta) {
-    this.hwhm = hwhm;
-    this.eta = eta;
-	  one_over_hwhm = 1.0 / hwhm;
-	  dgx = (1.0 - eta) * Constants.sqrtln2pi * one_over_hwhm;
-	  dcx = eta * one_over_hwhm / Math.PI;
+	public double getCoreShellEnergy() { return coreShellEnergy; }
+
+  public void setShape(double hwhm_dx, double eta_dx, double hwhm_sx, double eta_sx) {
+    this.hwhm_dx = hwhm_dx;
+    this.eta_dx = eta_dx;
+	  one_over_hwhm_dx = 1.0 / hwhm_dx;
+	  dgx_dx = (1.0 - eta_dx) * Constants.sqrtln2pi * one_over_hwhm_dx;
+	  dcx_dx = eta_dx * one_over_hwhm_dx / Math.PI;
+	  this.hwhm_sx = hwhm_sx;
+	  this.eta_sx = eta_sx;
+	  one_over_hwhm_sx = 1.0 / hwhm_sx;
+	  dgx_sx = (1.0 - eta_sx) * Constants.sqrtln2pi * one_over_hwhm_sx;
+	  dcx_sx = eta_sx * one_over_hwhm_sx / Math.PI;
   }
 
   public double getIntensity(double x) {
     double dx = x - getEnergy();
-    dx *= one_over_hwhm;
-    dx *= dx;
-    if (dx > 30.0)
-	    return getIntensity() *  dcx / (1.0 + dx);
-    else
-	    return getIntensity() *  (dcx / (1.0 + dx) + dgx * Math.exp(-Constants.LN2 * dx));
+	  if (dx <= 0) {
+		  dx *= one_over_hwhm_sx;
+		  dx *= dx;
+		  if (dx > 30.0)
+			  return getIntensity() * dcx_sx / (1.0 + dx);
+		  else
+			  return getIntensity() * (dcx_sx / (1.0 + dx) + dgx_sx * Math.exp(-Constants.LN2 * dx));
+	  } else {
+		  dx *= one_over_hwhm_dx;
+		  dx *= dx;
+		  if (dx > 30.0)
+			  return getIntensity() * dcx_dx / (1.0 + dx);
+		  else
+			  return getIntensity() * (dcx_dx / (1.0 + dx) + dgx_dx * Math.exp(-Constants.LN2 * dx));
+	  }
 	}
 
   public void multiplyIntensityBy(double atomsQuantity) {
@@ -107,20 +136,23 @@ public class FluorescenceLine {
 		return transitionProbability;
 	}
 
-	public int getInnerShellID() {
-		return innerShellID;
+	public int getCoreShellID() {
+		return coreShellID;
 	}
 
-	public void setFluorescenceYeld(double value) {
-		fluorescenceYeld = value;
+	public void setFluorescenceYield(double value) {
+		fluorescenceYield = value;
 	}
 
-	public double getFluorescenceYeld() {
-		return fluorescenceYeld;
+	public double getFluorescenceYield() {
+		return fluorescenceYield;
 	}
 
 	public String toString() {
-		return XRayDataSqLite.shellIDs[getInnerShellID()] + " " + getEnergy() + " " + getTransitionProbability();
+		return XRayDataSqLite.shellIDs[getCoreShellID()] + " " + getEnergy() + " " + getTransitionProbability();
 	}
 
+	public void printToConsole() {
+		System.out.println("Peak " + energy + " " + dcx_dx + " " + dcx_sx + " " + dgx_dx + " " + dgx_sx + " " + hwhm_dx + " " + hwhm_sx + " " + eta_dx + " " + eta_sx);
+	}
 }

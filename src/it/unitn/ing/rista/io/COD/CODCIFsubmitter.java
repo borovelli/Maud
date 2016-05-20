@@ -39,7 +39,7 @@ import org.w3c.dom.*;
 
 public class CODCIFsubmitter {
   public static void submit(String filename) {
-    String CODurl = MaudPreferences.getPref("CODaddress.forSubmission", "www.crystallography.net");
+    String CODurl = MaudPreferences.getPref("codAddress.forSubmission", "www.crystallography.net");
     NVPair[] form_data = new NVPair[1];
     NVPair[] file_data = new NVPair[1];
     form_data[0] = new NVPair("MAX_FILE_SIZE", "1000000");

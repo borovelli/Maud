@@ -18,7 +18,7 @@
  *
  */
 
-package it.unitn.ing.rista.diffr.sdpd;
+package it.unitn.ing.rista.comp;
 
 import org.joone.net.*;
 import org.joone.engine.*;
@@ -44,7 +44,7 @@ import it.unitn.ing.rista.awt.ProgressFrame;
 public class ArtificialNeuralNetwork implements NeuralNetListener, Serializable {
 
   NeuralNet annet = null;
-  String filename = MaudPreferences.getPref("NeuralNetwork.SaveFilename", Constants.filesfolder +
+  String filename = MaudPreferences.getPref("NeuralNetwork.SaveFilename", Constants.documentsDirectory +
       "ArtificialNeuralNetwork.nnet");
   int inputDimension = 10;
   int neuronNumber = 7;

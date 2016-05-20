@@ -70,23 +70,23 @@ public class EnixeDatafile extends it.unitn.ing.rista.diffr.DiffrDataFile {
 					if (linedata.startsWith("#PSI")) {
 						StringTokenizer st = new StringTokenizer(linedata, "=' ,\t\r\n");
 						token1 = st.nextToken();
-						setChi(st.nextToken());
+						setString(2, st.nextToken());
 					} else if (linedata.startsWith("#CHI")) {
 						StringTokenizer st = new StringTokenizer(linedata, "=' ,\t\r\n");
 						token1 = st.nextToken();
-						setChi(st.nextToken());
+						setString(2, st.nextToken());
 					} else if (linedata.startsWith("#OMEGA")) {
 						StringTokenizer st = new StringTokenizer(linedata, "=' ,\t\r\n");
 						token1 = st.nextToken();
-						setOmega(st.nextToken());
+						setString(1, st.nextToken());
 					} else if (linedata.startsWith("#ETA")) {
 						StringTokenizer st = new StringTokenizer(linedata, "=' ,\t\r\n");
 						token1 = st.nextToken();
-						setEta(st.nextToken());
+						setString(4, st.nextToken());
 					} else if (linedata.startsWith("#PHI")) {
 						StringTokenizer st = new StringTokenizer(linedata, "=' ,\t\r\n");
 						token1 = st.nextToken();
-						setPhi(st.nextToken());
+						setString(3, st.nextToken());
 					}
 					linedata = reader.readLine();
 				}

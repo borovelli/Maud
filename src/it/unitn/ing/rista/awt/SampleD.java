@@ -1034,7 +1034,7 @@ public class SampleD extends myJFrame {
 
       Markers marker = null;
       try {
-        marker = new Markers(Misc.getFilesResource("marker.txt"));
+        marker = new Markers(Constants.documentsDirectory + "marker.txt");
       } catch (IOException ioe) {
         ioe.printStackTrace();
       }

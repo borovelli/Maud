@@ -23,7 +23,6 @@ package it.unitn.ing.rista.diffr;
 import it.unitn.ing.rista.chemistry.AtomInfo;
 import it.unitn.ing.rista.chemistry.XRayDataSqLite;
 import it.unitn.ing.rista.util.*;
-import it.unitn.ing.rista.Maud;
 
 import java.util.ArrayList;
 import java.util.Vector;
@@ -901,6 +900,7 @@ public class Atom extends XRDcat {
    * Coordinates. Also the array of cartesian coordinates is refreshed.
    */
   public void refreshPositions(boolean cartesianAlso) {
+//	  System.out.println(toString() + " refresh atom positions: " + refreshPositions);
 	  if (refreshPositions) {
 		  refreshPositions = false;
 		  double[] xf = new double[3];
@@ -969,8 +969,8 @@ public class Atom extends XRDcat {
     Phase aphase = getPhaseParent();
     SitePosition sitepos;
     double x[] = new double[3];
-    for (int i = 0; i < aphase.getSitePositionNumber(); i++) {
-      sitepos = aphase.sitePositionv.elementAt(i);
+    for (int i = 0; i < aphase.getPhaseInfo().getSitePositionNumber(); i++) {
+      sitepos = aphase.getPhaseInfo().getSitePosition(i);
       for (int j = 0; j < 3; j++)
         x[j] = sitepos.getcoord(j, xf);
       boolean flagx = true;
@@ -1789,7 +1789,7 @@ public class Atom extends XRDcat {
     int numberPos = atomcoordinates.size();
 
     Phase aphase = getPhaseParent();
-    int numberGeneralPos = aphase.getSitePositionNumber();
+    int numberGeneralPos = aphase.getPhaseInfo().getSitePositionNumber();
 
     if (numberGeneralPos == numberPos) {
       for (int i = 0; i < 3; i++)

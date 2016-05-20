@@ -7,14 +7,13 @@
         <entry path="file://$PROJECT_DIR$/libs/commons-net-3.3.jar" />
         <entry path="file://$PROJECT_DIR$/Installers/infinitekind-appbundler-9d6ca23b3bee/appbundler/bin/appbundler-1.0ea.jar" />
       </additionalClassPath>
-      <customJdkName value="1.7" />
       <maximumHeapSize value="512" />
     </buildFile>
   </component>
   <component name="ArtifactManager">
-    <artifact name="Maud:jar">
+    <artifact type="jar" name="Maud:jar">
       <output-path>$PROJECT_DIR$/src</output-path>
-      <root id="root">
+      <root id="archive" name="Maud_jar.jar">
         <element id="archive" name="Maud.jar">
           <element id="archive" name="Maud.jar">
             <element id="module-output" name="Maud" />
@@ -129,7 +128,9 @@
     <option name="ADDITIONAL_OPTIONS_STRING" value="" />
     <option name="MAXIMUM_HEAP_SIZE" value="128" />
   </component>
-  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>

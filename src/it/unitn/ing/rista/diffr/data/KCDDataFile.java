@@ -169,10 +169,10 @@ public class KCDDataFile extends it.unitn.ing.rista.diffr.MultDiffrDataFile {
             datafile.isAbilitatetoRefresh = false;
 
             datafile.setDataType(DIFFRACTION_IMAGE);
-            datafile.setOmega(dimension[3]);
-            datafile.setChi(dimension[4]);
-            datafile.setPhi(dimension[6]);
-            datafile.setEta(etaStart + spectrumIndex * coneInterval);
+            datafile.setAngleValue(0, dimension[3]);
+            datafile.setAngleValue(1, dimension[4]);
+            datafile.setAngleValue(2, dimension[6]);
+            datafile.setAngleValue(3, etaStart + spectrumIndex * coneInterval);
 
 /*            datafile.setField("_riet_meas_datafile_calibrated", "true", "0", "0", "0", false, null, null, null, null,
                 false);

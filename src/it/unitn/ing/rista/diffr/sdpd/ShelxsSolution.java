@@ -183,10 +183,10 @@ public class ShelxsSolution extends StructureSolutionMethod {
           output.newLine();
           output.write("symmetry");
           output.newLine();
-          for (int i = 0; i < aphase.sitePositionv.size(); i++) {
-            output.write(changexyz((aphase.sitePositionv.elementAt(i)).getx()
-                + " " + (aphase.sitePositionv.elementAt(i)).gety()
-                + " " + (aphase.sitePositionv.elementAt(i)).getz()));
+          for (int i = 0; i < aphase.getPhaseInfo().sitePositionv.size(); i++) {
+            output.write(changexyz((aphase.getPhaseInfo().sitePositionv.elementAt(i)).getx()
+                + " " + (aphase.getPhaseInfo().sitePositionv.elementAt(i)).gety()
+                + " " + (aphase.getPhaseInfo().sitePositionv.elementAt(i)).getz()));
             output.newLine();
           }
           output.write("endsymmetry");
@@ -289,11 +289,11 @@ public class ShelxsSolution extends StructureSolutionMethod {
     double[] divideFactors = aphase.getActivePlanarDefects().getDivisionFactors();
     int siteNumber = 1;
 //    if (useAllSites)
-      siteNumber = aphase.getSitePositionNumber();
+      siteNumber = aphase.getPhaseInfo().getSitePositionNumber();
     double norm = Math.sqrt(factors) / (siteNumber * reducedCell[0] * reducedCell[1] * reducedCell[2]);
     SitePosition[] sitepos = new SitePosition[siteNumber];
     for (int i = 0; i < siteNumber; i++) {
-      sitepos[i] = aphase.sitePositionv.elementAt(i);
+      sitepos[i] = aphase.getPhaseInfo().sitePositionv.elementAt(i);
     }
     double x[][] = new double[3][siteNumber], xf[] = new double[3];
 
@@ -470,7 +470,7 @@ public class ShelxsSolution extends StructureSolutionMethod {
     Phase aphase = (Phase) getParent();
     int siteNumber = 1;
 //    if (useAllSites)
-      siteNumber = aphase.getSitePositionNumber();
+      siteNumber = aphase.getPhaseInfo().getSitePositionNumber();
     double norm = 1.0;// / (siteNumber * reducedCell[0] * reducedCell[1] * reducedCell[2]);
     int index = 0;
     double totalMap = 0.0;
@@ -487,10 +487,10 @@ public class ShelxsSolution extends StructureSolutionMethod {
 
     System.out.println("Normalization factor: " + Fmt.format(norm) + ", total: "
         + totalMap);
-//    useAllSites = MaudPreferences.getBoolean("MEMmap.useAllSites", false);
+//    useAllSites = MaudPreferences.getBoolean("meemMap.useAllSites", false);
 //    if (reducedCell[0] != 1.0 || reducedCell[1] != 1.0 || reducedCell[2] != 1.0)
 //      useAllSites = true;
-//    useequivalentReflections = MaudPreferences.getBoolean("MEMmap.useMultipleReflections", false);
+//    useequivalentReflections = MaudPreferences.getBoolean("meemMap.useMultipleReflections", false);
 
   }
 
@@ -515,10 +515,10 @@ public class ShelxsSolution extends StructureSolutionMethod {
 
 //    System.out.println("Normalization factor: " + Fmt.format(norm) + ", total: "
 //        + totalMap);
-//    useAllSites = MaudPreferences.getBoolean("MEMmap.useAllSites", false);
+//    useAllSites = MaudPreferences.getBoolean("meemMap.useAllSites", false);
 //    if (reducedCell[0] != 1.0 || reducedCell[1] != 1.0 || reducedCell[2] != 1.0)
 //      useAllSites = true;
-//    useequivalentReflections = MaudPreferences.getBoolean("MEMmap.useMultipleReflections", false);
+//    useequivalentReflections = MaudPreferences.getBoolean("meemMap.useMultipleReflections", false);
 
   }*/
 
@@ -544,10 +544,10 @@ public class ShelxsSolution extends StructureSolutionMethod {
 
     numberOfParameters = computeParameterNumber();
 //		totalWeight = new double[numberOfParameters];
-//    useAllSites = MaudPreferences.getBoolean("MEMmap.useAllSites", false);
+//    useAllSites = MaudPreferences.getBoolean("meemMap.useAllSites", false);
 //    if (reducedCell[0] != 1.0 || reducedCell[1] != 1.0 || reducedCell[2] != 1.0)
 //      useAllSites = true;
-//    useequivalentReflections = MaudPreferences.getBoolean("MEMmap.useMultipleReflections", false);
+//    useequivalentReflections = MaudPreferences.getBoolean("meemMap.useMultipleReflections", false);
 
   }
 
@@ -1012,10 +1012,10 @@ public class ShelxsSolution extends StructureSolutionMethod {
           stringField[i] = parsTF[i].getText();
 //      for (int i = parsTF.length - 3; i < parsTF.length; i++)
 //        reducedCell[i - parsTF.length + 3] = Double.parseDouble(parsTF[i].getText());
-//      useAllSites = MaudPreferences.getBoolean("MEMmap.useAllSites", false);
+//      useAllSites = MaudPreferences.getBoolean("meemMap.useAllSites", false);
 //      if (reducedCell[0] != 1.0 || reducedCell[1] != 1.0 || reducedCell[2] != 1.0)
 //        useAllSites = true;
-//      useequivalentReflections = MaudPreferences.getBoolean("MEMmap.useMultipleReflections", false);
+//      useequivalentReflections = MaudPreferences.getBoolean("meemMap.useMultipleReflections", false);
     }
 
 /*    public void plotElectronMap() {

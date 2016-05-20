@@ -1043,14 +1043,14 @@ public class BuildGraph extends ScanWord {
             return false;
           }
           break;
-        case URL:
+/*        case URL:
           try {
             m = new Markers((URL) nobj.getObject());
           } catch (Exception e) {
             errorAtLine("Failed to load markers: " +
                     e.getMessage());
           }
-          break;
+          break;*/
         case BEGIN:
           if (m != null) {
             nobj = new NamedObject(m, MARKER);

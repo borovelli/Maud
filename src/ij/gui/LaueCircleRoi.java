@@ -50,9 +50,9 @@ public class LaueCircleRoi extends OpenRoi {
 
   // Creates a new OvalRoi. The ImagePlus argument can be null.
   public LaueCircleRoi(ImagePlus imp, double radius) {
-    this(MaudPreferences.getDouble("Image2D.centerX", "50.0"),
-            MaudPreferences.getDouble("Image2D.centerY", "50.0"),
-            MaudPreferences.getDouble("Image2D.roiCircle",
+    this(MaudPreferences.getDouble("image2D.centerX", 50.0),
+            MaudPreferences.getDouble("image2D.centerY", 50.0),
+            MaudPreferences.getDouble("image2D.roiCircle",
                     10),
             imp);
     setRadius(radius);
@@ -421,7 +421,7 @@ public class LaueCircleRoi extends OpenRoi {
 	        profile[0][ix] += ip.getInterpolatedPixel(x1, y1);
 	        numbAvg++;
         } else {
-          profile[0][ix] = Double.NaN;
+          profile[0][ix] = -1.0;
         }
 // System.out.println("Not x:  " + x1 + " " + iy);
       }
@@ -429,7 +429,7 @@ public class LaueCircleRoi extends OpenRoi {
         profile[0][ix] /= numbAvg;
 //        if (profile[ix] > maxGray) maxGray *= 256;
       } else
-        profile[0][ix] = Double.NaN;
+        profile[0][ix] = -1.0;
 
     }
 
@@ -437,12 +437,12 @@ public class LaueCircleRoi extends OpenRoi {
     finalAngle = oldfinalAngle;
     setCircle(oldCircle);
 
-    for (int ix = 0; ix < npoints; ix++) {
+/*    for (int ix = 0; ix < npoints; ix++) {
       if (profile[0][ix] < 0.0)
         profile[0][ix] = 0.0;
 //      else if (Constants.macosx)
 //        profile[ix] = maxGray - profile[ix];
-    }
+    }*/
 //      System.out.println(profile[ix] + " " + maxGray);
     return profile;
 

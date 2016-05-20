@@ -52,7 +52,7 @@ public class AngularFlatImageTransmissionCalibration extends AngularCalibration 
 
   boolean refreshCalibration = true;
 
-  double detectorDistance = MaudPreferences.getDouble("Image2D.DetectorDistance", 2000.0);
+  double detectorDistance = MaudPreferences.getDouble("image2D.DetectorDistance", 2000.0);
 
   public AngularFlatImageTransmissionCalibration(XRDcat aobj, String alabel) {
     super(aobj, alabel);

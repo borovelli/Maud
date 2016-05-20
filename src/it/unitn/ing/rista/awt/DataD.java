@@ -64,10 +64,7 @@ public class DataD extends myJFrame {
   JTextField groupCountTF;
   JSubordSListPane excludedregionP;
   JList datafileL;
-  JTextField alphaTF;
-  JTextField betaTF;
-  JTextField omegaTF;
-  JTextField etaTF;
+  JTextField[] anglesTF;
   JTextField monitorTF;
   JTextField bankIDTF;
 	JTextField dateTF;
@@ -79,7 +76,8 @@ public class DataD extends myJFrame {
   JSubordListPane gaussianP;
 
   JCheckBox plotCB;
-  JCheckBox computeCB;
+	JCheckBox computeCB;
+	JCheckBox useCountTimeCB;
   JCheckBox asBkgCB;
   JCheckBox enabledCB;
   JCheckBox replaceCB;
@@ -673,39 +671,23 @@ public class DataD extends myJFrame {
     jp1.add(p4);
     p3 = new JPanel();
     p3.setLayout(new GridLayout(0, 1, 1, 1));
-    p6 = new JPanel();
-    p6.setLayout(new FlowLayout(FlowLayout.RIGHT, 3, 1));
-    p3.add(p6);
-    p6.add(new JLabel("Chi:"));
-    alphaTF = new JTextField(Constants.FLOAT_FIELD);
-    alphaTF.setText("0");
-    p6.add(alphaTF);
-    p6 = new JPanel();
-    p6.setLayout(new FlowLayout(FlowLayout.RIGHT, 3, 1));
-    p3.add(p6);
-    p6.add(new JLabel("Phi:"));
-    betaTF = new JTextField(Constants.FLOAT_FIELD);
-    betaTF.setText("0");
-    p6.add(betaTF);
-    p6 = new JPanel();
-    p6.setLayout(new FlowLayout(FlowLayout.RIGHT, 3, 1));
-    p3.add(p6);
-    p6.add(new JLabel("Omega:"));
-    omegaTF = new JTextField(Constants.FLOAT_FIELD);
-    omegaTF.setText("0");
-    p6.add(omegaTF);
-    p6 = new JPanel();
-    p6.setLayout(new FlowLayout(FlowLayout.RIGHT, 3, 1));
-    p3.add(p6);
-    p6.add(new JLabel("Eta:"));
-    etaTF = new JTextField(Constants.FLOAT_FIELD);
-    etaTF.setText("0");
-    p6.add(etaTF);
+	  String[] angleLabels = {"Omega:", "Chi:", "Phi:", "Eta:", "2Theta:", "Energy:"};
+	  anglesTF = new JTextField[angleLabels.length];
+	  for (int j = 0; j < angleLabels.length; j++) {
+		  p6 = new JPanel();
+		  p6.setLayout(new FlowLayout(FlowLayout.RIGHT, 3, 1));
+		  p3.add(p6);
+		  p6.add(new JLabel(angleLabels[j]));
+		  anglesTF[j] = new JTextField(Constants.FLOAT_FIELD);
+		  anglesTF[j].setText("0");
+		  p6.add(anglesTF[j]);
+	  }
     p4.add(BorderLayout.WEST, p3);
 
     p3 = new JPanel();
     p3.setLayout(new GridLayout(0, 1, 3, 1));
     p4.add(BorderLayout.EAST, p3);
+
     p6 = new JPanel();
     p6.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
     computeCB = new JCheckBox("Enabled");
@@ -717,6 +699,7 @@ public class DataD extends myJFrame {
       }
     });
     p3.add(p6);
+
     p6 = new JPanel();
     p6.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
     plotCB = new JCheckBox("Fitting file output");
@@ -729,19 +712,31 @@ public class DataD extends myJFrame {
     });
     p3.add(p6);
 
-    p6 = new JPanel();
-    p6.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
-    asBkgCB = new JCheckBox("As background");
-    p6.add(asBkgCB);
-    asBkgCB.setToolTipText("Check this box to use the selected spectrum as exp background for the others");
-    asBkgCB.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent event) {
-        asBkgAllSelectedFiles(asBkgCB.isSelected());
-      }
-    });
-    p3.add(p6);
+	  p6 = new JPanel();
+	  p6.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
+	  asBkgCB = new JCheckBox("As background");
+	  p6.add(asBkgCB);
+	  asBkgCB.setToolTipText("Check this box to use the selected spectrum as exp background for the others");
+	  asBkgCB.addActionListener(new ActionListener() {
+		  public void actionPerformed(ActionEvent event) {
+			  asBkgAllSelectedFiles(asBkgCB.isSelected());
+		  }
+	  });
+	  p3.add(p6);
 
-    p3 = new JPanel();
+	  p6 = new JPanel();
+	  p6.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
+	  useCountTimeCB = new JCheckBox("Correct for count time");
+	  p6.add(useCountTimeCB);
+	  useCountTimeCB.setToolTipText("Check this box to correct pattern scale factor for counting time");
+	  useCountTimeCB.addActionListener(new ActionListener() {
+		  public void actionPerformed(ActionEvent event) {
+			  useCountTimeAllSelectedFiles(useCountTimeCB.isSelected());
+		  }
+	  });
+	  p3.add(p6);
+
+	  p3 = new JPanel();
     p3.setLayout(new GridLayout(0, 2, 3, 1));
     p4.add(BorderLayout.SOUTH, p3);
 
@@ -1040,12 +1035,11 @@ public class DataD extends myJFrame {
     super.retrieveParameters();
     DiffrDataFile datafile = thedata.getSelectedDataFile();
     if (datafile != null) {
-      datafile.setChi(alphaTF.getText());
-      datafile.setPhi(betaTF.getText());
-      datafile.setOmega(omegaTF.getText());
-      datafile.setEta(etaTF.getText());
+	    for (int j = 0; j < DiffrDataFile.maxAngleNumber; j++)
+        datafile.setString(j + 1, anglesTF[j].getText());
 			datafile.setCompute(computeCB.isSelected());
       datafile.setAsBackground(asBkgCB.isSelected());
+	    datafile.useCountTimeToScale(useCountTimeCB.isSelected());
       datafile.setGeneratePlotfile(plotCB.isSelected());
       datafile.setIntensityUnit(unitCB.getSelectedItem().toString());
       datafile.setCountTime(countTimeTF.getText());
@@ -1110,12 +1104,11 @@ public class DataD extends myJFrame {
 
     if (fileselected >= 0 && fileselected < thedata.getDataFileList().size()) {
       datafile = thedata.getDataFile(fileselected);
-      datafile.setChi(alphaTF.getText());
-      datafile.setPhi(betaTF.getText());
-      datafile.setOmega(omegaTF.getText());
-      datafile.setEta(etaTF.getText());
+	    for (int j = 0; j < DiffrDataFile.maxAngleNumber; j++)
+		    datafile.setString(j + 1, anglesTF[j].getText());
 			datafile.setCompute(computeCB.isSelected());
       datafile.setAsBackground(asBkgCB.isSelected());
+	    datafile.useCountTimeToScale(useCountTimeCB.isSelected());
       datafile.setGeneratePlotfile(plotCB.isSelected());
       datafile.setIntensityUnit(unitCB.getSelectedItem().toString());
       datafile.setCountTime(countTimeTF.getText());
@@ -1126,12 +1119,11 @@ public class DataD extends myJFrame {
     fileselected = datafileL.getSelectedIndex();
     datafile = thedata.getSelectedDataFile();
     if (datafile != null) {
-      alphaTF.setText(datafile.getFormattedChi());
-      betaTF.setText(datafile.getFormattedPhi());
-      omegaTF.setText(datafile.getFormattedOmega());
-      etaTF.setText(datafile.getFormattedEta());
+	    for (int j = 0; j < DiffrDataFile.maxAngleNumber; j++)
+		    anglesTF[j].setText(Misc.getFormattedValue(Double.parseDouble(datafile.getString(j + 1))));
       computeCB.setSelected(datafile.getComputePermission());
       asBkgCB.setSelected(datafile.getAsBackgroundPermission());
+	    useCountTimeCB.setSelected(datafile.useCountTimeToScale());
       plotCB.setSelected(datafile.getPlotfilePermission());
       unitCB.setSelectedItem(datafile.getIntensityUnit());
       countTimeTF.setText(datafile.getCountTime());
@@ -1352,7 +1344,18 @@ public class DataD extends myJFrame {
     thedata.setAsBkgAllSelectedFiles(enable);
   }
 
-  /**
+	/**
+	 * Use the counting time to scale the instensity for
+	 * all the selected datafiles of the list.
+	 * @param enable true or false to enable or disable
+	 */
+
+	public void useCountTimeAllSelectedFiles(boolean enable) {
+//		fileselected = -1;
+		thedata.useCountTimeAllSelectedFiles(enable);
+	}
+
+	/**
    * Add one background parameter to all the datafiles.
    */
 
@@ -1468,17 +1471,13 @@ public class DataD extends myJFrame {
   /**
    * Sums the datafiles with some rules to generate a new datafile.
    * @param aframe the frame
-   * @param sameChi true if sum spectra with same chi
-   * @param samePhi true if sum spectra with same phi
-   * @param sameOmega true if sum spectra with same omega
-   * @param chi the chi value
-   * @param phi the phi value
-   * @param omega the omega value
+   * @param sameAngles true if sum spectra with same omega
+   * @param angles the omega value
    */
 
-  public void SumDatafileOutput(Frame aframe, boolean sameChi, boolean samePhi, boolean sameOmega,
-                                double chi, double phi, double omega) {
-    thedata.SumDatafileOutput(aframe, sameChi, samePhi, sameOmega, chi, phi, omega);
+  public void SumDatafileOutput(Frame aframe, boolean[] sameAngles,
+                                double[] angles) {
+    thedata.SumDatafileOutput(aframe, sameAngles, angles);
   }
 
   /**
@@ -1553,7 +1552,7 @@ public class DataD extends myJFrame {
    */
 
   public void plotIntensityHystogram() {
-    (new PlotSimpleData(this, thedata.getTotalIntensityForActiveSpectra())).setVisible(true);
+    (new PlotSimpleData(this, thedata.get2ThetaForActiveSpectra(), thedata.getTotalIntensityForActiveSpectra())).setVisible(true);
   }
 
   /**
@@ -1608,11 +1607,11 @@ public class DataD extends myJFrame {
 
     // add instrument from CIF database.
     String filename = Utility.openFileDialog(this, "Open CIF file or database", FileDialog.LOAD,
-        (String) MaudPreferences.getPref(MaudPreferences.databasePath),
-        null, Constants.filesfolder + FilePar.database[3]);
+        MaudPreferences.getPref(principalJFrame.databasePath, Constants.documentsDirectory),
+        null, Constants.documentsDirectory);
     if (filename != null) {
       final String[] folderAndName = Misc.getFolderandName(filename);
-      MaudPreferences.setPref(MaudPreferences.databasePath, folderAndName[0]);
+      MaudPreferences.setPref(principalJFrame.databasePath, folderAndName[0]);
       thedata.loadInstrument(folderAndName[0] + folderAndName[1], this);
       InstrumentC.setSelectedItem(thedata.getInstrument().identifier);
       InstLabel.setText(thedata.getInstrument().toXRDcatString());
@@ -1627,11 +1626,11 @@ public class DataD extends myJFrame {
     InstLabel.setText(thedata.getInstrument().toXRDcatString());
     // add the selected object to a CIF database.
     String filename = Utility.openFileDialog(this, "Select the Instrument database", FileDialog.LOAD,
-        (String) MaudPreferences.getPref(MaudPreferences.databasePath),
-        null, Constants.filesfolder + FilePar.database[3]);
+        MaudPreferences.getPref(principalJFrame.databasePath, Constants.documentsDirectory),
+        null, Constants.documentsDirectory + FilePar.database[3]);
     if (filename != null) {
       String[] folderAndName = Misc.getFolderandName(filename);
-      MaudPreferences.setPref(MaudPreferences.databasePath, folderAndName[0]);
+      MaudPreferences.setPref(principalJFrame.databasePath, folderAndName[0]);
       thedata.getInstrument().storeOnDB(folderAndName[0] + folderAndName[1]);
     }
 
@@ -1697,8 +1696,6 @@ public class DataD extends myJFrame {
 
   class summationRulesFrame extends myJFrame {
 
-    JTextField chiTF, phiTF, omegaTF;
-
     public summationRulesFrame(DataD aframe) {
 
       super(aframe);
@@ -1721,32 +1718,19 @@ public class DataD extends myJFrame {
       panel3.add(new JLabel(""));
       panel3.add(new JLabel(""));
 
-      final JCheckBox sameChiCB = new JCheckBox("same chi angle");
-      sameChiCB.setToolTipText("Sum the datafiles with different chi angle in different files");
-      sameChiCB.setSelected(true);
-      panel3.add(sameChiCB);
-      panel3.add(new JLabel(" +- "));
-      chiTF = new JTextField(6);
-      chiTF.setText("0");
-      panel3.add(chiTF);
-
-      final JCheckBox samePhiCB = new JCheckBox("same phi angle");
-      samePhiCB.setToolTipText("Sum the datafiles with different phi angle in different files");
-      samePhiCB.setSelected(true);
-      panel3.add(samePhiCB);
-      panel3.add(new JLabel(" +- "));
-      phiTF = new JTextField(6);
-      phiTF.setText("0");
-      panel3.add(phiTF);
-
-      final JCheckBox sameOmegaCB = new JCheckBox("same omega angle");
-      sameOmegaCB.setToolTipText("Sum the datafiles with different omega angle in different files");
-      sameOmegaCB.setSelected(true);
-      panel3.add(sameOmegaCB);
-      panel3.add(new JLabel(" +- "));
-      omegaTF = new JTextField(6);
-      omegaTF.setText("0");
-      panel3.add(omegaTF);
+	    String[] sameLabels = {"omega angle", "chi angle", "phi angle", "eta angle",
+			    "2theta angle", "energy"};
+      final JCheckBox[] sameAnglesCB = new JCheckBox[DiffrDataFile.maxAngleNumber];
+	    final JTextField[] anglesTF = new JTextField[DiffrDataFile.maxAngleNumber];
+	    for (int j = 0; j < sameLabels.length; j++) {
+		    sameAnglesCB[j].setText("same " + sameLabels[j]);
+		    sameAnglesCB[j].setToolTipText("Sum the datafiles with different " + sameLabels[j] + " angle in different files");
+		    sameAnglesCB[j].setSelected(true);
+		    panel3.add(sameAnglesCB[j]);
+		    panel3.add(new JLabel(" +- "));
+		    anglesTF[j].setText("0");
+		    panel3.add(anglesTF[j]);
+	    }
 
       panel3 = new JPanel();
       panel3.setLayout(new FlowLayout(FlowLayout.RIGHT, 6, 6));
@@ -1758,10 +1742,14 @@ public class DataD extends myJFrame {
       final DataD adata = aframe;
       startD.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent event) {
+	        boolean[] sameAngleB = new boolean[DiffrDataFile.maxAngleNumber];
+	        double[] angles = new double[DiffrDataFile.maxAngleNumber];
+	        for (int j = 0; j < DiffrDataFile.maxAngleNumber; j++) {
+		        sameAngleB[j] = sameAnglesCB[j].isSelected();
+		        angles[j] = Double.parseDouble(anglesTF[j].getText());
+	        }
           summationRulesFrame.this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-          adata.SumDatafileOutput(summationRulesFrame.this, sameChiCB.isSelected(), samePhiCB.isSelected(),
-                  sameOmegaCB.isSelected(), Double.parseDouble(chiTF.getText()),
-              Double.parseDouble(phiTF.getText()), Double.parseDouble(omegaTF.getText()));
+          adata.SumDatafileOutput(summationRulesFrame.this, sameAngleB, angles);
           summationRulesFrame.this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
           summationRulesFrame.this.setVisible(false);
           summationRulesFrame.this.dispose();
@@ -1820,12 +1808,18 @@ public class DataD extends myJFrame {
                             "   New chi = ",
                             "   New phi = ",
                             "   New eta = ",
-                            "New 2theta = "};
+		                        "New 2theta = ",
+		                        "New energy = ",
+		                        "New coordX = "
+      };
       String[] oldLabels = {" omega",
                             " chi",
                             " phi",
                             " eta",
-                            " 2theta"};
+                            " 2theta",
+		                        " energy",
+		                        " coordX"
+      };
 
       final int totalNumber = newLabels.length;
 
@@ -1874,10 +1868,8 @@ public class DataD extends myJFrame {
  //         int fileselected = datafileL.getSelectedIndex();
           DiffrDataFile datafile = adata.getSelectedDataFile();
           if (datafile != null) {
-            alphaTF.setText(datafile.getFormattedChi());
-            betaTF.setText(datafile.getFormattedPhi());
-            omegaTF.setText(datafile.getFormattedOmega());
-            etaTF.setText(datafile.getFormattedEta());
+	          for (int j = 0; j < DiffrDataFile.maxAngleNumber; j++)
+		          anglesTF[j].setText(Misc.getFormattedValue(Double.parseDouble(datafile.getString(j + 1))));
           }
           changeAnglesFrame.this.setVisible(false);
           changeAnglesFrame.this.dispose();
@@ -1928,7 +1920,10 @@ public class DataD extends myJFrame {
 			String[] newLabels = {"Omega",
 					"Chi",
 					"Phi",
-					"Eta"};
+					"Eta",
+					"2Theta",
+					"Energy"
+			};
 			for (int i = 0; i < newLabels.length; i++)
 				angleCB.addItem(newLabels[i]);
 			panel3.add(angleCB);
@@ -1982,29 +1977,12 @@ public class DataD extends myJFrame {
 					for (int i = 0; i < selDatafiles.length; i++) {
 						long actualTime = selDatafiles[i].getMeasurementTimeInMilliSec();
 						double newAngle = offset + step * (actualTime - refTime);
-						switch(angleIndex) {
-							case 0:
-								selDatafiles[i].setOmega(newAngle);
-								break;
-							case 1:
-								selDatafiles[i].setChi(newAngle);
-								break;
-							case 2:
-								selDatafiles[i].setPhi(newAngle);
-								break;
-							case 3:
-								selDatafiles[i].setEta(newAngle);
-								break;
-							default:
-						}
-
+						selDatafiles[i].setAngleValue(angleIndex, newAngle);
 					}
 					DiffrDataFile datafile = adata.getSelectedDataFile();
 					if (datafile != null) {
-						alphaTF.setText(datafile.getFormattedChi());
-						betaTF.setText(datafile.getFormattedPhi());
-						omegaTF.setText(datafile.getFormattedOmega());
-						etaTF.setText(datafile.getFormattedEta());
+						for (int j = 0; j < DiffrDataFile.maxAngleNumber; j++)
+							anglesTF[j].setText(Misc.getFormattedValue(datafile.getAngleValue(j)));
 					}
 					SetAnglesByTimeFrame.this.setVisible(false);
 					SetAnglesByTimeFrame.this.dispose();
@@ -2051,11 +2029,15 @@ public class DataD extends myJFrame {
       String[] priority = {"first :",
                            "second:",
                            "third :",
-                           "forth :"};
+                           "forth :",
+                           "fifth :",
+                           "Sixth :"};
       String[] angleNames = {"omega",
                              "chi",
                              "phi",
-                             "eta"};
+		                         "eta",
+		                         "2theta",
+                             "energy"};
 
       JPanel jp1;
       orderCB = new JComboBox[priority.length];
@@ -2173,7 +2155,9 @@ public class DataD extends myJFrame {
       String[] angleNames = {"omega",
                              "chi",
                              "phi",
-                             "eta"};
+                             "eta",
+                             "2theta",
+                             "energy"};
       orderCB = new JComboBox();
       for (int j = 0; j < angleNames.length; j++)
         orderCB.addItem(angleNames[j]);

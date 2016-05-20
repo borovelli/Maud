@@ -33,15 +33,17 @@ public class LaueOvalRoi extends LaueOvalStepRoi {
 
     int counter = 0;
 
-    int minX = MaudPreferences.getInteger("OvalROI.minX", 0);
-    int maxX = MaudPreferences.getInteger("OvalROI.maxX", xMax);
-    int minY = MaudPreferences.getInteger("OvalROI.minY", 0);
-    int maxY = MaudPreferences.getInteger("OvalROI.maxY", yMax);
+    int minX = MaudPreferences.getInteger("ovalROI.minX", 0);
+    int maxX = MaudPreferences.getInteger("ovalROI.maxX", xMax);
+    int minY = MaudPreferences.getInteger("ovalROI.minY", 0);
+    int maxY = MaudPreferences.getInteger("ovalROI.maxY", yMax);
 
-    MaudPreferences.setPref("OvalROI.minX", minX);
-    MaudPreferences.setPref("OvalROI.maxX", maxX);
-    MaudPreferences.setPref("OvalROI.minY", minY);
-    MaudPreferences.setPref("OvalROI.maxY", maxY);
+    MaudPreferences.setPref("ovalROI.minX", minX);
+    MaudPreferences.setPref("ovalROI.maxX", maxX);
+    MaudPreferences.setPref("ovalROI.minY", minY);
+    MaudPreferences.setPref("ovalROI.maxY", maxY);
+
+//	  System.out.println(minX + " " + maxX + " " + minY + " " + maxY);
 
     if (usableRectangle != null) {
       minX = (int) usableRectangle.getMinX();
@@ -50,15 +52,17 @@ public class LaueOvalRoi extends LaueOvalStepRoi {
       maxY = (int) usableRectangle.getMaxY();
     }
 
-    MaudPreferences.setPref("OvalROI.minX", minX);
-    MaudPreferences.setPref("OvalROI.maxX", maxX);
-    MaudPreferences.setPref("OvalROI.minY", minY);
-    MaudPreferences.setPref("OvalROI.maxY", maxY);
+//	  System.out.println("After usable Rectangle: " + minX + " " + maxX + " " + minY + " " + maxY);
 
-	  double correctionExponent = MaudPreferences.getDouble("image2D.exponentCorrectionValue", 0.5);
+    MaudPreferences.setPref("ovalROI.minX", minX);
+    MaudPreferences.setPref("ovalROI.maxX", maxX);
+    MaudPreferences.setPref("ovalROI.minY", minY);
+    MaudPreferences.setPref("ovalROI.maxY", maxY);
+
+	  double correctionExponent = MaudPreferences.getDouble("image2D.exponentCorrectionValue", 0.0);
 
 	  int npoints = (int) ((maxX - minX) * getPointsPerPixels());//  (int) getPixelCircleX(); //xMax / 2;  / coordTrasf
-	  double stepIntegration = imp.getCalibration().pixelWidth / getPointsPerPixels();
+//	  double stepIntegration = imp.getCalibration().pixelWidth / getPointsPerPixels();
 
 //	  int npoints = maxX - minX;
     double[][] profile = new double[1][npoints];
@@ -66,36 +70,18 @@ public class LaueOvalRoi extends LaueOvalStepRoi {
       numbAvg = 0;
 	    double xreal = (1.0 / getPointsPerPixels() * ix + minX) * coordTrasfX - getX();
 	    double twoTheta = xreal / radius * Constants.PITODEG;
-//      setCircle(ix * coordTrasfX - getX());
-/*      if (counter == 100) {
-        updateSelection();
-        try {
-          Thread.currentThread().sleep(100);
-        } catch (InterruptedException ie) {
-        }
-        counter = -1;
-      }
-      counter++;*/
+//	    System.out.println("Point, 2theta: " + ix + " " + (ix / getPointsPerPixels() + minX) + " " + twoTheta + " " + getXCoord(twoTheta, getY()/coordTrasfY));
       for (int iy = minY; iy < maxY; iy++) {
 	      double x1 = getXCoord(twoTheta, iy);
 	      double y1 = getYCoord(iy);
-/*        double eta = 0.0;
-        if (twoTheta != 0.0) {
-          double arg = -y1 / (radius * Math.sin(twoTheta));  // right handed rotation from the source
-          eta = Constants.PITODEG * Math.atan(arg);
-        }*/
-          double coreta = Math.pow(1.0 + (y1 * y1 / radius / radius), correctionExponent); // 1.0 / MoreMath.cosd(eta);
-
-/*          int sign = 1;
-          if ((eta < 0.0 && twoTheta >= 90.0) || (eta > 0.0 && twoTheta < 0.0))
-            sign = -1;*/
-          if ((selroi != null && selroi.contains((int) x1, (int) y1)) ||
-		          (selroi == null && (x1 >= minX && x1 < maxX && y1 >= minY && y1 < maxY))) {
+          if ((selroi != null && selroi.contains((int) x1, iy)) ||
+		          (selroi == null && (x1 >= minX && x1 < maxX))) {
+	          double coreta = Math.pow(1.0 + (y1 * y1 / radius / radius), correctionExponent); // 1.0 / MoreMath.cosd(eta);
             profile[0][ix] += ip.getInterpolatedPixel(x1, (double) iy) * coreta;
-//      System.out.println("x:  " + x1 + " " + y1 + " " + coreta + " " + profile[etaIndex][ix - minX]);
+//      System.out.println("x:  " + iy + " " + x1 + " " + y1 + " " + coreta + " " + profile[0][ix]);
             numbAvg++;
-          }// else
-// System.out.println("Not x:  " + x1 + " " + iy);
+          } //else
+// System.out.println("Not x:  " + x1 + " " + y1);
       }
         if (numbAvg > 3) {
           profile[0][ix] /= numbAvg;
@@ -105,25 +91,14 @@ public class LaueOvalRoi extends LaueOvalStepRoi {
 
     }
 
-/*    for (etaIndex = 0; etaIndex < nprofiles; etaIndex++) {
-      double coseta = MoreMath.cosd((etaIndex - centerIndex) * coneStep);
-      for (int ix = startX; ix < endX; ix++) {
-//        profile[etaIndex][ix - startX] *= coseta;
-        if (profile[etaIndex][ix - startX] < 0.0)
-          profile[etaIndex][ix - startX] = 0.0;
-//      else if (Constants.macosx)
-//        profile[ix] = maxGray - profile[ix];
-      }
-    }*/
-//      System.out.println(profile[ix] + " " + maxGray);
     return profile;
 
   }
 
   public double[][] getIntervalPixels() {
     double[][] profile = getPixels();
-    int minX = MaudPreferences.getInteger("OvalROI.minX", 0);
-    int maxX = MaudPreferences.getInteger("OvalROI.maxX", xMax);
+    int minX = MaudPreferences.getInteger("ovalROI.minX", 0);
+    int maxX = MaudPreferences.getInteger("ovalROI.maxX", xMax);
     saveAsText(profile, minX, maxX);
 //      System.out.println(profile[ix] + " " + maxGray);
     return profile;

@@ -90,7 +90,7 @@ public class SpaceGroups {
 	public static native Spacegroup checkSpaceGroup(String spaceGroupHall, String spaceGroupHM, String spaceGroupNumber);
 
 	public static boolean useCCTBX() {
-		return MaudPreferences.getBoolean("spacegroup.useCCTBX", true) && loaded;
+		return MaudPreferences.getBoolean("spacegroup.useCCTBX", false) && loaded;
 	}
 
 	public static String getCorrectSpaceGroupHall(String sg) {

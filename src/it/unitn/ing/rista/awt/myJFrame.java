@@ -23,7 +23,7 @@ package it.unitn.ing.rista.awt;
 import it.unitn.ing.rista.diffr.*;
 import it.unitn.ing.rista.interfaces.basicObj;
 import it.unitn.ing.rista.util.*;
-import it.unitn.ing.rista.Maud;
+import com.radiographema.Maud;
 
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
@@ -858,19 +858,19 @@ public class myJFrame extends iconJFrame implements ParentFrame, ClipboardOwner,
     if (parent != null && parent instanceof myJFrame)
       ((myJFrame) parent).dispose(this);
 
-		if (Constants.testing)
-			System.out.println("DEBUG: frame " + this.getTitle() + " disposing");
+//		if (Constants.testing)
+//			System.out.println("DEBUG: frame " + this.getTitle() + " disposing");
     super.dispose();
   }
 
   public void dispose(myJFrame child) {
-	  java.awt.EventQueue.invokeLater(new Runnable() {
+/*	  java.awt.EventQueue.invokeLater(new Runnable() {
 		  @Override
 		  public void run() {
 			  toFront();
 			  repaint();
 		  }
-	  });
+	  });*/
   }
 
   public void resizeWindow() {
@@ -942,7 +942,7 @@ public class myJFrame extends iconJFrame implements ParentFrame, ClipboardOwner,
         WindowPreferences.setPref(framePositionY, xy.y);
       }
     }
-    if (Constants.macosx && show == false &&
+/*    if (Constants.macosx && show == false &&
         (Maud.appMainFrame != null && this.getDefaultCloseOperation() == DISPOSE_ON_CLOSE)) {
       if (getJMenuBar() != null) {
         setJMenuBar(null);
@@ -950,7 +950,7 @@ public class myJFrame extends iconJFrame implements ParentFrame, ClipboardOwner,
         requestFocus();
  //       System.out.println("JMenuBar workaround....");
       }
-    }
+    }*/
     } catch(Exception e) {}
     super.setVisible(show);
   }
@@ -983,21 +983,21 @@ public class myJFrame extends iconJFrame implements ParentFrame, ClipboardOwner,
   }
 
   protected void finalize() throws Throwable {
-    if (Constants.testing)
-      System.out.println("DEBUG: frame " + this.getTitle() + " finalizing");
+//    if (Constants.testing)
+//      System.out.println("DEBUG: frame " + this.getTitle() + " finalizing");
 
     super.finalize();
 
   }
 
   public static void prepareForDisposal(JFrame jframe) {
-    if (!Constants.macosx || jframe.getJMenuBar() == null)
+/*    if (!Constants.macosx || jframe.getJMenuBar() == null)
       return;
     jframe.setJMenuBar(null);
 //    System.out.println("JMenuBar workaround called");
     if (Maud.appMainFrame != null)
       Maud.appMainFrame.requestFocus();
-    jframe.requestFocus();
+    jframe.requestFocus();*/
   }
 
 }

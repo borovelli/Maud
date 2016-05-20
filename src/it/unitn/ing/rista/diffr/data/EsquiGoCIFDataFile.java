@@ -66,6 +66,7 @@ public class EsquiGoCIFDataFile extends MultDiffrDataFile {
     double phi_angle = 0.0;
     double chi_angle = 0.0;
     double eta_angle = 0.0;
+	  String theta2_angle = "0";
     int indexXcoord = -1, indexYcoord = -1, indexIntensity = 0;
     boolean stepscan = false;
 	  double twothetaShift = 0.0;
@@ -193,6 +194,8 @@ public class EsquiGoCIFDataFile extends MultDiffrDataFile {
 		              omega_angle = Double.valueOf(token = st.nextToken()).doubleValue();
 		              if (scintillator || APD2000) // to be fixed
 			              omega_angle = 0.0;
+	              } else if (token.equalsIgnoreCase("_pd_meas_2theta_fixed")) {
+		              theta2_angle = st.nextToken();
 	              } else if (token.equalsIgnoreCase("_pd_meas_angle_chi") || token.equalsIgnoreCase("_pd_meas_orientation_chi")) {
 		              if (APD2000)
 			              chi_angle = Double.valueOf(token = st.nextToken()).doubleValue() - 180;
@@ -246,10 +249,14 @@ public class EsquiGoCIFDataFile extends MultDiffrDataFile {
             valueT = "true";
           datafile.setField("_riet_meas_datafile_calibrated", valueT, "0", "0", "0", false, null, null, null, null, null,
               false, false);
-          datafile.setOmega(omega_angle);
-          datafile.setChi(chi_angle);
-          datafile.setPhi(phi_angle);
-          datafile.setEta(eta_angle);
+          datafile.setAngleValue(0, omega_angle);
+          datafile.setAngleValue(1, chi_angle);
+          datafile.setAngleValue(2, phi_angle);
+          datafile.setAngleValue(3, eta_angle);
+	        if (theta2_angle.equalsIgnoreCase("=omega"))
+		        datafile.setAngleValue(4, omega_angle);
+	        else
+		        datafile.setAngleValue(4, Double.valueOf(theta2_angle));
 
 
 // _pd_meas_detector_id

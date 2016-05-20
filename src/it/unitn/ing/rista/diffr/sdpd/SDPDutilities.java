@@ -73,14 +73,14 @@ public class SDPDutilities {
           printStream.print("-");
         printStream.print(1);
         printStream.print(Constants.lineSeparator);
-        int npositions = aphase.getSitePositionNumber();
+        int npositions = aphase.getPhaseInfo().getSitePositionNumber();
         if (aphase.isCentrosymmetric())
           npositions /= 2;
         for (int i = 1; i < npositions; i++) {
           printStream.print("SYMM ");
-          printStream.print((new String((aphase.sitePositionv.elementAt(i)).getx_i())).toUpperCase() + ",");
-          printStream.print((new String((aphase.sitePositionv.elementAt(i)).gety_i())).toUpperCase() + ",");
-          printStream.print((new String((aphase.sitePositionv.elementAt(i)).getz_i())).toUpperCase());
+          printStream.print((new String((aphase.getPhaseInfo().getSitePosition(i)).getx_i())).toUpperCase() + ",");
+          printStream.print((new String((aphase.getPhaseInfo().getSitePosition(i)).gety_i())).toUpperCase() + ",");
+          printStream.print((new String((aphase.getPhaseInfo().getSitePosition(i)).getz_i())).toUpperCase());
           printStream.print(Constants.lineSeparator);
         }
         Vector atoms = aphase.getFullAtomList();

@@ -80,8 +80,8 @@ public class SimpleSite {
   public void computePositions(Phase aphase) {
     atomCoordinates = new Vector(10, 10);
     SitePosition sitepos;
-    for (int i = 0; i < aphase.getSitePositionNumber(); i++) {
-      sitepos = aphase.sitePositionv.elementAt(i);
+    for (int i = 0; i < aphase.getPhaseInfo().getSitePositionNumber(); i++) {
+      sitepos = aphase.getPhaseInfo().getSitePosition(i);
       double x[] = new double[3];
       for (int j = 0; j < 3; j++)
         x[j] = sitepos.getcoord(j, coord);

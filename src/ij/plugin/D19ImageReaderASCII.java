@@ -203,14 +203,14 @@ pixel h: 1.52941501976285
     int i;
     if (buffer == null) return;
     short[] sbuffer = new short[buffer.length];
-    int shiftedColumn = MaudPreferences.getInteger("KappaCCDImageFormat.columnToShift", 454);
+    int shiftedColumn = MaudPreferences.getInteger("kappaCCDImageFormat.columnToShift", 454);
     for (i = 0; i < height; i++)
       for (int j = shiftedColumn; j < width; j++)
         sbuffer[i * width + (j - shiftedColumn)] = buffer[i * width + j];
     for (i = 0; i < height; i++)
       for (int j = 0; j < shiftedColumn; j++)
         sbuffer[i * width + j + width - shiftedColumn] = buffer[i * width + j];
-    int shiftedRow = MaudPreferences.getInteger("KappaCCDImageFormat.rowToShift", 573);
+    int shiftedRow = MaudPreferences.getInteger("kappaCCDImageFormat.rowToShift", 573);
     int index = 0;
     for (i = shiftedRow; i < height; i++)
       for (int j = 0; j < width; j++)

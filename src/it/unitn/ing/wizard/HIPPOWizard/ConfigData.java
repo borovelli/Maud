@@ -14,16 +14,15 @@ public class ConfigData {
 	
 	public static String getPropertyValue(String property, String defaultvalue) {
     property = Misc.toStringNoBlank(property);
-    return MaudPreferences.getPref("HippoWizard." + property, defaultvalue);
+    return MaudPreferences.getPref("hippoWizard." + property, defaultvalue);
   }
     
     public static void setPropertyValue(String property, String value) {
       property = Misc.toStringNoBlank(property);
-      MaudPreferences.setPref("HippoWizard." + property, value);
+      MaudPreferences.setPref("hippoWizard." + property, value);
     }
     
 	public static void writeConfig() {
-    MaudPreferences.savePreferences();
   }
 
 }

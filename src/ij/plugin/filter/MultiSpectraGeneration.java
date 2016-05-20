@@ -110,9 +110,9 @@ public class MultiSpectraGeneration extends OvalSpectraSelection {
       MaudPreferences.setPref("camera.defaultChiAngle", chi);
       MaudPreferences.setPref("camera.defaultPhiAngle", phi);
       MaudPreferences.setPref("anglesCalibration.imageToSpectra", calibrated);
-	    MaudPreferences.setPref("D19Detector.defaultEtaConeInterval", coneAngleStep);
-//	    MaudPreferences.setPref("D19Detector.defaultDiffractionStepAngle", 0.05);
-	    MaudPreferences.setPref("D19Detector.defaultEtaConeAngleMax", coneAngleMax);
+	    MaudPreferences.setPref("d19Detector.defaultEtaConeInterval", coneAngleStep);
+//	    MaudPreferences.setPref("d19Detector.defaultDiffractionStepAngle", 0.05);
+	    MaudPreferences.setPref("d19Detector.defaultEtaConeAngleMax", coneAngleMax);
       roi.setRadius(radius);
       roi.setStartingPoint(x, y);
       roi.setCircle(diameter);
@@ -175,9 +175,9 @@ public class MultiSpectraGeneration extends OvalSpectraSelection {
 //        MaudPreferences.setPref("camera.defaultHeight", cameraHeight);
         MaudPreferences.setPref("camera.defaultDiffractionConeInterval", coneAngleStep);
         MaudPreferences.setPref("camera.defaultDiffractionConeMaxAngle", coneAngleMax);
-	      MaudPreferences.setPref("D19Detector.defaultEtaConeInterval", coneAngleStep);
+	      MaudPreferences.setPref("d19Detector.defaultEtaConeInterval", coneAngleStep);
 //	    MaudPreferences.setPref("D19Detector.defaultDiffractionStepAngle", 0.05);
-	      MaudPreferences.setPref("D19Detector.defaultEtaConeAngleMax", coneAngleMax);
+	      MaudPreferences.setPref("d19Detector.defaultEtaConeAngleMax", coneAngleMax);
         MaudPreferences.setPref("camera.defaultOmegaAngle", omega);
         MaudPreferences.setPref("camera.defaultChiAngle", chi);
         MaudPreferences.setPref("camera.defaultPhiAngle", phi);

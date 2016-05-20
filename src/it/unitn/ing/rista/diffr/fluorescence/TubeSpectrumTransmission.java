@@ -85,7 +85,7 @@ public class TubeSpectrumTransmission extends Fluorescence {
 //			System.out.println(ej + " " + lambda + " " + energy_intensity);
 			double energy = Constants.ENERGY_LAMBDA / lambda;    // in eV
 			double energyInKeV = energy * 0.001;
-			FluorescenceLine transfertLine = new FluorescenceLine(energyInKeV, -1);
+			FluorescenceLine transfertLine = new FluorescenceLine(energyInKeV, -1, 0);
 			transfertLine.setIntensity(transfertLine.getIntensity() * energy_intensity);
 			fluorescenceLines.add(transfertLine);
 
@@ -181,7 +181,7 @@ public class TubeSpectrumTransmission extends Fluorescence {
 		for (int k = 0; k < fluorescenceLines.size(); k++) {
 			FluorescenceLine line = fluorescenceLines.get(k);
 			double[] broad = ainstrument.getInstrumentalBroadeningAt(line.getEnergy(), adatafile);
-			line.setShape(broad[1], broad[0]);
+			line.setShape(broad[1], broad[0], broad[3], broad[2]);
 			line.setEnergy(line.getEnergy() * 1000.0); // in eV
 //        System.out.print(/*line.getEnergy() + " " + */line.getIntensity() + " ");
 			for (int i = 0; i < numberOfPoints; i++)

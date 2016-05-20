@@ -41,7 +41,7 @@ import java.util.StringTokenizer;
 
 public class FluorescenceDataFileSpm extends MultDiffrDataFile {
 
-  public int maxNumberOfChannels = MaudPreferences.getInteger("LoadingDatafiles.detectorMaxChannels",  8192 * 2);
+  public int maxNumberOfChannels = MaudPreferences.getInteger("loadingDatafiles.detectorMaxChannels",  8192 * 2);
 
   double twothetaShift = 0.0;
 
@@ -111,10 +111,10 @@ public class FluorescenceDataFileSpm extends MultDiffrDataFile {
           datafile.constantstep = false;
           String detector_string = "";
 
-          datafile.setOmega(omega_angle);
-          datafile.setChi(chi_angle);
-          datafile.setPhi(phi_angle);
-          datafile.setEta(eta_angle);
+          datafile.setAngleValue(0, omega_angle);
+          datafile.setAngleValue(1, chi_angle);
+          datafile.setAngleValue(2, phi_angle);
+          datafile.setAngleValue(3, eta_angle);
 
           linedata = reader.readLine();
           st = new StringTokenizer(linedata, "' ,\t\r\n");

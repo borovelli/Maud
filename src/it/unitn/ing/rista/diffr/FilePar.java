@@ -99,9 +99,11 @@ public class FilePar extends XRDcat implements lFilePar, Function {
   public static final String[] listString = {"Sample"};
   public static final String[] database = {"datasets.mdb", "structures.mdb", "samples.mdb", "instruments.mdb"};
 
-  public static int optimizationAlgorithmID = 0;
+	public static String analysisFile = "analysis.last";
+	public static String analysisPath = "analysis.path";
 
-  public static final int sampleID = 0;
+	public static int optimizationAlgorithmID = 0;
+	public static final int sampleID = 0;
 
   public ListVector boundlistv;
 //	public Vector parametersV;
@@ -318,8 +320,8 @@ public class FilePar extends XRDcat implements lFilePar, Function {
   }
 
   protected void finalize() throws Throwable {
-    if (Constants.testing)
-      System.out.println("DEBUG: " + this.toXRDcatString() + " finalizing");
+//    if (Constants.testing)
+//      System.out.println("DEBUG: " + this.toXRDcatString() + " finalizing");
 
 //    int i;
 
@@ -373,8 +375,7 @@ public class FilePar extends XRDcat implements lFilePar, Function {
   public void setDirectory(String folder) {
     thefolder = new String(folder);
 //		if (MaudPreferences != null)
-    MaudPreferences.setPref(MaudPreferences.analysisPath, folder);
-	  MaudPreferences.savePreferences();
+    MaudPreferences.setPref(analysisPath, folder);
   }
 
   public String getDirectory() {
@@ -534,7 +535,7 @@ public class FilePar extends XRDcat implements lFilePar, Function {
   }
 
   public boolean singleFunctionComputing() {
-    if (MaudPreferences.getBoolean("LeastSquares.computeExtractionOnWSSCheck", false))
+    if (MaudPreferences.getBoolean("leastSquares.computeExtractionOnWSSCheck", false))
       return true;
     switch (getTextureFactorsExtractionStatusI()) {
       case 2:
@@ -1094,10 +1095,10 @@ public class FilePar extends XRDcat implements lFilePar, Function {
                   aclass))
             for (int ij = 0; ij < adata.datafilesnumber(); ij++) {
               DiffrDataFile adatafile = adata.getDataFile(ij);
-              adatafile.setChi(adatafile.getChiValue() - 90.0);
+              adatafile.setAngleValue(1, adatafile.getAngleValue(1) - 90.0);
               if (Misc.areClassCompatibles("it.unitn.ing.rista.diffr.geometry.GeometryBraggBrentano",
                   aclass))
-                adatafile.setPhi(adatafile.getOmegaValue() - 90.0);
+                adatafile.setAngleValue(2, adatafile.getAngleValue(0) - 90.0);
             }
         }
       }
@@ -1182,15 +1183,13 @@ public class FilePar extends XRDcat implements lFilePar, Function {
 		  }
 		  System.out.println(message);
 	  }*/
-	  MaudPreferences.setPref(MaudPreferences.analysisFile, getNameToSave(reading));
-	  MaudPreferences.savePreferences();
+	  MaudPreferences.setPref(analysisFile, getNameToSave(reading));
   }
 
 	public void setFileNamePreserveExtension(String thename, boolean reading) {
 //	  thefilename = thename;
 		stringField[analysisNameID] = thename;
-		MaudPreferences.setPref(MaudPreferences.analysisFile, thename);
-		MaudPreferences.savePreferences();
+		MaudPreferences.setPref(analysisFile, thename);
 	}
 
 	public void setLabel(String alabel) {
@@ -1204,6 +1203,7 @@ public class FilePar extends XRDcat implements lFilePar, Function {
   }
 
   public void writeall(BufferedWriter out) {
+	  setStoreSpectraOption(true);
     if (themainframe != null)
       themainframe.retrieveParameters();
     try {
@@ -2500,7 +2500,7 @@ public class FilePar extends XRDcat implements lFilePar, Function {
 
   public void refreshWeight() {
     int dnumber = 0;
-//    boolean forceNoWeight = MaudPreferences.getBoolean("LeastSquares.noWeights", false);
+//    boolean forceNoWeight = MaudPreferences.getBoolean("leastSquares.noWeights", false);
 
     double Ncorrection = 1.0;
     for (int i = 0; i < samplesNumber(); i++) {
@@ -3120,7 +3120,7 @@ public class FilePar extends XRDcat implements lFilePar, Function {
 
 	public String getLstNameToSave() {
     if (Constants.sandboxEnabled)
-      return Constants.cachesDirectory + Constants.fileSeparator + "lastAnalysis.lst";
+      return Constants.cachesDirectory + "lastAnalysis.lst";
     return getDirectory() + stringField[analysisNameID] + /*getFileNameVersionString() +*/ ".lst";
 	}
 
@@ -3393,14 +3393,14 @@ public class FilePar extends XRDcat implements lFilePar, Function {
 	}
 
 	public void setCompactSavingTextureFactors(boolean value) {
-		if (value)
+		if (!value)
 			stringField[saveTextureFactorsID] = "true";
 		else
 			stringField[saveTextureFactorsID] = "false";
 	}
 
 	public void setCompactSavingStructureFactors(boolean value) {
-		if (value)
+		if (!value)
 			stringField[saveStructureFactorsID] = "true";
 		else
 			stringField[saveStructureFactorsID] = "false";

@@ -30,8 +30,10 @@ package it.unitn.ing.rista.interfaces;
 
 public class BaseFactoryObject {
 
-  public String identifier = "none id";
-  public String IDlabel = "none id";
+	public static String noneID = "none id";
+
+  public String identifier = noneID;
+  public String IDlabel = noneID;
   public String description = "any description";
 
   public BaseFactoryObject() {

@@ -48,6 +48,7 @@ import org.javadev.AnimatingCardLayout;
 public class SpectrumPlotPanel extends CopyPrintablePanel {
 
   //      Graph2D graph;
+  CopyPrintPanel graphPanel = null;
   DataSet data1 = null;
   Axis xaxis = null;
   Axis yaxis = null;
@@ -55,17 +56,18 @@ public class SpectrumPlotPanel extends CopyPrintablePanel {
   DataSet dataFit = null;
   DataSet datar = null;
   PeakSet[] datap = null;
-  Graph2D residuals = null;
+	G2Dint residuals = null;
   G2Dint positions = null;
   double[][] peaksList = null;
   double[] secondDerivative = null;
   public DiffrDataFile[] datafile = null;
+	public DataFileSet dataset = null;
   Axis yaxisp = null;
   Axis xaxisr = null;
   Axis yaxisr = null;
 
-	public static Vector<PeakInfo> peaksInfoXRF = null;
-	public static double energyUsedForPeakInfoXRF = 0;
+	private static Vector<PeakInfo> peaksInfoXRF = null;
+	private static double energyUsedForPeakInfoXRF = MaudPreferences.getDouble("xrf_peaks_info.maximumEnergyInKeV", 30.0);
   public static int defaultMarker = 2;
   public static int markerNumber = defaultMarker;
   public static double markerScale = 1;
@@ -92,8 +94,8 @@ public class SpectrumPlotPanel extends CopyPrintablePanel {
   public static boolean plotPeaks = MaudPreferences.getBoolean("plot.plotPeaks", true);
   public static boolean plotBackground = MaudPreferences.getBoolean("plot.plotBackground", false);
 
-  Graph2D graph = null;
-  CopyPrintPanel fullGraphPanel = null;
+	G2Dint graph = null;
+//  CopyPrintPanel fullGraphPanel = null;
   AnimatingCardLayout panelLayout = null;
   JTextField markerNumberTF;
   JTextField markerScaleTF;
@@ -124,7 +126,7 @@ public class SpectrumPlotPanel extends CopyPrintablePanel {
   boolean computeMinMax = true;
 
   public SpectrumPlotPanel() {
-    this(null, null, null);
+    this(null);
   }
 
   public SpectrumPlotPanel(boolean summedDatafiles) {
@@ -132,7 +134,21 @@ public class SpectrumPlotPanel extends CopyPrintablePanel {
     this.summedDatafiles = summedDatafiles;
   }
 
-  public SpectrumPlotPanel(DiffrDataFile[] afile, double[][] peaks,
+	public SpectrumPlotPanel(DataFileSet adata) {
+
+		initResources();
+
+		dataset = adata;
+		graphPanel = createGraph(false);
+
+		setComponentToPrint(graphPanel);
+
+		setLayout(new BorderLayout());
+		add(graphPanel, BorderLayout.CENTER);
+
+	}
+
+	public SpectrumPlotPanel(DiffrDataFile[] afile, double[][] peaks,
                            double[] derivative2) {
 
     initResources();
@@ -143,8 +159,6 @@ public class SpectrumPlotPanel extends CopyPrintablePanel {
 //    JPanel principalPlotPanel = new JPanel(new BorderLayout());
 
 //    add(principalPlotPanel, "plot");
-
-    CopyPrintPanel graphPanel;
 
     datafile = afile;
     if (afile == null || afile.length > 1)
@@ -158,26 +172,6 @@ public class SpectrumPlotPanel extends CopyPrintablePanel {
     setLayout(new BorderLayout());
     add(graphPanel, BorderLayout.CENTER);
 
-/*    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, Constants.borderInsideMinimum,
-                                                                     Constants.borderInsideMinimum));
-    principalPlotPanel.add(buttonPanel, BorderLayout.SOUTH);
-    JButton optionsB = new JButton("Replot");
-    buttonPanel.add(optionsB);
-    optionsB.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        replot(false);
-      }
-    });
-
-    optionsB = new JButton("Plot options");
-    buttonPanel.add(optionsB);
-    optionsB.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        panelLayout.show(SpectrumPlotPanel.this, "options");
-      }
-    });
-
-    add(createOptionsPanel(), "options");*/
   }
 
   public JPanel createOptionsPanel(final myJDialog theDialog) {
@@ -303,7 +297,7 @@ public class SpectrumPlotPanel extends CopyPrintablePanel {
     XaxisLabelFontScaleTF.setText(new String(Integer.toString(XaxisLabelFontScale)));
     YaxisLabelFontScaleTF.setText(new String(Integer.toString(YaxisLabelFontScale)));
     PhasesFontScaleTF.setText(new String(Integer.toString(PhasesFontScale)));
-    plotModeCB.setSelectedItem(MaudPreferences.getPref(MaudPreferences.plotScale, PlotDataFile.plotMode[0]));
+    plotModeCB.setSelectedItem(MaudPreferences.getPref(principalJFrame.plotScale, PlotDataFile.plotMode[0]));
     xplotModeCB.setSelectedItem(MaudPreferences.getPref(xaxisModePref, xplotMode[0]));
     subtractBackground.setSelected(MaudPreferences.getBoolean(plotNoBkg, PlotDataFile.plotNoBkgDefault));
     calibrateIntensity.setSelected(MaudPreferences.getBoolean(PlotDataFile.plotCalIntensity,
@@ -328,7 +322,7 @@ public class SpectrumPlotPanel extends CopyPrintablePanel {
     XaxisLabelFontScale = Integer.valueOf(XaxisLabelFontScaleTF.getText()).intValue();
     YaxisLabelFontScale = Integer.valueOf(YaxisLabelFontScaleTF.getText()).intValue();
     PhasesFontScale = Integer.valueOf(PhasesFontScaleTF.getText()).intValue();
-    MaudPreferences.setPref(MaudPreferences.plotScale, plotModeCB.getSelectedItem().toString());
+    MaudPreferences.setPref(principalJFrame.plotScale, plotModeCB.getSelectedItem().toString());
     MaudPreferences.setPref(plotNoBkg, subtractBackground.isSelected());
     blackAndWhite = blackAndWhiteCB.isSelected();
     plotResiduals = plotResidualsCB.isSelected();
@@ -361,16 +355,46 @@ public class SpectrumPlotPanel extends CopyPrintablePanel {
     }
   }
 
-  public void replot(boolean preserveLimits) {
-    setNewData(datafile, peaksList, secondDerivative, preserveLimits);
-    invalidate();
-    getFrameParent().validate();
+	public void replot(boolean preserveLimits) {
+		if (dataset != null)
+      setNewData(dataset, preserveLimits);
+		else
+			setNewData(datafile, null, null, preserveLimits);
+		invalidate();
+		getFrameParent().validate();
   }
 
-  public void setNewData(DiffrDataFile[] afile, double[][] peaks,
+	public void setNewData(DataFileSet adata, boolean keepMaxima) {
+		if (keepMaxima && graph != null && graph.userLimits()) {
+			double[] ranges = graph.getRanges();
+			xMin = ranges[0];
+			xMax = ranges[1];
+			IntensityMin = ranges[2];
+			IntensityMax = ranges[3];
+//      System.out.println("Maxima: " + xMin + " " + xMax + " " + IntensityMin + " " + IntensityMax);
+		} else
+			keepMaxima = false;
+		removeAll();
+		adata.updateDataForPlot();
+
+		initResources();
+
+		dataset = adata;
+
+		graphPanel = null;
+		graph = null;
+
+		graphPanel = createGraph(keepMaxima);
+
+		setComponentToPrint(graphPanel);
+		setLayout(new BorderLayout());
+		add(graphPanel, BorderLayout.CENTER);
+	}
+
+	public void setNewData(DiffrDataFile[] afile, double[][] peaks,
                          double[] derivative2, boolean keepMaxima) {
-    if (keepMaxima && graph != null && ((G2Dint) graph).userLimits()) {
-      double[] ranges = ((G2Dint) graph).getRanges();
+    if (keepMaxima && graph != null && graph.userLimits()) {
+      double[] ranges = graph.getRanges();
       xMin = ranges[0];
       xMax = ranges[1];
       IntensityMin = ranges[2];
@@ -378,49 +402,19 @@ public class SpectrumPlotPanel extends CopyPrintablePanel {
 //      System.out.println("Maxima: " + xMin + " " + xMax + " " + IntensityMin + " " + IntensityMax);
     } else
       keepMaxima = false;
-    removeAll();
-//    panelLayout = new AnimatingCardLayout();
-//    panelLayout.setAnimation(new SlideAnimation());
-//    setLayout(panelLayout);
-    setLayout(new BorderLayout());
-//    JPanel principalPlotPanel = new JPanel(new BorderLayout());
+		removeAll();
 
-//    add(principalPlotPanel, "plot");
     initResources();
 
-    CopyPrintPanel graphPanel;
 	  datafile = afile;
 	  if (afile == null || afile.length > 1)
 		  graphPanel = createGraph(afile, peaks, derivative2, keepMaxima);
 	  else
 		  graphPanel = createGraphSingle(afile[0], peaks, derivative2, keepMaxima);
 
-    setComponentToPrint(graphPanel);
-
-//    principalPlotPanel.add(graphPanel, BorderLayout.CENTER);
+	  setComponentToPrint(graphPanel);
+	  setLayout(new BorderLayout());
     add(graphPanel, BorderLayout.CENTER);
-
-/*    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, Constants.borderInsideMinimum,
-                                                                Constants.borderInsideMinimum));
-principalPlotPanel.add(buttonPanel, BorderLayout.SOUTH);
-JButton optionsB = new JButton("Replot");
-buttonPanel.add(optionsB);
-optionsB.addActionListener(new ActionListener() {
- public void actionPerformed(ActionEvent e) {
-   replot(false);
- }
-});
-
-optionsB = new JButton("Plot options");
-buttonPanel.add(optionsB);
-optionsB.addActionListener(new ActionListener() {
- public void actionPerformed(ActionEvent e) {
-   panelLayout.show(SpectrumPlotPanel.this, "options");
- }
-});
-
-add(createOptionsPanel(), "options");*/
-
   }
 
   public Frame getFrameParent() {
@@ -439,12 +433,569 @@ add(createOptionsPanel(), "options");*/
     theOptionsDialog.setVisible(true);
   }
 
-  public CopyPrintPanel createGraph(DiffrDataFile[] afile, double[][] peaks,
+	public CopyPrintPanel createGraph(boolean keepMaxima) {
+		CopyPrintPanel fullGraphPanel;
+		int mode = PlotDataFile.checkScaleModeX();
+
+		if (dataset == null) {
+			return new NoDatafileCanvas();
+		}
+//    if (peaks != null)
+		peaksList = null;
+//    if (derivative2 != null)
+		secondDerivative = null;
+//    if (afile != null)
+		boolean peaksLocated = (peaksList != null);
+
+		boolean markExcludedRegion = MaudPreferences.getBoolean("excludedRegion.setZeroForPlot", true);  // todo
+
+		double[] data = dataset.getDataForPlot();
+		double[] datafit = dataset.getDatafitForPlot();
+		double[] dataResidual = null;
+		if (data != null)
+			dataResidual = new double[data.length];
+		double[] backgroundData = dataset.getBackgroundForPlot();
+		double[][] dataphase = dataset.getDataphaseForPlot();
+
+		if (data != null) {
+			np = data.length / 2;
+			setTitle("");
+			FilePar filepar = dataset.getFilePar();
+
+			int numberphases = filepar.getActiveSample().phasesNumber();
+
+			Phase[] phaselist = new Phase[numberphases];
+			for (int i = 0; i < numberphases; i++)
+				phaselist[i] = filepar.getActiveSample().getPhase(i);
+
+			fullGraphPanel = new CopyPrintPanelNoBkg();
+//      fullGraphPanel.setBackground(Color.white);
+
+//					KappaLayout gridbag = new KappaLayout();
+			GridBagLayout gridbag = new GridBagLayout();
+			GridBagConstraints c = new GridBagConstraints();
+
+			fullGraphPanel.setLayout(gridbag);
+
+/*
+**      Create the Graph instance and modify the default behaviour
+*/
+			graph = new plotPanelG2Dint();
+
+			graph.startedloading();
+
+			graph.setDataBackground(Color.white);
+			graph.setInfoDefaultLength(MaudPreferences.getInteger("plot.numberOfInfoPeaks", 10));
+
+			fullGraphPanel.add(graph);
+			c.fill = GridBagConstraints.BOTH;
+			c.weighty = 1.0;
+			c.weightx = 1.0;
+			c.gridwidth = GridBagConstraints.REMAINDER;
+
+			gridbag.setConstraints(graph, c);
+
+			graph.drawzero = false;
+			graph.drawgrid = false;
+			graph.borderTop = 30;
+			graph.borderBottom = 1;
+
+/*
+**      Load a file containing Marker definitions
+*/
+			Markers marker = null;
+			try {
+				marker = new Markers(Constants.documentsDirectory + "marker.txt");
+			} catch (IOException ioe) {
+				ioe.printStackTrace();
+			}
+
+			if (marker != null)
+				graph.setMarkers(marker);
+
+			// data
+
+			data1 = graph.loadDataSet(data, np);
+			if (markerNumber < 0 && datafit != null)
+				markerNumber = defaultMarker;
+			if (markerNumber < 0) {
+				data1.linestyle = 1;
+			} else {
+				data1.linestyle = 0;
+				data1.marker = markerNumber;
+				data1.markerscale = markerScale;
+				data1.markercolor = markerColor;
+			}
+
+			// fit
+
+			if (datafit != null) {
+				dataFit = graph.loadDataSet(datafit, np);
+				if (blackAndWhite) {
+					dataFit.linecolor = Color.black;
+				} else {
+					dataFit.linecolor = fitColor;
+				}
+			}
+
+			// phases
+
+			DataSet[] phaseData = new DataSet[numberphases];
+
+			if (datafit != null) {
+				for (int s = 0; s < numberphases; s++) {
+					if (phaselist[s].plotFit()) {
+						phaseData[s] = graph.loadDataSet(dataphase[s], np);
+						phaseData[s].linestyle = 1;
+						if (blackAndWhite)
+							phaseData[s].linecolor = Color.black;
+						else
+							phaseData[s].linecolor = getPastelColor(s + 2);
+					}
+				}
+
+			}
+
+			// background
+
+			DataSet bkgData = null;
+
+			if (datafit != null && plotBackground) {
+				bkgData = graph.loadDataSet(backgroundData, np);
+				bkgData.linestyle = 1;
+				if (blackAndWhite)
+					bkgData.linecolor = Color.black;
+				else
+					bkgData.linecolor = getPastelColor(1);
+
+			}
+
+/*
+**      Attach data sets to the Xaxis
+*/
+//          System.out.println("Attaching X-axis....");
+
+			xaxis = graph.createXAxis();
+			xaxis.axiscolor = Color.black;
+			if ((plotResiduals && datafit != null) || peaksLocated) {
+				xaxis.drawLabel = false;
+				xaxis.drawTitle = false;
+			}
+			xaxis.attachDataSet(data1);
+			if (datafit != null || peaksLocated) {
+				xaxis.attachDataSet(dataFit);
+			}
+			if (datafit != null) {
+				for (int s = 0; s < numberphases; s++)
+					if (phaselist[s].plotFit())
+						xaxis.attachDataSet(phaseData[s]);
+				if (plotBackground)
+					xaxis.attachDataSet(bkgData);
+			}
+
+/*
+**      Attach the data set to the Left Axis
+*/
+//          System.out.println("Attaching Y-axis....");
+
+			yaxis = graph.createYAxis();
+			yaxis.attachDataSet(data1);
+			if (datafit != null)
+				yaxis.attachDataSet(dataFit);
+			if (datafit != null) {
+				for (int s = 0; s < numberphases; s++)
+					if (phaselist[s].plotFit())
+						yaxis.attachDataSet(phaseData[s]);
+				if (plotBackground)
+					yaxis.attachDataSet(bkgData);
+			}
+
+			yaxis.setTitleText(DiffrDataFile.getAxisYLegend());
+			yaxis.setTitleFont(new Font(axisFont, Font.BOLD, YaxisTitleFontScale));
+			yaxis.setLabelFont(new Font(labelFont, Font.PLAIN, YaxisLabelFontScale));
+			yaxis.setTitleColor(YaxisTitleColor);
+			yaxis.axiscolor = Color.black;
+
+			int numberofPeaks = dataset.getNumberofPeaks();
+
+			if (dataset.getInstrument() instanceof XRFInstrument) {
+				numberofPeaks = 0;
+				double energyInKeV = Constants.ENERGY_LAMBDA / dataset.getInstrument().getRadiationType().
+						getShortestWavelengthForFluorescence() * 0.001;
+				graph.attachPeaksInfos(getFluorescencePeakInfos(energyInKeV));
+			}
+
+			if ((plotPeaks && numberofPeaks > 0) && datafit != null) {
+
+/*
+**      prepare the positions box
+*/
+				if (!peaksLocated) {
+					Vector<Peak> peaklist = dataset.getPeakList();
+
+					int numberradiation = dataset.getInstrument().getRadiationType().getLinesCountForPlot();
+
+					if (numberradiation == 0)
+						numberradiation = 1;
+					int numberofRefl = numberofPeaks;
+
+					if (numberofRefl > 0) {
+
+						Vector<PeakInfo> peaksInfos = new Vector<PeakInfo>(numberofPeaks / numberradiation);
+
+						positions = new G2Dint(new plotPhaseMouseAdapter(), null);
+
+						graph.addComponent(positions);
+
+						c.weighty = 0.04 * (numberphases + 1);
+						c.gridwidth = GridBagConstraints.REMAINDER;
+//              c.h = numberphases + 1;
+
+						gridbag.setConstraints(positions, c);
+//        			c1.add(positions, c);
+						fullGraphPanel.add(positions);
+//              c1.add(positions, "0 60 100 80");
+//              c.y += c.h;
+
+						positions.drawzero = false;
+						positions.drawgrid = false;
+						positions.frame = false;
+						positions.borderTop = 1;
+						positions.borderBottom = 1;
+/*
+**      Load a file containing Marker definitions
+*/
+
+						if (marker != null)
+							positions.setMarkers(marker);
+
+						double[] datapeak = new double[2 * numberofRefl];
+
+						int dimension = numberradiation;
+
+						if (numberphases > dimension)
+							dimension = numberphases;
+						datap = new PeakSet[dimension];
+
+						for (int ijn = 0; ijn < numberradiation; ijn++) {
+							int j;
+							double wave = dataset.getInstrument().getRadiationType().getRadiationWavelength(ijn);
+							for (int i = j = 0; i < numberofPeaks; i++, j += 2) {
+								Peak peak = peaklist.elementAt(i);
+								Phase tmpphase = peak.getPhase();
+								int reflIndex = peak.getOrderPosition();
+								int phaseindex = 0;
+								for (int ij = 0; ij < numberphases; ij++)
+									if (tmpphase == phaselist[ij])
+										phaseindex = ij;
+
+								if (ijn < dataset.getActiveDataFile(0).getPositions(tmpphase).length) {
+									double pos = dataset.getActiveDataFile(0).getPositions(tmpphase)[ijn][reflIndex][0];
+									datapeak[j] = dataset.getActiveDataFile(0).convertXDataForPlot(pos, wave, mode);
+									datapeak[j + 1] = (double) (phaseindex + 1);
+								}
+								if (ijn == 0) {
+									PeakInfo peakInfo = new PeakInfo();
+									Reflection refl = peak.getReflex();
+									peakInfo.info = tmpphase.getPhaseName() + " (" + Integer.toString(refl.getH()) + " " +
+											Integer.toString(refl.getK()) + " " +
+											Integer.toString(refl.getL()) + ")";
+									peakInfo.coordinate = datapeak[j];
+//		              System.out.println("Adding: " + peakInfo.coordinate + " " + peakInfo.info);
+									peaksInfos.add(peakInfo);
+								}
+							}
+							datap[ijn] = positions.loadPeakSet(datapeak, numberofRefl);
+							datap[ijn].linestyle = 0;
+							datap[ijn].marker = 9;
+							double mscale = 2.0 - ijn;
+							if (mscale <= 0.01)
+								mscale = 0.5;
+							datap[ijn].markerscale = mscale;
+
+//        		 		int index = 0;
+//        		 		if (ijn > 0)
+//        		 			index = 1;
+//              if (blackAndWhite)
+							datap[ijn].markercolor = Color.black;
+//              else
+//                datap[ijn].markercolor = getPastelColor(ijn);
+
+						}
+
+						datapeak = new double[2];
+						for (int ijn = numberradiation; ijn < numberphases; ijn++) {
+							datapeak[0] = 0.0;
+							datapeak[1] = 1.0;
+							datap[ijn] = positions.loadPeakSet(datapeak, 1);
+							datap[ijn].linestyle = 0;
+							datap[ijn].marker = 9;
+							datap[ijn].markerscale = 0.1;
+							if (blackAndWhite)
+								datap[ijn].markercolor = Color.black;
+							else
+								datap[ijn].markercolor = getPastelColor(ijn);
+						}
+						for (int ij = 0; ij < numberphases; ij++) {
+							double ypos = (double) (ij + 1);
+							datap[ij].legend(1, ypos, phaselist[ij].toXRDcatString());
+							datap[ij].legendFont(new Font(labelFont, Font.PLAIN, PhasesFontScale));
+							if (blackAndWhite)
+								datap[ij].legendColor(Color.black);
+							else
+								datap[ij].legendColor(getPastelColor(ij + 2));
+						}
+
+//          System.out.println("Data loaded");
+
+/*
+**      Attach data sets to the Xaxis
+*/
+//          System.out.println("Attaching X-axis....");
+
+						Axis xaxisp = positions.createXAxis();
+						xaxisp.drawLine = false;
+						xaxisp.drawLabel = false;
+						xaxisp.drawTitle = false;
+						xaxisp.referenceAxis = xaxis;
+						xaxisp.axiscolor = Color.black;
+
+						for (int ijn = 0; ijn < dimension; ijn++)
+							xaxisp.attachDataSet(datap[ijn]);
+
+/*
+**      Attach the first data set to the Left Axis
+*/
+//          System.out.println("Attaching Y-axis....");
+
+						yaxisp = positions.createYAxis();
+						yaxisp.drawLine = false;
+						yaxisp.drawLabel = false;
+						yaxisp.drawTitle = false;
+						yaxisp.referenceAxisWidth = yaxis;
+						for (int ijn = 0; ijn < dimension; ijn++)
+							yaxisp.attachDataSet(datap[ijn]);
+						yaxisp.setTitleText(" ");
+						yaxisp.setTitleFont(new Font(axisFont, Font.BOLD, YaxisTitleFontScale));
+						yaxisp.setLabelFont(new Font(labelFont, Font.PLAIN, YaxisLabelFontScale));
+						yaxisp.setTitleColor(getBackground());
+						yaxisp.axiscolor = Color.black;
+						yaxisp.minimum = 0.5;
+						yaxisp.maximum = ((double) numberphases) + 0.5;
+
+						graph.attachPeaksInfos(peaksInfos);
+					}
+				} else {
+					int numberofRefl = peaksList[0].length;
+
+					if (numberofRefl > 0) {
+
+						positions = new G2Dint(new g2DPmouse(), null);
+
+						graph.addComponent(positions);
+
+						c.weighty = 0.04 * 2;
+						c.gridwidth = GridBagConstraints.REMAINDER;
+//              c.h = numberphases + 1;
+
+						gridbag.setConstraints(positions, c);
+//        			c1.add(positions, c);
+						fullGraphPanel.add(positions);
+//              c1.add(positions, "0 60 100 80");
+//              c.y += c.h;
+
+						positions.drawzero = false;
+						positions.drawgrid = false;
+						positions.frame = false;
+						positions.borderTop = 1;
+						positions.borderBottom = 1;
+/*
+**      Load a file containing Marker definitions
+*/
+
+						if (marker != null)
+							positions.setMarkers(marker);
+
+						double[] datapeak = new double[2 * numberofRefl];
+
+						int dimension = 1;
+						datap = new PeakSet[dimension];
+
+						double wave = dataset.getInstrument().getRadiationType().getRadiationWavelength(0);
+						for (int i = 0; i < numberofRefl; i++) {
+							datapeak[2 * i] = dataset.getActiveDataFile(0).convertXDataForPlot(peaksList[0][i], wave, mode);
+
+							datapeak[2 * i + 1] = 1.0;
+						}
+						datap[0] = positions.loadPeakSet(datapeak, numberofRefl);
+						datap[0].linestyle = 0;
+						datap[0].marker = 9;
+						double mscale = 2.0;
+						datap[0].markerscale = mscale;
+//            if (blackAndWhite)
+						datap[0].markercolor = Color.black;
+//            else
+//              datap[0].markercolor = getPastelColor(0);
+
+						double ypos = 1.0;
+						datap[0].legend(1, ypos, "Peaks");
+						datap[0].legendFont(new Font(labelFont, Font.PLAIN, PhasesFontScale));
+//            if (blackAndWhite)
+						datap[0].legendColor(Color.black);
+//            else
+//              datap[0].legendColor(getPastelColor(0));
+/*
+**      Attach data sets to the Xaxis
+*/
+//          System.out.println("Attaching X-axis....");
+
+						Axis xaxisp = positions.createXAxis();
+						xaxisp.drawLine = false;
+						xaxisp.drawLabel = false;
+						xaxisp.drawTitle = false;
+						xaxisp.referenceAxis = xaxis;
+						xaxisp.axiscolor = Color.black;
+
+						for (int ijn = 0; ijn < dimension; ijn++)
+							xaxisp.attachDataSet(datap[ijn]);
+
+/*
+**      Attach the first data set to the Left Axis
+*/
+//          System.out.println("Attaching Y-axis....");
+
+						yaxisp = positions.createYAxis();
+						yaxisp.drawLine = false;
+						yaxisp.drawLabel = false;
+						yaxisp.drawTitle = false;
+						yaxisp.axiscolor = Color.black;
+						yaxisp.referenceAxisWidth = yaxis;
+						for (int ijn = 0; ijn < dimension; ijn++)
+							yaxisp.attachDataSet(datap[ijn]);
+						yaxisp.setTitleText(" ");
+						yaxisp.setTitleFont(new Font(axisFont, Font.BOLD, YaxisTitleFontScale));
+						yaxisp.setLabelFont(new Font(labelFont, Font.PLAIN, YaxisLabelFontScale));
+						yaxisp.setTitleColor(getBackground());
+						yaxisp.minimum = 0.5;
+						yaxisp.maximum = 1.5;
+
+					}
+				}
+/*
+**      prepare the residuals box
+*/
+			}
+
+			if (plotResiduals && datafit != null) {
+
+				residuals = new G2Dint();
+				residuals.setDataBackground(Color.white);
+
+				graph.addComponent(residuals);
+
+				c.weighty = 0.3;
+				if (peaksLocated)
+					c.weighty = 0.7;
+//            c.h = 5;
+				c.gridwidth = GridBagConstraints.REMAINDER;
+
+				gridbag.setConstraints(residuals, c);
+				fullGraphPanel.add(residuals);
+//        		c1.add(residuals, c);
+//            c1.add(residuals, "0 80 100 100");
+
+				residuals.drawzero = true;
+				residuals.drawgrid = false;
+				residuals.borderTop = 0;
+				residuals.borderBottom = 10;
+/*
+**      Load a file containing Marker definitions
+*/
+
+				if (marker != null)
+					residuals.setMarkers(marker);
+
+				int j;
+				for (int i = j = 0; i < np; i++, j += 2) {
+					dataResidual[j + 1] = datafit[j + 1] - data[j + 1];
+					dataResidual[j] = data[j];
+				}
+
+				datar = residuals.loadDataSet(dataResidual, np);
+
+/*
+**      Attach data sets to the Xaxis
+*/
+//          System.out.println("Attaching X-axis....");
+
+				xaxisr = residuals.createAxis(Axis.BOTTOM);
+				xaxisr.referenceAxis = xaxis;
+				xaxisr.axiscolor = Color.black;
+				xaxisr.attachDataSet(datar);
+				xaxisr.setTitleText(dataset.getActiveDataFile(0).getAxisXLegend());
+				xaxisr.setTitleFont(new Font(axisFont, Font.BOLD, XaxisTitleFontScale));
+				xaxisr.setLabelFont(new Font(labelFont, Font.PLAIN, XaxisLabelFontScale));
+				xaxisr.setTitleColor(XaxisTitleColor);
+/*
+**      Attach the first data set to the Left Axis
+*/
+//          System.out.println("Attaching Y-axis....");
+
+				yaxisr = residuals.createAxis(Axis.LEFT);
+				yaxisr.drawLine = false;
+				yaxisr.drawLabel = false;
+				yaxisr.drawTitle = false;
+				yaxisr.axiscolor = Color.black;
+				yaxisr.referenceAxisWidth = yaxis;
+				if (!peaksLocated) {
+					yaxisr.referenceAxisScale = yaxis;
+				}
+				yaxisr.attachDataSet(datar);
+				yaxisr.setTitleText(" ");
+				yaxisr.setTitleFont(new Font(axisFont, Font.BOLD, YaxisTitleFontScale));
+				yaxisr.setLabelFont(new Font(labelFont, Font.PLAIN, YaxisLabelFontScale));
+				yaxisr.setTitleColor(getBackground());
+				yaxisr.axiscolor = Color.black;
+
+			} else {
+				xaxis.setTitleText(dataset.getActiveDataFile(0).getAxisXLegend());
+				xaxis.setTitleFont(new Font(axisFont, Font.BOLD, XaxisTitleFontScale));
+				xaxis.setLabelFont(new Font(labelFont, Font.PLAIN, XaxisLabelFontScale));
+				xaxis.setTitleColor(XaxisTitleColor);
+				xaxis.axiscolor = Color.black;
+				graph.borderBottom = 10;
+			}
+		} else {
+//			graph.finishedloading();
+			graph = null;
+			String[] labels = new String[2];
+			labels[0] = "Spectrum not loaded";
+			labels[1] = "check the datafiles!";
+			fullGraphPanel = new NoDatafileCanvas(labels);
+			return fullGraphPanel;
+		}
+		graph.finishedloading();
+
+		if (keepMaxima) {
+			graph.setUserLimits(xMin, xMax, IntensityMin, IntensityMax);
+//      System.out.println("Keeping maxima: " + xMin + " " + xMax + " " + IntensityMin + " " + IntensityMax);
+		} else {
+			xMin = 0.0;
+			xMax = 0.0;
+			IntensityMin = 0.0;
+			IntensityMax = 0.0;
+		}
+
+		return fullGraphPanel;
+	}
+
+	public CopyPrintPanel createGraph(DiffrDataFile[] afile, double[][] peaks,
                                     double[] derivative2, boolean keepMaxima) {
     double datafit[] = null;
     double dataphase[];
+	  CopyPrintPanel fullGraphPanel = null;
 
-    if (afile == null) {
+	  if (afile == null) {
       return new NoDatafileCanvas();
     }
 //    if (peaks != null)
@@ -452,102 +1003,53 @@ add(createOptionsPanel(), "options");*/
 //    if (derivative2 != null)
     secondDerivative = derivative2;
 //    if (afile != null)
-    fullGraphPanel = null;
-
     boolean peaksLocated = (peaksList != null);
 
     boolean markExcludedRegion = MaudPreferences.getBoolean("excludedRegion.setZeroForPlot", true);
 
     if (datafile[0] != null) {
-      setTitle(datafile[0].getTitle());
-      FilePar filepar = datafile[0].getFilePar();
+	    setTitle(datafile[0].getTitle());
+	    FilePar filepar = datafile[0].getFilePar();
 
-      int numberphases = filepar.getActiveSample().phasesNumber();
+	    int numberphases = filepar.getActiveSample().phasesNumber();
 //      if (!plotPeaks)
 //        numberphases = 0;
-      Phase[] phaselist = new Phase[numberphases];
-      for (int i = 0; i < numberphases; i++)
-        phaselist[i] = filepar.getActiveSample().getPhase(i);
+	    Phase[] phaselist = new Phase[numberphases];
+	    for (int i = 0; i < numberphases; i++)
+		    phaselist[i] = filepar.getActiveSample().getPhase(i);
 
-      int i;
-      int j;
+	    int i;
+	    int j;
 
-      setTitle(datafile[0].getTitle());
-      fullGraphPanel = new CopyPrintPanelNoBkg();
-//      fullGraphPanel.setBackground(Color.white);
-
-//					KappaLayout gridbag = new KappaLayout();
-      GridBagLayout gridbag = new GridBagLayout();
-      GridBagConstraints c = new GridBagConstraints();
-
-      fullGraphPanel.setLayout(gridbag);
-
-/*
-**      Create the Graph instance and modify the default behaviour
-*/
-      graph = new plotPanelG2Dint();
-
-	    graph.startedloading();
-
-      graph.setDataBackground(Color.white);
-      G2Dint lgraph = (G2Dint) graph;
-	    lgraph.setInfoDefaultLength(MaudPreferences.getInteger("plot.numberOfInfoPeaks", 10));
-
-      fullGraphPanel.add(lgraph);
-      c.fill = GridBagConstraints.BOTH;
-      c.weighty = 1.0;
-      c.weightx = 1.0;
-      c.gridwidth = GridBagConstraints.REMAINDER;
-
-      gridbag.setConstraints(lgraph, c);
-
-      lgraph.drawzero = false;
-      lgraph.drawgrid = false;
-      lgraph.borderTop = 30;
-      lgraph.borderBottom = 1;
-
-/*
-**      Load a file containing Marker definitions
-*/
-      Markers marker = null;
-      try {
-        marker = new Markers(Misc.getFilesResource("marker.txt"));
-      } catch (IOException ioe) {
-        ioe.printStackTrace();
-      }
-
-      if (marker != null)
-        lgraph.setMarkers(marker);
-
-      int ylength = datafile.length;
-      int startingIndex = datafile[0].startingindex;
-      int finalIndex = datafile[0].finalindex;
-      double xmin = 1.0E10, xmax = 0.0;
+	    int ylength = datafile.length;
+	    int startingIndex = datafile[0].startingindex;
+	    int finalIndex = datafile[0].finalindex;
+	    double xmin = 1.0E10, xmax = 0.0;
 	    if (datafile[0].increasingX()) {
-      if (xmin > datafile[0].getXDataForPlot(datafile[0].startingindex))
-        xmin = datafile[0].getXDataForPlot(datafile[0].startingindex);
-      if (xmax < datafile[0].getXDataForPlot(datafile[0].finalindex - 1))
-        xmax = datafile[0].getXDataForPlot(datafile[0].finalindex - 1);
-      if (xmin > datafile[0].getXDataForPlot(datafile[0].finalindex - 1))
-        xmin = datafile[0].getXDataForPlot(datafile[0].finalindex - 1);
-      if (xmax < datafile[0].getXDataForPlot(datafile[0].startingindex))
-        xmax = datafile[0].getXDataForPlot(datafile[0].startingindex);
-      for (int is1 = 1; is1 < ylength; is1++) {
-        if (startingIndex > datafile[is1].startingindex) {
-          startingIndex = datafile[is1].startingindex;
-        }
-        if (finalIndex < datafile[is1].finalindex) {
-          finalIndex = datafile[is1].finalindex;
-        }
-        if (xmin > datafile[is1].getXDataForPlot(datafile[is1].startingindex))
-          xmin = datafile[is1].getXDataForPlot(datafile[is1].startingindex);
-        if (xmax < datafile[is1].getXDataForPlot(datafile[is1].finalindex - 1))
-          xmax = datafile[is1].getXDataForPlot(datafile[is1].finalindex - 1);
-        if (xmin > datafile[is1].getXDataForPlot(datafile[is1].finalindex - 1))
-          xmin = datafile[is1].getXDataForPlot(datafile[is1].finalindex - 1);
-        if (xmax < datafile[is1].getXDataForPlot(datafile[is1].startingindex))
-          xmax = datafile[is1].getXDataForPlot(datafile[is1].startingindex);
-      }
+		    if (xmin > datafile[0].getXDataForPlot(datafile[0].startingindex))
+			    xmin = datafile[0].getXDataForPlot(datafile[0].startingindex);
+		    if (xmax < datafile[0].getXDataForPlot(datafile[0].finalindex - 1))
+			    xmax = datafile[0].getXDataForPlot(datafile[0].finalindex - 1);
+		    if (xmin > datafile[0].getXDataForPlot(datafile[0].finalindex - 1))
+			    xmin = datafile[0].getXDataForPlot(datafile[0].finalindex - 1);
+		    if (xmax < datafile[0].getXDataForPlot(datafile[0].startingindex))
+			    xmax = datafile[0].getXDataForPlot(datafile[0].startingindex);
+		    for (int is1 = 1; is1 < ylength; is1++) {
+			    if (startingIndex > datafile[is1].startingindex) {
+				    startingIndex = datafile[is1].startingindex;
+			    }
+			    if (finalIndex < datafile[is1].finalindex) {
+				    finalIndex = datafile[is1].finalindex;
+			    }
+			    if (xmin > datafile[is1].getXDataForPlot(datafile[is1].startingindex))
+				    xmin = datafile[is1].getXDataForPlot(datafile[is1].startingindex);
+			    if (xmax < datafile[is1].getXDataForPlot(datafile[is1].finalindex - 1))
+				    xmax = datafile[is1].getXDataForPlot(datafile[is1].finalindex - 1);
+			    if (xmin > datafile[is1].getXDataForPlot(datafile[is1].finalindex - 1))
+				    xmin = datafile[is1].getXDataForPlot(datafile[is1].finalindex - 1);
+			    if (xmax < datafile[is1].getXDataForPlot(datafile[is1].startingindex))
+				    xmax = datafile[is1].getXDataForPlot(datafile[is1].startingindex);
+		    }
 	    } else {
 		    xmin = 1.0E10;
 		    xmax = 0.0;
@@ -576,356 +1078,397 @@ add(createOptionsPanel(), "options");*/
 				    xmax = datafile[is1].getXDataForPlot(datafile[is1].startingindex);
 		    }
 	    }
-      int xlength = finalIndex - startingIndex;
-      double stepX = (xmax - xmin) / (xlength - 1);
-      np = xlength;
-      if (np <= 0) {
-	      graph.finishedloading();
-        graph = null;
-        String[] labels = new String[2];
-        labels[0] = "Spectrum not loaded";
-        labels[1] = "check the datafiles!";
-        return new NoDatafileCanvas(labels);
-      }
-      double data[] = new double[2 * np];
-      if (datafile[0].hasfit() || peaksLocated) {
-        datafit = new double[2 * np];
-      }
-      int mode = PlotDataFile.checkScaleModeX();
-      for (int is1 = 0; is1 < xlength; is1++) {
-        int is2 = is1 * 2;
-        data[is2] = xmin + is1 * stepX;
-        int total = 0;
-        int totalFit = 0;
-        for (int sn = 0; sn < ylength; sn++) {
-          double xstartmin = datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode);
-          double xendmax = datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode);
-          if (xendmax < datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode))
-            xendmax = datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode);
-          if (xstartmin > datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode))
-            xstartmin = datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode);
-          if (data[is2] >= xstartmin && data[is2] <= xendmax) {
-            data[is2 + 1] += datafile[sn].getInterpolatedYSqrtIntensity(data[is2], 2, mode);
-            total++;
-          }
-        }
-        if (total > 0)
-          data[is2 + 1] /= total;
+	    int xlength = finalIndex - startingIndex;
+	    double stepX = (xmax - xmin) / (xlength - 1);
+	    np = xlength;
 
-        if (datafile[0].hasfit()) {
-          datafit[is2] = data[is2];
+	    if (np > 0) {
+		    double data[] = new double[2 * np];
+		    if (datafile[0].hasfit() || peaksLocated) {
+			    datafit = new double[2 * np];
+		    }
+		    int mode = PlotDataFile.checkScaleModeX();
+		    for (int is1 = 0; is1 < xlength; is1++) {
+			    int is2 = is1 * 2;
+			    data[is2] = xmin + is1 * stepX;
+			    int total = 0;
+			    int totalFit = 0;
+			    for (int sn = 0; sn < ylength; sn++) {
+				    double xstartmin = datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode);
+				    double xendmax = datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode);
+				    if (xendmax < datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode))
+					    xendmax = datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode);
+				    if (xstartmin > datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode))
+					    xstartmin = datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode);
+				    if (data[is2] >= xstartmin && data[is2] <= xendmax) {
+					    data[is2 + 1] += datafile[sn].getInterpolatedYSqrtIntensity(data[is2], 2, mode);
+					    total++;
+				    }
+			    }
+			    if (total > 0)
+				    data[is2 + 1] /= total;
 
-          for (int sn = 0; sn < ylength; sn++) {
-            double xstartmin = datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode);
-            double xendmax = datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode);
-            if (xendmax < datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode))
-              xendmax = datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode);
-            if (xstartmin > datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode))
-              xstartmin = datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode);
-            if (datafit[is2] >= xstartmin && datafit[is2] <= xendmax) {
-              datafit[is2 + 1] += datafile[sn].getInterpolatedFitSqrtIntensity(datafit[is2], 2, mode);
-              totalFit++;
-            }
-          }
-          if (totalFit > 0)
-            datafit[is2 + 1] /= totalFit;
-        }
-      }
+			    if (datafile[0].hasfit()) {
+				    datafit[is2] = data[is2];
 
-      data1 = lgraph.loadDataSet(data, np);
-      if (markerNumber < 0 && (datafile[0].hasfit() || peaksLocated))
-        markerNumber = defaultMarker;
-      if (markerNumber < 0) {
-        data1.linestyle = 1;
-      } else {
-        data1.linestyle = 0;
-        data1.marker = markerNumber;
-        data1.markerscale = markerScale;
-        data1.markercolor = markerColor;
-      }
+				    for (int sn = 0; sn < ylength; sn++) {
+					    double xstartmin = datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode);
+					    double xendmax = datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode);
+					    if (xendmax < datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode))
+						    xendmax = datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode);
+					    if (xstartmin > datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode))
+						    xstartmin = datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode);
+					    if (datafit[is2] >= xstartmin && datafit[is2] <= xendmax) {
+						    datafit[is2 + 1] += datafile[sn].getInterpolatedFitSqrtIntensity(datafit[is2], 2, mode);
+						    totalFit++;
+					    }
+				    }
+				    if (totalFit > 0)
+					    datafit[is2 + 1] /= totalFit;
+			    }
+		    }
+
+
+	    setTitle(datafile[0].getTitle());
+	    fullGraphPanel = new CopyPrintPanelNoBkg();
+//      fullGraphPanel.setBackground(Color.white);
+
+//					KappaLayout gridbag = new KappaLayout();
+	    GridBagLayout gridbag = new GridBagLayout();
+	    GridBagConstraints c = new GridBagConstraints();
+
+	    fullGraphPanel.setLayout(gridbag);
+
+/*
+**      Create the Graph instance and modify the default behaviour
+*/
+	    graph = new plotPanelG2Dint();
+
+	    graph.startedloading();
+
+	    graph.setDataBackground(Color.white);
+	    graph.setInfoDefaultLength(MaudPreferences.getInteger("plot.numberOfInfoPeaks", 10));
+
+	    fullGraphPanel.add(graph);
+	    c.fill = GridBagConstraints.BOTH;
+	    c.weighty = 1.0;
+	    c.weightx = 1.0;
+	    c.gridwidth = GridBagConstraints.REMAINDER;
+
+	    gridbag.setConstraints(graph, c);
+
+	    graph.drawzero = false;
+	    graph.drawgrid = false;
+	    graph.borderTop = 30;
+	    graph.borderBottom = 1;
+
+/*
+**      Load a file containing Marker definitions
+*/
+	    Markers marker = null;
+	    try {
+		    marker = new Markers(Constants.documentsDirectory + "marker.txt");
+	    } catch (IOException ioe) {
+		    ioe.printStackTrace();
+	    }
+
+	    if (marker != null)
+		    graph.setMarkers(marker);
+
+		    data1 = graph.loadDataSet(data, np);
+		    if (markerNumber < 0 && (datafile[0].hasfit() || peaksLocated))
+			    markerNumber = defaultMarker;
+		    if (markerNumber < 0) {
+			    data1.linestyle = 1;
+		    } else {
+			    data1.linestyle = 0;
+			    data1.marker = markerNumber;
+			    data1.markerscale = markerScale;
+			    data1.markercolor = markerColor;
+		    }
 //        	data1.legend(200,100,datafile[0].getAxisXLegend());
 //        	data1.legendColor(Color.black);
 
-      if (datafile[0].hasfit() || peaksLocated) {
-        dataFit = lgraph.loadDataSet(datafit, np);
-	      if (blackAndWhite) {
-		      dataFit.linecolor = Color.black;
-	      } else {
-		      dataFit.linecolor = fitColor;
-	      }
-      }
+		    if (datafile[0].hasfit() || peaksLocated) {
+			    dataFit = graph.loadDataSet(datafit, np);
+			    if (blackAndWhite) {
+				    dataFit.linecolor = Color.black;
+			    } else {
+				    dataFit.linecolor = fitColor;
+			    }
+		    }
 
-      DataSet[] phaseData = new DataSet[numberphases];
+		    DataSet[] phaseData = new DataSet[numberphases];
 
-      if (datafile[0].hasfit()) {
-        for (int s = 0; s < numberphases; s++) {
-          if (phaselist[s].plotFit()) {
-            dataphase = new double[2 * np];
-            for (i = j = 0; i < np; i++, j += 2) {
-              int totalFit = 0;
-              for (int sn = 0; sn < ylength; sn++) {
-                double xstartmin = datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode);
-                double xendmax = datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode);
-                if (xendmax < datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode))
-                  xendmax = datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode);
-                if (xstartmin > datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode))
-                  xstartmin = datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode);
+		    if (datafile[0].hasfit()) {
+			    for (int s = 0; s < numberphases; s++) {
+				    if (phaselist[s].plotFit()) {
+					    dataphase = new double[2 * np];
+					    for (i = j = 0; i < np; i++, j += 2) {
+						    int totalFit = 0;
+						    for (int sn = 0; sn < ylength; sn++) {
+							    double xstartmin = datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode);
+							    double xendmax = datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode);
+							    if (xendmax < datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode))
+								    xendmax = datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode);
+							    if (xstartmin > datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode))
+								    xstartmin = datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode);
 //            if (is1 == 0)
 //              syaxis[ylength + 1 + sn] = ylength + 1 + sn;
-                if (datafit[j] >= xstartmin && datafit[j] <= xendmax) {
-                  dataphase[j + 1] += datafile[sn].getInterpolatedFitSqrtIntensity(datafit[j], 2, mode, s);
-                  totalFit++;
-                }
-              }
-              if (totalFit > 0)
-                dataphase[j + 1] /= totalFit;
-              dataphase[j] = datafit[j];
+							    if (datafit[j] >= xstartmin && datafit[j] <= xendmax) {
+								    dataphase[j + 1] += datafile[sn].getInterpolatedFitSqrtIntensity(datafit[j], 2, mode, s);
+								    totalFit++;
+							    }
+						    }
+						    if (totalFit > 0)
+							    dataphase[j + 1] /= totalFit;
+						    dataphase[j] = datafit[j];
 //            System.out.println(datafit[j] + " " + datafit[j + 1]);
 
-            }
-            phaseData[s] = lgraph.loadDataSet(dataphase, np);
-            phaseData[s].linestyle = 1;
-            if (blackAndWhite)
-              phaseData[s].linecolor = Color.black;
-            else
-              phaseData[s].linecolor = getPastelColor(s + 2);
-          }
-        }
+					    }
+					    phaseData[s] = graph.loadDataSet(dataphase, np);
+					    phaseData[s].linestyle = 1;
+					    if (blackAndWhite)
+						    phaseData[s].linecolor = Color.black;
+					    else
+						    phaseData[s].linecolor = getPastelColor(s + 2);
+				    }
+			    }
 
-      }
+		    }
 
-      DataSet bkgData = null;
+		    DataSet bkgData = null;
 
-      if (datafile[0].hasfit() && plotBackground) {
-        dataphase = new double[2 * np];
-        for (i = j = 0; i < np; i++, j += 2) {
-          int totalFit = 0;
-          for (int sn = 0; sn < ylength; sn++) {
-            double xstartmin = datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode);
-            double xendmax = datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode);
-            if (xendmax < datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode))
-              xendmax = datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode);
-            if (xstartmin > datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode))
-              xstartmin = datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode);
+		    if (datafile[0].hasfit() && plotBackground) {
+			    dataphase = new double[2 * np];
+			    for (i = j = 0; i < np; i++, j += 2) {
+				    int totalFit = 0;
+				    for (int sn = 0; sn < ylength; sn++) {
+					    double xstartmin = datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode);
+					    double xendmax = datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode);
+					    if (xendmax < datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode))
+						    xendmax = datafile[sn].getXDataForPlot(datafile[sn].startingindex, mode);
+					    if (xstartmin > datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode))
+						    xstartmin = datafile[sn].getXDataForPlot(datafile[sn].finalindex - 1, mode);
 //            if (is1 == 0)
 //              syaxis[ylength + 1 + sn] = ylength + 1 + sn;
-            if (datafit[j] >= xstartmin && datafit[j] <= xendmax) {
-              dataphase[j + 1] += datafile[sn].getInterpolatedBkgFitSqrtIntensity(datafit[j], 2, mode);
-              totalFit++;
-            }
-          }
-          if (totalFit > 0)
-            dataphase[j + 1] /= totalFit;
-          dataphase[j] = datafit[j];
+					    if (datafit[j] >= xstartmin && datafit[j] <= xendmax) {
+						    dataphase[j + 1] += datafile[sn].getInterpolatedBkgFitSqrtIntensity(datafit[j], 2, mode);
+						    totalFit++;
+					    }
+				    }
+				    if (totalFit > 0)
+					    dataphase[j + 1] /= totalFit;
+				    dataphase[j] = datafit[j];
 //            System.out.println(datafit[j] + " " + datafit[j + 1]);
 
-        }
-        bkgData = lgraph.loadDataSet(dataphase, np);
-        bkgData.linestyle = 1;
-        if (blackAndWhite)
-          bkgData.linecolor = Color.black;
-        else
-	        bkgData.linecolor = getPastelColor(1);
+			    }
+			    bkgData = graph.loadDataSet(dataphase, np);
+			    bkgData.linestyle = 1;
+			    if (blackAndWhite)
+				    bkgData.linecolor = Color.black;
+			    else
+				    bkgData.linecolor = getPastelColor(1);
 
-      }
+		    }
 
 /*
 **      Attach data sets to the Xaxis
 */
 //          System.out.println("Attaching X-axis....");
 
-      xaxis = lgraph.createXAxis();
-      xaxis.axiscolor = Color.black;
-      if ((plotResiduals && datafile[0].hasfit()) || peaksLocated) {
-        xaxis.drawLabel = false;
-        xaxis.drawTitle = false;
-      }
-      xaxis.attachDataSet(data1);
-      if (datafile[0].hasfit() || peaksLocated) {
-        xaxis.attachDataSet(dataFit);
-      }
-      if (datafile[0].hasfit()) {
-        for (int s = 0; s < numberphases; s++)
-          if (phaselist[s].plotFit())
-            xaxis.attachDataSet(phaseData[s]);
-        if (plotBackground)
-          xaxis.attachDataSet(bkgData);
-      }
+		    xaxis = graph.createXAxis();
+		    xaxis.axiscolor = Color.black;
+		    if ((plotResiduals && datafile[0].hasfit()) || peaksLocated) {
+			    xaxis.drawLabel = false;
+			    xaxis.drawTitle = false;
+		    }
+		    xaxis.attachDataSet(data1);
+		    if (datafile[0].hasfit() || peaksLocated) {
+			    xaxis.attachDataSet(dataFit);
+		    }
+		    if (datafile[0].hasfit()) {
+			    for (int s = 0; s < numberphases; s++)
+				    if (phaselist[s].plotFit())
+					    xaxis.attachDataSet(phaseData[s]);
+			    if (plotBackground)
+				    xaxis.attachDataSet(bkgData);
+		    }
 
 /*
 **      Attach the first data set to the Left Axis
 */
 //          System.out.println("Attaching Y-axis....");
 
-      yaxis = lgraph.createYAxis();
-      yaxis.attachDataSet(data1);
-      if (datafile[0].hasfit() || peaksLocated) {
-        yaxis.attachDataSet(dataFit);
-      }
-      if (datafile[0].hasfit()) {
-        for (int s = 0; s < numberphases; s++)
-          if (phaselist[s].plotFit())
-            yaxis.attachDataSet(phaseData[s]);
-        if (plotBackground)
-          yaxis.attachDataSet(bkgData);
-      }
+		    yaxis = graph.createYAxis();
+		    yaxis.attachDataSet(data1);
+		    if (datafile[0].hasfit() || peaksLocated) {
+			    yaxis.attachDataSet(dataFit);
+		    }
+		    if (datafile[0].hasfit()) {
+			    for (int s = 0; s < numberphases; s++)
+				    if (phaselist[s].plotFit())
+					    yaxis.attachDataSet(phaseData[s]);
+			    if (plotBackground)
+				    yaxis.attachDataSet(bkgData);
+		    }
 
 
-      yaxis.setTitleText(DiffrDataFile.getAxisYLegend());
-      yaxis.setTitleFont(new Font(axisFont, Font.BOLD, YaxisTitleFontScale));
-      yaxis.setLabelFont(new Font(labelFont, Font.PLAIN, YaxisLabelFontScale));
-      yaxis.setTitleColor(YaxisTitleColor);
-      yaxis.axiscolor = Color.black;
+		    yaxis.setTitleText(DiffrDataFile.getAxisYLegend());
+		    yaxis.setTitleFont(new Font(axisFont, Font.BOLD, YaxisTitleFontScale));
+		    yaxis.setLabelFont(new Font(labelFont, Font.PLAIN, YaxisLabelFontScale));
+		    yaxis.setTitleColor(YaxisTitleColor);
+		    yaxis.axiscolor = Color.black;
 
-	    DataFileSet adataset = datafile[0].getDataFileSet();
-	    int numberofPeaks = adataset.getNumberofPeaks();
-	    if (adataset.getInstrument() instanceof XRFInstrument) {
-		    numberofPeaks = 0;
-		    double energyInKeV = Constants.ENERGY_LAMBDA / adataset.getInstrument().getRadiationType().
-				    getRadiationWavelengthForFluorescence(0) * 0.001;
-		    if (peaksInfoXRF == null || energyUsedForPeakInfoXRF < energyInKeV) {
-			    energyUsedForPeakInfoXRF = energyInKeV;
-			    peaksInfoXRF = new Vector<PeakInfo>(10000, 1000);
-			    double threasholdXRFLines = MaudPreferences.getDouble("fluorescenceLinesPeaksInfo.thresholdOnMinors", 0.001);
-			    for (int atomNumber = 0; atomNumber < XRayDataSqLite.atomsNumber; atomNumber++) {
-				    String atomLabel = AtomInfo.atomLabels[atomNumber];
-				    Vector<FluorescenceLine> linesForAtom = XRayDataSqLite.getFluorescenceLinesFor(
-						    atomNumber + 1, energyInKeV);
-				    for (int lindex = 0; lindex < linesForAtom.size(); lindex++) {
-					    FluorescenceLine line = linesForAtom.get(lindex);
-					    if (line.getIntensity() > threasholdXRFLines) {
-						    PeakInfo peakInfo = new PeakInfo();
-						    peakInfo.info = atomLabel + " " + line.toString();
-						    peakInfo.coordinate = line.getEnergy() * 1000;
-						    peaksInfoXRF.add(peakInfo);
-					    }/* else {
+		    DataFileSet adataset = datafile[0].getDataFileSet();
+		    int numberofPeaks = adataset.getNumberofPeaks();
+		    if (adataset.getInstrument() instanceof XRFInstrument) {
+			    numberofPeaks = 0;
+			    double energyInKeV = Constants.ENERGY_LAMBDA / adataset.getInstrument().getRadiationType().
+					    getShortestWavelengthForFluorescence() * 0.001;
+			    if (peaksInfoXRF == null || energyUsedForPeakInfoXRF < energyInKeV) {
+				    energyUsedForPeakInfoXRF = energyInKeV;
+				    peaksInfoXRF = new Vector<PeakInfo>(10000, 1000);
+				    double threasholdXRFLines = MaudPreferences.getDouble("fluorescenceLinesPeaksInfo.thresholdOnMinors", 0.001);
+				    for (int atomNumber = 0; atomNumber < XRayDataSqLite.atomsNumber; atomNumber++) {
+					    String atomLabel = AtomInfo.atomLabels[atomNumber];
+					    Vector<FluorescenceLine> linesForAtom = XRayDataSqLite.getFluorescenceLinesFor(
+							    atomNumber + 1, energyInKeV);
+					    for (int lindex = 0; lindex < linesForAtom.size(); lindex++) {
+						    FluorescenceLine line = linesForAtom.get(lindex);
+						    if (line.getIntensity() > threasholdXRFLines) {
+							    PeakInfo peakInfo = new PeakInfo();
+							    peakInfo.info = atomLabel + " " + line.toString();
+							    peakInfo.coordinate = line.getEnergy() * 1000;
+							    peaksInfoXRF.add(peakInfo);
+						    }/* else {
 						    System.out.println("Not added: " + atomLabel + " " + line.toString() + " " + line.getEnergy() + " " + line.getIntensity());
 					    }*/
+					    }
 				    }
 			    }
+			    graph.attachPeaksInfos(peaksInfoXRF);
 		    }
-		    lgraph.attachPeaksInfos(peaksInfoXRF);
-	    }
 
-      if (((plotPeaks && numberofPeaks > 0) && datafile[0].hasfit()) || peaksLocated) {
+		    if (((plotPeaks && numberofPeaks > 0) && datafile[0].hasfit()) || peaksLocated) {
 
 /*
 **      prepare the positions box
 */
-        if (!peaksLocated) {
-          Vector<Peak> peaklist = adataset.getPeakList();
+			    if (!peaksLocated) {
+				    Vector<Peak> peaklist = adataset.getPeakList();
 
-          int numberradiation = adataset.getInstrument().getRadiationType().getLinesCountForPlot();
+				    int numberradiation = adataset.getInstrument().getRadiationType().getLinesCountForPlot();
 
-          if (numberradiation == 0)
-            numberradiation = 1;
-          int numberofRefl = numberofPeaks;
+				    if (numberradiation == 0)
+					    numberradiation = 1;
+				    int numberofRefl = numberofPeaks;
 
-          if (numberofRefl > 0) {
+				    if (numberofRefl > 0) {
 
-	          Vector<PeakInfo> peaksInfos = new Vector<PeakInfo>(numberofPeaks / numberradiation);
+					    Vector<PeakInfo> peaksInfos = new Vector<PeakInfo>(numberofPeaks / numberradiation);
 
-            positions = new G2Dint(new plotPhaseMouseAdapter(), null);
+					    positions = new G2Dint(new plotPhaseMouseAdapter(), null);
 
-            lgraph.addComponent(positions);
+					    graph.addComponent(positions);
 
-            c.weighty = 0.04 * (numberphases + 1);
-            c.gridwidth = GridBagConstraints.REMAINDER;
+					    c.weighty = 0.04 * (numberphases + 1);
+					    c.gridwidth = GridBagConstraints.REMAINDER;
 //              c.h = numberphases + 1;
 
-            gridbag.setConstraints(positions, c);
+					    gridbag.setConstraints(positions, c);
 //        			c1.add(positions, c);
-            fullGraphPanel.add(positions);
+					    fullGraphPanel.add(positions);
 //              c1.add(positions, "0 60 100 80");
 //              c.y += c.h;
 
-            positions.drawzero = false;
-            positions.drawgrid = false;
-            positions.frame = false;
-            positions.borderTop = 1;
-            positions.borderBottom = 1;
+					    positions.drawzero = false;
+					    positions.drawgrid = false;
+					    positions.frame = false;
+					    positions.borderTop = 1;
+					    positions.borderBottom = 1;
 /*
 **      Load a file containing Marker definitions
 */
 
-            if (marker != null)
-              positions.setMarkers(marker);
+					    if (marker != null)
+						    positions.setMarkers(marker);
 
-            double[] datapeak = new double[2 * numberofRefl];
+					    double[] datapeak = new double[2 * numberofRefl];
 
-            int dimension = numberradiation;
+					    int dimension = numberradiation;
 
-            if (numberphases > dimension)
-              dimension = numberphases;
-            datap = new PeakSet[dimension];
+					    if (numberphases > dimension)
+						    dimension = numberphases;
+					    datap = new PeakSet[dimension];
 
-            for (int ijn = 0; ijn < numberradiation; ijn++) {
-              double wave = adataset.getInstrument().getRadiationType().getRadiationWavelength(ijn);
-              for (i = j = 0; i < numberofPeaks; i++, j += 2) {
-	              Peak peak = peaklist.elementAt(i);
-                Phase tmpphase = peak.getPhase();
-	              int reflIndex = peak.getOrderPosition();
-                int phaseindex = 0;
-                for (int ij = 0; ij < numberphases; ij++)
-                  if (tmpphase == phaselist[ij])
-                    phaseindex = ij;
+					    for (int ijn = 0; ijn < numberradiation; ijn++) {
+						    double wave = adataset.getInstrument().getRadiationType().getRadiationWavelength(ijn);
+						    for (i = j = 0; i < numberofPeaks; i++, j += 2) {
+							    Peak peak = peaklist.elementAt(i);
+							    Phase tmpphase = peak.getPhase();
+							    int reflIndex = peak.getOrderPosition();
+							    int phaseindex = 0;
+							    for (int ij = 0; ij < numberphases; ij++)
+								    if (tmpphase == phaselist[ij])
+									    phaseindex = ij;
 
-	              if (ijn < datafile[0].getPositions(tmpphase).length) {
-                  double pos = datafile[0].getPositions(tmpphase)[ijn][reflIndex][0];
-                  datapeak[j] = datafile[0].convertXDataForPlot(pos, wave, mode);
-                  datapeak[j + 1] = (double) (phaseindex + 1);
-	              }
-	              if (ijn == 0) {
-		              PeakInfo peakInfo = new PeakInfo();
-		              Reflection refl = peak.getReflex();
-		              peakInfo.info = tmpphase.getPhaseName() + " (" + Integer.toString(refl.getH()) + " " +
-				              Integer.toString(refl.getK()) + " " +
-				              Integer.toString(refl.getL()) + ")";
-		              peakInfo.coordinate = datapeak[j];
+							    if (ijn < datafile[0].getPositions(tmpphase).length) {
+								    double pos = datafile[0].getPositions(tmpphase)[ijn][reflIndex][0];
+								    datapeak[j] = datafile[0].convertXDataForPlot(pos, wave, mode);
+								    datapeak[j + 1] = (double) (phaseindex + 1);
+							    }
+							    if (ijn == 0) {
+								    PeakInfo peakInfo = new PeakInfo();
+								    Reflection refl = peak.getReflex();
+								    peakInfo.info = tmpphase.getPhaseName() + " (" + Integer.toString(refl.getH()) + " " +
+										    Integer.toString(refl.getK()) + " " +
+										    Integer.toString(refl.getL()) + ")";
+								    peakInfo.coordinate = datapeak[j];
 //		              System.out.println("Adding: " + peakInfo.coordinate + " " + peakInfo.info);
-		              peaksInfos.add(peakInfo);
-	              }
-              }
-              datap[ijn] = positions.loadPeakSet(datapeak, numberofRefl);
-              datap[ijn].linestyle = 0;
-              datap[ijn].marker = 9;
-              double mscale = 2.0 - ijn;
-              if (mscale <= 0.01)
-                mscale = 0.5;
-              datap[ijn].markerscale = mscale;
+								    peaksInfos.add(peakInfo);
+							    }
+						    }
+						    datap[ijn] = positions.loadPeakSet(datapeak, numberofRefl);
+						    datap[ijn].linestyle = 0;
+						    datap[ijn].marker = 9;
+						    double mscale = 2.0 - ijn;
+						    if (mscale <= 0.01)
+							    mscale = 0.5;
+						    datap[ijn].markerscale = mscale;
 
 //        		 		int index = 0;
 //        		 		if (ijn > 0)
 //        		 			index = 1;
 //              if (blackAndWhite)
-              datap[ijn].markercolor = Color.black;
+						    datap[ijn].markercolor = Color.black;
 //              else
 //                datap[ijn].markercolor = getPastelColor(ijn);
 
-            }
+					    }
 
-            datapeak = new double[2];
-            for (int ijn = numberradiation; ijn < numberphases; ijn++) {
-              datapeak[0] = 0.0;
-              datapeak[1] = 1.0;
-              datap[ijn] = positions.loadPeakSet(datapeak, 1);
-              datap[ijn].linestyle = 0;
-              datap[ijn].marker = 9;
-              datap[ijn].markerscale = 0.1;
-              if (blackAndWhite)
-                datap[ijn].markercolor = Color.black;
-              else
-                datap[ijn].markercolor = getPastelColor(ijn);
-            }
-            for (int ij = 0; ij < numberphases; ij++) {
-              double ypos = (double) (ij + 1);
-              datap[ij].legend(1, ypos, phaselist[ij].toXRDcatString());
-              datap[ij].legendFont(new Font(labelFont, Font.PLAIN, PhasesFontScale));
-              if (blackAndWhite)
-                datap[ij].legendColor(Color.black);
-              else
-                datap[ij].legendColor(getPastelColor(ij + 2));
-            }
+					    datapeak = new double[2];
+					    for (int ijn = numberradiation; ijn < numberphases; ijn++) {
+						    datapeak[0] = 0.0;
+						    datapeak[1] = 1.0;
+						    datap[ijn] = positions.loadPeakSet(datapeak, 1);
+						    datap[ijn].linestyle = 0;
+						    datap[ijn].marker = 9;
+						    datap[ijn].markerscale = 0.1;
+						    if (blackAndWhite)
+							    datap[ijn].markercolor = Color.black;
+						    else
+							    datap[ijn].markercolor = getPastelColor(ijn);
+					    }
+					    for (int ij = 0; ij < numberphases; ij++) {
+						    double ypos = (double) (ij + 1);
+						    datap[ij].legend(1, ypos, phaselist[ij].toXRDcatString());
+						    datap[ij].legendFont(new Font(labelFont, Font.PLAIN, PhasesFontScale));
+						    if (blackAndWhite)
+							    datap[ij].legendColor(Color.black);
+						    else
+							    datap[ij].legendColor(getPastelColor(ij + 2));
+					    }
 
 //          System.out.println("Data loaded");
 
@@ -934,95 +1477,95 @@ add(createOptionsPanel(), "options");*/
 */
 //          System.out.println("Attaching X-axis....");
 
-            Axis xaxisp = positions.createXAxis();
-            xaxisp.drawLine = false;
-            xaxisp.drawLabel = false;
-            xaxisp.drawTitle = false;
-            xaxisp.referenceAxis = xaxis;
-            xaxisp.axiscolor = Color.black;
+					    Axis xaxisp = positions.createXAxis();
+					    xaxisp.drawLine = false;
+					    xaxisp.drawLabel = false;
+					    xaxisp.drawTitle = false;
+					    xaxisp.referenceAxis = xaxis;
+					    xaxisp.axiscolor = Color.black;
 
-            for (int ijn = 0; ijn < dimension; ijn++)
-              xaxisp.attachDataSet(datap[ijn]);
+					    for (int ijn = 0; ijn < dimension; ijn++)
+						    xaxisp.attachDataSet(datap[ijn]);
 
 /*
 **      Attach the first data set to the Left Axis
 */
 //          System.out.println("Attaching Y-axis....");
 
-            yaxisp = positions.createYAxis();
-            yaxisp.drawLine = false;
-            yaxisp.drawLabel = false;
-            yaxisp.drawTitle = false;
-            yaxisp.referenceAxisWidth = yaxis;
-            for (int ijn = 0; ijn < dimension; ijn++)
-              yaxisp.attachDataSet(datap[ijn]);
-            yaxisp.setTitleText(" ");
-            yaxisp.setTitleFont(new Font(axisFont, Font.BOLD, YaxisTitleFontScale));
-            yaxisp.setLabelFont(new Font(labelFont, Font.PLAIN, YaxisLabelFontScale));
-            yaxisp.setTitleColor(getBackground());
-            yaxisp.axiscolor = Color.black;
-            yaxisp.minimum = 0.5;
-            yaxisp.maximum = ((double) numberphases) + 0.5;
+					    yaxisp = positions.createYAxis();
+					    yaxisp.drawLine = false;
+					    yaxisp.drawLabel = false;
+					    yaxisp.drawTitle = false;
+					    yaxisp.referenceAxisWidth = yaxis;
+					    for (int ijn = 0; ijn < dimension; ijn++)
+						    yaxisp.attachDataSet(datap[ijn]);
+					    yaxisp.setTitleText(" ");
+					    yaxisp.setTitleFont(new Font(axisFont, Font.BOLD, YaxisTitleFontScale));
+					    yaxisp.setLabelFont(new Font(labelFont, Font.PLAIN, YaxisLabelFontScale));
+					    yaxisp.setTitleColor(getBackground());
+					    yaxisp.axiscolor = Color.black;
+					    yaxisp.minimum = 0.5;
+					    yaxisp.maximum = ((double) numberphases) + 0.5;
 
-	          lgraph.attachPeaksInfos(peaksInfos);
-          }
-        } else {
-          int numberofRefl = peaksList[0].length;
+					    graph.attachPeaksInfos(peaksInfos);
+				    }
+			    } else {
+				    int numberofRefl = peaksList[0].length;
 
-          if (numberofRefl > 0) {
+				    if (numberofRefl > 0) {
 
-            positions = new G2Dint(new g2DPmouse(), null);
+					    positions = new G2Dint(new g2DPmouse(), null);
 
-            lgraph.addComponent(positions);
+					    graph.addComponent(positions);
 
-            c.weighty = 0.04 * 2;
-            c.gridwidth = GridBagConstraints.REMAINDER;
+					    c.weighty = 0.04 * 2;
+					    c.gridwidth = GridBagConstraints.REMAINDER;
 //              c.h = numberphases + 1;
 
-            gridbag.setConstraints(positions, c);
+					    gridbag.setConstraints(positions, c);
 //        			c1.add(positions, c);
-            fullGraphPanel.add(positions);
+					    fullGraphPanel.add(positions);
 //              c1.add(positions, "0 60 100 80");
 //              c.y += c.h;
 
-            positions.drawzero = false;
-            positions.drawgrid = false;
-            positions.frame = false;
-            positions.borderTop = 1;
-            positions.borderBottom = 1;
+					    positions.drawzero = false;
+					    positions.drawgrid = false;
+					    positions.frame = false;
+					    positions.borderTop = 1;
+					    positions.borderBottom = 1;
 /*
 **      Load a file containing Marker definitions
 */
 
-            if (marker != null)
-              positions.setMarkers(marker);
+					    if (marker != null)
+						    positions.setMarkers(marker);
 
-            double[] datapeak = new double[2 * numberofRefl];
+					    double[] datapeak = new double[2 * numberofRefl];
 
-            int dimension = 1;
-            datap = new PeakSet[dimension];
+					    int dimension = 1;
+					    datap = new PeakSet[dimension];
 
-            double wave = adataset.getInstrument().getRadiationType().getRadiationWavelength(0);
-            for (i = 0; i < numberofRefl; i++) {
-              datapeak[2 * i] = datafile[0].convertXDataForPlot(peaksList[0][i], wave, mode);
+					    double wave = adataset.getInstrument().getRadiationType().getRadiationWavelength(0);
+					    for (i = 0; i < numberofRefl; i++) {
+						    datapeak[2 * i] = datafile[0].convertXDataForPlot(peaksList[0][i], wave, mode);
 
-              datapeak[2 * i + 1] = 1.0;
-            }
-            datap[0] = positions.loadPeakSet(datapeak, numberofRefl);
-            datap[0].linestyle = 0;
-            datap[0].marker = 9;
-            double mscale = 2.0;
-            datap[0].markerscale = mscale;
+						    datapeak[2 * i + 1] = 1.0;
+					    }
+					    datap[0] = positions.loadPeakSet(datapeak, numberofRefl);
+					    datap[0].linestyle = 0;
+					    datap[0].marker = 9;
+					    double mscale = 2.0;
+					    datap[0].markerscale = mscale;
 //            if (blackAndWhite)
-              datap[0].markercolor = Color.black;
+					    datap[0].markercolor = Color.black;
 //            else
 //              datap[0].markercolor = getPastelColor(0);
 
-            double ypos = 1.0;
-            datap[0].legend(1, ypos, "Peaks");
-            datap[0].legendFont(new Font(labelFont, Font.PLAIN, PhasesFontScale));
+					    double ypos = 1.0;
+					    datap[0].legend(1, ypos, "Peaks");
+					    datap[0].legendFont(new Font(labelFont, Font.PLAIN, PhasesFontScale));
 //            if (blackAndWhite)
-              datap[0].legendColor(Color.black);
+					    datap[0].legendColor(Color.black);
 //            else
 //              datap[0].legendColor(getPastelColor(0));
 /*
@@ -1030,146 +1573,154 @@ add(createOptionsPanel(), "options");*/
 */
 //          System.out.println("Attaching X-axis....");
 
-            Axis xaxisp = positions.createXAxis();
-            xaxisp.drawLine = false;
-            xaxisp.drawLabel = false;
-            xaxisp.drawTitle = false;
-            xaxisp.referenceAxis = xaxis;
-            xaxisp.axiscolor = Color.black;
+					    Axis xaxisp = positions.createXAxis();
+					    xaxisp.drawLine = false;
+					    xaxisp.drawLabel = false;
+					    xaxisp.drawTitle = false;
+					    xaxisp.referenceAxis = xaxis;
+					    xaxisp.axiscolor = Color.black;
 
-            for (int ijn = 0; ijn < dimension; ijn++)
-              xaxisp.attachDataSet(datap[ijn]);
+					    for (int ijn = 0; ijn < dimension; ijn++)
+						    xaxisp.attachDataSet(datap[ijn]);
 
 /*
 **      Attach the first data set to the Left Axis
 */
 //          System.out.println("Attaching Y-axis....");
 
-            yaxisp = positions.createYAxis();
-            yaxisp.drawLine = false;
-            yaxisp.drawLabel = false;
-            yaxisp.drawTitle = false;
-            yaxisp.axiscolor = Color.black;
-            yaxisp.referenceAxisWidth = yaxis;
-            for (int ijn = 0; ijn < dimension; ijn++)
-              yaxisp.attachDataSet(datap[ijn]);
-            yaxisp.setTitleText(" ");
-            yaxisp.setTitleFont(new Font(axisFont, Font.BOLD, YaxisTitleFontScale));
-            yaxisp.setLabelFont(new Font(labelFont, Font.PLAIN, YaxisLabelFontScale));
-            yaxisp.setTitleColor(getBackground());
-            yaxisp.minimum = 0.5;
-            yaxisp.maximum = 1.5;
+					    yaxisp = positions.createYAxis();
+					    yaxisp.drawLine = false;
+					    yaxisp.drawLabel = false;
+					    yaxisp.drawTitle = false;
+					    yaxisp.axiscolor = Color.black;
+					    yaxisp.referenceAxisWidth = yaxis;
+					    for (int ijn = 0; ijn < dimension; ijn++)
+						    yaxisp.attachDataSet(datap[ijn]);
+					    yaxisp.setTitleText(" ");
+					    yaxisp.setTitleFont(new Font(axisFont, Font.BOLD, YaxisTitleFontScale));
+					    yaxisp.setLabelFont(new Font(labelFont, Font.PLAIN, YaxisLabelFontScale));
+					    yaxisp.setTitleColor(getBackground());
+					    yaxisp.minimum = 0.5;
+					    yaxisp.maximum = 1.5;
 
-          }
-        }
+				    }
+			    }
 /*
 **      prepare the residuals box
 */
-      }
+		    }
 
-      if ((plotResiduals && datafile[0].hasfit()) || peaksLocated) {
+		    if ((plotResiduals && datafile[0].hasfit()) || peaksLocated) {
 
-        residuals = new G2Dint();
-        residuals.setDataBackground(Color.white);
+			    residuals = new G2Dint();
+			    residuals.setDataBackground(Color.white);
 
-        lgraph.addComponent(residuals);
+			    graph.addComponent(residuals);
 
-        c.weighty = 0.3;
-        if (peaksLocated)
-          c.weighty = 0.7;
+			    c.weighty = 0.3;
+			    if (peaksLocated)
+				    c.weighty = 0.7;
 //            c.h = 5;
-        c.gridwidth = GridBagConstraints.REMAINDER;
+			    c.gridwidth = GridBagConstraints.REMAINDER;
 
-        gridbag.setConstraints(residuals, c);
-        fullGraphPanel.add(residuals);
+			    gridbag.setConstraints(residuals, c);
+			    fullGraphPanel.add(residuals);
 //        		c1.add(residuals, c);
 //            c1.add(residuals, "0 80 100 100");
 
-        residuals.drawzero = false;
-        residuals.drawgrid = false;
-        residuals.borderTop = 0;
-        residuals.borderBottom = 10;
+			    residuals.drawzero = false;
+			    residuals.drawgrid = false;
+			    residuals.borderTop = 0;
+			    residuals.borderBottom = 10;
 /*
 **      Load a file containing Marker definitions
 */
 
-        if (marker != null)
-          residuals.setMarkers(marker);
+			    if (marker != null)
+				    residuals.setMarkers(marker);
 
-        if (peaksLocated)
-          for (i = j = 0; i < np; i++, j += 2) {
-            data[j + 1] = MoreMath.sign(derivative2[i]) *
-                Math.sqrt(Math.sqrt(Math.abs(derivative2[i])));
-          }
-        else
-          for (i = j = 0; i < np; i++, j += 2) {
-            data[j + 1] = datafit[j + 1] - data[j + 1];
-          }
+			    if (peaksLocated)
+				    for (i = j = 0; i < np; i++, j += 2) {
+					    data[j + 1] = MoreMath.sign(derivative2[i]) *
+							    Math.sqrt(Math.sqrt(Math.abs(derivative2[i])));
+				    }
+			    else
+				    for (i = j = 0; i < np; i++, j += 2) {
+					    data[j + 1] = datafit[j + 1] - data[j + 1];
+				    }
 
-        datar = residuals.loadDataSet(data, np);
+			    datar = residuals.loadDataSet(data, np);
 
 /*
 **      Attach data sets to the Xaxis
 */
 //          System.out.println("Attaching X-axis....");
 
-        xaxisr = residuals.createAxis(Axis.BOTTOM);
-        xaxisr.referenceAxis = xaxis;
-        xaxisr.axiscolor = Color.black;
-        xaxisr.attachDataSet(datar);
-        xaxisr.setTitleText(datafile[0].getAxisXLegend());
-        xaxisr.setTitleFont(new Font(axisFont, Font.BOLD, XaxisTitleFontScale));
-        xaxisr.setLabelFont(new Font(labelFont, Font.PLAIN, XaxisLabelFontScale));
-        xaxisr.setTitleColor(XaxisTitleColor);
+			    xaxisr = residuals.createAxis(Axis.BOTTOM);
+			    xaxisr.referenceAxis = xaxis;
+			    xaxisr.axiscolor = Color.black;
+			    xaxisr.attachDataSet(datar);
+			    xaxisr.setTitleText(datafile[0].getAxisXLegend());
+			    xaxisr.setTitleFont(new Font(axisFont, Font.BOLD, XaxisTitleFontScale));
+			    xaxisr.setLabelFont(new Font(labelFont, Font.PLAIN, XaxisLabelFontScale));
+			    xaxisr.setTitleColor(XaxisTitleColor);
 /*
 **      Attach the first data set to the Left Axis
 */
 //          System.out.println("Attaching Y-axis....");
 
-        yaxisr = residuals.createAxis(Axis.LEFT);
-        yaxisr.drawLine = false;
-        yaxisr.drawLabel = false;
-        yaxisr.drawTitle = false;
-        yaxisr.axiscolor = Color.black;
-        yaxisr.referenceAxisWidth = yaxis;
-        if (!peaksLocated) {
-          yaxisr.referenceAxisScale = yaxis;
-        }
-        yaxisr.attachDataSet(datar);
-        yaxisr.setTitleText(" ");
-        yaxisr.setTitleFont(new Font(axisFont, Font.BOLD, YaxisTitleFontScale));
-        yaxisr.setLabelFont(new Font(labelFont, Font.PLAIN, YaxisLabelFontScale));
-        yaxisr.setTitleColor(getBackground());
-        yaxisr.axiscolor = Color.black;
+			    yaxisr = residuals.createAxis(Axis.LEFT);
+			    yaxisr.drawLine = false;
+			    yaxisr.drawLabel = false;
+			    yaxisr.drawTitle = false;
+			    yaxisr.axiscolor = Color.black;
+			    yaxisr.referenceAxisWidth = yaxis;
+			    if (!peaksLocated) {
+				    yaxisr.referenceAxisScale = yaxis;
+			    }
+			    yaxisr.attachDataSet(datar);
+			    yaxisr.setTitleText(" ");
+			    yaxisr.setTitleFont(new Font(axisFont, Font.BOLD, YaxisTitleFontScale));
+			    yaxisr.setLabelFont(new Font(labelFont, Font.PLAIN, YaxisLabelFontScale));
+			    yaxisr.setTitleColor(getBackground());
+			    yaxisr.axiscolor = Color.black;
 
-      } else {
-        xaxis.setTitleText(datafile[0].getAxisXLegend());
-        xaxis.setTitleFont(new Font(axisFont, Font.BOLD, XaxisTitleFontScale));
-        xaxis.setLabelFont(new Font(labelFont, Font.PLAIN, XaxisLabelFontScale));
-        xaxis.setTitleColor(XaxisTitleColor);
-        xaxis.axiscolor = Color.black;
-        lgraph.borderBottom = 10;
-      }
+		    } else {
+			    xaxis.setTitleText(datafile[0].getAxisXLegend());
+			    xaxis.setTitleFont(new Font(axisFont, Font.BOLD, XaxisTitleFontScale));
+			    xaxis.setLabelFont(new Font(labelFont, Font.PLAIN, XaxisLabelFontScale));
+			    xaxis.setTitleColor(XaxisTitleColor);
+			    xaxis.axiscolor = Color.black;
+			    graph.borderBottom = 10;
+		    }
+	    } else {
+		    graph.finishedloading();
+		    graph = null;
+		    String[] labels = new String[1];
+		    labels[0] = "No datafile selected!";
+		    return new NoDatafileCanvas(labels);
+	    }
+	    graph.finishedloading();
+
+	    if (keepMaxima) {
+		    graph.setUserLimits(xMin, xMax, IntensityMin, IntensityMax);
+//      System.out.println("Keeping maxima: " + xMin + " " + xMax + " " + IntensityMin + " " + IntensityMax);
+	    } else {
+		    xMin = 0.0;
+		    xMax = 0.0;
+		    IntensityMin = 0.0;
+		    IntensityMax = 0.0;
+	    }
     } else {
 	    graph.finishedloading();
-      graph = null;
-      String[] labels = new String[1];
-      labels[0] = "No datafile selected!";
-      return new NoDatafileCanvas(labels);
-    }
-	  graph.finishedloading();
-
-    if (keepMaxima) {
-      ((G2Dint) graph).setUserLimits(xMin, xMax, IntensityMin, IntensityMax);
-//      System.out.println("Keeping maxima: " + xMin + " " + xMax + " " + IntensityMin + " " + IntensityMax);
-    } else {
-      xMin = 0.0;
-      xMax = 0.0;
-      IntensityMin = 0.0;
-      IntensityMax = 0.0;
+	    graph = null;
+	    String[] labels = new String[2];
+	    labels[0] = "Spectrum not loaded";
+	    labels[1] = "check the datafiles!";
+	    fullGraphPanel = new NoDatafileCanvas(labels);
     }
 
-    return fullGraphPanel;
+	  return fullGraphPanel;
   }
 
   public CopyPrintPanel createGraphSingle(DiffrDataFile afile, double[][] peaks,
@@ -1187,7 +1738,7 @@ add(createOptionsPanel(), "options");*/
 //    if (derivative2 != null)
     secondDerivative = derivative2;
 //    if (afile != null)
-    fullGraphPanel = null;
+	  CopyPrintPanel fullGraphPanel = null;
 
     boolean peaksLocated = (peaksList != null);
 
@@ -1225,8 +1776,7 @@ add(createOptionsPanel(), "options");*/
       graph = new plotPanelG2Dint();
 	    graph.startedloading();
       graph.setDataBackground(Color.white);
-      G2Dint lgraph = (G2Dint) graph;
-	    lgraph.setInfoDefaultLength(MaudPreferences.getInteger("plot.numberOfInfoPeaks", 10));
+	    graph.setInfoDefaultLength(MaudPreferences.getInteger("plot.numberOfInfoPeaks", 10));
 
 /*          c.x = 0;
           c.y = 0;
@@ -1239,31 +1789,31 @@ add(createOptionsPanel(), "options");*/
 //          c1.add(lgraph, "0 0 100 60");
 //          c.y += c.h;
 
-      fullGraphPanel.add(lgraph);
+      fullGraphPanel.add(graph);
       c.fill = GridBagConstraints.BOTH;
       c.weighty = 1.0;
       c.weightx = 1.0;
       c.gridwidth = GridBagConstraints.REMAINDER;
 
-      gridbag.setConstraints(lgraph, c);
+      gridbag.setConstraints(graph, c);
 
-      lgraph.drawzero = false;
-      lgraph.drawgrid = false;
-      lgraph.borderTop = 30;
-      lgraph.borderBottom = 1;
+      graph.drawzero = false;
+      graph.drawgrid = false;
+      graph.borderTop = 30;
+      graph.borderBottom = 1;
 
 /*
 **      Load a file containing Marker definitions
 */
       Markers marker = null;
       try {
-        marker = new Markers(Misc.getFilesResource("marker.txt"));
+        marker = new Markers(Constants.documentsDirectory + "marker.txt");
       } catch (IOException ioe) {
         ioe.printStackTrace();
       }
 
       if (marker != null)
-        lgraph.setMarkers(marker);
+        graph.setMarkers(marker);
 
       int startingIndexG = afile.startingindex;
       int finalIndexG = afile.finalindex;
@@ -1283,14 +1833,14 @@ add(createOptionsPanel(), "options");*/
       for (i = j = 0; i < np; i++, j += 2) {
         int index = i + startingIndexG;
         if (index >= afile.startingindex && index < afile.finalindex) {
-          data[j] = (double) afile.getXDataForPlot(index, mode);
+          data[j] = afile.getXDataForPlot(index, mode);
 //            System.out.println(j + " " + data[j]);
           data[j + 1] = afile.getYSqrtData(index);
         }
       }
 //          System.out.println("Data loaded");
 
-      data1 = lgraph.loadDataSet(data, np);
+      data1 = graph.loadDataSet(data, np);
       if (markerNumber < 0 && (afile.hasfit() || peaksLocated))
         markerNumber = defaultMarker;
       if (markerNumber < 0) {
@@ -1318,7 +1868,7 @@ add(createOptionsPanel(), "options");*/
           }
           datafit[j] = data[j];
         }
-        dataFit = lgraph.loadDataSet(datafit, np);
+        dataFit = graph.loadDataSet(datafit, np);
 	      if (blackAndWhite)
 		      dataFit.linecolor = Color.black;
 		    else
@@ -1344,7 +1894,7 @@ add(createOptionsPanel(), "options");*/
 //            System.out.println(datafit[j] + " " + datafit[j + 1]);
 
             }
-            phaseData[s] = lgraph.loadDataSet(dataphase, np);
+            phaseData[s] = graph.loadDataSet(dataphase, np);
             phaseData[s].linestyle = 1;
             if (blackAndWhite)
               phaseData[s].linecolor = Color.black;
@@ -1371,7 +1921,7 @@ add(createOptionsPanel(), "options");*/
 //            System.out.println(datafit[j] + " " + datafit[j + 1]);
 
         }
-        bkgData = lgraph.loadDataSet(dataphase, np);
+        bkgData = graph.loadDataSet(dataphase, np);
         bkgData.linestyle = 1;
 //            if (blackAndWhite)
         bkgData.linecolor = Color.black;
@@ -1385,7 +1935,7 @@ add(createOptionsPanel(), "options");*/
 */
 //          System.out.println("Attaching X-axis....");
 
-      xaxis = lgraph.createXAxis();
+      xaxis = graph.createXAxis();
       xaxis.axiscolor = Color.black;
       if ((plotResiduals && afile.hasfit()) || peaksLocated) {
         xaxis.drawLabel = false;
@@ -1408,7 +1958,7 @@ add(createOptionsPanel(), "options");*/
 */
 //          System.out.println("Attaching Y-axis....");
 
-      yaxis = lgraph.createYAxis();
+      yaxis = graph.createYAxis();
       yaxis.attachDataSet(data1);
       if (afile.hasfit() || peaksLocated) {
         yaxis.attachDataSet(dataFit);
@@ -1455,7 +2005,7 @@ add(createOptionsPanel(), "options");*/
 				    }
 			    }
 		    }
-		    lgraph.attachPeaksInfos(peaksInfoXRF);
+		    graph.attachPeaksInfos(peaksInfoXRF);
 	    }
 
       if (((plotPeaks && numberofPeaks > 0) && afile.hasfit()) || peaksLocated) {
@@ -1478,7 +2028,7 @@ add(createOptionsPanel(), "options");*/
 
 	          positions = new G2Dint(new plotPhaseMouseAdapter(), null);
 
-            lgraph.addComponent(positions);
+            graph.addComponent(positions);
 
             c.weighty = 0.04 * (numberphases + 1);
             c.gridwidth = GridBagConstraints.REMAINDER;
@@ -1611,7 +2161,7 @@ add(createOptionsPanel(), "options");*/
             yaxisp.minimum = 0.5;
             yaxisp.maximum = ((double) numberphases) + 0.5;
 
-	          lgraph.attachPeaksInfos(peaksInfos);
+	          graph.attachPeaksInfos(peaksInfos);
           }
         } else {
           int numberofRefl = peaksList[0].length;
@@ -1620,7 +2170,7 @@ add(createOptionsPanel(), "options");*/
 
             positions = new G2Dint(new g2DPmouse(), null);
 
-            lgraph.addComponent(positions);
+            graph.addComponent(positions);
 
             c.weighty = 0.04 * 2;
             c.gridwidth = GridBagConstraints.REMAINDER;
@@ -1719,7 +2269,7 @@ add(createOptionsPanel(), "options");*/
         residuals = new G2Dint();
         residuals.setDataBackground(Color.white);
 
-        lgraph.addComponent(residuals);
+        graph.addComponent(residuals);
 
         c.weighty = 0.3;
         if (peaksLocated)
@@ -1749,7 +2299,7 @@ add(createOptionsPanel(), "options");*/
                 Math.sqrt(Math.sqrt(Math.abs(derivative2[i])));
           }
         else
-          for (i = j = 0; i < np; i++, j += 2) {
+          for (i = j = 0; i < np && j+1 < data.length && j+1 < datafit.length; i++, j += 2) {
             data[j + 1] = datafit[j + 1] - data[j + 1];
           }
 
@@ -1795,7 +2345,7 @@ add(createOptionsPanel(), "options");*/
         xaxis.setLabelFont(new Font(labelFont, Font.PLAIN, XaxisLabelFontScale));
         xaxis.setTitleColor(XaxisTitleColor);
         xaxis.axiscolor = Color.black;
-        lgraph.borderBottom = 10;
+        graph.borderBottom = 10;
       }
     } else {
       graph = null;
@@ -1807,7 +2357,7 @@ add(createOptionsPanel(), "options");*/
 
 	  graph.finishedloading();
     if (keepMaxima) {
-      ((G2Dint) graph).setUserLimits(xMin, xMax, IntensityMin, IntensityMax);
+      graph.setUserLimits(xMin, xMax, IntensityMin, IntensityMax);
 //      System.out.println("Keeping maxima: " + xMin + " " + xMax + " " + IntensityMin + " " + IntensityMax);
     } else {
       xMin = 0.0;
@@ -1928,51 +2478,76 @@ add(createOptionsPanel(), "options");*/
 	boolean editInterpolatedPoints = false;
 
   public void editInterpolatedBackgroundPoints() {
-    if (!editInterpolatedPoints) {
-	    double[] range = ((G2Dint) graph).getRanges();
-      int[] points = datafile[0].getInterpolatedPointsX();
-      double[] avPositions = new double[points.length];
-      int[] numberHits = new int[points.length];
-      for (int i = 0; i < datafile.length; i++) {
-        datafile[i].setManualBkgInterpolation(true);
-        points = datafile[i].getInterpolatedPointsX();
-        double[] positions = new double[points.length];
-        for (int j = 0; j < points.length; j++) {
-          if (points[j] >= 0) {
-            positions[j] = datafile[i].getXDataForPlot(points[j]);
-            avPositions[j] += positions[j];
-            numberHits[j]++;
-          }
-        }
-      }
-	    double data[] = new double[points.length * 2];
-      for (int j = 0; j < points.length; j++) {
-        if (numberHits[j] > 0) {
-          avPositions[j] /= numberHits[j];
-          MyPoint p = ((plotPanelG2Dint) graph).addPoint(avPositions[j]);
-	        data[j * 2] = p.x;
-	        data[j * 2 + 1] = p.y;
-        }
-      }
-	    try {
-		    ((plotPanelG2Dint) graph).pointsDataset = new DataSet(data, points.length);
-	    } catch (Exception e) {
-		    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-	    }
+	  if (!editInterpolatedPoints) {
+		  double[] range = graph.getRanges();
+		  int[] points = datafile[0].getInterpolatedPointsX();
+		  double[] avPositions = new double[points.length];
+		  int[] numberHits = new int[points.length];
+		  for (int i = 0; i < datafile.length; i++) {
+			  datafile[i].setManualBkgInterpolation(true);
+			  points = datafile[i].getInterpolatedPointsX();
+			  double[] positions = new double[points.length];
+			  for (int j = 0; j < points.length; j++) {
+				  if (points[j] >= 0) {
+					  positions[j] = datafile[i].getXDataForPlot(points[j]);
+					  avPositions[j] += positions[j];
+					  numberHits[j]++;
+				  }
+			  }
+		  }
+		  double data[] = new double[points.length * 2];
+		  for (int j = 0; j < points.length; j++) {
+			  if (numberHits[j] > 0) {
+				  avPositions[j] /= numberHits[j];
+				  MyPoint p = ((plotPanelG2Dint) graph).addPoint(avPositions[j]);
+				  data[j * 2] = p.x;
+				  data[j * 2 + 1] = p.y;
+			  }
+		  }
+		  try {
+			  ((plotPanelG2Dint) graph).pointsDataset = new DataSet(data, points.length);
+		  } catch (Exception e) {
+			  e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+		  }
 
-	    graph.attachDataSet(((plotPanelG2Dint) graph).pointsDataset);
+		  graph.attachDataSet(((plotPanelG2Dint) graph).pointsDataset);
 		  ((plotPanelG2Dint) graph).pointsDataset.linestyle = 0;
 		  ((plotPanelG2Dint) graph).pointsDataset.marker = 10;
 		  ((plotPanelG2Dint) graph).pointsDataset.markerscale = 2;
 		  ((plotPanelG2Dint) graph).pointsDataset.markercolor = getPastelColor(4);
-	    xaxis.attachDataSet(((plotPanelG2Dint) graph).pointsDataset);
-	    yaxis.attachDataSet(((plotPanelG2Dint) graph).pointsDataset);
+		  xaxis.attachDataSet(((plotPanelG2Dint) graph).pointsDataset);
+		  yaxis.attachDataSet(((plotPanelG2Dint) graph).pointsDataset);
 
-	    ((plotPanelG2Dint) graph).isLikeAltDown = true;
-	    editInterpolatedPoints = true;
-	    ((G2Dint) graph).updateDataAndPaint(range);
-    }
+		  ((plotPanelG2Dint) graph).isLikeAltDown = true;
+		  editInterpolatedPoints = true;
+		  graph.updateDataAndPaint(range);
+	  }
   }
+
+	public static Vector<PeakInfo> getFluorescencePeakInfos(double energyInKeV) {
+		if (energyInKeV <= 0)
+			energyInKeV = energyUsedForPeakInfoXRF;
+		if (peaksInfoXRF == null || energyUsedForPeakInfoXRF < energyInKeV) {
+			energyUsedForPeakInfoXRF = energyInKeV;
+			peaksInfoXRF = new Vector<>(10000, 1000);
+			double threasholdXRFLines = MaudPreferences.getDouble("fluorescenceLinesPeaksInfo.thresholdOnMinors", 0.001);
+			for (int atomNumber = 0; atomNumber < XRayDataSqLite.atomsNumber; atomNumber++) {
+				String atomLabel = AtomInfo.atomLabels[atomNumber];
+				Vector<FluorescenceLine> linesForAtom = XRayDataSqLite.getFluorescenceLinesFor(
+						atomNumber + 1, energyInKeV);
+				for (int lindex = 0; lindex < linesForAtom.size(); lindex++) {
+					FluorescenceLine line = linesForAtom.get(lindex);
+					if (line.getIntensity() > threasholdXRFLines) {
+						PeakInfo peakInfo = new PeakInfo();
+						peakInfo.info = atomLabel + " " + line.toString();
+						peakInfo.coordinate = line.getEnergy() * 1000;
+						peaksInfoXRF.add(peakInfo);
+					}
+				}
+			}
+		}
+		return peaksInfoXRF;
+	}
 
   class g2DPmouse extends MouseAdapter {
     G2Dint positionBox = null;
@@ -2051,6 +2626,7 @@ add(createOptionsPanel(), "options");*/
   }
 
   class plotPhaseMouseAdapter extends MouseAdapter {
+
     int x1 = 0;
     int y1 = 0;
 
@@ -2062,9 +2638,15 @@ add(createOptionsPanel(), "options");*/
         x1 = e.getX();
         y1 = e.getY();
 
-        if (datafile[0] != null) {
-          FilePar filepar = datafile[0].getFilePar();
+//	      System.out.println("Mouse pressed");
 
+	      FilePar filepar = null;
+
+        if (datafile != null)
+	        filepar = datafile[0].getFilePar();
+        else if (dataset != null)
+	        filepar = dataset.getFilePar();
+				if (filepar != null) {
           JPopupMenu popup = new JPopupMenu("Plot fit for phases");
           popup.setLightWeightPopupEnabled(false);
 
@@ -2101,8 +2683,15 @@ add(createOptionsPanel(), "options");*/
         x1 = e.getX();
         y1 = e.getY();
 
-        if (datafile[0] != null) {
-          FilePar filepar = datafile[0].getFilePar();
+//	      System.out.println("Mouse released");
+
+	      FilePar filepar = null;
+
+	      if (datafile != null)
+		      filepar = datafile[0].getFilePar();
+	      else if (dataset != null)
+		      filepar = dataset.getFilePar();
+	      if (filepar != null) {
 
           JPopupMenu popup = new JPopupMenu("Plot fit for phases");
           popup.setLightWeightPopupEnabled(false);
@@ -2138,7 +2727,10 @@ add(createOptionsPanel(), "options");*/
   }
 
   private void toggleViewForPhase(int index) {
-    datafile[0].getFilePar().getActiveSample().getPhase(index).toggleView();
+	  if (datafile != null)
+      datafile[0].getFilePar().getActiveSample().getPhase(index).toggleView();
+	  else if (dataset != null)
+		  dataset.getFilePar().getActiveSample().getPhase(index).toggleView();
   }
 
   class NoDatafileCanvas extends CopyPrintPanelNoBkg {
@@ -2185,7 +2777,7 @@ add(createOptionsPanel(), "options");*/
     }
 
     public void addNewPoint(double x) {
-	    double[] range = ((G2Dint) graph).getRanges();
+	    double[] range = graph.getRanges();
 	    double d[] = getClosestPoint(x);
 	    boolean added = true;
 	    for (int i = 0; i < datafile.length; i++) {
@@ -2200,12 +2792,12 @@ add(createOptionsPanel(), "options");*/
 		    } catch (Exception e) {
 			    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
 		    }
-		    ((G2Dint) graph).updateDataAndPaint(range);
+		    graph.updateDataAndPaint(range);
 	    }
     }
 
     public void removePoint(double x) {
-	    double[] range = ((G2Dint) graph).getRanges();
+	    double[] range = graph.getRanges();
 	    double d[] = getClosestPoint(x);
       int indexToRemove = getClosestBkgPoint(d[0], d[1]);
 	    try {
@@ -2221,7 +2813,7 @@ add(createOptionsPanel(), "options");*/
 	        datafile[i].removeInterpolatedPointsX(pointToRemove.x, 0.0001);
       }
 	    points.remove(pointToRemove);
-	    ((G2Dint) graph).updateDataAndPaint(range);
+	    graph.updateDataAndPaint(range);
     }
 
     public int getClosestBkgPoint(double x, double y) {

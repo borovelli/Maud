@@ -68,7 +68,7 @@ public class XSpiderAngularCalibration extends AngularInclinedFlatImageCalibrati
   public XSpiderAngularCalibration(XRDcat aobj, String alabel) {
     super(aobj, alabel);
 //    initXRD();
-    identifier = "XSpider Image";
+    identifier = "XSpider Image (disabled)";
     IDlabel = "XSpider Image";
   }
 
@@ -77,7 +77,7 @@ public class XSpiderAngularCalibration extends AngularInclinedFlatImageCalibrati
   }
 
   public XSpiderAngularCalibration() {
-    identifier = "XSpider Image";
+    identifier = "XSpider Image (disabled)";
     IDlabel = "XSpider Image";
   }
 

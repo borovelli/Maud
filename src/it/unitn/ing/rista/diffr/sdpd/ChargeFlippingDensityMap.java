@@ -86,7 +86,7 @@ public class ChargeFlippingDensityMap extends StructureSolutionMethod {
   double forceMapToLowValue = 0.9f;
   double weightMAPforce = 1.0f;
   boolean useWeightForceLowMap = false;
-//  int repeatMax = MaudPreferences.getInteger("MEMrefinement.cyclesNumber", 3);
+//  int repeatMax = MaudPreferences.getInteger("meemRefinement.cyclesNumber", 3);
 //  boolean useAllSites = false;
 //  boolean useequivalentReflections = false;
 
@@ -127,7 +127,7 @@ public class ChargeFlippingDensityMap extends StructureSolutionMethod {
   public void initParameters() {
     super.initParameters();
 
-    stringField[0] = MaudPreferences.getPref("MEMrefinement.cyclesNumber", "3");
+    stringField[0] = MaudPreferences.getPref("meemRefinement.cyclesNumber", "3");
     stringField[1] = "10";
     stringField[2] = MaudPreferences.getPref("entropyMEM.startingExponent", "0.001");
     String default_res = MaudPreferences.getPref("atomMap.divisionNumber_even", "10");
@@ -149,10 +149,10 @@ public class ChargeFlippingDensityMap extends StructureSolutionMethod {
 
     Phase aphase = (Phase) getParent();
 
-//    useAllSites = MaudPreferences.getBoolean("MEMmap.useAllSites", false);
+//    useAllSites = MaudPreferences.getBoolean("meemMap.useAllSites", false);
 //    if (reducedCell[0] != 1.0 || reducedCell[1] != 1.0 || reducedCell[2] != 1.0)
 //      useAllSites = true;
-//    useequivalentReflections = MaudPreferences.getBoolean("MEMmap.useMultipleReflections", false);
+//    useequivalentReflections = MaudPreferences.getBoolean("meemMap.useMultipleReflections", false);
 
 
     if (mapnotLoaded) {
@@ -723,13 +723,13 @@ public class ChargeFlippingDensityMap extends StructureSolutionMethod {
     Phase aphase = (Phase) getParent();
     int siteNumber = 1;
 //    if (useAllSites)
-      siteNumber = aphase.getSitePositionNumber();
+      siteNumber = aphase.getPhaseInfo().getSitePositionNumber();
     double factors = aphase.getActivePlanarDefects().getStructureFactorModifier(null);
     double[] divideFactors = aphase.getActivePlanarDefects().getDivisionFactors();
     double norm = Math.sqrt(factors);// / (siteNumber * reducedCell[0] * reducedCell[1] * reducedCell[2]);
     SitePosition[] sitepos = new SitePosition[siteNumber];
     for (int i = 0; i < siteNumber; i++) {
-      sitepos[i] = aphase.sitePositionv.elementAt(i);
+      sitepos[i] = aphase.getPhaseInfo().sitePositionv.elementAt(i);
     }
     double x[][] = new double[3][siteNumber], xf[] = new double[3];
 
@@ -801,7 +801,7 @@ public class ChargeFlippingDensityMap extends StructureSolutionMethod {
     Phase aphase = (Phase) getParent();
     int siteNumber = 1;
 //    if (useAllSites)
-      siteNumber = aphase.getSitePositionNumber();
+      siteNumber = aphase.getPhaseInfo().getSitePositionNumber();
     double norm = 1.0;// / (siteNumber * reducedCell[0] * reducedCell[1] * reducedCell[2]);
     int index = 0;
     double totalMap = 0.0;
@@ -818,10 +818,10 @@ public class ChargeFlippingDensityMap extends StructureSolutionMethod {
 
 //    System.out.println("Normalization factor: " + Fmt.format(norm) + ", total: "
 //        + totalMap);
-//    useAllSites = MaudPreferences.getBoolean("MEMmap.useAllSites", false);
+//    useAllSites = MaudPreferences.getBoolean("meemMap.useAllSites", false);
 //    if (reducedCell[0] != 1.0 || reducedCell[1] != 1.0 || reducedCell[2] != 1.0)
 //      useAllSites = true;
-//    useequivalentReflections = MaudPreferences.getBoolean("MEMmap.useMultipleReflections", false);
+//    useequivalentReflections = MaudPreferences.getBoolean("meemMap.useMultipleReflections", false);
 
   }
 
@@ -864,10 +864,10 @@ public class ChargeFlippingDensityMap extends StructureSolutionMethod {
 
     numberOfParameters = computeParameterNumber();
 //		totalWeight = new double[numberOfParameters];
-//    useAllSites = MaudPreferences.getBoolean("MEMmap.useAllSites", false);
+//    useAllSites = MaudPreferences.getBoolean("meemMap.useAllSites", false);
 //    if (reducedCell[0] != 1.0 || reducedCell[1] != 1.0 || reducedCell[2] != 1.0)
 //      useAllSites = true;
-//    useequivalentReflections = MaudPreferences.getBoolean("MEMmap.useMultipleReflections", false);
+//    useequivalentReflections = MaudPreferences.getBoolean("meemMap.useMultipleReflections", false);
 
   }
 
@@ -966,14 +966,14 @@ public class ChargeFlippingDensityMap extends StructureSolutionMethod {
     Phase aphase = (Phase) getParent();
     int siteNumber = 1;
 //    if (useAllSites)
-      siteNumber = aphase.getSitePositionNumber();
+      siteNumber = aphase.getPhaseInfo().getSitePositionNumber();
     double factors = aphase.getActivePlanarDefects().getStructureFactorModifier(null);
     double[] divideFactors = aphase.getActivePlanarDefects().getDivisionFactors();
     double norm = Math.sqrt(factors); // / (siteNumber * multeplicity);
       //  * reducedCell[0] * reducedCell[1] * reducedCell[2]);
     SitePosition[] sitepos = new SitePosition[siteNumber];
     for (int i = 0; i < siteNumber; i++) {
-      sitepos[i] = aphase.sitePositionv.elementAt(i);
+      sitepos[i] = aphase.getPhaseInfo().sitePositionv.elementAt(i);
     }
     double x[][] = new double[3][siteNumber], xf[] = new double[3];
 
@@ -1519,8 +1519,8 @@ public class ChargeFlippingDensityMap extends StructureSolutionMethod {
     Phase aphase = (Phase) getParent();
     for (int i = 0; i < 3; i++)
       reducedCell[i] = aphase.reducedCellFactor[i];
-    forceMapToLowValue = (double) MaudPreferences.getDouble("MEMmap.forceLowMapConstant", "0.9");
-    weightMAPforce = (double) MaudPreferences.getDouble("MEMmap.forceLowMapWeight", "1.0");
+    forceMapToLowValue = MaudPreferences.getDouble("meemMap.forceLowMapConstant", 0.9);
+    weightMAPforce = MaudPreferences.getDouble("meemMap.forceLowMapWeight", 1.0);
 //    System.out.println("Normalization");
     atomMapNormalization();
   }
@@ -1645,10 +1645,10 @@ public class ChargeFlippingDensityMap extends StructureSolutionMethod {
           stringField[i] = parsTF[i].getText();
 //      for (int i = parsTF.length - 3; i < parsTF.length; i++)
 //        reducedCell[i - parsTF.length + 3] = Double.parseDouble(parsTF[i].getText());
-//      useAllSites = MaudPreferences.getBoolean("MEMmap.useAllSites", false);
+//      useAllSites = MaudPreferences.getBoolean("meemMap.useAllSites", false);
 //      if (reducedCell[0] != 1.0 || reducedCell[1] != 1.0 || reducedCell[2] != 1.0)
 //        useAllSites = true;
-//      useequivalentReflections = MaudPreferences.getBoolean("MEMmap.useMultipleReflections", false);
+//      useequivalentReflections = MaudPreferences.getBoolean("meemMap.useMultipleReflections", false);
     }
 
 /*    public void plotElectronMap() {

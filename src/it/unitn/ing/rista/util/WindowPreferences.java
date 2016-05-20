@@ -21,6 +21,8 @@
 package it.unitn.ing.rista.util;
 
 import java.io.*;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
 /**
  *  The WindowPreferences is a class to manage the Windows preferences.
@@ -33,103 +35,61 @@ import java.io.*;
 
 public class WindowPreferences {
 
-  static SortedProperties prefs = null;
+	public static Preferences prefs;
 
-  private WindowPreferences() {
+	private WindowPreferences() {
   }
 
   public static void loadPreferences() {
-
-    InputStream preferencesFile = Misc.getInputStream(Constants.filesfolder, "preferences.Window");
-    prefs = new SortedProperties();
-
-    if (preferencesFile != null) {
-      try {
-        prefs.load(preferencesFile);
-      } catch (Exception e) {
-      }
-    }
-
+	  prefs = Preferences.userRoot().node(WindowPreferences.class.getName());
   }
 
-  public static void savePreferences() {
-    FileOutputStream preferencesFile = Misc.getFileOutputStream(Constants.filesfolder, "preferences.Window");
-    if (preferencesFile != null)
-    try {
-      prefs.store(preferencesFile, " Window preferences, version " + Constants.getVersion());
-    } catch (IOException io) {
+	public static boolean contains(String key) {
+		return prefs.get(key, null) != null;
+	}
 
-    }
+	public static String getPref(String key, String defaultValue) {
+	  if (!contains(key))
+		  prefs.put(key, defaultValue);
+    return prefs.get(key, defaultValue);
   }
 
-  public static Object getPref(String key) {
-    return prefs.getProperty(key);
-  }
-
-  public static String getPref(String key, String defaultValue) {
-    if (prefs.getProperty(key) == null) {
-      addPref(key, defaultValue);
-    }
-    return (String) getPref(key);
-  }
-
-  public static void setPref(String key, String value) {
-    prefs.setProperty(key, value);
+  public static void setPref(String key, String defaultValue) {
+    prefs.put(key, defaultValue);
   }
 
   public static void setPref(String key, int intvalue) {
-    prefs.setProperty(key, Integer.toString(intvalue));
-  }
-
-  public static void addPref(String key, String value) {
-    prefs.setProperty(key, value);
-  }
-
-  public static int getInteger(String key) {
-    return Integer.valueOf((String) getPref(key)).intValue();
+    prefs.putInt(key, intvalue);
   }
 
   public static int getInteger(String key, String defaultValue) {
-    return Integer.valueOf(getPref(key, defaultValue)).intValue();
+	  if (!contains(key))
+		  prefs.put(key, defaultValue);
+    return prefs.getInt(key, Integer.parseInt(defaultValue));
   }
 
   public static int getInteger(String key, int defaultValue) {
-    return getInteger(key, Integer.toString(defaultValue));
-  }
-
-  public static double getDouble(String key) {
-    return Double.valueOf((String) getPref(key)).doubleValue();
+	  if (!contains(key))
+		  prefs.putInt(key, defaultValue);
+	  return prefs.getInt(key, defaultValue);
   }
 
   public static double getDouble(String key, String defaultValue) {
-    return Double.valueOf(getPref(key, defaultValue)).doubleValue();
+	  if (!contains(key))
+		  prefs.put(key, defaultValue);
+    return prefs.getDouble(key, Double.parseDouble(defaultValue));
   }
 
   public static double getDouble(String key, double defaultValue) {
-    return getDouble(key, Double.toString(defaultValue));
-  }
-
-  public static boolean getBoolean(String key) {
-    String tmp = (String) getPref(key);
-    if (tmp.equalsIgnoreCase("true"))
-      return true;
-    else
-      return false;
-  }
-
-  public static boolean getBoolean(String key, String defaultValue) {
-    String tmp = getPref(key, defaultValue);
-    if (tmp.equalsIgnoreCase("true"))
-      return true;
-    else
-      return false;
+	  if (!contains(key))
+		  prefs.putDouble(key, defaultValue);
+    return prefs.getDouble(key, defaultValue);
   }
 
   public static boolean getBoolean(String key, boolean defaultValue) {
-    String value = "true";
-    if (!defaultValue)
-      value = "false";
-    return getBoolean(key, value);
+	  if (!contains(key))
+		  prefs.putBoolean(key, defaultValue);
+    return prefs.getBoolean(key, defaultValue);
   }
 
 }

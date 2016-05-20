@@ -165,7 +165,7 @@ public class ExpHarmonicTexture extends HarmonicTexture {
 	  betaalphama = alphama * betama;
     alphama1 = alphama - 1;
     betama1 = betama - 1;
-    integrationStepPF = MaudPreferences.getDouble(Texture.prefs[1], Texture.prefVal[1]);
+    integrationStepPF = MaudPreferences.getDouble(Texture.prefs[1], Double.parseDouble(Texture.prefVal[1]));
     if (integrationStepPF <= 0.0)
       integrationStepPF = resolution / 2.0;
 	  if (integrationStepPF > 1.0)

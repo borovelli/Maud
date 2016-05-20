@@ -1,11 +1,11 @@
- # IJ_Props.txt - This is the ImageJ properties file. ImageJ uses
+# IJ_Props.txt - This is the ImageJ properties file. ImageJ uses
 # the information in this file to install plug-ins in menus.
 # ImageJ looks for this file in ij.jar. It can be edited by
 # opening ij.jar with a ZIP utility.
 
 # Note that commands must be unique.
 
-# Version 1.46
+# Version 1.55
 
 # Commands installed in the right-click popup menu
 # Overridden in StartupMacros

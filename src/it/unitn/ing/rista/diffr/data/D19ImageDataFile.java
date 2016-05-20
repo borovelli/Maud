@@ -59,8 +59,8 @@ public class D19ImageDataFile extends it.unitn.ing.rista.diffr.MultDiffrDataFile
     String[] properties = new String[1];
 //    new Opener().open();
 //		OpenDialog od = new OpenDialog("Open...", "");
-//    boolean calibrateLater = MaudPreferences.getBoolean("D19Detector.calibrateInMaud", true);
-    boolean takeWavelengthFromDatafile = MaudPreferences.getBoolean("D19Detector.useWavelengthFromDatafile", true);
+//    boolean calibrateLater = MaudPreferences.getBoolean("d19Detector.calibrateInMaud", true);
+    boolean takeWavelengthFromDatafile = MaudPreferences.getBoolean("d19Detector.useWavelengthFromDatafile", true);
 	  AngularCalibration angularCalibration = getDataFileSet().getInstrument().getAngularCalibration();
 
 	  String directory = getFolder(); //od.getDirectory();
@@ -79,13 +79,13 @@ public class D19ImageDataFile extends it.unitn.ing.rista.diffr.MultDiffrDataFile
 //            getDataFileSet().getInstrument().setRadiationType("Neutron");
 // todo fix the problem      getDataFileSet().getInstrument().getRadiationType().getRadiation(0).getWavelength().setValue(dimension.get(0)[4]);
           }
-          double centerX = MaudPreferences.getDouble("D19Detector.ImageCenterX", -58);
-          double centerY = MaudPreferences.getDouble("D19Detector.ImageCenterY", 194.11);
-          double radius = MaudPreferences.getDouble("D19Detector.detectorSampleDistance", 768.8);
+          double centerX = MaudPreferences.getDouble("d19Detector.ImageCenterX", -58);
+          double centerY = MaudPreferences.getDouble("d19Detector.ImageCenterY", 194.11);
+          double radius = MaudPreferences.getDouble("d19Detector.detectorSampleDistance", 768.8);
 
-          double coneInterval = MaudPreferences.getDouble("D19Detector.defaultEtaConeInterval", 5.0);
-          double theta2Step = MaudPreferences.getDouble("D19Detector.defaultDiffractionStepAngle", 0.05);
-          double coneAngleMax = MaudPreferences.getDouble("D19Detector.defaultEtaConeAngleMax", 180.0);
+          double coneInterval = MaudPreferences.getDouble("d19Detector.defaultEtaConeInterval", 5.0);
+          double theta2Step = MaudPreferences.getDouble("d19Detector.defaultDiffractionStepAngle", 0.05);
+          double coneAngleMax = MaudPreferences.getDouble("d19Detector.defaultEtaConeAngleMax", 180.0);
 
           double coneStep = coneInterval;
           double halfConeStep = coneStep / 2.0;
@@ -175,8 +175,8 @@ public class D19ImageDataFile extends it.unitn.ing.rista.diffr.MultDiffrDataFile
 
           int spectrumNumber = 0;
 
-          int stepLoading = MaudPreferences.getInteger("D19Detector.loadAnImageEvery", 1);
-	        int sumEvery = MaudPreferences.getInteger("D19Detector.sumImagesNumber", 1);
+          int stepLoading = MaudPreferences.getInteger("d19Detector.loadAnImageEvery", 1);
+	        int sumEvery = MaudPreferences.getInteger("d19Detector.sumImagesNumber", 1);
 	        for (int yi = 0; yi < imageDimension[2]; yi+=stepLoading) {
 		        double[][] photoplate = new double[coordX.length][coordY.length];
 		        for (int yj = 0; yj < sumEvery; yj++) {
@@ -225,10 +225,10 @@ public class D19ImageDataFile extends it.unitn.ing.rista.diffr.MultDiffrDataFile
 		            datafile.setDataType(DIFFRACTION_IMAGE);
               datafile.isAbilitatetoRefresh = false;
 
-	            datafile.setOmega(omega);
-              datafile.setChi(chi);
-              datafile.setPhi(phi);
-              datafile.setEta(mineta + spectrumIndex * coneInterval);
+	            datafile.setAngleValue(0, omega);
+              datafile.setAngleValue(1, chi);
+              datafile.setAngleValue(2, phi);
+              datafile.setAngleValue(3, mineta + spectrumIndex * coneInterval);
 
               datanumber = 0;
               i = 0;

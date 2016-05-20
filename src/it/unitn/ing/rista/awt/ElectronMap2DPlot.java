@@ -274,9 +274,9 @@ public class ElectronMap2DPlot extends myJFrame {
   ColorMap createColorMap(Range2D datar) {
     int colrsNumber = 64;
     int[] red = new int[colrsNumber], green = new int[colrsNumber], blue = new int[colrsNumber];
-    if (MaudPreferences.getBoolean("Multiplot2D.grayscale", false)) {
+    if (MaudPreferences.getBoolean("multiplot2D.grayscale", false)) {
       double fract = 248.0 / (colrsNumber - 1);
-      if (MaudPreferences.getBoolean("Multiplot2D.colors_inverted", false)) {
+      if (MaudPreferences.getBoolean("multiplot2D.colors_inverted", false)) {
         for (int i = 0; i < colrsNumber; i++) {
           int grayLevel = (int) (fract * i);
           red[i] = grayLevel;
@@ -291,7 +291,7 @@ public class ElectronMap2DPlot extends myJFrame {
           blue[i] = grayLevel;
         }
     } else if (colrsNumber == 64) {
-      if (MaudPreferences.getBoolean("Multiplot2D.colors_inverted", false)) {
+      if (MaudPreferences.getBoolean("multiplot2D.colors_inverted", false)) {
         for (int i = 0; i < 64; i++) {
           red[63 - i] = ThermalColorMap.red64[i];
           green[63 - i] = ThermalColorMap.green64[i];
@@ -304,7 +304,7 @@ public class ElectronMap2DPlot extends myJFrame {
           blue[i] = ThermalColorMap.blue64[i];
         }
     } else if (colrsNumber == 16) {
-      if (MaudPreferences.getBoolean("Multiplot2D.colors_inverted", false)) {
+      if (MaudPreferences.getBoolean("multiplot2D.colors_inverted", false)) {
         for (int i = 0; i < 16; i++) {
           red[15 - i] = ThermalColorMap.red16[i];
           green[15 - i] = ThermalColorMap.green16[i];
@@ -449,13 +449,13 @@ public class ElectronMap2DPlot extends myJFrame {
     public void initParameters() {
       legendMinTF.setText(new String(Double.toString(IntensityMin)));
       legendMaxTF.setText(new String(Double.toString(IntensityMax)));
-      plotModeCB.setSelectedItem(MaudPreferences.getPref(MaudPreferences.plotScale, PlotDataFile.plotMode[0]));
+      plotModeCB.setSelectedItem(MaudPreferences.getPref(principalJFrame.plotScale, PlotDataFile.plotMode[0]));
     }
 
     public void retrieveParameters() {
       IntensityMin = Float.valueOf(legendMinTF.getText()).floatValue();
       IntensityMax = Float.valueOf(legendMaxTF.getText()).floatValue();
-      MaudPreferences.setPref(MaudPreferences.plotScale, plotModeCB.getSelectedItem().toString());
+      MaudPreferences.setPref(principalJFrame.plotScale, plotModeCB.getSelectedItem().toString());
 
       showNewFrame();
     }

@@ -43,7 +43,7 @@ import java.awt.*;
 
 public class Geometry extends XRDcat {
 
-	static double pi_over2 = Math.PI * 0.5;
+	public static double pi_over2 = Math.PI * 0.5;
 	public static double degtopi2 = Constants.DEGTOPI / 2.0;
 
 	public double radius = 175.0; // in mm, the default goniometer radius
@@ -758,7 +758,7 @@ public class Geometry extends XRDcat {
     double[] incidentAngles = getTextureAnglesR(tilting_angles[0], tilting_angles[1], tilting_angles[2],
               tilting_angles3, 90.0f, newSampleAngles, false);
 
-    double[]  diffractionAngles = getTextureAnglesR(tilting_angles[0], tilting_angles[1], tilting_angles[2],
+    double[] diffractionAngles = getTextureAnglesR(tilting_angles[0], tilting_angles[1], tilting_angles[2],
               tilting_angles3, -90.0f + position, newSampleAngles, false);
 
     double[] allAngles = new double[4];

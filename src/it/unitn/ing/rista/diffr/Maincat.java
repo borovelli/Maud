@@ -35,7 +35,8 @@ import it.unitn.ing.rista.io.cif.*;
  */
 
 public class Maincat extends XRDcat {
-  public Maincat(XRDcat afile, String alabel) {
+
+	public Maincat(XRDcat afile, String alabel) {
     super(afile, alabel);
   }
 

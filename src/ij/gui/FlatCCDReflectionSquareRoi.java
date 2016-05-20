@@ -251,10 +251,10 @@ public class FlatCCDReflectionSquareRoi extends LaueOvalRoi {
 
     Properties prop = imp.getProperties();
     if (prop != null && prop.containsKey(BrukerImageReader.brukerImage)) {
-      MaudPreferences.setPref("BrukerImage.xminValue", minX);
-      MaudPreferences.setPref("BrukerImage.xmaxValue", maxX);
-      MaudPreferences.setPref("BrukerImage.yminValue", minY);
-      MaudPreferences.setPref("BrukerImage.ymaxValue", maxY);
+      MaudPreferences.setPref("brukerImage.xminValue", minX);
+      MaudPreferences.setPref("brukerImage.xmaxValue", maxX);
+      MaudPreferences.setPref("brukerImage.yminValue", minY);
+      MaudPreferences.setPref("brukerImage.ymaxValue", maxY);
     } else {
       MaudPreferences.setPref("squareRoi.xminValue", minX);
       MaudPreferences.setPref("squareRoi.xmaxValue", maxX);

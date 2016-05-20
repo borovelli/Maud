@@ -173,10 +173,10 @@ public class ISISGemRotaxDatafile extends MultDiffrDataFile {
             i++;
           }
           datafile.setBankID(bankID);
-          datafile.setOmega(omega_angle);
-          datafile.setChi(chi_angle);
-          datafile.setPhi(phi_angle);
-          datafile.setEta(eta_angle);
+          datafile.setString(1, omega_angle);
+          datafile.setString(2, chi_angle);
+          datafile.setString(3, phi_angle);
+          datafile.setString(4, eta_angle);
           datafile.isAbilitatetoRefresh = atmpB;
           datafile.dataLoaded = true;
           checkGroupConsistency(datafile, spectrumNumber, bankID, TOFangle, totalFlightPath,

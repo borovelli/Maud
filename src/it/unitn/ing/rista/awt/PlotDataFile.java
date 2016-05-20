@@ -105,120 +105,12 @@ public class PlotDataFile extends GraphFrame {
   }
 
   public PlotDataFile(Frame parent, DiffrDataFile[] afile) {
-
     this(parent);
-
     createDefaultMenuBar();
-
     createGraph(afile);
-
   }
 
   public void createGraph(DiffrDataFile[] afile) {
-
-/*    this.getContentPane().setBackground(Color.white);
-    this.getContentPane().setLayout(null);
-
-    Container p1 = getContentPane();
-    p1.setLayout(new BorderLayout());
-    fullGraphPanel = new CopyPrintPanel();
-    p1.add(fullGraphPanel, BorderLayout.CENTER);
-    fullGraphPanel.setLayout(new BorderLayout(6, 6));
-
-    datafile = afile;
-
-    int i;
-    int j;
-    graph = new G2Dint();
-    G2Dint lgraph = (G2Dint) graph;
-
-    lgraph.drawzero = false;
-    lgraph.drawgrid = false;
-    lgraph.borderTop = 10;
-    Markers marker = null;
-    try {
-      marker = new Markers(Misc.getResource("/files/marker.txt"));
-    } catch (IOException ioe) {
-      ioe.printStackTrace();
-    }
-
-    if (marker != null)
-      lgraph.setMarkers(marker);
-
-    if (datafile[0] != null) {
-      fullGraphPanel.add("Center", lgraph);
-      setTitle(datafile[0].getTitle());
-//          System.out.println("Loading data....");
-      np = datafile[0].finalindex - datafile[0].startingindex;
-
-      double data[] = new double[2 * np];
-
-      int mode = checkScaleModeX();
-      for (i = j = 0; i < np; i++, j += 2) {
-        data[j] = (double) datafile[0].getXDataForPlot(i + datafile[0].startingindex, mode);
-        data[j + 1] = datafile[0].getYSqrtData(i + datafile[0].startingindex);
-      }
-
-//          System.out.println("Data loaded");
-
-      data1 = lgraph.loadDataSet(data, np);
-      if (markerNumber < 0)
-        data1.linestyle = 1;
-      else {
-        data1.linestyle = 0;
-        data1.marker = markerNumber;
-        data1.markerscale = markerScale;
-        data1.markercolor = markerColor;
-      }
-//        	data1.legend(200,100,datafile[0].getAxisXLegend());
-//        	data1.legendColor(Color.black);
-
-      DataSet data2 = null;
-      DataSet data3 = null;
-
-      if (datafile[0].hasfit()) {
-
-        for (i = j = 0; i < np; i++, j += 2) {
-          data[j + 1] = datafile[0].getFitSqrtData(i + datafile[0].startingindex);
-        }
-        data2 = lgraph.loadDataSet(data, np);
-
-        for (i = j = 0; i < np; i++, j += 2) {
-          data[j + 1] = datafile[0].getFitSqrtData(i + datafile[0].startingindex) -
-                  datafile[0].getYSqrtData(i + datafile[0].startingindex);
-        }
-        data3 = lgraph.loadDataSet(data, np);
-      }
-//          System.out.println("Attaching X-axis....");
-
-      xaxis = lgraph.createXAxis();
-      xaxis.attachDataSet(data1);
-      if (datafile[0].hasfit()) {
-        xaxis.attachDataSet(data2);
-        xaxis.attachDataSet(data3);
-      }
-      xaxis.setTitleText(datafile[0].getAxisXLegend());
-      xaxis.setTitleFont(new Font(axisFont, Font.BOLD, XaxisTitleFontScale));
-      xaxis.setLabelFont(new Font(labelFont, Font.PLAIN, XaxisLabelFontScale));
-      xaxis.setTitleColor(XaxisTitleColor);
-//          System.out.println("Attaching Y-axis....");
-
-      yaxis = lgraph.createYAxis();
-      yaxis.attachDataSet(data1);
-      if (datafile[0].hasfit()) {
-        yaxis.attachDataSet(data2);
-        yaxis.attachDataSet(data3);
-      }
-      yaxis.setTitleText(datafile[0].getAxisYLegend());
-      yaxis.setTitleFont(new Font(axisFont, Font.BOLD, YaxisTitleFontScale));
-      yaxis.setLabelFont(new Font(labelFont, Font.PLAIN, YaxisLabelFontScale));
-      yaxis.setTitleColor(XaxisTitleColor);
-//          System.out.println("Plotting....");
-    } else
-      fullGraphPanel.add("South", new Label("No datafile selected!"));
-
-    setComponentToPrint(fullGraphPanel);*/
-
   }
 
   public JMenuBar createDefaultMenuBar() {
@@ -548,7 +440,7 @@ public class PlotDataFile extends GraphFrame {
   }
 
   public static void checkScaleMode() {
-    String scaleString = MaudPreferences.getPref(MaudPreferences.plotScale, PlotDataFile.plotMode[0]);
+    String scaleString = MaudPreferences.getPref(principalJFrame.plotScale, PlotDataFile.plotMode[0]);
     int nmode = plotMode.length;
     for (int i = 0; i < nmode; i++)
       if (plotMode[i].equalsIgnoreCase(scaleString)) {
@@ -722,7 +614,7 @@ public class PlotDataFile extends GraphFrame {
       YaxisLabelFontScaleTF.setText(new String(Integer.toString(YaxisLabelFontScale)));
       PhasesFontScaleTF.setText(new String(Integer.toString(PhasesFontScale)));
       plotModeCB.setSelectedItem(MaudPreferences.getPref(
-              MaudPreferences.plotScale, PlotDataFile.plotMode[0]));
+		      principalJFrame.plotScale, PlotDataFile.plotMode[0]));
       xplotModeCB.setSelectedItem(MaudPreferences.getPref(xaxisModePref, xplotMode[0]));
       subtractBackground.setSelected(
               MaudPreferences.getBoolean(plotNoBkg, PlotDataFile.plotNoBkgDefault));
@@ -745,7 +637,7 @@ public class PlotDataFile extends GraphFrame {
       XaxisLabelFontScale = Integer.valueOf(XaxisLabelFontScaleTF.getText()).intValue();
       YaxisLabelFontScale = Integer.valueOf(YaxisLabelFontScaleTF.getText()).intValue();
       PhasesFontScale = Integer.valueOf(PhasesFontScaleTF.getText()).intValue();
-      MaudPreferences.setPref(MaudPreferences.plotScale, plotModeCB.getSelectedItem().toString());
+      MaudPreferences.setPref(principalJFrame.plotScale, plotModeCB.getSelectedItem().toString());
       MaudPreferences.setPref(plotNoBkg, subtractBackground.isSelected());
       blackAndWhite = blackAndWhiteCB.isSelected();
       MaudPreferences.setPref("plot.black&white", PlotDataFile.blackAndWhite);

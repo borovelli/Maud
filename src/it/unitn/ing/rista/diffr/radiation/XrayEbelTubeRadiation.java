@@ -27,13 +27,10 @@ import it.unitn.ing.rista.diffr.*;
 import it.unitn.ing.rista.util.*;
 
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
-
-import static it.unitn.ing.rista.util.MaudPreferences.getPref;
 
 /**
  *  The XrayEbelTubeRadiation is a class to calculate the entire
@@ -421,7 +418,7 @@ public class XrayEbelTubeRadiation extends RadiationType {
 
 	public double[][] computeBremsStrahlung() {
 		double tubeVoltageInkV = Math.abs(getParameterValue(voltage_kV_id));
-//		double scale_continuous = getParameterValue(continuous_scale_factor_id);
+		double scale_continuous = getParameterValue(continuous_scale_factor_id);
 		double minimumEnergy = Double.parseDouble(getString(minimum_keV_id));
 		double energyStep = Double.parseDouble(getString(step_keV_id));
 		int n_points = (int) ((tubeVoltageInkV - minimumEnergy) / energyStep);
@@ -456,7 +453,7 @@ public class XrayEbelTubeRadiation extends RadiationType {
 				expo = 2.0 * expo * sinRatio;
 				double f = (1.0 - Math.exp(-expo)) / expo;
 				double dN = energyStep * consta * atomNumber[anodeNumber] * f * Math.pow((U0 - 1.0), xself);
-				tmp_spectrum[1][i] += dN * atomFraction[anodeNumber]; //  * scale_continuous;
+				tmp_spectrum[1][i] += dN * atomFraction[anodeNumber] * scale_continuous;
 				tmp_spectrum[2][i] += mu_tot * atomFraction[anodeNumber];
 			}
 		}
@@ -481,7 +478,7 @@ public class XrayEbelTubeRadiation extends RadiationType {
 		double minimumEnergy = Double.parseDouble(getString(minimum_keV_id));
 
 		double energyStep = Double.parseDouble(getString(step_keV_id));
-		double scale_continuous = getParameterValue(continuous_scale_factor_id);
+//		double scale_continuous = getParameterValue(continuous_scale_factor_id);
 		double inc_ang_deg = getParameterValue(incident_angle_id);
 		double ex_ang_deg = getParameterValue(exiting_angle_id);
 		double sinRatio = MoreMath.sind(inc_ang_deg) / MoreMath.sind(ex_ang_deg);
@@ -504,7 +501,7 @@ public class XrayEbelTubeRadiation extends RadiationType {
 			for (int i = 0; i < n_points; i++) {
 				FluorescenceLine line = anodeFluorescenceLines.get(i);
 				characteristic_spc[0][i] = line.getEnergy();
-//			System.out.println("Compute characteristic spectrum for line: " + XRayDataSqLite.shellIDs[line.getInnerShellID()] +
+//			System.out.println("Compute characteristic spectrum for line: " + XRayDataSqLite.shellIDs[line.getCoreShellID()] +
 //					", " + line.getEnergy());
 				double U0 = tubeVoltageInkV / characteristic_spc[0][i];
 				double lU0 = Math.log(U0);
@@ -514,7 +511,7 @@ public class XrayEbelTubeRadiation extends RadiationType {
 				double erre = 1.0 - 0.0081517 * atomNumber[anodeNumber] + 3.613E-5 * atomNumber[anodeNumber] * atomNumber[anodeNumber] + 0.009583 *
 						atomNumber[anodeNumber] * Math.exp(-U0) + 0.001141 * tubeVoltageInkV;
 				int flag_KL = 0; // "K"
-				if (line.getInnerShellID() > XRayDataSqLite.K)
+				if (line.getCoreShellID() > XRayDataSqLite.K)
 					flag_KL = 1;  // "L"
 				double inv_S = z_KL[flag_KL] * b_KL[flag_KL] / atomNumber[anodeNumber];
 				double den = (U0 * Math.log(U0) + 1.0 - U0);
@@ -526,9 +523,9 @@ public class XrayEbelTubeRadiation extends RadiationType {
 				expo = 2.0 * expo * sinRatio;
 				double f = (1.0 - Math.exp(-expo)) / expo;
 
-				double N_ch = const_KL[flag_KL] * inv_S * erre * f * line.getTransitionProbability() * line.getFluorescenceYeld();
+				double N_ch = const_KL[flag_KL] * inv_S * erre * f * line.getTransitionProbability() * line.getFluorescenceYield();
 
-				characteristic_spc[1][i] = N_ch * scale_continuous * atomFraction[anodeNumber];
+				characteristic_spc[1][i] = N_ch * atomFraction[anodeNumber];
 				characteristic_spc[2][i] = mu_tot * atomFraction[anodeNumber];
 
 			}
@@ -643,9 +640,9 @@ public class XrayEbelTubeRadiation extends RadiationType {
 		exitingAngleTF = new JTextField(Constants.FLOAT_FIELD);
 		exitingAngleTF.setToolTipText("Specify the exiting angle from anode for the x-rays in degrees");
 		jp1.add(exitingAngleTF);
-		jp1.add(new JLabel("Intensity ratio characteristic/continuous spectrum: "));
+		jp1.add(new JLabel("Scale factor for Bremsstrahlung: "));
 		ratioIntensitiesTF = new JTextField(Constants.FLOAT_FIELD);
-		ratioIntensitiesTF.setToolTipText("Intensity ratio for the characteristic/continuous spectrum (1 the default)");
+		ratioIntensitiesTF.setToolTipText("Scale factor for the continuous spectrum (1 the default)");
 		jp1.add(ratioIntensitiesTF);
 
 		JPanel eastPanel = new JPanel(new BorderLayout(6, 6));

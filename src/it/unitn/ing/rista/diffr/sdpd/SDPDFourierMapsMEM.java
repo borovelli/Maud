@@ -94,7 +94,7 @@ public class SDPDFourierMapsMEM extends StructureFactorSolveCrystalStructure imp
   boolean useReducedCell = true;
   double percentageForCut = 0.0;
   boolean isOptimizing = false;
-//  int repeatMax = MaudPreferences.getInteger("MEMrefinement.cyclesNumber", 3);
+//  int repeatMax = MaudPreferences.getInteger("meemRefinement.cyclesNumber", 3);
 //  boolean useAllSites = false;
 //  boolean useequivalentReflections = false;
 
@@ -135,7 +135,7 @@ public class SDPDFourierMapsMEM extends StructureFactorSolveCrystalStructure imp
   public void initParameters() {
     super.initParameters();
 
-    stringField[0] = MaudPreferences.getPref("MEMrefinement.cyclesNumber", "3");
+    stringField[0] = MaudPreferences.getPref("meemRefinement.cyclesNumber", "3");
     stringField[1] = "10";
     stringField[2] = MaudPreferences.getPref("entropyMEM.startingExponent", "0.001");
     String default_res = MaudPreferences.getPref("atomMap.divisionNumber_even", "10");
@@ -153,10 +153,10 @@ public class SDPDFourierMapsMEM extends StructureFactorSolveCrystalStructure imp
 //    if (!aparFile.isStructureFactorComputationPermitted())
 //      return false;
 
-//    useAllSites = MaudPreferences.getBoolean("MEMmap.useAllSites", false);
+//    useAllSites = MaudPreferences.getBoolean("meemMap.useAllSites", false);
 //    if (reducedCell[0] != 1.0 || reducedCell[1] != 1.0 || reducedCell[2] != 1.0)
 //      useAllSites = true;
-//    useequivalentReflections = MaudPreferences.getBoolean("MEMmap.useMultipleReflections", false);
+//    useequivalentReflections = MaudPreferences.getBoolean("meemMap.useMultipleReflections", false);
 
 
 		if (mapnotLoaded) {
@@ -221,7 +221,7 @@ public class SDPDFourierMapsMEM extends StructureFactorSolveCrystalStructure imp
 //    FilePar aparFile = (FilePar) getFilePar();
 
     atomMapInitialization();
-    percentageForCut = MaudPreferences.getDouble("MEEM.cuttingFactor", 0.01);
+    percentageForCut = MaudPreferences.getDouble("meem.cuttingFactor", 0.01);
     cutLowDensityMap(percentageForCut);
     atomMapNormalization();
 //Last    checkSimmetries();
@@ -742,13 +742,13 @@ public class SDPDFourierMapsMEM extends StructureFactorSolveCrystalStructure imp
     Phase aphase = (Phase) getParent();
     int siteNumber = 1;
 //    if (useAllSites)
-      siteNumber = aphase.getSitePositionNumber();
+      siteNumber = aphase.getPhaseInfo().getSitePositionNumber();
     double factors = aphase.getActivePlanarDefects().getStructureFactorModifier(null);
     double[] divideFactors = aphase.getActivePlanarDefects().getDivisionFactors();
     double norm = Math.sqrt(factors);// / (siteNumber * reducedCell[0] * reducedCell[1] * reducedCell[2]);
     SitePosition[] sitepos = new SitePosition[siteNumber];
     for (int i = 0; i < siteNumber; i++) {
-      sitepos[i] = aphase.sitePositionv.elementAt(i);
+      sitepos[i] = aphase.getPhaseInfo().getSitePosition(i);
     }
     double x[][] = new double[3][siteNumber], xf[] = new double[3];
 
@@ -824,7 +824,7 @@ public class SDPDFourierMapsMEM extends StructureFactorSolveCrystalStructure imp
     Phase aphase = (Phase) getParent();
     int siteNumber = 1;
 //    if (useAllSites)
-      siteNumber = aphase.getSitePositionNumber();
+      siteNumber = aphase.getPhaseInfo().getSitePositionNumber();
     double norm = 1.0;// / (siteNumber * reducedCell[0] * reducedCell[1] * reducedCell[2]);
     int index = 0;
     double totalMap = 0.0;
@@ -841,10 +841,10 @@ public class SDPDFourierMapsMEM extends StructureFactorSolveCrystalStructure imp
 
     System.out.println("Normalization factor: " + Fmt.format(norm) + ", total: "
         + totalMap);
-//    useAllSites = MaudPreferences.getBoolean("MEMmap.useAllSites", false);
+//    useAllSites = MaudPreferences.getBoolean("meemMap.useAllSites", false);
 //    if (reducedCell[0] != 1.0 || reducedCell[1] != 1.0 || reducedCell[2] != 1.0)
 //      useAllSites = true;
-//    useequivalentReflections = MaudPreferences.getBoolean("MEMmap.useMultipleReflections", false);
+//    useequivalentReflections = MaudPreferences.getBoolean("meemMap.useMultipleReflections", false);
 
   }
 
@@ -921,10 +921,10 @@ public class SDPDFourierMapsMEM extends StructureFactorSolveCrystalStructure imp
 
     numberOfParameters = computeParameterNumber();
 //		totalWeight = new double[numberOfParameters];
-//    useAllSites = MaudPreferences.getBoolean("MEMmap.useAllSites", false);
+//    useAllSites = MaudPreferences.getBoolean("meemMap.useAllSites", false);
 //    if (reducedCell[0] != 1.0 || reducedCell[1] != 1.0 || reducedCell[2] != 1.0)
 //      useAllSites = true;
-//    useequivalentReflections = MaudPreferences.getBoolean("MEMmap.useMultipleReflections", false);
+//    useequivalentReflections = MaudPreferences.getBoolean("meemMap.useMultipleReflections", false);
 
   }
 
@@ -1025,14 +1025,14 @@ public class SDPDFourierMapsMEM extends StructureFactorSolveCrystalStructure imp
     Phase aphase = (Phase) getParent();
     int siteNumber = 1;
 //    if (useAllSites)
-      siteNumber = aphase.getSitePositionNumber();
+      siteNumber = aphase.getPhaseInfo().getSitePositionNumber();
     double factors = aphase.getActivePlanarDefects().getStructureFactorModifier(null);
     double[] divideFactors = aphase.getActivePlanarDefects().getDivisionFactors();
     double norm = Math.sqrt(factors); // / (siteNumber * multeplicity);
       //  * reducedCell[0] * reducedCell[1] * reducedCell[2]);
     SitePosition[] sitepos = new SitePosition[siteNumber];
     for (int i = 0; i < siteNumber; i++) {
-      sitepos[i] = aphase.sitePositionv.elementAt(i);
+      sitepos[i] = aphase.getPhaseInfo().getSitePosition(i);
     }
     double x[][] = new double[3][siteNumber], xf[] = new double[3];
 
@@ -1640,7 +1640,7 @@ public class SDPDFourierMapsMEM extends StructureFactorSolveCrystalStructure imp
     int column = 0;
     IntensityMin = 0.0f;
     IntensityMax = 0.0f;
-    boolean sqrtMap = MaudPreferences.getBoolean("ElectronMap.sqrt", false);
+    boolean sqrtMap = MaudPreferences.getBoolean("electronMap.sqrt", false);
     for (int i = 0; i < numberOfSections; i++) {
       for (int n = 0; n < aSlices * zoom; n++) {
         for (int m = 0; m < bSlices * zoom; m++) {
@@ -1712,8 +1712,8 @@ public class SDPDFourierMapsMEM extends StructureFactorSolveCrystalStructure imp
 
     atomMapInitialization();
     
-    forceMapToLowValue = (double) MaudPreferences.getDouble("MEMmap.forceLowMapConstant", "1.0");
-    weightMAPforce = (double) MaudPreferences.getDouble("MEMmap.forceLowMapWeight", "10.0");
+    forceMapToLowValue = MaudPreferences.getDouble("meemMap.forceLowMapConstant", 1.0);
+    weightMAPforce = MaudPreferences.getDouble("meemMap.forceLowMapWeight", 10.0);
 //    System.out.println("Normalization");
     atomMapNormalization();
   }

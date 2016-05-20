@@ -161,7 +161,6 @@ public class Phase extends XRDcat {
   public String SGconv = sgconvlist[2];
   private Vector<Reflection> reflectionv = new Vector<Reflection>(0, 10);
 //  public Vector<Reflection> absentreflectionv = new Vector<Reflection>(0, 10);
-  public Vector<SitePosition> sitePositionv = new Vector<SitePosition>(0, 1);
   public boolean refreshReflectionv = true;
   //	protected boolean refreshReflectionvHard = false;
   public boolean refreshAtoms = true;
@@ -187,7 +186,8 @@ public class Phase extends XRDcat {
 	private double full_so[] = new double[9];
   //  public int totalNumberOfAtoms = 0;
   public Vector<Atom> fullAtomList = null;
-  private T_SgInfo SgInfo = null;
+//  private T_SgInfo SgInfo = null;
+	private PhaseInfo phaseInfo = null;
 
   public static boolean native_loaded = false;
 
@@ -563,6 +563,7 @@ public class Phase extends XRDcat {
     refreshReflectionv = true;
     refreshFhklcomp = true;
     refreshPositions = true;
+	  refreshSpaceGroup = true;
 //		Constants.speedUp = false;
 //			refreshReflectionvHard = true;
     refreshCellSymmetry = true;
@@ -588,6 +589,7 @@ public class Phase extends XRDcat {
       refreshReflectionv = true;
       refreshEnergyComputation = true;
       refreshPositions = true;
+	    refreshSpaceGroup = true;
       CellSymmetry();
     }
     if (reason == Constants.STRUCTURE_FACTOR_CHANGED) {
@@ -641,6 +643,7 @@ public class Phase extends XRDcat {
       refreshReflectionv = true;
       refreshEnergyComputation = true;
       refreshPositions = true;
+	    refreshSpaceGroup = true;
       CellSymmetry();
     }
     if (reason == Constants.STRUCTURE_FACTOR_CHANGED) {
@@ -801,9 +804,9 @@ public class Phase extends XRDcat {
 
     if (index >= 3 && index <= 6) {
       int conv = index - 3;
-//	    System.out.println("Setting: " + stringField[index] + " " + conv);
+	    System.out.println("Setting: " + stringField[index] + " " + conv);
       if (allowSetting(lastSGLoaded, conv)) {
-//	      System.out.println("Allowing: " + stringField[index]);
+	      System.out.println("Allowing: " + stringField[index]);
         setSGconv(sgconvlist[conv]);
         setSpaceGroup(true, stringField[index], false);
         lastSGLoaded = conv;
@@ -814,6 +817,8 @@ public class Phase extends XRDcat {
   }
 
   boolean allowSetting(int SGLoaded, int conv) {
+	  if (conv == 3 && SpaceGroups.useCCTBX())
+		  return true;
     if (conv == 2)
       return true;
     return false;
@@ -902,12 +907,14 @@ public class Phase extends XRDcat {
 //      for (int i = 0; i < SGconvN; i++)
 //        if (SGconv.equalsIgnoreCase(sgconvlist[i]))
 //          return i;
-    return 2; // lastSGLoaded;
+	  if (SpaceGroups.useCCTBX())
+			return 3;
+	  return 2; // lastSGLoaded;
   }
 
-  public String getSGconvS() {
+/*  public String getSGconvS() {
     return sgconvlist[getSGconv()];
-  }
+  }*/
 
   public void setSGconv(String sg) {
     if (!SGconv.equals(sg)) {
@@ -962,30 +969,76 @@ public class Phase extends XRDcat {
 
     System.out.println("Trying to change to space group: " + sg);
 
+	  spaceGroupAssigned = true;
 	  if (SpaceGroups.useCCTBX()) {
-
-		  // todo: check monoclinic axis
-
-		  spaceGroupAssigned = true;
-			Spacegroup space_group = SpaceGroups.getCorrectSpaceGroup(sg);
-		  System.out.println(space_group.symmetry + " : " + space_group.number + " | " + space_group.hermann_mauguin + " | " + space_group.hall + " | " + space_group.schoenflies);
-		  stringField[5] = space_group.hermann_mauguin;
-		  stringField[6] = space_group.hall;
-		  stringField[4] = space_group.schoenflies;
-		  stringField[3] = Integer.toString(space_group.number);
-		  setSymmetry(space_group.symmetry);
-		  refreshReflectionv = true;
-		  refreshFhklcomp = true;
-		  refreshPositions = true;
-		  refreshCellSymmetry = true;
-		  refreshCellVolume = true;
-		  refreshCrystMicrostrain = true;
-		  getActiveTexture().refreshComputation = true;
-		  getActiveStrain().refreshComputation = true;
-		  notifyUpObjectChanged(this, Constants.STRING_CHANGED);
+		  String oldSg = getSpaceGroup();
+		  Spacegroup space_group = SpaceGroups.getCorrectSpaceGroup(sg);
+		  if (forceChange || !oldSg.equals(space_group.hall)) {
+			  int monoclinicAxis = getMonoclinicAxis();
+			  refreshSpaceGroup = true;
+//		  System.out.println(space_group.symmetry + " : " + space_group.number + " | " + space_group.hermann_mauguin + " | " + space_group.hall + " | " + space_group.schoenflies);
+			  stringField[5] = space_group.hermann_mauguin;
+			  stringField[6] = space_group.hall;
+			  stringField[4] = space_group.schoenflies;
+			  stringField[3] = Integer.toString(space_group.number);
+			  setSymmetry(space_group.symmetry);
+			  int newMonoclinicAxis = getMonoclinicAxis();
+			  if (checkMonoclinicAxis && monoclinicAxis != newMonoclinicAxis) {
+				  boolean oldPermission = isAbilitatetoRefresh;
+				  isAbilitatetoRefresh = false;
+				  switch (monoclinicAxis) {
+					  case 1:
+						  switch (newMonoclinicAxis) {
+							  case 1:
+								  break;
+							  case 2:
+								  refreshCellForChange(CellOperation.FORWARD);
+								  break;
+							  case 3:
+								  refreshCellForChange(CellOperation.BACKWARD);
+								  break;
+						  }
+						  break;
+					  case 2:
+						  switch (newMonoclinicAxis) {
+							  case 1:
+								  refreshCellForChange(CellOperation.BACKWARD);
+								  break;
+							  case 2:
+								  break;
+							  case 3:
+								  refreshCellForChange(CellOperation.FORWARD);
+								  break;
+						  }
+						  break;
+					  case 3:
+						  switch (newMonoclinicAxis) {
+							  case 1:
+								  refreshCellForChange(CellOperation.FORWARD);
+								  break;
+							  case 2:
+								  refreshCellForChange(CellOperation.BACKWARD);
+								  break;
+							  case 3:
+								  break;
+						  }
+						  break;
+				  }
+				  isAbilitatetoRefresh = oldPermission;
+//          refreshAll(false);
+			  }
+			  refreshReflectionv = true;
+			  refreshFhklcomp = true;
+			  refreshPositions = true;
+			  refreshCellSymmetry = true;
+			  refreshCellVolume = true;
+			  refreshCrystMicrostrain = true;
+			  getActiveTexture().refreshComputation = true;
+			  getActiveStrain().refreshComputation = true;
+			  notifyUpObjectChanged(this, Constants.STRING_CHANGED);
+		  }
 	  } else {
 		  String newsg = null;
-		  spaceGroupAssigned = true;
 //    if (Constants.testing)
 //		  System.out.println("Start to modify:" + sg);
 		  sg = Misc.toStringDeleteBlank(sg);
@@ -1903,8 +1956,12 @@ public static final String getSpaceGroup(int index, int sgconv) {
 //      System.out.println(getPhaseName() + ", refresh peak list " + reflectionv.size() + " : " + getNumberOfCustomPeaks());
       if (getNumberOfCustomPeaks() > 0)
         updateReflectionsFromInternalList(reflectionv);
-      else
-	      checkSghkllist(getSpaceGroup(), getSGconv(), dspacemin, dspacemax);
+      else {
+	      if (SpaceGroups.useCCTBX())
+		      checkSghkllist(getSpaceGroup(), dspacemin, dspacemax);
+	      else
+	        checkSghkllist(getSpaceGroup(), getSGconv(), dspacemin, dspacemax);
+      }
       getActivePlanarDefects().checkhklListForPlanarDefects(reflectionv, getClosePackedType());
       if (Constants.testtime)
         System.out.println("Reflection list computation for phase " + getLabel() + ": " +
@@ -2114,13 +2171,7 @@ public static final String getSpaceGroup(int index, int sgconv) {
 
   public void printCustomInformations(OutputStream out) throws IOException {
     // to be implemented by subclasses
-    printLine(out, "       General position");
-    for (int i = 0; i < sitePositionv.size(); i++) {
-      printString(out, (i + 1) + ")  " + (sitePositionv.elementAt(i)).getx());
-      printString(out, "  |  " + (sitePositionv.elementAt(i)).gety());
-      printLine(out, "  |  " + (sitePositionv.elementAt(i)).getz());
-    }
-    newLine(out);
+	  getPhaseInfo().printCustomInformations(out);
 
     printLine(out, "       Atom list");
     printLine(out, "n  label  symbol  quantity  occupancy  x  y  z  multiplicity  B  radius  weight  neutron " +
@@ -2175,6 +2226,7 @@ public static final String getSpaceGroup(int index, int sgconv) {
   }
 
   public void refreshFhklcompv() {
+	  refreshSpaceGroup = true;
     refreshsgxyz();
     refreshAtoms();
     refreshSubordinateStructureModels();
@@ -2187,15 +2239,17 @@ public static final String getSpaceGroup(int index, int sgconv) {
   }
 
   public void refreshsgxyz() {
-    sgxyzcomp();
+	  if (refreshSpaceGroup)
+		  refreshSpaceGroup = refreshSpaceGroupComputation(getSpaceGroup(), getSGconv());
   }
 
   public void refreshAtoms() {
+//	  System.out.println("Refresh atoms: " + refreshAtoms);
     if (refreshAtoms) {
       fullAtomList = new Vector<Atom>(0, 1);
       fullAtomList.addAll(getAtomList());
       fullAtomList.addAll(getActiveStructureModel().getFullAtomList());
-      refreshOccupancyAndQuantity();
+	    refreshOccupancyAndQuantity();
 	    for (int i = 0; i < fullAtomList.size(); i++)
 		    fullAtomList.get(i).setRefreshPosition(true);
       refreshAtoms = false;
@@ -2239,6 +2293,7 @@ public static final String getSpaceGroup(int index, int sgconv) {
 
   public void refreshOccupancyAndQuantity() {
     for (int i = 0; i < getFullAtomList().size(); i++) {
+	    getFullAtomList().get(i).setRefreshPosition(true);
       getFullAtomList().get(i).refreshPositions(false);
       getFullAtomList().get(i).refreshOccupancyAndQuantity();
     }
@@ -2889,7 +2944,7 @@ public static final String getSpaceGroup(int index, int sgconv) {
 
   public void computeStrain(Sample asample) {
     getActiveStrain().computeStrain(this, asample);
-	  getActiveStrain().saveStrainValues(this, asample);
+// todo: transform this to export only from menu	  getActiveStrain().saveStrainValues(this, asample);
   }
 
 /*  public void setStrain(int datafile, Reflection reflex, double value) {
@@ -2917,24 +2972,15 @@ public static final String getSpaceGroup(int index, int sgconv) {
     }
   }*/
 
-  public int getSitePositionNumber() {
-    sgxyzcomp();
-    return sitePositionv.size();
-  }
-
-  public void addPosition(double signx1, double signy1, double signz1, double constant1,
-                          double signx2, double signy2, double signz2, double constant2,
-                          double signx3, double signy3, double signz3, double constant3) {
-    sitePositionv.addElement(new SitePosition(signx1, signy1, signz1, constant1,
-        signx2, signy2, signz2, constant2,
-        signx3, signy3, signz3, constant3));
-  }
-
   // SgInfo methods start here, pure java
 
-  public T_SgInfo getSgInfo() {
-    return SgInfo;
-  }
+	public PhaseInfo getPhaseInfo() {
+		if (phaseInfo == null) {
+			phaseInfo = new PhaseInfo();
+			phaseInfo.refreshSpaceGroupComputation(getSpaceGroup(), getSGconv());
+		}
+		return phaseInfo;
+	}
 
   public Vector<Reflection> sghkllist(String SgName, int sgconv, double dplanecut, double dplanestart,
                                       boolean permitAbsent) {
@@ -2969,8 +3015,8 @@ public static final String getSpaceGroup(int index, int sgconv) {
     Maxk = (int) (1.0 / (Math.sqrt(soVector[1]) * dplanecut)) + 1;
     Maxl = (int) (1.0 / (Math.sqrt(soVector[2]) * dplanecut)) + 1;
 
-    boolean showWarningMaxIndex = MaudPreferences.getBoolean("MillerIndices.showWarning", true);
-    int maxIndexPermitted = MaudPreferences.getInteger("MillerIndices.maxValue", 100);
+    boolean showWarningMaxIndex = MaudPreferences.getBoolean("millerIndices.showWarning", true);
+    int maxIndexPermitted = MaudPreferences.getInteger("millerIndices.maxValue", 100);
     if (Maxh > maxIndexPermitted) {
       Maxh = maxIndexPermitted;
       if (showWarningMaxIndex)
@@ -2993,7 +3039,7 @@ public static final String getSpaceGroup(int index, int sgconv) {
                 "try to restrict the computing range or change max value");
     }
 
-    Sghkl sghkl = new Sghkl(SgInfo);
+    Sghkl sghkl = new Sghkl(getPhaseInfo().SgInfo);
 
     sghkl.SetListMin_hkl(friedelLaw, Maxh, Maxk, Maxl, Minh, Mink, Minl);
 
@@ -3096,8 +3142,8 @@ public static final String getSpaceGroup(int index, int sgconv) {
 
 	  cellVolumeComp();
 	  char F_Convention = 'A';
-	  SgInfo = new T_SgInfo(this.getSpaceGroup(), F_Convention);
-	  Sghkl sghkl = new Sghkl(SgInfo);
+	  getPhaseInfo().SgInfo = new T_SgInfo(this.getSpaceGroup(), F_Convention);
+	  Sghkl sghkl = new Sghkl(getPhaseInfo().SgInfo);
 
 	  Vector<double[]> reflectionList = getActivePlanarDefects().computeReflectionsList(this, sghkl, totNumber, dmin,
 			  permitAbsent, sumOverlapped);
@@ -3191,8 +3237,7 @@ public static final String getSpaceGroup(int index, int sgconv) {
     return reflectionList;
   }
 
-  private void checkSghkllist(String SgName, int sgconv,
-                              double dplanecut, double dplanestart/*, boolean permitAbsent*/) {
+  private void checkSghkllist(String SgName, double dplanecut, double dplanestart) {
 
 //			System.out.println(getPhaseName() + ", check reflection list " + dplanestart + " " + dplanecut);
 /* 		if (native_loaded) {
@@ -3201,13 +3246,13 @@ public static final String getSpaceGroup(int index, int sgconv) {
  		}*/
 
     if (refreshSpaceGroup) {
-      refreshSpaceGroup = refreshSpaceGroupComputation(SgName, sgconv);
+      refreshSpaceGroup = refreshSpaceGroupComputation(SgName, getSGconv());
 //      reflectionList.removeAllElements();
     }
 
 	  cellVolumeComp(); // to refresh
 
-	  Sghkl sghkl = new Sghkl(SgInfo);
+	  Sghkl sghkl = new Sghkl(getPhaseInfo().SgInfo);
 
 	  boolean done = getActivePlanarDefects().checkSghkllist(this, sghkl, dplanecut, dplanestart);
 
@@ -3238,8 +3283,8 @@ public static final String getSpaceGroup(int index, int sgconv) {
 		  Maxk = (int) (1.0 / (Math.sqrt(soVector[1]) * dplanecut)) + 1;
 		  Maxl = (int) (1.0 / (Math.sqrt(soVector[2]) * dplanecut)) + 1;
 
-		  boolean showWarningMaxIndex = MaudPreferences.getBoolean("MillerIndices.showWarning", true);
-		  int maxIndexPermitted = MaudPreferences.getInteger("MillerIndices.maxValue", 100);
+		  boolean showWarningMaxIndex = MaudPreferences.getBoolean("millerIndices.showWarning", true);
+		  int maxIndexPermitted = MaudPreferences.getInteger("millerIndices.maxValue", 100);
 		  if (Maxh > maxIndexPermitted) {
 			  Maxh = maxIndexPermitted;
 			  if (showWarningMaxIndex)
@@ -3415,49 +3460,234 @@ public static final String getSpaceGroup(int index, int sgconv) {
 	  }
   }
 
-  public void sgxyzcomp() {
+	private void checkSghkllist(String SgName, int sgconv,
+	                            double dplanecut, double dplanestart/*, boolean permitAbsent*/) {
 
+//			System.out.println(getPhaseName() + ", check reflection list " + dplanestart + " " + dplanecut);
 /* 		if (native_loaded) {
- 			PhaseInfo.sgxyzcomp(this, getSpaceGroup(), getSGconv());
+ 			PhaseInfo.sghkllist(this, SgName, sgconv, cellpar, dplanecut, dplanestart);
  			return;
  		}*/
 
-    if (refreshSpaceGroup)
-      refreshSpaceGroup = refreshSpaceGroupComputation(getSpaceGroup(), getSGconv());
+		if (refreshSpaceGroup) {
+			refreshSpaceGroup = refreshSpaceGroupComputation(SgName, sgconv);
+//      reflectionList.removeAllElements();
+		}
 
-  }
+		cellVolumeComp(); // to refresh
+
+		Sghkl sghkl = new Sghkl(getPhaseInfo().SgInfo);
+
+		boolean done = getActivePlanarDefects().checkSghkllist(this, sghkl, dplanecut, dplanestart);
+
+		if (!done) {
+			int im, M2;
+//    char F_Convention;
+			int h, k, l, M; //restriction;
+			int Maxh, Maxk, Maxl;
+			int[] Minh = new int[1], Mink = new int[1], Minl = new int[1];
+			double dpi; //, so12, so23, so13;
+//    double 		          parm12, parm22, parm32, w1, so11, so22, so33;
+			int[] hlist = new int[24], klist = new int[24], llist = new int[24];
+			int[] jhlist;
+			int[] jklist;
+			int[] jllist;
+			T_Eq_hkl Eq_hkl = new T_Eq_hkl();
+			int friedelLaw = 1;
+//    Vector reflectionList = new Vector(0, 1);
+
+
+			double[] soVector = getSoVector();
+//		  for (int i = 0; i < 6; i++)
+//			  System.out.println(soVector[i] + " " + soVector[i]);
+
+//	  System.out.println(this.getLabel() + " Reflection list: " + dplanecut);
+
+			Maxh = (int) (1.0 / (Math.sqrt(soVector[0]) * dplanecut)) + 1;
+			Maxk = (int) (1.0 / (Math.sqrt(soVector[1]) * dplanecut)) + 1;
+			Maxl = (int) (1.0 / (Math.sqrt(soVector[2]) * dplanecut)) + 1;
+
+			boolean showWarningMaxIndex = MaudPreferences.getBoolean("millerIndices.showWarning", true);
+			int maxIndexPermitted = MaudPreferences.getInteger("millerIndices.maxValue", 100);
+			if (Maxh > maxIndexPermitted) {
+				Maxh = maxIndexPermitted;
+				if (showWarningMaxIndex)
+					System.out.println(
+							"Warning: the h miller index was exceeding the max permitted value (modifiable in the preferences); " +
+									"try to restrict the computing range or change max value");
+			}
+			if (Maxk > maxIndexPermitted) {
+				Maxk = maxIndexPermitted;
+				if (showWarningMaxIndex)
+					System.out.println(
+							"Warning: the k miller index was exceeding the max permitted value (modifiable in the preferences); " +
+									"try to restrict the computing range or change max value");
+			}
+			if (Maxl > maxIndexPermitted) {
+				Maxl = maxIndexPermitted;
+				if (showWarningMaxIndex)
+					System.out.println(
+							"Warning: the l miller index was exceeding the max permitted value (modifiable in the preferences); " +
+									"try to restrict the computing range or change max value");
+			}
+
+			sghkl.SetListMin_hkl(friedelLaw, Maxh, Maxk, Maxl, Minh, Mink, Minl);
+
+			for (int i = 0; i < reflectionv.size()/* don't change */; i++) {
+				Reflection refl = reflectionv.elementAt(i);
+				dpi = 1.0 / Math.sqrt(soVector[0] * refl.getH() * refl.getH() + soVector[1] * refl.getK() * refl.getK()
+						+ soVector[2] * refl.getL() * refl.getL()
+						+ 2. * soVector[5] * refl.getH() * refl.getK() + 2. * soVector[3] * refl.getK() * refl.getL()
+						+ 2. * soVector[4] * refl.getH() * refl.getL());
+				if (dpi < dplanecut || dpi > dplanestart) {
+//        System.out.println("Removing " + refl.h +" "+refl.k+" "+refl.l + " " + refl + " " +dpi);
+					reflectionv.removeElementAt(i);
+					i--;
+				}
+			}
+			int numberReflections = reflectionv.size();
+			boolean[] alreadyChecked = new boolean[numberReflections];
+			for (int i = 0; i < numberReflections; i++)
+				alreadyChecked[i] = false;
+			int minimumChecked = 0;
+
+/*    for (int i = 0; i < absentreflectionv.size(); i++) {
+      Reflection refl = absentreflectionv.elementAt(i);
+      dpi = 1.0 / Math.sqrt(soVector[0] * refl.h * refl.h + soVector[1] * refl.k * refl.k + soVector[2] * refl.l * refl.l
+          + 2. * soVector[5] * refl.h * refl.k + 2. * soVector[3] * refl.k * refl.l
+          + 2. * soVector[4] * refl.h * refl.l);
+      if (dpi < dplanecut || dpi > dplanestart) {
+        absentreflectionv.removeElementAt(i);
+        i--;
+      }
+    }
+    int numberReflectionsA = absentreflectionv.size();
+    boolean[] alreadyCheckedA = new boolean[numberReflectionsA];
+    for (int i = 0; i < numberReflectionsA; i++)
+      alreadyCheckedA[i] = false;
+    int minimumCheckedA = 0;*/
+
+			for (h = Minh[0]; h <= Maxh; h++) {
+				for (k = Mink[0]; k <= Maxk; k++) {
+					for (l = Minl[0]; l <= Maxl; l++) {
+						if (sghkl.IsSysAbsent_hkl(h, k, l, null) == 0) {
+							if ((sghkl.IsHidden_hkl(friedelLaw, Minh[0], Mink[0], Minl[0],
+									Maxh, Maxk, Maxl, h, k, l)) == 0) {
+								if (!((h == 0 && k == 0) && l == 0) && getActivePlanarDefects().acceptReflection(h, k, l)) {
+									dpi = 1.0 / Math.sqrt(soVector[0] * h * h + soVector[1] * k * k + soVector[2] * l * l + 2.
+											* soVector[5] * h * k + 2. * soVector[3] * k * l + 2. * soVector[4] * h * l);
+									if (dpi >= dplanecut && dpi <= dplanestart) {
+//        System.out.println("Checking " + h +" "+k+" "+l + " " +dpi);
+										int found = -1;
+										for (int i = minimumChecked; i < numberReflections; i++) {
+											if (!alreadyChecked[i]) {
+												Reflection refl = reflectionv.elementAt(i);
+												if (refl.equalsTo(h, k, l)) {
+													found = i;
+													break;
+												}
+											} else {
+												if (i == minimumChecked)
+													minimumChecked++;
+											}
+										}
+										if (found < 0) {
+											M = sghkl.BuildEq_hkl(friedelLaw, Eq_hkl, h, k, l);
+											M2 = M / 2;
+											for (im = 0; im < M2; im++) {
+												hlist[im] = Eq_hkl.h[im];
+												klist[im] = Eq_hkl.k[im];
+												llist[im] = Eq_hkl.l[im];
+											}
+											jhlist = new int[M2];
+											jklist = new int[M2];
+											jllist = new int[M2];
+											for (int i = 0; i < M2; i++) {
+												jhlist[i] = hlist[i];
+												jklist[i] = klist[i];
+												jllist[i] = llist[i];
+											}
+											Reflection refl = new Reflection(this, jhlist, jklist, jllist, M, dpi);
+											reflectionv.addElement(refl);
+//										System.out.println("check, New Reflection " + h +" "+k+" "+l + " " + refl);
+										} else {
+											alreadyChecked[found] = true;
+											Reflection refl = reflectionv.elementAt(found);
+											refl.setDSpace(dpi);
+											refl.refreshforUpdate();
+//                    System.out.println("check, Old Reflection " + h +" "+k+" "+l + " " + refl);
+										}
+									}
+								}
+							}
+						}/* else if (permitAbsent) {
+            if ((sghkl.IsHidden_hkl(friedelLaw, Minh[0], Mink[0], Minl[0],
+                Maxh, Maxk, Maxl, h, k, l)) == 0) {
+              if (!((h == 0 && k == 0) && l == 0) && getActivePlanarDefects().acceptReflection(h, k, l)) {
+                dpi = 1.0 / Math.sqrt(soVector[0] * h * h + soVector[1] * k * k + soVector[2] * l * l + 2.
+                    * soVector[5] * h * k + 2. * soVector[3] * k * l + 2. * soVector[4] * h * l);
+                if (dpi >= dplanecut && dpi <= dplanestart) {
+                  int found = -1;
+                  for (int i = minimumCheckedA; i < numberReflectionsA; i++) {
+                    if (!alreadyCheckedA[i]) {
+                      Reflection refl = absentreflectionv.elementAt(i);
+                      if (refl.equalsTo(h, k, l)) {
+                        found = i;
+                        break;
+                      }
+                    } else {
+                      if (i == minimumCheckedA)
+                        minimumCheckedA++;
+                    }
+                  }
+                  if (found < 0) {
+                    M = sghkl.BuildEq_hkl(friedelLaw, Eq_hkl, h, k, l);
+                    M2 = M / 2;
+                    for (im = 0; im < M2; im++) {
+                      hlist[im] = Eq_hkl.h[im];
+                      klist[im] = Eq_hkl.k[im];
+                      llist[im] = Eq_hkl.l[im];
+                    }
+                    jhlist = new int[M2];
+                    jklist = new int[M2];
+                    jllist = new int[M2];
+                    for (int i = 0; i < M2; i++) {
+                      jhlist[i] = hlist[i];
+                      jklist[i] = klist[i];
+                      jllist[i] = llist[i];
+                    }
+                    Reflection refl = new Reflection(this, jhlist, jklist, jllist, M, dpi);
+                    absentreflectionv.addElement(refl);
+//										System.out.println("check, New Reflection " + h +" "+k+" "+l + " " + refl);
+                  } else {
+                    alreadyCheckedA[found] = true;
+                    Reflection refl = absentreflectionv.elementAt(found);
+                    refl.setDSpace(dpi);
+                    refl.refreshforUpdate();
+                  }
+                }
+              }
+            }
+          }*/
+					}
+				}
+			}
+			for (int i = numberReflections - 1; i >= 0; i--)
+				if (!alreadyChecked[i])
+					reflectionv.removeElementAt(i);
+/*    for (int i = numberReflectionsA - 1; i >= 0; i--)
+      if (!alreadyCheckedA[i])
+        absentreflectionv.removeElementAt(i);*/
+
+//	  System.out.println(getPhaseName() + " " + reflectionv.size());
+//    return reflectionList;
+		}
+	}
 
   public boolean isCentrosymmetric() {
-    sgxyzcomp();
-    return (SgInfo.InversionOffOrigin == 0);
-  }
-
-  int LGgroup = -1;
-  int PGgroup = -1;
-
-  public int getLaueGroup(String SgName, int sgconv) {
-
-/* 		if (native_loaded) {
- 			return PhaseInfo.getLaueGroup(SgName, sgconv);
- 		}*/
-
-    if (refreshSpaceGroup || LGgroup == -1)
-      refreshSpaceGroup = refreshSpaceGroupComputation(SgName, sgconv);
-
-    return LGgroup;
-
-  }
-
-  public int getPointGroup(String SgName, int sgconv) {
-
-/* 		if (native_loaded) {
- 			return PhaseInfo.getPointGroup(SgName, sgconv);
- 		}*/
-
-    if (refreshSpaceGroup || PGgroup == -1)
-      refreshSpaceGroup = refreshSpaceGroupComputation(SgName, sgconv);
-
-    return PGgroup;
+	  if (refreshSpaceGroup)
+		  refreshSpaceGroup = refreshSpaceGroupComputation(getSpaceGroup(), getSGconv());
+    return (getPhaseInfo().InversionOffOrigin() == 0);
   }
 
   public String fixSpaceGroupForTexture() {
@@ -3756,83 +3986,16 @@ public static final String getSpaceGroup(int index, int sgconv) {
 
   public boolean refreshSpaceGroupComputation(String SgName, int sgconv) {
 
-    int i;
-    char F_Convention;
+	  refreshAtoms = true;
+	  refreshEnergyComputation = true;
+	  refreshFhklcomp = true;
+	  refreshPositions = true;
+	  fullAtomList = null;
+	  if (reflectionv != null)
+		  reflectionv.removeAllElements();
+	  refreshReflectionv = true;
 
-    int iList, fi;
-    int nTrV, iTrV, nLoopInv, iLoopInv;
-    int[] TrV;
-    T_RTMx SMx = new T_RTMx();
-    T_RTMx[] lsmx;
-    double[] signx = new double[3], signy = new double[3], signz = new double[3],
-        constvalue = new double[3];
-
-
-    F_Convention = 'A';
-    if (sgconv == 3)
-      F_Convention = 'H';
-
-    SgInfo = new T_SgInfo(SgName, F_Convention);
-
-    LGgroup = T_SgInfo.LG_Number(SgInfo.PointGroup);
-    PGgroup = T_SgInfo.PG_Index(SgInfo.PointGroup);
-
-    refreshAtoms = true;
-    refreshEnergyComputation = true;
-    refreshFhklcomp = true;
-    refreshPositions = true;
-    fullAtomList = null;
-    sitePositionv.removeAllElements();
-    if (reflectionv != null)
-      reflectionv.removeAllElements();
-    refreshReflectionv = true;
-//    if (absentreflectionv != null)
-//      absentreflectionv.removeAllElements();
-
-    nLoopInv = SgInfo.Sg_nLoopInv();
-
-    nTrV = SgInfo.LatticeInfo.nTrVector;
-    TrV = SgInfo.LatticeInfo.TrVector;
-    int kTrV = 0;
-    lsmx = SgInfo.ListSeitzMx;
-
-
-    for (iTrV = 0; iTrV < nTrV; iTrV++, kTrV += 3) {
-      for (iLoopInv = 0; iLoopInv < nLoopInv; iLoopInv++) {
-        if (iLoopInv == 0)
-          fi = 1;
-        else
-          fi = -1;
-
-        int ilsmx = 0;
-
-        for (iList = 0; iList < SgInfo.nList; iList++, ilsmx++) {
-          for (i = 0; i < 9; i++)
-            SMx.s.R[i] = fi * lsmx[ilsmx].s.R[i];
-
-          for (i = 0; i < 3; i++)
-            SMx.s.T[i] = T_SgInfo.iModPositive(fi * lsmx[ilsmx].s.T[i] + TrV[i + kTrV], T_SgInfo.STBF);
-
-          signx[0] = SMx.s.R[0];
-          signy[0] = SMx.s.R[1];
-          signz[0] = SMx.s.R[2];
-          constvalue[0] = ((double) SMx.s.T[0]) / T_SgInfo.STBF;
-
-          signx[1] = SMx.s.R[3];
-          signy[1] = SMx.s.R[4];
-          signz[1] = SMx.s.R[5];
-          constvalue[1] = ((double) SMx.s.T[1]) / T_SgInfo.STBF;
-
-          signx[2] = SMx.s.R[6];
-          signy[2] = SMx.s.R[7];
-          signz[2] = SMx.s.R[8];
-          constvalue[2] = ((double) SMx.s.T[2]) / T_SgInfo.STBF;
-          addPosition(signx[0], signy[0], signz[0], constvalue[0],
-              signx[1], signy[1], signz[1], constvalue[1],
-              signx[2], signy[2], signz[2], constvalue[2]);
-        }
-      }
-    }
+	  getPhaseInfo().refreshSpaceGroupComputation(SgName, sgconv);
 
     computeReducedCellFactors();
 
@@ -3849,12 +4012,12 @@ public static final String getSpaceGroup(int index, int sgconv) {
     reducedCellFactor[1] = 1.0;
     reducedCellFactor[2] = 1.0;
 
-    int siteNumber = sitePositionv.size();
+    int siteNumber = getPhaseInfo().getSitePositionNumber();
 //    System.out.println("Sites " + siteNumber);
     int[][] factors = MoreMath.get3factors(siteNumber);
     SitePosition[] sitepos = new SitePosition[siteNumber];
     for (int i = 0; i < siteNumber; i++)
-      sitepos[i] = sitePositionv.elementAt(i);
+      sitepos[i] = getPhaseInfo().getSitePosition(i);
     double[] xf = new double[3];
 
     double[] maxRedCell = new double[3];
@@ -3940,7 +4103,7 @@ public static final String getSpaceGroup(int index, int sgconv) {
         if (cell[0] == cell[2] && maxRedCell[0] != maxRedCell[2])
           checkit = false;
         if (checkit) {
-          System.out.println("Asymmetric unit assigned: " + maxRedCell[0] + " " + maxRedCell[1] + " " + maxRedCell[2]);
+//          System.out.println("Asymmetric unit assigned: " + maxRedCell[0] + " " + maxRedCell[1] + " " + maxRedCell[2]);
           for (int j = 0; j < 3; j++)
             reducedCellFactor[j] = maxRedCell[j];
           found = true;
@@ -3948,13 +4111,13 @@ public static final String getSpaceGroup(int index, int sgconv) {
       }
       if (!found) {
         maxRedCell = (double[]) reducedCell.elementAt(0);
-        System.out.println("Asymmetric unit assigned: " + maxRedCell[0] + " " + maxRedCell[1] + " " + maxRedCell[2]);
+//        System.out.println("Asymmetric unit assigned: " + maxRedCell[0] + " " + maxRedCell[1] + " " + maxRedCell[2]);
         for (int j = 0; j < 3; j++)
           reducedCellFactor[j] = maxRedCell[j];
       }
     } else if (reducedCell.size() > 0) {
       maxRedCell = (double[]) reducedCell.elementAt(0);
-      System.out.println("Asymmetric unit assigned: " + maxRedCell[0] + " " + maxRedCell[1] + " " + maxRedCell[2]);
+//      System.out.println("Asymmetric unit assigned: " + maxRedCell[0] + " " + maxRedCell[1] + " " + maxRedCell[2]);
       for (int j = 0; j < 3; j++)
         reducedCellFactor[j] = maxRedCell[j];
     } else
@@ -3962,11 +4125,15 @@ public static final String getSpaceGroup(int index, int sgconv) {
   }
 
   public int getLaueGroup() {
-    return getLaueGroup(getSpaceGroup(), getSGconv());
+	  if (refreshSpaceGroup || getPhaseInfo().LGgroup == -1)
+		  refreshSpaceGroup = refreshSpaceGroupComputation(getSpaceGroup(), getSGconv());
+	  return getPhaseInfo().LGgroup;
   }
 
   public int getPointGroup() {
-    return getPointGroup(getSpaceGroup(), getSGconv());
+	  if (refreshSpaceGroup || getPhaseInfo().PGgroup == -1)
+		  refreshSpaceGroup = refreshSpaceGroupComputation(getSpaceGroup(), getSGconv());
+	  return getPhaseInfo().PGgroup;
   }
 
   public void cellVolumeComp() {
@@ -4121,6 +4288,7 @@ public static final String getSpaceGroup(int index, int sgconv) {
 		for (int j = 0; j < getFullAtomList().size(); j++) {
 			absorption += getFullAtomList().elementAt(j).getSiteAbsorption(energyInKeV);
 			totalNumber += getFullAtomList().elementAt(j).getSiteWeight();
+//			System.out.println(absorption + " ++++++ " + totalNumber);
 		}
 		absorption /= totalNumber;
 //		System.out.println("Absorption of " + toString() + ": " + absorption);
@@ -4493,20 +4661,20 @@ public static final String getSpaceGroup(int index, int sgconv) {
 			out.newLine();
 			out.write("_symmetry_equiv_pos_as_xyz");
 			out.newLine();
-			for (int i = 0; i < sitePositionv.size(); i++) {
+			for (int i = 0; i < getPhaseInfo().getSitePositionNumber(); i++) {
 				out.write(Integer.toString(i));
 				out.write(" '");
-				String pos = sitePositionv.elementAt(i).getx();
+				String pos = getPhaseInfo().getSitePosition(i).getx();
 				if (pos.startsWith("+"))
 					pos = pos.substring(1);
 				out.write(pos);
 				out.write(", ");
-				pos = sitePositionv.elementAt(i).gety();
+				pos = getPhaseInfo().getSitePosition(i).gety();
 				if (pos.startsWith("+"))
 					pos = pos.substring(1);
 				out.write(pos);
 				out.write(", ");
-				pos = sitePositionv.elementAt(i).getz();
+				pos = getPhaseInfo().getSitePosition(i).getz();
 				if (pos.startsWith("+"))
 					pos = pos.substring(1);
 				out.write(pos);

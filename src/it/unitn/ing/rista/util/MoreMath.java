@@ -1267,8 +1267,11 @@ end;
 
 	public static double getEbelLogarithmicInterpolation(double[] coefficients, double energyInKeV) {
 		double result = 0.0;
-		for (int i = 0; i < coefficients.length; i++)
+		for (int i = 0; i < coefficients.length; i++) {
 			result += coefficients[i] * MoreMath.pow(Math.log(energyInKeV), i);
+//			System.out.print(coefficients[i] + " " + result + " ");
+		}
+//		System.out.println(Math.exp(result));
 		return Math.exp(result);
 	}
 
@@ -1302,4 +1305,10 @@ end;
 		return Math.acos(res);
 	}
 
+	public static double[] abs(double[] value) {
+		double[] absValue = new double[value.length];
+		for (int i = 0; i < value.length; i++)
+			absValue[i] = Math.abs(value[i]);
+		return absValue;
+	}
 }

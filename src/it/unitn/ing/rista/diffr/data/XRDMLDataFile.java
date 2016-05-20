@@ -144,9 +144,9 @@ public class XRDMLDataFile extends it.unitn.ing.rista.diffr.MultDiffrDataFile {
           datafile.setCountTime(xreader.getValue(countingTimeL.item(0)));
         }
 
-        datafile.setChi(chi_angle);
-        datafile.setPhi(phi_angle);
-        datafile.setEta(eta_angle);
+        datafile.setAngleValue(1, chi_angle);
+        datafile.setAngleValue(2, phi_angle);
+        datafile.setAngleValue(3, eta_angle);
         for (int i = 0; i < datanumber; i++) {
           datafile.setXData(i, start + i * step);
           double intens = Double.parseDouble((String) intVector.elementAt(i));

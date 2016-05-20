@@ -316,11 +316,11 @@ public class ReflectivityMainFrame extends principalJFrame implements TreeEventR
     // add object from CIF database.
     int index = getVisibleTabPanelIndex();
     String filename = Utility.openFileDialog(this, "Open CIF file or database", FileDialog.LOAD,
-            (String) MaudPreferences.getPref(MaudPreferences.databasePath),
-            null, Constants.filesfolder + FilePar.database[index]);
+            MaudPreferences.getPref(databasePath, Constants.documentsDirectory),
+            null, Constants.documentsDirectory + FilePar.database[index]);
     if (filename != null) {
       String[] folderAndName = Misc.getFolderandName(filename);
-      MaudPreferences.setPref(MaudPreferences.databasePath, folderAndName[0]);
+      MaudPreferences.setPref(databasePath, folderAndName[0]);
       parameterfile.loadObject(index, folderAndName[0] + folderAndName[1]);
     }
   }
@@ -336,11 +336,11 @@ public class ReflectivityMainFrame extends principalJFrame implements TreeEventR
     }
 
     String filename = Utility.openFileDialog(this, "Select the CIF database", FileDialog.LOAD,
-            (String) MaudPreferences.getPref(MaudPreferences.databasePath),
-            null, Constants.filesfolder + FilePar.database[index]);
+            MaudPreferences.getPref(databasePath, Constants.documentsDirectory),
+            null, Constants.documentsDirectory + FilePar.database[index]);
     if (filename != null) {
       String[] folderAndName = Misc.getFolderandName(filename);
-      MaudPreferences.setPref(MaudPreferences.databasePath, folderAndName[0]);
+      MaudPreferences.setPref(databasePath, folderAndName[0]);
       aobject.storeOnDB(folderAndName[0] + folderAndName[1]);
     }
 

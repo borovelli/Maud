@@ -148,13 +148,13 @@ public class StressX3000DataFile extends MultDiffrDataFile {
           datafile.dspacingbase = false;
           datafile.constantstep = true;
 
-          datafile.setPhi(phi);
+          datafile.setAngleValue(2, phi);
           if (psiOrOmega == 0) {
-            datafile.setOmega((theta0 + step * nstp / 2) / 2);
-            datafile.setChi(-chi);
+            datafile.setAngleValue(0, (theta0 + step * nstp / 2) / 2);
+            datafile.setAngleValue(1, -chi);
           } else {
-            datafile.setOmega((theta0 + step * nstp / 2) / 2 - chi);
-            datafile.setChi(0.0);
+            datafile.setAngleValue(0, (theta0 + step * nstp / 2) / 2 - chi);
+            datafile.setAngleValue(1, 0.0);
           }
           datafile.measurementstep = step;
 

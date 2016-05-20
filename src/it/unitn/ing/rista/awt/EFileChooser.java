@@ -2,6 +2,8 @@ package it.unitn.ing.rista.awt;
 
 // import it.unitn.ing.rista.util.LogSystem;
 
+import it.unitn.ing.rista.util.Constants;
+
 import java.util.*;
 import java.io.*;
 import java.awt.*;
@@ -207,7 +209,7 @@ public class EFileChooser extends JFileChooser {
   public EFileChooser(String directory) {
     // look for existing directory history from last session
     super(directory);
-    dirFile = it.unitn.ing.rista.util.Constants.filesfolder + ".MAUD_DIRECTORY_HISTORY.cfg";
+    dirFile = Constants.applicationSupportDirectory + ".MAUD_DIRECTORY_HISTORY.cfg";
 
     /*System.getProperty("user.home")
                         + System.getProperty("file.separator")

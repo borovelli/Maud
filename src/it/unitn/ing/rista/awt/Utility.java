@@ -94,31 +94,35 @@ public class Utility {
   }
 
   public static String[] browseFilenames(Frame parent, String title) {
+	  String[] filenames = null;
+		if (System.getProperty("java.version").compareTo("1.7") < 0) {
+			filenames = new String[1];
+			filenames[0] = browseFilename(parent, title);
+		} else {
 
-    String[] filenames = null;
-
-    FileDialog fileDialog = new FileDialog(parent, title, FileDialog.LOAD);
-    fileDialog.setMultipleMode(true);
-    fileDialog.setVisible(true);
-    File files[] = fileDialog.getFiles();
-    if (files != null && files.length > 0) {
-      filenames = new String[files.length];
-      for (int i = 0; i < files.length; i++)
-        filenames[i] = files[i].getAbsolutePath();
-      String[] folderAndName = Misc.getFolderandName(filenames[0]);
-      MaudPreferences.setPref(MaudPreferences.datafilePath, folderAndName[0]);
-    }
-    fileDialog.dispose();
+			FileDialog fileDialog = new FileDialog(parent, title, FileDialog.LOAD);
+			fileDialog.setMultipleMode(true);
+			fileDialog.setVisible(true);
+			File files[] = fileDialog.getFiles();
+			if (files != null && files.length > 0) {
+				filenames = new String[files.length];
+				for (int i = 0; i < files.length; i++)
+					filenames[i] = files[i].getAbsolutePath();
+				String[] folderAndName = Misc.getFolderandName(filenames[0]);
+				MaudPreferences.setPref(principalJFrame.datafilePath, folderAndName[0]);
+			}
+			fileDialog.dispose();
+		}
     return filenames;
   }
 
   public static String browseFilename(Frame parent, String title) {
     String filename = openFileDialog(parent, title, FileDialog.LOAD,
-        (String) MaudPreferences.getPref(MaudPreferences.datafilePath),
+        MaudPreferences.getPref(principalJFrame.datafilePath, Constants.documentsDirectory),
         null, null);
     if (filename != null) {
       String[] folderAndName = Misc.getFolderandName(filename);
-      MaudPreferences.setPref(MaudPreferences.datafilePath,
+      MaudPreferences.setPref(principalJFrame.datafilePath,
           folderAndName[0]);
     }
     return filename;
@@ -126,10 +130,10 @@ public class Utility {
 
   public static String browseFilenametoSave(Frame parent, String title) {
     String filename = openFileDialog(parent, title, FileDialog.SAVE,
-		    (String) MaudPreferences.getPref(MaudPreferences.datafilePath), null, null);
+		    MaudPreferences.getPref(principalJFrame.datafilePath, Constants.documentsDirectory), null, null);
     if (filename != null) {
       String[] folderAndName = Misc.getFolderandName(filename);
-      MaudPreferences.setPref(MaudPreferences.datafilePath,
+      MaudPreferences.setPref(principalJFrame.datafilePath,
           folderAndName[0]);
     }
     return filename;
@@ -292,7 +296,6 @@ public class Utility {
       JButton jbs = new JButton("Save on disk");
       jbs.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent event) {
-          MaudPreferences.savePreferences();
           Constants.checkMaudPreferences();
           setVisible(false);
         }
@@ -324,13 +327,13 @@ public class Utility {
     public ParPreferencesDialog(Frame parent, String title) {
       super(parent, title);
 
-      frameWLabel = "preferencesFrame.frameWidth";
-      frameHLabel = "preferencesFrame.frameHeight";
+      frameWLabel = "parPreferencesFrame.frameWidth";
+      frameHLabel = "parPreferencesFrame.frameHeight";
       defaultFrameW = 500;
       defaultFrameH = 300;
       setOwnSize = true;
-      framePositionX = "preferencesFrame.framePositionX";
-      framePositionY = "preferencesFrame.framePositionY";
+      framePositionX = "parPreferencesFrame.framePositionX";
+      framePositionY = "parPreferencesFrame.framePositionY";
       defaultFramePositionX = 100;
       defaultFramePositionY = 20;
       setOwnPosition = true;
@@ -349,7 +352,6 @@ public class Utility {
       JButton jbs = new JButton("Save on disk");
       jbs.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent event) {
-          ParameterPreferences.savePreferences();
           setVisible(false);
         }
       });

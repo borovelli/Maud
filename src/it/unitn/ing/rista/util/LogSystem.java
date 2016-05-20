@@ -33,9 +33,9 @@ import java.io.*;
 public class LogSystem {
 
   public static PrintStream logStream;
-  public static boolean errorsToConsole = MaudPreferences.getBoolean("Exceptions.showInConsole", true);
-  public static boolean errorsToFile = MaudPreferences.getBoolean("Exceptions.logInFile", true);
-  static String logFileForErrors = MaudPreferences.getPref("Exceptions.logfileName", "maudLogfile.txt");
+  public static boolean errorsToConsole = MaudPreferences.getBoolean("exceptions.showInConsole", true);
+  public static boolean errorsToFile = MaudPreferences.getBoolean("exceptions.logInFile", true);
+  static String logFileForErrors = MaudPreferences.getPref("exceptions.logfileName", "maudLogfile.txt");
   static boolean outputFilestreamOpened = false;
 
   public static void printStackTrace(Throwable e) {
@@ -62,11 +62,11 @@ public class LogSystem {
   private static PrintStream openFilestream() {
     OutputStream out = null;
     try {
-      out = new FileOutputStream(new File(Constants.filesfolder + logFileForErrors));
+      out = new FileOutputStream(new File(Constants.logsDirectory + logFileForErrors));
     } catch (FileNotFoundException e) {
       if (errorsToConsole) {
         System.out.println("Not able to open file for errors log output: " +
-            Constants.filesfolder + logFileForErrors);
+            Constants.logsDirectory + logFileForErrors);
         e.printStackTrace();
       }
     }

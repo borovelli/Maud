@@ -1,7 +1,6 @@
 package it.unitn.ing.esqui.client;
 
 import java.util.*;
-import java.sql.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;

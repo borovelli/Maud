@@ -231,10 +231,10 @@ public class TIFFDataFile extends it.unitn.ing.rista.diffr.MultDiffrDataFile {
 			datafile.isAbilitatetoRefresh = false;
 
 			datafile.setDataType(DIFFRACTION_IMAGE);
-			datafile.setOmega(omega);
-			datafile.setChi(chi);
-			datafile.setPhi(phi);
-			datafile.setEta(etaStart + spectrumIndex * coneInterval);
+			datafile.setAngleValue(0, omega);
+			datafile.setAngleValue(1, chi);
+			datafile.setAngleValue(2, phi);
+			datafile.setAngleValue(3, etaStart + spectrumIndex * coneInterval);
 
 /*            datafile.setField("_riet_meas_datafile_calibrated", "true", "0", "0", "0", false, null, null, null, null,
                 false);
@@ -355,8 +355,8 @@ public class TIFFDataFile extends it.unitn.ing.rista.diffr.MultDiffrDataFile {
 //        roi.updateSelection();
 
 		double[][] profile = roi.getPixels();
-		int startX = MaudPreferences.getInteger("OvalROI.minX", 0);
-		int endX = MaudPreferences.getInteger("OvalROI.maxX", 10000);
+		int startX = MaudPreferences.getInteger("ovalROI.minX", 0);
+		int endX = MaudPreferences.getInteger("ovalROI.maxX", 10000);
 		String directory = getFolder(); //od.getDirectory();
 		String name = getLabel(); //od.getFileName();
 		int dotLocation = name.indexOf(".");
@@ -368,9 +368,9 @@ public class TIFFDataFile extends it.unitn.ing.rista.diffr.MultDiffrDataFile {
 		datafile.isAbilitatetoRefresh = false;
 		datafile.setString(datafile.saveCustomID, "true");
 
-		datafile.setOmega(omega);
-		datafile.setChi(chi);
-		datafile.setPhi(phi);
+		datafile.setAngleValue(0, omega);
+		datafile.setAngleValue(1, chi);
+		datafile.setAngleValue(2, phi);
 
 		datafile.initData(endX - startX);
 		datafile.constantstep = false;
@@ -413,8 +413,8 @@ public class TIFFDataFile extends it.unitn.ing.rista.diffr.MultDiffrDataFile {
 		ij.measure.Calibration cal = imp.getCalibration();
 		if (cal.pixelWidth == 0.0 || cal.pixelWidth == 1 || cal.getUnit().compareToIgnoreCase("pixel") == 0) {
 			cal.setUnit("mm");
-			cal.pixelWidth = MaudPreferences.getDouble("Image2D.pixelWidth", 0.2);
-			cal.pixelHeight = MaudPreferences.getDouble("Image2D.pixelHeight", 0.2);
+			cal.pixelWidth = MaudPreferences.getDouble("image2D.pixelWidth", 0.2);
+			cal.pixelHeight = MaudPreferences.getDouble("image2D.pixelHeight", 0.2);
 		} else if (cal.getUnit().compareToIgnoreCase("inches") == 0) {
 			cal.setUnit("mm");
 			cal.pixelWidth *= 25.4;
@@ -433,9 +433,9 @@ public class TIFFDataFile extends it.unitn.ing.rista.diffr.MultDiffrDataFile {
 		double chi = MaudPreferences.getDouble("camera.defaultChiAngle", 0.0);
 		double phi = MaudPreferences.getDouble("camera.defaultPhiAngle", 0.0);
 		boolean calibrated = MaudPreferences.getBoolean("anglesCalibration.imageToSpectra", false);
-		double startingAngle = MaudPreferences.getDouble("Image2D.StartingAngle", 0.0);
-		double finalAngle = MaudPreferences.getDouble("Image2D.FinalAngle", 360.0);
-		int nDivision = MaudPreferences.getInteger("Image2D.nSpectraDivision", 72);
+		double startingAngle = MaudPreferences.getDouble("image2D.StartingAngle", 0.0);
+		double finalAngle = MaudPreferences.getDouble("image2D.FinalAngle", 360.0);
+		int nDivision = MaudPreferences.getInteger("image2D.nSpectraDivision", 72);
 
 		LaueCircleStepRoi roi = new LaueCircleStepRoi(imp, radius);
 		imp.setRoi(roi);
@@ -460,7 +460,7 @@ public class TIFFDataFile extends it.unitn.ing.rista.diffr.MultDiffrDataFile {
 		int width = ip.getWidth();
 		int height = ip.getHeight();
 
-		int pointsPerPixel = MaudPreferences.getInteger("Image2D.pointsPerPixel", 1);
+		int pointsPerPixel = MaudPreferences.getInteger("image2D.pointsPerPixel", 1);
 		int minX = MaudPreferences.getInteger("squareRoi.xminValue", 0);
 		int maxX = MaudPreferences.getInteger("squareRoi.xmaxValue", width);
 		int minY = MaudPreferences.getInteger("squareRoi.yminValue", 0);

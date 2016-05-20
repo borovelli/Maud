@@ -93,8 +93,12 @@ public class Constants {
 	public static final int NO_OUTPUT = 2;
   public static final int TO_FILE = 3;
   public static int stdoutput = CONSOLE_WINDOW;
+	public static boolean textureOutput = false;
+	public static boolean strainOutput = false;
+	public static boolean structureFactorsOutput = false;
 
-  public static boolean showProgressFrame = true;
+
+	public static boolean showProgressFrame = false;
 
 	public static final int NONE_GRANULARITY = 0;
 	public static final int COARSE_GRANULARITY = 1;
@@ -244,11 +248,11 @@ public class Constants {
   public static final double defaultWavelengthIndexing = 1.5405981;
 //  public static final double startingStructureFactor = 1000.0;
   public static final double log10Conv = 1.0 / Math.log(10.0);
-  public static String filesfolder = null;
+//  public static String filesfolder = null;
   public static String imagefolder = "images/";
   public static String iconfolder = imagefolder + "20x20/";
   public static String helpfolder = "help/";
-  public static String libDir = "/lib/";
+  public static String libDir = "lib";
   public static final String pluginsDir = "/plugins/";
   public static final String programIcon = "Maud_ladybug_icon_32.gif";
   public static final String backupFile = "paramete.sav";
@@ -257,13 +261,13 @@ public class Constants {
   public static String resultsFile = "results.txt";
   public static String userName = null;
   public static String startPath = "/";
-  public static String maudReleaseBuilt = "$Revision: 2.56 $";
-  public static String maudDateBuilt = "$Date: 2015/07/26 20:13:32 $";
+  public static String maudReleaseBuilt = "$Revision: 2.60 $";
+  public static String maudDateBuilt = "$Date: 2016/04/21 7:15:12 $";
 
   public static final double arg2PIover3 = PI2 / 3.;
   public static final double sinArg2PIover3 = Math.sin(arg2PIover3);
   public static final double cosArg2PIover3 = Math.cos(arg2PIover3);
-  public static double maud_version = 2.56;
+  public static double maud_version = 2.60;
 	public static boolean useOpenCL = false;
 	public static Vector<OpenCLDevice> openClDevices= null;
 	public static OpenCLDevice openclDevice = null;
@@ -357,7 +361,9 @@ public class Constants {
   public static final int STRING_ADDED = 298;
   public static final int STRING_REMOVED = 299;
 
-  public static boolean testing = false;
+	public static final int PLOT_REFRESH = 2001;
+
+	public static boolean testing = false;
   public static boolean testtime = false;
   public static boolean esquienabled = false;
 
@@ -375,11 +381,11 @@ public class Constants {
   public static boolean textonly = false;
   public static boolean initialized = false;
   public static final String NONE = "None";
-  public static boolean consoleShouldBeVisible = true;
+  public static boolean consoleShouldBeVisible = false;
   public static Console outputConsole = null;
   public static double STARTING_STRUCTURE_FACTOR = 1000.0;
   public static double MINIMUM_STRUCTURE_FACTOR = 1.0;
-	public static String filesJar;
+	//public static String filesJar;
 	public static String maudJar = null;
 	public static String imagesJar;
 	public static String helpJar;
@@ -391,11 +397,17 @@ public class Constants {
 	public static it.unitn.ing.fortran.Formatter ffmt = null;
 	public static it.unitn.ing.fortran.Formatter efmt = null;
 
+	public static String userHomeDirectory = "";
+	public static String userDirectory = "";
   public static String libraryDirectory = "";
   public static String documentsDirectory = "";
   public static String cachesDirectory = "";
   public static String applicationSupportDirectory = "";
+	public static String logsDirectory = "";
+	public static String startingLog = "startingLog";
   public static boolean sandboxEnabled = false;
+
+	public static String refineIcon = "slot_machine_20.gif";
 
   public static String getVersion() {
     return Double.toString(maud_version);
@@ -405,42 +417,151 @@ public class Constants {
     return maudReleaseBuilt;
   }
 
-  public static void initConstants() {
-	  if (System.getProperty("SandboxEnabled") != null)
-		  sandboxEnabled = System.getProperty("SandboxEnabled").equalsIgnoreCase("true");// (the String "true" or "false")
-		String startingLog = "startingLog";
-	  if (sandboxEnabled)
-		  startingLog = System.getProperty("DocumentsDirectory") + "/" + startingLog;
+	public static void initForMacOS(boolean sandboxed) {
+		macosx = true;
+		osType = OsMac;
+		if (sandboxed) {
+			libraryDirectory = System.getProperty("LibraryDirectory") + fileSeparator;
+			documentsDirectory = System.getProperty("DocumentsDirectory") + fileSeparator;
+			cachesDirectory = System.getProperty("CachesDirectory") + fileSeparator;
+			applicationSupportDirectory = System.getProperty("ApplicationSupportDirectory") + fileSeparator;
+			logsDirectory = libraryDirectory + "Logs" + fileSeparator;
+		} else {
+			applicationSupportDirectory = userHomeDirectory + ".maud" + fileSeparator;
+			libraryDirectory = applicationSupportDirectory + "Library" + fileSeparator;
+			documentsDirectory = applicationSupportDirectory + "Documents" + fileSeparator;
+			cachesDirectory = libraryDirectory + "Caches" + fileSeparator;
+			logsDirectory = libraryDirectory + "Logs" + fileSeparator;
+			File appSupFile = new File(applicationSupportDirectory);
+			File libDirFile = new File(libraryDirectory);
+			File docDirFile = new File(documentsDirectory);
+			File cachesDirFile = new File(cachesDirectory);
+			File logsDirFile = new File(logsDirectory);
+			try {
+				if (!appSupFile.exists())
+					appSupFile.mkdirs();
+				if (!libDirFile.exists())
+					libDirFile.mkdirs();
+				if (!docDirFile.exists())
+					docDirFile.mkdirs();
+				if (!cachesDirFile.exists())
+					cachesDirFile.mkdirs();
+				if (!logsDirFile.exists())
+					logsDirFile.mkdirs();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static void initForWindows(boolean sandboxed) {
+		windoze = true;
+		startPath = "//";
+		osType = OsWindoof;
+		computationPriority--; // the default one is too strong for windows
+		startingLog = "startingLog";
+		applicationSupportDirectory = userHomeDirectory + "maud" + fileSeparator;
+		libraryDirectory = applicationSupportDirectory + "lib" + fileSeparator;
+		documentsDirectory = applicationSupportDirectory + "doc" + fileSeparator;
+		cachesDirectory = applicationSupportDirectory + "caches" + fileSeparator;
+		logsDirectory = libraryDirectory + "Logs" + fileSeparator;
+		File appSupFile = new File(applicationSupportDirectory);
+		File libDirFile = new File(libraryDirectory);
+		File docDirFile = new File(documentsDirectory);
+		File cachesDirFile = new File(cachesDirectory);
+		File logsDirFile = new File(logsDirectory);
+		try {
+			if (!appSupFile.exists())
+				appSupFile.mkdirs();
+			if (!libDirFile.exists())
+				libDirFile.mkdirs();
+			if (!docDirFile.exists())
+				docDirFile.mkdirs();
+			if (!cachesDirFile.exists())
+				cachesDirFile.mkdirs();
+			if (!logsDirFile.exists())
+				logsDirFile.mkdirs();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void initForLinux(boolean sandboxed) {
+		osType = OsLinux;
+		startingLog = "startingLog";
+		applicationSupportDirectory = userHomeDirectory + ".maud" + fileSeparator;
+		libraryDirectory = applicationSupportDirectory + "lib" + fileSeparator;
+		documentsDirectory = applicationSupportDirectory + "doc" + fileSeparator;
+		cachesDirectory = applicationSupportDirectory + "caches" + fileSeparator;
+		logsDirectory = libraryDirectory + "Logs" + fileSeparator;
+		File appSupFile = new File(applicationSupportDirectory);
+		File libDirFile = new File(libraryDirectory);
+		File docDirFile = new File(documentsDirectory);
+		File cachesDirFile = new File(cachesDirectory);
+		File logsDirFile = new File(logsDirectory);
+		try {
+			if (!appSupFile.exists())
+				appSupFile.mkdirs();
+			if (!libDirFile.exists())
+				libDirFile.mkdirs();
+			if (!docDirFile.exists())
+				docDirFile.mkdirs();
+			if (!cachesDirFile.exists())
+				cachesDirFile.mkdirs();
+			if (!logsDirFile.exists())
+				logsDirFile.mkdirs();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void initConstants() {
+		if (System.getProperty("SandboxEnabled") != null)
+			sandboxEnabled = System.getProperty("SandboxEnabled").equalsIgnoreCase("true");// (the String "true" or "false")
+
+		maudReleaseBuilt = maudReleaseBuilt.substring(1, maudReleaseBuilt.length() - 1);
+		maudDateBuilt = maudDateBuilt.substring(1, maudDateBuilt.length() - 1);
+
+		maudReleaseBuilt = "version: " + maud_version + ", cvs update on " + maudDateBuilt +
+				", " + maudReleaseBuilt;
+
+		userName = System.getProperty("user.name");
+		userHomeDirectory = System.getProperty("user.home") + Constants.fileSeparator;
+		userDirectory = System.getProperty("user.dir") + Constants.fileSeparator;
+		documentsDirectory = userHomeDirectory + "Documents" + fileSeparator;
+		logsDirectory = userHomeDirectory + "Library" + fileSeparator + "Logs" + fileSeparator;
+
+		libraryDirectory = userDirectory;
+		cachesDirectory = System.getProperty("java.io.tmpdir");
+		applicationSupportDirectory = userDirectory;
+
+		String osName = System.getProperty("os.name");
+		osType = OsUnix;
+		if (osName != null && osName.toLowerCase().startsWith("mac os x")) {
+			initForMacOS(sandboxEnabled);
+		} else if (osName != null && osName.indexOf("Windows") != -1) {
+			initForWindows(sandboxEnabled);
+		} else if (osName != null && osName.indexOf("Mac") != -1) {
+			initForMacOS(sandboxEnabled);
+		} else if (osName != null && osName.indexOf("Linux") != -1) {
+			initForLinux(sandboxEnabled);
+		}
+
+		System.out.println("User home: " + userHomeDirectory);
+		System.out.println("Application folder: " + userDirectory);
+		System.out.println("App support: " + applicationSupportDirectory);
+		System.out.println("Library folder: " + libraryDirectory);
+		System.out.println("Logs folder: " + logsDirectory);
+		System.out.println("Caches folder: " + cachesDirectory);
+		System.out.println("Documents folder: " + documentsDirectory);
+
+		startingLog = logsDirectory + startingLog;
+
 	  if (!textonly)
 		  redirectConsoleOutputToFile(startingLog);
     if (initialized)
       return;
     initialized = true;
-
-	  maudReleaseBuilt = maudReleaseBuilt.substring(1, maudReleaseBuilt.length() - 1);
-	  maudDateBuilt = maudDateBuilt.substring(1, maudDateBuilt.length() - 1);
-
-	  maudReleaseBuilt = "version: " + maud_version + ", cvs update on " + maudDateBuilt +
-			  ", " + maudReleaseBuilt;
-
-    userName = System.getProperty("user.name");
-
-    String osName = System.getProperty("os.name");
-    osType = OsUnix;
-    if (osName != null && osName.toLowerCase().startsWith("mac os x")) {
-      macosx = true;
-      osType = OsMac;
-    } else if (osName != null && osName.indexOf("Windows") != -1) {
-      windoze = true;
-      startPath = "//";
-      osType = OsWindoof;
-      computationPriority--; // the default one is too strong for windows
-    } else if (osName != null && osName.indexOf("Mac") != -1) {
-      macos = true;
-      osType = OsMac;
-    } else if (osName != null && osName.indexOf("Linux") != -1) {
-      osType = OsLinux;
-    }
 
     sounds = new Vector(0, 1);
 
@@ -453,26 +574,22 @@ public class Constants {
 	  }
 
 	  if (sandboxEnabled) { // Sandboxing for the moment is for OS X
-		  System.out.println("Initializing sandboxing environment!");
-		  libraryDirectory = System.getProperty("LibraryDirectory");
-		  documentsDirectory = System.getProperty("DocumentsDirectory");
-		  cachesDirectory = System.getProperty("CachesDirectory");
-		  applicationSupportDirectory = System.getProperty("ApplicationSupportDirectory");
+		  System.out.println("Initialized sandboxing environment!");
 	  } else {
 		  System.out.println("No sandboxing!");
 	  }
 
     String vers = System.getProperty("java.version");
-	  String classnamesFile = "files/classnames.ins";
+//	  String classnamesFile = "files/classnames.ins";
 	  pathToMaudJar = Misc.getPathToMaudJar("Maud.jar");
 	  maudJar = pathToMaudJar + fileSeparator + "Maud.jar";
-	  String fileToLoad = "/.maudpath_" + userName;
+/*	  String fileToLoad = "/.maudpath_" + userName;
 	  if (windoze)
 		  fileToLoad = "/maudpath_" + userName;
 	  else {
 		  maudJar = "/" + maudJar;
 		  pathToMaudJar = "/" + pathToMaudJar;
-	  }
+	  }*/
 
 	  if (pathToMaudJar.startsWith("/."))
 		  pathToMaudJar = pathToMaudJar.substring(1);
@@ -480,9 +597,9 @@ public class Constants {
 		  maudJar = maudJar.substring(1);
 	  System.out.println("Maud.jar located at: " + maudJar);
 	  System.out.println("Path to Maud jar: " + pathToMaudJar);
-	  String pathFile = pathToMaudJar + fileToLoad;
+/*	  String pathFile = pathToMaudJar + fileToLoad;
     if (sandboxEnabled)
-      pathFile = applicationSupportDirectory + fileToLoad;
+      pathFile = applicationSupportDirectory + fileToLoad;*/
 
     String full_build_number = "Maud_full_build.number";
 //    String reduced_build_number = new String("/Maud_reduced_build.number");
@@ -524,14 +641,16 @@ public class Constants {
     }
 
 	  File[] jarFileList = null;
-	  libDirname = pathToMaudJar + libDir;
+		File[] pluginsJarFileList = null;
+	  libDirname = pathToMaudJar + fileSeparator + libDir + fileSeparator;
+		System.out.println("Lib dir: " + libDirname);
 	  try {
       File libDir = new File(libDirname);
 	    if (macosx && !libDir.exists()) {
 		    libDirname = pathToMaudJar;
 		    libDir = new File(libDirname);
       }
-      if (libDir.exists() && !sandboxEnabled) {
+      if (libDir.exists()) {
         addToClassPath(libDirname);
         jarFileList = libDir.listFiles(new FilenameFilter() {
           public boolean accept(File dir, String name) {
@@ -550,33 +669,31 @@ public class Constants {
     } catch (IOException io) {
 		  io.printStackTrace();
     }
-	  filesJar = libDirname + "Files.jar";
+//	  filesJar = libDirname + "Files.jar";
 	  imagesJar = libDirname + "Images.jar";
 	  helpJar = libDirname + "Help.jar";
 
-	  jarFileList = null;
+//	  jarFileList = null;
     try {
-      String pathtoplugins = Misc.getUserDir();
+/*      String pathtoplugins = Misc.getUserDir();
 	    System.out.println("Get user dir: " + pathtoplugins);
       if (pathtoplugins.startsWith("."))
-        pathtoplugins = pathToMaudJar;
-      String pluginsDirname = pathtoplugins + pluginsDir;
-      if (sandboxEnabled)
-        pluginsDirname = applicationSupportDirectory;
+        pathtoplugins = pathToMaudJar;*/
+      String pluginsDirname = applicationSupportDirectory + "plugins";
       File pluginsDir = new File(pluginsDirname);
 	    System.out.println("Plugins dir: " + pluginsDirname);
       if (pluginsDir.exists()) {
         addToClassPath(pluginsDirname);
-        jarFileList = pluginsDir.listFiles(new FilenameFilter() {
+	      pluginsJarFileList = pluginsDir.listFiles(new FilenameFilter() {
           public boolean accept(File dir, String name) {
             if (name.endsWith(".jar") || name.endsWith(".zip"))
               return true;
             return false;
           }
         });
-        for (int i = 0; i < jarFileList.length; i++) {
-          addToClassPath(jarFileList[i]);
-	        System.out.println("Adding to classpath (plugins): " + jarFileList[i]);
+        for (int i = 0; i < pluginsJarFileList.length; i++) {
+          addToClassPath(pluginsJarFileList[i]);
+	        System.out.println("Adding to classpath (plugins): " + pluginsJarFileList[i]);
         }
       } else {
 	      System.out.println("Plugins dir not found!");
@@ -585,7 +702,7 @@ public class Constants {
 	    io.printStackTrace();
     }
 
-      if (textonly) {
+/*      if (textonly) {
 	      System.out.println("Checking " + pathFile + " exist!");
         if (Misc.checkForFile(pathFile))
           filesfolder = getUserPath(pathFile);
@@ -597,32 +714,34 @@ public class Constants {
         filesfolder = initializeMaud(pathToMaudJar, pathFile);
       } else {
 //        if (sandboxEnabled)
-//          filesfolder = fileSeparator + applicationSupportDirectory + fileSeparator;
+//          filesfolder = fileSeparator + applicationSupportDirectory;
 //        else
         filesfolder = getUserPath(pathFile);
-      }
+      }*/
 
 //    filesfolder = new String(Misc.getUserDir()+"/files/");
 
-	  System.out.println("Checking again for the default.par: " + filesfolder + "default.par");
+//	  System.out.println("Checking again for the default.par: " + filesfolder + "default.par");
 
 //	    for (int i = 0; i < filesfolder.length() && i < pathToMaudJar.length(); i++)
 //		    System.out.println(filesfolder.charAt(i) + " == " + pathToMaudJar.charAt(i) + " = " +
 //				    (filesfolder.charAt(i) == pathToMaudJar.charAt(i)));
 // Check again if installation was ok or something is not working anymore
-      if (!Misc.checkForFile(filesfolder + "default.par") && !textonly)
-        filesfolder = initializeMaud(pathToMaudJar, pathFile);
+		if (!Misc.checkForFile(documentsDirectory + "default.par"))
+			initializeMaud(pathToMaudJar, documentsDirectory);
 
 	  System.out.println("Loading Maud preferences");
-    MaudPreferences.loadPreferences();
-    stdoutput = MaudPreferences.getInteger("console.output", CONSOLE_WINDOW);
+    stdoutput = MaudPreferences.getInteger("console.output", stdoutput);
+	  textureOutput = MaudPreferences.getBoolean("log_output.file_texture", textureOutput);
+	  strainOutput = MaudPreferences.getBoolean("log_output.file_strains", strainOutput);
+	  structureFactorsOutput = MaudPreferences.getBoolean("log_output.file_structure_factors", structureFactorsOutput);
 
-    if (macosx) {
+/*    if (macosx) {
       String brushMetalLook = MaudPreferences.getPref("apple.awt.brushMetalLook", "false");
       String brushMetalRounded = MaudPreferences.getPref("apple.awt.brushMetalRounded", "false");
       System.setProperty("apple.awt.brushMetalLook", brushMetalLook);
       System.setProperty("apple.awt.brushMetalRounded", brushMetalRounded);
-    }
+    }*/
     // load some constants
     checkMaudPreferences();
 	  threadingGranularity = MaudPreferences.getInteger("parallel_processing.granularity(0-3)", MEDIUM_GRANULARITY);
@@ -695,16 +814,16 @@ public class Constants {
     LastInputValues.loadPreferences();
 
 	  System.out.println("Java version: " + vers);
-	  if (vers.compareTo("1.5") < 0) {
+	  if (vers.compareTo("1.7") < 0) {
 		  System.out.println("!!!WARNING: Maud must be run with a " +
-				  "1.5 or higher version of Java VM!!!");
+				  "1.7 or higher version of Java VM!!!");
 	  }
 	  System.out.println("Encoding: " + System.getProperty("file.encoding"));
 
 	  System.out.println("Maud " + maudReleaseBuilt);
-	  System.out.println("pathToMaudJar: " + pathToMaudJar);
-	  System.out.println("Maud.jar exist? " + Misc.checkForFile(maudJar));
-	  System.out.println("Instruction file path: " + pathFile);
+//	  System.out.println("pathToMaudJar: " + pathToMaudJar);
+//	  System.out.println("Maud.jar exist? " + Misc.checkForFile(maudJar));
+//	  System.out.println("Instruction file path: " + pathFile);
 	  System.out.println(java.lang.System.getProperty("java.class.path"));
 	  System.out.println("Lib dir: " + libDirname);
 
@@ -756,13 +875,13 @@ public class Constants {
 
     numberofclasstype = 0;
 
-    Vector tmpString = new Vector(0, 1);
-    Vector identString = new Vector(0, 1);
+    Vector tmpString = new Vector(0, 100);
+    Vector identString = new Vector(0, 100);
 
     //  String dummyIdentifier = (new BaseFactoryObject()).identifier;
-    if (!textonly && !macos) {
+    if (!textonly) {
       try {
-//        System.out.println("DEBUG jar: "+Misc.checkForFile(jarMaudFile));
+        System.out.println("DEBUG jar: start loading music from classpath!");
         JarFile maudJarFile = new JarFile(maudJar);
         Enumeration jarEntries = maudJarFile.entries();
         while (jarEntries.hasMoreElements()) {
@@ -772,39 +891,16 @@ public class Constants {
           if (entryName.endsWith(".au") || entryName.endsWith(".rmf") || entryName.endsWith(".mid")
               || entryName.endsWith(".wav") || entryName.endsWith(".aif") || entryName.endsWith(".aiff"))
             sounds.add(maudJarFile + entryName);
-          else if (token.endsWith(".class")) {
-/*           try {
-            token = token.substring(0, token.length() - 6);
-            token = Misc.toStringChangeChar(token, '\\', '.');
-            token = Misc.toStringChangeChar(token, '/', '.');
-            Class aclass = Class.forName(token);
-            Constructor ctor = aclass.getConstructor(new Class[]{String[].class});
-            Object cobj = ctor.newInstance(new Object[]{new String[1]});
-            if (cobj instanceof BaseFactoryObject) {
-              BaseFactoryObject obj = (BaseFactoryObject) cobj;
-              String ident = new String(obj.identifier);
-              if (!ident.equals(dummyIdentifier) && !ident.startsWith("Disabled")) {
-              tmpString.addElement(token);
-              identString.addElement(ident);
-              System.out.println("Class loaded: " + token);
-              numberofclasstype++;
-              }
-            }
-           } catch (Exception e) {
-//            if (testing)
-//              System.out.println("Class not loaded: " + token);
-           } */
-          }
         }
         jarEntries = null;
       } catch (IOException ioe) {
         ioe.printStackTrace();
       }
 
-      if (MaudPreferences.getBoolean("StartupMusic.enable", false))
+      if (MaudPreferences.getBoolean("startupMusic.enable", false))
         (new MusicPlayer(sounds)).start();
     }
-	  try {
+/*	  try {
       reader = Misc.getResourceReader(maudJar, classnamesFile);
       try {
         String token;
@@ -849,22 +945,26 @@ public class Constants {
     } catch (IOException e) {
       System.out.println("File not found!");
       e.printStackTrace();
-    }
+    }*/
 
+		if (pluginsJarFileList == null)
+			pluginsJarFileList = new File[0];
+//		if (testing)
+//			System.out.println("Scanning jars: " + (pluginsJarFileList.length + 1));
     if (jarFileList != null) {
-      String[] allMaudJars = new String[jarFileList.length]; // + 1];
-//    allMaudJars[0] = pathToMaudJar + "Maud.jar";
-      for (int i = 0; i < jarFileList.length; i++) {
-        try {
-          allMaudJars[i] = jarFileList[i].getCanonicalPath();
-        } catch (IOException e) {
-          e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-      }
+      String[] allMaudJars = new String[1 + pluginsJarFileList.length]; // + 1];
+      allMaudJars[0] = pathToMaudJar + fileSeparator + "Maud.jar";
+	    for (int i = 0; i < pluginsJarFileList.length; i++) {
+		    try {
+			    allMaudJars[jarFileList.length + i] = pluginsJarFileList[i].getCanonicalPath();
+		    } catch (IOException e) {
+			    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+		    }
+	    }
 
       for (int j = 0; j < allMaudJars.length; j++) {
- //       if (testing)
- //         System.out.println("Loading from: " + allMaudJars[j]);
+        if (testing)
+          System.out.println("Loading from jar: " + allMaudJars[j]);
         Vector list = ClassScanner.getClassListFromJar(allMaudJars[j], "",
             "it.unitn.ing.rista.diffr.XRDcat");
 //        if (testing)
@@ -929,8 +1029,8 @@ public class Constants {
   }
 
   public static void checkMaudPreferences() {
-    esquienabled = Misc.checkForFile(pathToMaudJar + "/EsquiClient.jar");
-    if (Misc.checkTesting())
+//    esquienabled = Misc.checkForFile(pathToMaudJar + "/EsquiClient.jar");
+//    if (Misc.checkTesting())
       testing = MaudPreferences.getBoolean("newFeatures.testing", testing);
     testtime = MaudPreferences.getBoolean("debug.computeTime", testtime);
 //    useAltivec = MaudPreferences.getBoolean("debug.useG4Altivec", useAltivec);
@@ -938,14 +1038,14 @@ public class Constants {
 	  OpenGL = false;
 
     useNewAbsorption = MaudPreferences.getBoolean("absorption.new_model", true);
-    checkCIFinputInConsole = MaudPreferences.getBoolean("CIFinput.check_outputInConsole", false);
+    checkCIFinputInConsole = MaudPreferences.getBoolean("cifInput.check_outputInConsole", false);
   }
 
   public static void read3DPreferences() {
 
-    BufferedReader in = Misc.getReader(filesfolder, "Properties.3D");
+    BufferedReader in = Misc.getReader(documentsDirectory, "Properties.3D");
     if (in == null)
-      in = Misc.getResourceReader(maudJar, "/files/Properties.3D");
+      in = Misc.getResourceReader(maudJar, "files/Properties.3D");
     String token;
     if (in != null) {
       try {
@@ -1014,14 +1114,24 @@ public class Constants {
             Class aclass = Class.forName(classname[i]);
             Constructor ctor = aclass.getConstructor(new Class[]{});
             BaseFactoryObject obj = (BaseFactoryObject) ctor.newInstance(new Object[]{});
-            tmpString.addElement(new String(classname[i]));
-            tmpString.addElement(new String(obj.IDlabel));
-            tmpString.addElement(new String(obj.identifier));
+	          if (obj.identifier != BaseFactoryObject.noneID && !obj.identifier.contains("disabled")) {
+		          tmpString.addElement(new String(classname[i]));
+		          tmpString.addElement(new String(obj.IDlabel));
+		          tmpString.addElement(new String(obj.identifier));
+	          } else {
+		          if (Constants.testing)
+			          System.out.println("Not valid subclass: " + classname[i]);
+		          if (Constants.testing && obj.identifier.contains("disabled")) {
+		            tmpString.addElement(new String("disabled"));
+		            tmpString.addElement(new String("----"));
+		            tmpString.addElement(new String("----"));
+		          }
+	          }
           } catch (Exception e) {
             System.out.println("Class not loaded: " + classname[i]);
-            tmpString.addElement(new String("disabled"));
+/*            tmpString.addElement(new String("disabled"));
             tmpString.addElement(new String("----"));
-            tmpString.addElement(new String("----"));
+            tmpString.addElement(new String("----"));*/
           }
         }
       }
@@ -1030,70 +1140,9 @@ public class Constants {
     return tmpString;
   }
 
-  public static String initializeMaud(String pathToMaudJar, String pathFile) {
-    String folder = pathToMaudJar + "/files/";
+  public static void initializeMaud(String pathToMaudJar, String pathFile) {
+    String folder = pathFile;
 //    System.out.println("Starting folder : " + folder);
-    if (textonly) {
-      System.out.println("Extracting configuration and examples files in " + folder + " .........");
-      if (!Misc.checkForFolderOrCreateIt(folder))
-        System.out.println("Not able to create directory (or is a file) : " + folder);
-    } else {
-      if (!acceptLicense())
-        System.exit(0);
-      if (macosx) {
-        if (sandboxEnabled) {
-          folder = fileSeparator + applicationSupportDirectory + fileSeparator;
-        } else {
-          FileDialog fd = new FileDialog(new Frame(),
-              "Create a folder in your home to extract the Maud databases and examples and press Save",
-              FileDialog.SAVE);
-          System.setProperty("apple.awt.fileDialogForDirectories", "true");
-          fd.setFile("Select folder to extract Maud files");
-          fd.setVisible(true);
-          System.out.println(fd.getDirectory());
-          System.out.println(fd.getFile());
-          System.setProperty("apple.awt.fileDialogForDirectories", "false");
-          if (fd.getFile() != null)
-            folder = Misc.filterFileName(fd.getDirectory());
-          else {
-            Misc.checkForFolderOrCreateIt(folder);
-            folder = Misc.filterFileName(folder + "/");
-          }
-          fd.dispose();
-        }
-      } else {
-        JFileChooser fc = new JFileChooser();
-        fc.setDialogTitle("First run, extract the Maud databases and examples");
-        fc.setApproveButtonToolTipText("Choose a directory outside the Maud program ones, preferences will be stored there");
-        fc.setApproveButtonText("Extract here");
-        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int retval = fc.showDialog(null, "Extract here");
-        if (retval == JFileChooser.APPROVE_OPTION) {
-          try {
-            folder = Misc.filterFileName(fc.getSelectedFile().getCanonicalPath());
-            Misc.checkForFolderOrCreateIt(folder);
-            folder += "/";
-          } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-          }
-        }
-      }
-    }
-	  OutputStreamWriter writer = null;
-      try {
-	      writer = new OutputStreamWriter(new FileOutputStream(pathFile), "UTF8");
-	      writer.write(folder);
-      } catch (IOException io) {
-        io.printStackTrace();
-      } finally {
-        try {
-	        if (writer != null)
-            writer.close();
-        } catch (IOException io1) {
-        }
-      }
-
-    Object waitForEnd = null;
     try {
       String libAddition = "";
 	    libAddition = "/lib/";
@@ -1101,7 +1150,7 @@ public class Constants {
       JarFile filesJar = null;
       try {
         filesJar = new JarFile(pathToMaudJar + libAddition + "Files.jar");
-        System.out.println("Found at " + pathToMaudJar + libAddition + "Files.jar");
+//        System.out.println("Found at " + pathToMaudJar + libAddition + "Files.jar");
       } catch (Exception e) {
         try {
           filesJar = new JarFile(pathToMaudJar + "/Files.jar");
@@ -1113,9 +1162,6 @@ public class Constants {
         }
       }
       Enumeration jarEntries = filesJar.entries();
-      if (!textonly) {
-        ((AttentionD) (waitForEnd = new AttentionD(new Frame(), "Attention!", "Please wait until the file extraction has finished, this frame will close then.", "Clock.gif", false))).setVisible(true);
-      }
 //      System.out.println("Final folder : " + folder);
       while (jarEntries.hasMoreElements()) {
         String entryName = jarEntries.nextElement().toString();
@@ -1159,19 +1205,69 @@ public class Constants {
           }
         }
       }
-      jarEntries = null;
+/*	    filesJar = null;
+	    try {
+		    filesJar = new JarFile(pathToMaudJar + libAddition + "Examples.jar");
+//		    System.out.println("Found at " + pathToMaudJar + libAddition + "Examples.jar");
+	    } catch (Exception e) {
+		    try {
+			    filesJar = new JarFile(pathToMaudJar + "/Examples.jar");
+			    System.out.println("Found at " + pathToMaudJar + "/Examples.jar");
+		    } catch (Exception ie) {
+			    System.out.println("Maud examples not inizialized. No one of the following files has been found:");
+			    System.out.println(pathToMaudJar + libAddition + "Examples.jar");
+			    System.out.println(pathToMaudJar + "/Examples.jar");
+		    }
+	    }
+	    jarEntries = filesJar.entries();
+//      System.out.println("Final folder : " + folder);
+	    while (jarEntries.hasMoreElements()) {
+		    String entryName = jarEntries.nextElement().toString();
+		    int index = entryName.lastIndexOf("/");
+		    String entryName1 = new String(entryName);
+		    if (index >= 0)
+			    entryName1 = entryName.substring(index + 1);
+		    if (entryName1.length() > 0 &&
+				    entryName1.indexOf("META-INF") == -1 &&
+				    entryName1.indexOf("MANIFEST") == -1 &&
+				    entryName1.indexOf("MYSELF.") == -1 &&
+				    entryName1.indexOf("files") == -1 &&
+				    entryName1.indexOf(".DS_Store") == -1) {
+			    if (!Misc.checkForFile(folder + entryName)) {
+				    it.unitn.ing.rista.util.FFT obj = new it.unitn.ing.rista.util.FFT();
+				    BufferedInputStream in = new BufferedInputStream((obj.getClass().getResource("/" + entryName)).openStream());
+				    FileOutputStream out = new FileOutputStream(folder + entryName1);
+				    int mark = 0;
+				    int available = in.available();
+				    byte[] bytes = new byte[available];
+				    try {
+					    while (available > 0 && in.read(bytes, mark, available) != -1) {
+						    out.write(bytes);
+						    mark += available;
+						    available = in.available();
+						    if (available > 0)
+							    bytes = new byte[available];
+					    }
+				    } catch (IOException io) {
+					    io.printStackTrace();
+				    } finally {
+					    try {
+						    if (in != null)
+							    in.close();
+						    if (out != null)
+							    out.close();
+					    } catch (IOException io1) {
+						    io1.printStackTrace();
+					    }
+				    }
+			    }
+		    }
+	    }*/
     } catch (Exception ioe) {
       ioe.printStackTrace();
     }
-
-    if (waitForEnd != null) {
-      ((AttentionD) waitForEnd).setVisible(false);
-      ((AttentionD) waitForEnd).dispose();
-    }
-
-    return folder;
   }
-
+/*
   static boolean result = false;
 
   private static boolean acceptLicense() {
@@ -1235,7 +1331,7 @@ public class Constants {
         }
       }
     return folder;
-  }
+  }*/
 
 /*	public static void reset() {
 		mustLoad = false;

@@ -50,9 +50,9 @@ public class LaueCircleStepRoi extends LaueCircleRoi {
 
   // Creates a new OvalRoi. The ImagePlus argument can be null.
   public LaueCircleStepRoi(ImagePlus imp, double radius) {
-    super(MaudPreferences.getDouble("Image2D.centerX", imp.getWidth() * imp.getCalibration().pixelWidth / 2.0),
-            MaudPreferences.getDouble("Image2D.centerY", imp.getHeight() * imp.getCalibration().pixelHeight / 2.0),
-            MaudPreferences.getDouble("Image2D.roiCircle",
+    super(MaudPreferences.getDouble("image2D.centerX", imp.getWidth() * imp.getCalibration().pixelWidth / 2.0),
+            MaudPreferences.getDouble("image2D.centerY", imp.getHeight() * imp.getCalibration().pixelHeight / 2.0),
+            MaudPreferences.getDouble("image2D.roiCircle",
             imp.getWidth() * imp.getCalibration().pixelWidth / 2.0),
             imp);
     setRadius(radius);
@@ -96,7 +96,7 @@ public class LaueCircleStepRoi extends LaueCircleRoi {
       System.out.println("No image processor!");
       return null;
     }
-	  int pointsPerPixel = MaudPreferences.getInteger("Image2D.pointsPerPixel", 1);
+	  int pointsPerPixel = MaudPreferences.getInteger("image2D.pointsPerPixel", 1);
     int minX = 0;
     int maxX = xMax;
     int minY = 0;
@@ -131,7 +131,7 @@ public class LaueCircleStepRoi extends LaueCircleRoi {
 			System.out.println("No image processor!");
 			return null;
 		}
-		int pointsPerPixel = MaudPreferences.getInteger("Image2D.pointsPerPixel", 1);
+		int pointsPerPixel = MaudPreferences.getInteger("image2D.pointsPerPixel", 1);
 		int minX = 0;
 		int maxX = xMax;
 		int minY = 0;

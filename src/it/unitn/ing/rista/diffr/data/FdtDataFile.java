@@ -469,10 +469,10 @@ END;
             System.out.println("2theta offset is probably wrong: " + ValMot[2] + ", we reset it to zero!");
             ValMot[2] = 0;
           }
-          datafile.setPhi((double) ValMot[1]);
-          datafile.setOmega(ValMot[0]);
+          datafile.setAngleValue(2, (double) ValMot[1]);
+          datafile.setAngleValue(0, ValMot[0]);
           twothetaShift = ValMot[2];
-          datafile.setChi(ValMot[3]);
+          datafile.setAngleValue(1, ValMot[3]);
           for (int j = 0; j < actualnumberofdata; j++) {
             if (uncalibrated)
               datafile.setXData(j, j);

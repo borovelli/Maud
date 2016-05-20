@@ -1,12 +1,11 @@
 package it.unitn.ing.jgraph;
 
+import it.unitn.ing.rista.util.Misc;
+
 import java.awt.*;
+import java.io.*;
 import java.util.*;
 import java.lang.*;
-import java.io.StreamTokenizer;
-import java.io.InputStream;
-import java.io.IOException;
-import java.net.URL;
 
 
 /*
@@ -64,7 +63,7 @@ public class Markers extends Object {
   /**
    *    maximum number of markers allowed
    */
-  protected int max = 11;
+  protected int max = 24;
   /**
    *    An array of vectors. Each element in the array contains the vertex
    *    vectors for a marker. Marker 1 is at element vert[0].
@@ -93,7 +92,7 @@ public class Markers extends Object {
    * @param file    The URL of the data file to read
    * @exception  IOException if there is an error with the IO stream.
    */
-  public Markers(URL file) throws IOException {
+  public Markers(String file) throws IOException {
 
     this();
 
@@ -197,59 +196,52 @@ public class Markers extends Object {
    * @param file URL of file to load
    * @exception IOException If there is an IO error
    */
-  public void LoadMarkers(URL file) throws IOException {
-    InputStream is;
-    StreamTokenizer st;
+  public void LoadMarkers(String file) throws IOException {
+	  StringTokenizer st;
     MarkerVertex v;
+	  String line = null;
 
-    is = file.openStream();
+	  BufferedReader reader = Misc.getReader(file);
+	  if (reader != null) {
+		  line = reader.readLine();
 
-    st = new StreamTokenizer(is);
-    st.eolIsSignificant(true);
-    st.commentChar('#');
+		  while (line != null) {
+			  if (!line.startsWith("#")) {
+				  st = new StringTokenizer(line, "\r\n ,");
+				  while (st.hasMoreTokens()) {
+					  String result = st.nextToken();
+					  if (result.equalsIgnoreCase("start")) {
+						  vert[last] = new Vector();
+					  } else if (result.equalsIgnoreCase("end")) {
+						  last++;
+					  } else if (result.equalsIgnoreCase("m")) {
+						  v = new MarkerVertex();
+						  v.draw = false;
+						  if (st.hasMoreTokens()) {
+						    v.x = Double.parseDouble(st.nextToken());
+						    if (st.hasMoreTokens()) {
+							    v.y = Double.parseDouble(st.nextToken());
+//							    System.out.println(last);
+								  vert[last].addElement(v);
+							  }
+						  }
+					  } else if (result.equalsIgnoreCase("l")) {
+						  v = new MarkerVertex();
+						  v.draw = true;
+						  if (st.hasMoreTokens()) {
+							  v.x = Double.parseDouble(st.nextToken());
+							  if (st.hasMoreTokens()) {
+								  v.y = Double.parseDouble(st.nextToken());
+								  vert[last].addElement(v);
+							  }
+						  }
+					  }
+				  }
+			  }
 
-    scan:
-            while (true) {
-              switch (st.nextToken()) {
-                default:
-                  break scan;
-                case StreamTokenizer.TT_EOL:
-                  break;
-                case StreamTokenizer.TT_WORD:
-
-                  if ("start".equals(st.sval)) {
-                    vert[last] = new Vector();
-                  } else if ("end".equals(st.sval)) {
-                    last++;
-                  } else if ("m".equals(st.sval)) {
-                    v = new MarkerVertex();
-                    v.draw = false;
-                    if (st.nextToken() == StreamTokenizer.TT_NUMBER) {
-                      v.x = st.nval;
-                      if (st.nextToken() == StreamTokenizer.TT_NUMBER) {
-                        v.y = st.nval;
-                        vert[last].addElement(v);
-                      }
-                    }
-                  } else if ("l".equals(st.sval)) {
-                    v = new MarkerVertex();
-                    v.draw = true;
-                    if (st.nextToken() == StreamTokenizer.TT_NUMBER) {
-                      v.x = st.nval;
-                      if (st.nextToken() == StreamTokenizer.TT_NUMBER) {
-                        v.y = st.nval;
-                        vert[last].addElement(v);
-                      }
-                    }
-                  }
-                  break;
-              }
-
-
-            }
-
-    is.close();
-
+			  line = reader.readLine();
+		  }
+	  }
   }
 
   /**

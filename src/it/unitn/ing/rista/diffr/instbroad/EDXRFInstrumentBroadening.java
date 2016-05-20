@@ -43,13 +43,17 @@ public class EDXRFInstrumentBroadening extends InstrumentBroadening {
   public static final String[] diclistc = {
 		  "_riet_par_asymmetry_truncation",
 
-		  "_riet_par_asymmetry_value", "_riet_par_broadening_hwhm", "_riet_par_broadening_gaussian",
+		  "_riet_par_asymmetry_value_inv",
+		  "_riet_par_broadening_hwhm_dx", "_riet_par_broadening_gaussian_dx",
+		  "_riet_par_broadening_hwhm_sx", "_riet_par_broadening_gaussian_sx"
   };
 
   protected static final String[] diclistcrm = {
 		  "asymmetry truncation angle",
 
-		  "asymmetry coeff ", "broadening coeff ", "gaussian coeff ",
+		  "asymmetry coeff ",
+		  "broadening coeff dx ", "gaussian coeff dx ",
+		  "broadening coeff sx ", "gaussian coeff sx "
   };
 
   protected static final String[] classlistc = {};
@@ -58,9 +62,6 @@ public class EDXRFInstrumentBroadening extends InstrumentBroadening {
 
   public static double minimumHWHMvalue = MaudPreferences.getDouble(
       "instrBroadening.minimumHWHMvalue", 0.0000001);
-
-	public static double minimumAsymmetryValue = MaudPreferences.getDouble(
-			"instrBroadening.minimumAsymmetryValue", 1);
 
 	public EDXRFInstrumentBroadening(XRDcat obj, String alabel) {
     super(obj, alabel);
@@ -84,7 +85,7 @@ public class EDXRFInstrumentBroadening extends InstrumentBroadening {
     Nstring = 1;
     Nstringloop = 0;
     Nparameter = 0;
-    Nparameterloop = 3;
+    Nparameterloop = 5;
     Nsubordinate = 0;
     Nsubordinateloop = 0;
   }
@@ -105,18 +106,33 @@ public class EDXRFInstrumentBroadening extends InstrumentBroadening {
     if (initialized)
       return;
     initialized = true;
-	  addparameterloopField(0, new Parameter(this, getParameterString(0, 0), 100,
-			  ParameterPreferences.getDouble(getParameterString(0, 0) + ".min", 1),
-			  ParameterPreferences.getDouble(getParameterString(0, 0) + ".max", 1000)));
+	  addparameterloopField(0, new Parameter(this, getParameterString(0, 0), 0,
+			  ParameterPreferences.getDouble(getParameterString(0, 0) + ".min", 0),
+			  ParameterPreferences.getDouble(getParameterString(0, 0) + ".max", 1)));
     addparameterloopField(1, new Parameter(this, getParameterString(1, 0), 42.4,
         ParameterPreferences.getDouble(getParameterString(1, 0) + ".min", 0),
         ParameterPreferences.getDouble(getParameterString(1, 0) + ".max", 100)));
     addparameterloopField(1, new Parameter(this, getParameterString(1, 1), 5330,
         ParameterPreferences.getDouble(getParameterString(1, 1) + ".min", 100),
         ParameterPreferences.getDouble(getParameterString(1, 1) + ".max", 10000)));
-    addparameterloopField(2, new Parameter(this, getParameterString(2, 0), 0.0,
+    addparameterloopField(2, new Parameter(this, getParameterString(2, 0), 0.1,
         ParameterPreferences.getDouble(getParameterString(2, 0) + ".min", -1.0),
         ParameterPreferences.getDouble(getParameterString(2, 0) + ".max", 2.0)));
+	  addparameterloopField(2, new Parameter(this, getParameterString(2, 0), 0.0,
+			  ParameterPreferences.getDouble(getParameterString(2, 1) + ".min", -1.0),
+			  ParameterPreferences.getDouble(getParameterString(2, 1) + ".max", 2.0)));
+	  addparameterloopField(3, new Parameter(this, getParameterString(3, 0), 42.4,
+			  ParameterPreferences.getDouble(getParameterString(3, 0) + ".min", 0),
+			  ParameterPreferences.getDouble(getParameterString(3, 0) + ".max", 100)));
+	  addparameterloopField(3, new Parameter(this, getParameterString(1, 1), 5330,
+			  ParameterPreferences.getDouble(getParameterString(3, 1) + ".min", 100),
+			  ParameterPreferences.getDouble(getParameterString(3, 1) + ".max", 10000)));
+	  addparameterloopField(4, new Parameter(this, getParameterString(4, 0), 0.7,
+			  ParameterPreferences.getDouble(getParameterString(4, 0) + ".min", -1.0),
+			  ParameterPreferences.getDouble(getParameterString(4, 0) + ".max", 2.0)));
+	  addparameterloopField(4, new Parameter(this, getParameterString(4, 0), 0.0,
+			  ParameterPreferences.getDouble(getParameterString(4, 1) + ".min", -1.0),
+			  ParameterPreferences.getDouble(getParameterString(4, 1) + ".max", 2.0)));
   }
 
   public void notifyParameterChanged(Parameter source) {
@@ -150,57 +166,31 @@ public class EDXRFInstrumentBroadening extends InstrumentBroadening {
 
 	public static final int asymmetryID = 0;
 
-	public ListVector getAsymmetryList() {
-		return parameterloopField[asymmetryID];
-	}
+  public static final int caglioti_dxID = 1;
 
-	public Parameter getAsymmetry(int index) {
-		return (Parameter) getAsymmetryList().elementAt(index);
-	}
+  public static final int gaussian_dxID = 2;
 
-	public int getcagliotinumber() {
-    return getCagliotiList().size();
-  }
+	public static final int caglioti_sxID = 3;
 
-  public int getgaussiannumber() {
-    return getGaussianList().size();
-  }
-
-  public static final int cagliotiID = 1;
-
-  public ListVector getCagliotiList() {
-    return parameterloopField[cagliotiID];
-  }
-
-  public Parameter getCaglioti(int index) {
-    return (Parameter) getCagliotiList().elementAt(index);
-  }
-
-  public static final int gaussianID = 2;
-
-  public ListVector getGaussianList() {
-    return parameterloopField[gaussianID];
-  }
-
-  public Parameter getGaussian(int index) {
-    return (Parameter) getGaussianList().elementAt(index);
-  }
+	public static final int gaussian_sxID = 4;
 
 	double asymmetry[] = null;
 	int asymmetryN = 0;
-	double caglioti[] = null;
-	int cagliotiN = 0;
-	double gaussian[] = null;
-	int gaussianN = 0;
-	double truncationAngle = 0.4;
+	double caglioti_dx[] = null;
+	int caglioti_dxN = 0;
+	double gaussian_dx[] = null;
+	int gaussian_dxN = 0;
+	double caglioti_sx[] = null;
+	int caglioti_sxN = 0;
+	double gaussian_sx[] = null;
+	int gaussian_sxN = 0;
+	double truncationAngle = -1000;
 
   public void updateStringtoDoubleBuffering(boolean firstLoading) {
     super.updateStringtoDoubleBuffering(false);
 
     minimumHWHMvalue = MaudPreferences.getDouble(
         "instrBroadening.minimumHWHMvalue", 0.0000001);
-	  minimumAsymmetryValue = MaudPreferences.getDouble(
-			  "instrBroadening.minimumAsymmetryValue", 1);
 	  truncationAngle = Double.parseDouble(getTruncationAngleString());
   }
 
@@ -217,20 +207,15 @@ public class EDXRFInstrumentBroadening extends InstrumentBroadening {
 	  asymmetryN = numberOfLoopParameters[asymmetryID];
 //    if (MaudPreferences.getBoolean("CagliotiFirstParameter.forcePositive", true))
 //      checkCagliotiFirstParameter();
-	  caglioti = getParameterLoopVector(cagliotiID);
-	  cagliotiN = numberOfLoopParameters[cagliotiID];
-	  gaussian = getParameterLoopVector(gaussianID);
-	  gaussianN = numberOfLoopParameters[gaussianID];
+	  caglioti_dx = getParameterLoopVector(caglioti_dxID);
+	  caglioti_dxN = numberOfLoopParameters[caglioti_dxID];
+	  gaussian_dx = getParameterLoopVector(gaussian_dxID);
+	  gaussian_dxN = numberOfLoopParameters[gaussian_dxID];
+	  caglioti_sx = getParameterLoopVector(caglioti_sxID);
+	  caglioti_sxN = numberOfLoopParameters[caglioti_sxID];
+	  gaussian_sx = getParameterLoopVector(gaussian_sxID);
+	  gaussian_sxN = numberOfLoopParameters[gaussian_sxID];
   }
-
-/*  private void checkCagliotiFirstParameter() {
-    Parameter firstCaglioti = getCaglioti(0);
-    if (firstCaglioti != null) {
-      double first = firstCaglioti.getValueD();
-      if (first < 0.0)
-        firstCaglioti.setValue(-first);
-    }
-  }*/
 
   public Instrument getInstrument() {
     return (Instrument) getParent();
@@ -249,19 +234,34 @@ public class EDXRFInstrumentBroadening extends InstrumentBroadening {
 // Attention: x equal to 2theta
 
     x *= 0.001;
-    double broad[] = new double[2];
+    double broad[] = new double[4];
+	  // dx
     broad[0] = 0.0;
-    for (int i = 0; i < gaussianN; i++)
-      broad[0] += gaussian[i] * MoreMath.pow(x, i);
-    if (broad[0] < 0.0)
+    for (int i = 0; i < gaussian_dxN; i++)
+      broad[0] += gaussian_dx[i] * MoreMath.pow(x, i);
+/*    if (broad[0] < 0.0)
       broad[0] = 0.0;
     if (broad[0] > 1.0)
-      broad[0] = 1.0;
+      broad[0] = 1.0;*/
     broad[1] = 0.0;
-    for (int i = 0; i < cagliotiN; i++)
-      broad[1] += caglioti[i] * MoreMath.pow(x, i);
+    for (int i = 0; i < caglioti_dxN; i++)
+      broad[1] += caglioti_dx[i] * MoreMath.pow(x, i);
     if (broad[1] < minimumHWHMvalue * 10000)
       broad[1] = minimumHWHMvalue * 10000;
+	  // sx
+	  broad[2] = 0.0;
+	  for (int i = 0; i < gaussian_sxN; i++)
+		  broad[2] += gaussian_sx[i] * MoreMath.pow(x, i);
+/*	  if (broad[2] < 0.0)
+		  broad[2] = 0.0;
+	  if (broad[2] > 1.0)
+		  broad[2] = 1.0;*/
+	  broad[3] = 0.0;
+	  for (int i = 0; i < caglioti_sxN; i++)
+		  broad[3] += caglioti_sx[i] * MoreMath.pow(x, i);
+	  if (broad[3] < minimumHWHMvalue * 10000)
+		  broad[3] = minimumHWHMvalue * 10000;
+
     return broad;
   }
 
@@ -285,8 +285,6 @@ public class EDXRFInstrumentBroadening extends InstrumentBroadening {
 
 		  for (int i = 0; i < asymmetryN; i++)
 			  asy += asymmetry[i] * MoreMath.pow(x1, i);
-		  if (asy < minimumAsymmetryValue && asy != 0)
-			  asy = minimumAsymmetryValue;
 	  }
 	  return asy;
   }
@@ -357,8 +355,10 @@ public class EDXRFInstrumentBroadening extends InstrumentBroadening {
   class JEDXRFOptionsD extends JOptionsDialog {
 
 	  JParameterListPane AsymmetryPanel;
-    JParameterListPane HWHMPanel;
-    JParameterListPane GaussianPanel;
+    JParameterListPane HWHMPanel_dx;
+    JParameterListPane GaussianPanel_dx;
+	  JParameterListPane HWHMPanel_sx;
+	  JParameterListPane GaussianPanel_sx;
 	  JTextField truncationTF = null;
 
     public JEDXRFOptionsD(Frame parent, XRDcat obj) {
@@ -369,7 +369,7 @@ public class EDXRFInstrumentBroadening extends InstrumentBroadening {
 
       JPanel aberrationPanel = new JPanel(new BorderLayout(3, 3));
       JTabbedPane tabPanel1 = new JTabbedPane();
-      String tempString[] = {"Asymmetry", "HWHM", "Gaussianity"};
+      String tempString[] = {"Asymmetry", "HWHM dx", "Gaussianity dx", "HWHM sx", "Gaussianity sx"};
       principalPanel.add(BorderLayout.CENTER, aberrationPanel);
       aberrationPanel.add(BorderLayout.CENTER, tabPanel1);
 
@@ -386,11 +386,17 @@ public class EDXRFInstrumentBroadening extends InstrumentBroadening {
 	    truncationTF = new JTextField(Constants.FLOAT_FIELD);
 	    p6.add(truncationTF);
 
-      HWHMPanel = new JParameterListPane(this, false, true);
-      tabPanel1.addTab(tempString[1], null, HWHMPanel);
+      HWHMPanel_dx = new JParameterListPane(this, false, true);
+      tabPanel1.addTab(tempString[1], null, HWHMPanel_dx);
 
-      GaussianPanel = new JParameterListPane(this, false, true);
-      tabPanel1.addTab(tempString[2], null, GaussianPanel);
+      GaussianPanel_dx = new JParameterListPane(this, false, true);
+      tabPanel1.addTab(tempString[2], null, GaussianPanel_dx);
+
+	    HWHMPanel_sx = new JParameterListPane(this, false, true);
+	    tabPanel1.addTab(tempString[3], null, HWHMPanel_sx);
+
+	    GaussianPanel_sx = new JParameterListPane(this, false, true);
+	    tabPanel1.addTab(tempString[4], null, GaussianPanel_sx);
 
 /*      JPanel closebuttonPanel = new JPanel();
       closebuttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 3, 3));
@@ -413,8 +419,10 @@ public class EDXRFInstrumentBroadening extends InstrumentBroadening {
 
     public void initParameters() {
 	    AsymmetryPanel.setList(EDXRFInstrumentBroadening.this, 0);
-      HWHMPanel.setList(EDXRFInstrumentBroadening.this, 1);
-      GaussianPanel.setList(EDXRFInstrumentBroadening.this, 2);
+      HWHMPanel_dx.setList(EDXRFInstrumentBroadening.this, 1);
+      GaussianPanel_dx.setList(EDXRFInstrumentBroadening.this, 2);
+	    HWHMPanel_sx.setList(EDXRFInstrumentBroadening.this, 3);
+	    GaussianPanel_sx.setList(EDXRFInstrumentBroadening.this, 4);
 	    truncationTF.setText(getTruncationAngleString());
     }
 
@@ -422,15 +430,19 @@ public class EDXRFInstrumentBroadening extends InstrumentBroadening {
       super.retrieveParameters();
 
 	    AsymmetryPanel.retrieveparlist();
-      HWHMPanel.retrieveparlist();
-      GaussianPanel.retrieveparlist();
+      HWHMPanel_dx.retrieveparlist();
+      GaussianPanel_dx.retrieveparlist();
+	    HWHMPanel_sx.retrieveparlist();
+	    GaussianPanel_sx.retrieveparlist();
 	    setTruncationAngle(truncationTF.getText());
     }
 
     public void dispose() {
 	    AsymmetryPanel.dispose();
-      HWHMPanel.dispose();
-      GaussianPanel.dispose();
+      HWHMPanel_dx.dispose();
+      GaussianPanel_dx.dispose();
+	    HWHMPanel_sx.dispose();
+	    GaussianPanel_sx.dispose();
 
       super.dispose();
     }

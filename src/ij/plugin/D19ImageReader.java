@@ -54,16 +54,16 @@ public class D19ImageReader implements PlugIn {
       String string_2_ = opendialog.getFileName();
       if (string_2_ != null) {
         try {
-	        double pixelWidth = MaudPreferences.getDouble("D19Detector.pixelX", 2.5);
-	        double pixelHeight = MaudPreferences.getDouble("D19Detector.pixelY", 1.5);
-	        boolean shift128Pixels = MaudPreferences.getBoolean("D19Detector.shift128Pixel", true);
-	        double centerX = MaudPreferences.getDouble("D19Detector.ImageCenterX", -58);
-	        double centerY = MaudPreferences.getDouble("D19Detector.ImageCenterY", 194.11);
-	        double radius = MaudPreferences.getDouble("D19Detector.detectorSampleDistance", 768.8);
+	        double pixelWidth = MaudPreferences.getDouble("d19Detector.pixelX", 2.5);
+	        double pixelHeight = MaudPreferences.getDouble("d19Detector.pixelY", 1.5);
+	        boolean shift128Pixels = MaudPreferences.getBoolean("d19Detector.shift128Pixel", true);
+	        double centerX = MaudPreferences.getDouble("d19Detector.ImageCenterX", -58);
+	        double centerY = MaudPreferences.getDouble("d19Detector.ImageCenterY", 194.11);
+	        double radius = MaudPreferences.getDouble("d19Detector.detectorSampleDistance", 768.8);
 
-	        double coneInterval = MaudPreferences.getDouble("D19Detector.defaultEtaConeInterval", 5.0);
-	        double theta2Step = MaudPreferences.getDouble("D19Detector.defaultDiffractionStepAngle", 0.05);
-	        double coneAngleMax = MaudPreferences.getDouble("D19Detector.defaultEtaConeAngleMax", 180.0);
+	        double coneInterval = MaudPreferences.getDouble("d19Detector.defaultEtaConeInterval", 5.0);
+	        double theta2Step = MaudPreferences.getDouble("d19Detector.defaultDiffractionStepAngle", 0.05);
+	        double coneAngleMax = MaudPreferences.getDouble("d19Detector.defaultEtaConeAngleMax", 180.0);
 
 	        int[] imageDimension = new int[3];
 	        Vector<double[]> dimension = new Vector<double[]>();
@@ -287,16 +287,16 @@ public class D19ImageReader implements PlugIn {
 	  String title = null;
 	  double x_start = 0.0;
 	  double y_start = 0.0;
-	  double x_pixel = MaudPreferences.getDouble("D19Detector.pixelX", 2.5);
-	  double y_pixel = MaudPreferences.getDouble("D19Detector.pixelY", 1.5);
-	  boolean shift128Pixels = MaudPreferences.getBoolean("D19Detector.shift128Pixel", true);
-	  double centerX = MaudPreferences.getDouble("D19Detector.ImageCenterX", -58);
-	  double centerY = MaudPreferences.getDouble("D19Detector.ImageCenterY", 194.11);
-	  double radius = MaudPreferences.getDouble("D19Detector.detectorSampleDistance", 768.8);
+	  double x_pixel = MaudPreferences.getDouble("d19Detector.pixelX", 2.5);
+	  double y_pixel = MaudPreferences.getDouble("d19Detector.pixelY", 1.5);
+	  boolean shift128Pixels = MaudPreferences.getBoolean("d19Detector.shift128Pixel", true);
+	  double centerX = MaudPreferences.getDouble("d19Detector.ImageCenterX", -58);
+	  double centerY = MaudPreferences.getDouble("d19Detector.ImageCenterY", 194.11);
+	  double radius = MaudPreferences.getDouble("d19Detector.detectorSampleDistance", 768.8);
 
-	  double coneInterval = MaudPreferences.getDouble("D19Detector.defaultEtaConeInterval", 5.0);
-	  double theta2Step = MaudPreferences.getDouble("D19Detector.defaultDiffractionStepAngle", 0.05);
-	  double coneAngleMax = MaudPreferences.getDouble("D19Detector.defaultEtaConeAngleMax", 180.0);
+	  double coneInterval = MaudPreferences.getDouble("d19Detector.defaultEtaConeInterval", 5.0);
+	  double theta2Step = MaudPreferences.getDouble("d19Detector.defaultDiffractionStepAngle", 0.05);
+	  double coneAngleMax = MaudPreferences.getDouble("d19Detector.defaultEtaConeAngleMax", 180.0);
 
     try {
       BufferedReader bis = Misc.getReader(folder, name);
@@ -361,7 +361,7 @@ public class D19ImageReader implements PlugIn {
 		    x_coord[i] = x_start + x_pixel * i;
 	    for (int i = 0; i < y_size; i++)
 		    y_coord[i] = y_start + y_pixel * i;
-	    if (MaudPreferences.getBoolean("D19Detector.invertYcoord", true)) {
+	    if (MaudPreferences.getBoolean("d19Detector.invertYcoord", true)) {
 		    double yend = y_coord[y_size - 1];
 		    for (int i = 0; i < y_size; i++)
 			    y_coord[i] = yend - y_coord[i];

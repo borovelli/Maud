@@ -112,7 +112,7 @@ public class HIPPOWizard extends Wizard {
   }
 
   public static void setupTheAnalysis(FilePar analysis, HIPPOdata data) {
-	  int max_nbkg = MaudPreferences.getInteger("HippoWizard.background_parameters_to_add", 2);
+	  int max_nbkg = MaudPreferences.getInteger("hippoWizard.background_parameters_to_add", 2);
 	  analysis.removesample();
     analysis.loadingFile = true;
     Sample asample;
@@ -122,7 +122,7 @@ public class HIPPOWizard extends Wizard {
     asample.setLabel(data.sampleName);
     asample.initializeAsNew();
     boolean original = analysis.storeSpectraWithAnalysis();
-	  double maxBankToleranceTheta = MaudPreferences.getDouble("HippoWizard.maxDelta2ThetaForBankGrouping", 2.0);
+	  double maxBankToleranceTheta = MaudPreferences.getDouble("hippoWizard.maxDelta2ThetaForBankGrouping", 2.0);
     analysis.setStoreSpectraOption(false);
       for (int i = 0; i < data.mbank.size(); i++) {
         if (((HIPPOBank) data.mbank.elementAt(i)).enabled) {
@@ -214,7 +214,7 @@ public class HIPPOWizard extends Wizard {
 //				            System.out.println("Add: " + name + " , to: " + adataset.getLabel() + " for: " + instAngCal.getBankID(j));
 				            DiffrDataFile[] adatafile = adataset.addDataFileforName(name, false);
 				            for (int ij = 0; ij < adatafile.length; ij++) {
-					            adatafile[ij].setOmega(Double.parseDouble(adatafile[ij].getOmega()) +
+					            adatafile[ij].setAngleValue(0, Double.parseDouble(adatafile[ij].getString(1)) +
 							            ((HIPPODataFile) data.dataFiles.get(k)).omegaAngle +
 							            data.omegaOffset);
 					            for (int nbkg = 0; nbkg < max_nbkg; nbkg++) {

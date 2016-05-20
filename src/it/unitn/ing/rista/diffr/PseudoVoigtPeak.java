@@ -197,10 +197,10 @@ public class PseudoVoigtPeak extends basicPeak {
 					Fhkl = diffrDataFile.getDataFileSet().getStructureFactors(aphase)[0][getOrderPosition()];
 					break;
 				case Constants.UNITARY:
-					Fhkl = 1.0;
+					Fhkl = 99.0;
 					break;
 				default:
-					Fhkl = 1.0;
+					Fhkl = 88.0;
 			}
 
 			double[] shapeAbs = diffrDataFile.getShapeAbsFactors(aphase, getOrderPosition());
@@ -370,7 +370,7 @@ public class PseudoVoigtPeak extends basicPeak {
 
 					} else {
 						intensity[ipv] = 0.0f;
-						Fhkl = 1.0f;
+//						Fhkl = 1.0f;
 						hwhm_i[ipv] = 1.0f;
 						eta[ipv] = 0.0f;
 						actualPosition[ipv] = 0.0f;

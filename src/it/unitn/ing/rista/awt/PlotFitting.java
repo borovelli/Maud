@@ -156,20 +156,20 @@ public class PlotFitting extends PlotDataFile {
 
 	boolean startingPoint = false;
 
-  public void prepareForTools() {
+  public void prepareForTools(boolean setData) {
     if (!startingPoint)
-      thePlotPanel.datafile[0].setStartingPointForTools();
+      thePlotPanel.datafile[0].setStartingPointForTools(setData);
     startingPoint = true;
   }
 
   public void resetStartingPoint() {
     startingPoint = false;
-    prepareForTools();
+    prepareForTools(true);
     updatePlotForTools();
   }
 
 	public void inverseFourierTransformFFT() {
-		prepareForTools();
+		prepareForTools(true);
 		int multiplier = MaudPreferences.getInteger("inversepdf_FFT.multiplier_scale", 16);
 		double bkg = MaudPreferences.getDouble("inversepdf_FFT.background_Gr", 0.0);
 		int dtanumber = thePlotPanel.datafile[0].computeDataNumber();
@@ -245,7 +245,7 @@ public class PlotFitting extends PlotDataFile {
 	}
 
 	public void inverseFourierTransform() {
-		prepareForTools();
+		prepareForTools(true);
 		int multiplier = MaudPreferences.getInteger("pdf_inverse_FFT.multiplier_scale", 1);
 //		double bkg = MaudPreferences.getDouble("pdf_FFT.background_Gr", 0.0);
 		int dtanumber = thePlotPanel.datafile[0].computeDataNumber();
@@ -313,7 +313,7 @@ public class PlotFitting extends PlotDataFile {
 	}
 
 	public void inverseReflectivityFourierTransform() {
-		prepareForTools();
+		prepareForTools(true);
 		int multiplier = MaudPreferences.getInteger("inverse_FFT.multiplier_scale", 8);
 		double bkg = MaudPreferences.getDouble("inverse_FFT.background", 0.0);
 		boolean log = MaudPreferences.getBoolean("inverse_FFT.useLog", false);
@@ -358,7 +358,7 @@ public class PlotFitting extends PlotDataFile {
 	}
 
 	public void fourierTransformFFT() {
-		prepareForTools();
+		prepareForTools(true);
 		int multiplier = MaudPreferences.getInteger("pdf_FFT.multiplier_scale", 16);
 		double bkg = MaudPreferences.getDouble("pdf_FFT.background_Gr", 0.0);
 		int dtanumber = thePlotPanel.datafile[0].computeDataNumber();
@@ -399,7 +399,8 @@ public class PlotFitting extends PlotDataFile {
 	}
 
 	public void fourierTransform() {
-		prepareForTools();
+		// should be in equal steps of Q for fft
+		prepareForTools(MaudPreferences.getBoolean("pdf_FFT.useData", true));
 		int multiplier = MaudPreferences.getInteger("pdf_FFT.multiplier_scale", 1);
 //		double bkg = MaudPreferences.getDouble("pdf_FFT.background_Gr", 0.0);
 		int dtanumber = thePlotPanel.datafile[0].computeDataNumber();
@@ -444,10 +445,23 @@ public class PlotFitting extends PlotDataFile {
 			gr[i] *= normalization;
 		}
 
-		exportComputedPDF(r, gr);
+//		exportComputedPDF(r, gr);
+/*		fftlength = MoreMath.getNextPowerof2(dtanumber);
+		double[] fft = new double[fftlength];
+		int i = 0;
+		for (; i < dtanumber; i++)
+			fft[i] = sq[i];
+		for (i = dtanumber; i < fftlength; i++)
+			fft[i] = 1.0;
+
+		FFT.realfft(fftlength, fft);
+
+		for (i = 0; i < dtanumber; i++)
+			thePlotPanel.datafile[0].setPhasesFit(i + thePlotPanel.datafile[0].startingindex, fft[i]);
+*/
 
 		for (int i = 0; i < dtanumber; i++) {
-			thePlotPanel.datafile[0].setXData(i + thePlotPanel.datafile[0].startingindex, r[i]);
+//			thePlotPanel.datafile[0].setXData(i + thePlotPanel.datafile[0].startingindex, r[i]);
 			thePlotPanel.datafile[0].setPhasesFit(i + thePlotPanel.datafile[0].startingindex, gr[i]);
 		}
 
@@ -456,7 +470,7 @@ public class PlotFitting extends PlotDataFile {
 	}
 
 	public void fourierSmoothing() {
-    prepareForTools();
+    prepareForTools(true);
 
     int dtanumber = thePlotPanel.datafile[0].computeDataNumber();
     int fftlength = MoreMath.getNextPowerof2(dtanumber);
@@ -479,7 +493,7 @@ public class PlotFitting extends PlotDataFile {
   }
 
   public void inverseFourierSmoothing(double[] fft, DiffrDataFile adatafile) {
-    prepareForTools();
+    prepareForTools(true);
     int dtanumber = adatafile.computeDataNumber();
     int fftlength = fft.length;
     FFT.realifft(fftlength, fft);
@@ -494,13 +508,13 @@ public class PlotFitting extends PlotDataFile {
   }
 
   public void backgroundSubtraction() {
-    prepareForTools();
+    prepareForTools(true);
     if (thePlotPanel.datafile[0].backgroundSubtraction())
       updatePlotForTools();
   }
 
   public void kalpha2Stripping() {
-    prepareForTools();
+    prepareForTools(true);
     if (thePlotPanel.datafile[0].kalpha2Stripping())
       updatePlotForTools();
   }
@@ -510,7 +524,7 @@ public class PlotFitting extends PlotDataFile {
   }
 
   public void peaksLocation() {
-    prepareForTools();
+    prepareForTools(true);
     int dtanumber = thePlotPanel.datafile[0].computeDataNumber();
     double[] derivative2 = new double[dtanumber];
 
@@ -909,29 +923,13 @@ public class PlotFitting extends PlotDataFile {
   public void showNewFrame() {
     setVisible(false);
     getContentPane().removeAll();
-//    data1 = null;
-//    xaxis = null;
-//    yaxis = null;
-//    System.out.println("Disposing: " + graph);
-/*    if (graph != null)
-      if (graph instanceof G2Dint)
-        ((G2Dint) graph).dispose();
-    graph = null;*/
-//    dataFit = null;
-//    datar = null;
-//    datap = null;
-//    residuals = null;
-//    positions = null;
-//    yaxisp = null;
-//    xaxisr = null;
-//    yaxisr = null;
 
     createDefaultMenuBar();
     thePlotPanel = new SpectrumPlotPanel(thePlotPanel.datafile, thePlotPanel.peaksList,
         thePlotPanel.secondDerivative);
     if (thePlotPanel != null)
       getContentPane().add(thePlotPanel, BorderLayout.CENTER);
-    setComponentToPrint(thePlotPanel.getComponentToPrint());
+	  setComponentToPrint(thePlotPanel.getComponentToPrint());
 
     getContentPane().invalidate();
     getContentPane().validate();
@@ -941,29 +939,11 @@ public class PlotFitting extends PlotDataFile {
   public void showNewFrame(double[][] peaks, double[] derivative2) {
     setVisible(false);
     getContentPane().removeAll();
-//    data1 = null;
-//    xaxis = null;
-//    yaxis = null;
-//    System.out.println("Disposing: " + graph);
-/*    if (graph != null)
-      if (graph instanceof G2Dint)
-        ((G2Dint) graph).dispose();
-    graph = null;*/
-//    dataFit = null;
-//    datar = null;
-//    datap = null;
-//    residuals = null;
-//    positions = null;
-//    yaxisp = null;
-//    xaxisr = null;
-//    yaxisr = null;
-//    getContentPane().invalidate();
-
     createDefaultMenuBar();
     thePlotPanel = new SpectrumPlotPanel(thePlotPanel.datafile, peaks, derivative2);
     if (thePlotPanel != null)
       getContentPane().add(thePlotPanel, BorderLayout.CENTER);
-    setComponentToPrint(thePlotPanel.getComponentToPrint());
+	  setComponentToPrint(thePlotPanel.getComponentToPrint());
 
     getContentPane().invalidate();
     getContentPane().validate();
@@ -975,7 +955,7 @@ public class PlotFitting extends PlotDataFile {
 
     int i, j;
 
-    G2Dint lgraph = (G2Dint) thePlotPanel.graph;
+    G2Dint lgraph = thePlotPanel.graph;
 
     double[] trange = lgraph.getRanges();
 //    double[] prange = positions.getRanges();
@@ -1448,7 +1428,7 @@ public class PlotFitting extends PlotDataFile {
         }
       });
       valueTF = new JTextField(Constants.FLOAT_FIELD);
-      valueTF.setText(MaudPreferences.getPref("Smoothing.fourierZeros", "0.6"));
+      valueTF.setText(MaudPreferences.getPref("smoothing.fourierZeros", "0.6"));
       valueTF.addKeyListener(new java.awt.event.KeyListener() {
         public void keyPressed(java.awt.event.KeyEvent event) {
         }
@@ -1498,7 +1478,7 @@ public class PlotFitting extends PlotDataFile {
         }
       });
       valueFTF = new JTextField(Constants.FLOAT_FIELD);
-      valueFTF.setText(MaudPreferences.getPref("Smoothing.multiplyingFactor", "3.9"));
+      valueFTF.setText(MaudPreferences.getPref("smoothing.multiplyingFactor", "3.9"));
       valueFTF.addKeyListener(new java.awt.event.KeyListener() {
         public void keyPressed(java.awt.event.KeyEvent event) {
         }
@@ -1616,8 +1596,8 @@ public class PlotFitting extends PlotDataFile {
 
     public void update() {
       JLiveSmoothingD.this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-      MaudPreferences.setPref("Smoothing.fourierZeros", valueTF.getText());
-      MaudPreferences.setPref("Smoothing.multiplyingFactor", valueFTF.getText());
+      MaudPreferences.setPref("smoothing.fourierZeros", valueTF.getText());
+      MaudPreferences.setPref("smoothing.multiplyingFactor", valueFTF.getText());
       newfft = BasicIndexingUtilities.modifyFFT(fft);
 
       for (int i = 0; i < dtanumber; i++)
@@ -1675,7 +1655,7 @@ public class PlotFitting extends PlotDataFile {
         }
       });
       valueTF = new JTextField(Constants.FLOAT_FIELD);
-      valueTF.setText(MaudPreferences.getPref("PeaksLocation.noiseFactor", "10"));
+      valueTF.setText(MaudPreferences.getPref("peaksLocation.noiseFactor", "10"));
       valueTF.addKeyListener(new java.awt.event.KeyListener() {
         public void keyPressed(java.awt.event.KeyEvent event) {
         }
@@ -1725,7 +1705,7 @@ public class PlotFitting extends PlotDataFile {
         }
       });
       valueFTF = new JTextField(Constants.FLOAT_FIELD);
-      valueFTF.setText(MaudPreferences.getPref("PeaksLocation.minimum2derivative%", "1"));
+      valueFTF.setText(MaudPreferences.getPref("peaksLocation.minimum2derivative%", "1"));
       valueFTF.addKeyListener(new java.awt.event.KeyListener() {
         public void keyPressed(java.awt.event.KeyEvent event) {
         }
@@ -1826,9 +1806,9 @@ public class PlotFitting extends PlotDataFile {
 
     public void update() {
       JLivePeaksSearchD.this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-//      MaudPreferences.setPref("PeaksLocation.interpolatedPoints", valueTF.getText());
-      MaudPreferences.setPref("PeaksLocation.minimum2derivative%", valueFTF.getText());
-      MaudPreferences.setPref("PeaksLocation.noiseFactor", valueTF.getText());
+//      MaudPreferences.setPref("peaksLocation.interpolatedPoints", valueTF.getText());
+      MaudPreferences.setPref("peaksLocation.minimum2derivative%", valueFTF.getText());
+      MaudPreferences.setPref("peaksLocation.noiseFactor", valueTF.getText());
       peaksLocation();
 
       updatePlotForTools();

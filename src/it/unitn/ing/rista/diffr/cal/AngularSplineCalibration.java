@@ -131,7 +131,7 @@ public class AngularSplineCalibration extends AngularCalibration {
 
     double original_range = datafile.getXDataForCalibration(datanumber - 1) -
             datafile.getXDataForCalibration(0);
-    double w_range = original_range / nSpline;
+    double w_range = original_range / (nSpline + 1);
     double w_range2 = w_range * w_range;
     double w_range3 = w_range2 * w_range;
 //    double remaining = original_range - w_range * nSpline;
@@ -151,6 +151,7 @@ public class AngularSplineCalibration extends AngularCalibration {
         range_id++;
         startX = endX;
         endX = getEndX(range_id, w_range);
+//	      System.out.println(range_id + " " + startX + " " + endX);
         if (range_id == 0) {
           startX = datafile.getXDataForCalibration(0);
           d = difc[0];
@@ -164,7 +165,10 @@ public class AngularSplineCalibration extends AngularCalibration {
           d = a * deltaX3 + b * deltaX2 + c * deltaX + d;
           c = 3 * a * deltaX2 + 2 * b * deltaX + c;
           b = 3 * a * deltaX + b;
-          a = difc[range_id + 3] / w_range3;
+	        if (range_id >= numberCoeff - 3)
+		        a = 0;
+	        else
+            a = difc[range_id + 3] / w_range3;
         }
       }
       double delta = value - startX;
@@ -200,7 +204,7 @@ public class AngularSplineCalibration extends AngularCalibration {
   }*/
 
   double getEndX(int i, double w_range) {
-    return (i + 1) * w_range;
+    return w_range * (i + 1);
   }
 
   public double notCalibrated(DiffrDataFile datafile, double x) {

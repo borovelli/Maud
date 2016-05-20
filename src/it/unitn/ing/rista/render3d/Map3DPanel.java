@@ -75,7 +75,7 @@ public class Map3DPanel extends JPanel {
 
     setLayout(new BorderLayout());
 
-    if (Constants.OpenGL) {
+/*    if (Constants.OpenGL) {
       try {
         canvasStruct3d = new MapRendering3Dgl(odf, alphaSlices, betaSlices, gammaSlices,
                          drawmode, resolution, logScale, colrsNumber);
@@ -90,11 +90,11 @@ public class Map3DPanel extends JPanel {
                          drawmode, resolution, logScale, colrsNumber);
         add((Component) canvasStruct3d, BorderLayout.CENTER);
       }
-    } else {
+    } else {*/
       canvasStruct3d = new MapRendering3Djgl(odf, alphaSlices, betaSlices, gammaSlices,
                          drawmode, resolution, logScale, colrsNumber);
       add((Component) canvasStruct3d, BorderLayout.CENTER);
-    }
+//    }
 
     // canvas.setSize(new Dimension(300, 300));
     add(panel3DButtons = new JPanel(), BorderLayout.SOUTH);

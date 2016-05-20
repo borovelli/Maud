@@ -46,8 +46,8 @@ import java.util.Vector;
 
 public class SampleShapeIntegral extends SampleShape implements Shape3D, SimpleFunction {
 
-  public static int Ndivision = MaudPreferences.getInteger("SampleShapeIntegral.integralDivisions", 8);
-  public static int maxCount = MaudPreferences.getInteger("SampleShapeIntegral.maxCount", 500);
+  public static int Ndivision = MaudPreferences.getInteger("sampleShapeIntegral.integralDivisions", 8);
+  public static int maxCount = MaudPreferences.getInteger("sampleShapeIntegral.maxCount", 500);
 
   protected static String[] diclistc = {
     "_rita_sample_symmetry", "_rita_harmonic_expansion_degree", "_rita_shape_abs_velocity_corr",
@@ -134,7 +134,7 @@ public class SampleShapeIntegral extends SampleShape implements Shape3D, SimpleF
   public void initParameters() {
     super.initParameters();
     stringField[2] = "false";
-    stringField[3] = MaudPreferences.getPref("SampleShapeIntegral.integralDivisions", "10");
+    stringField[3] = MaudPreferences.getPref("sampleShapeIntegral.integralDivisions", "10");
     setSampleSymmetry(0);
     setHarmonicExpansion(4);
     parameterField[3].setValue("0.3");
@@ -492,8 +492,8 @@ public class SampleShapeIntegral extends SampleShape implements Shape3D, SimpleF
   protected void prepareFiniteElementsDescription() {
     updateStringtoDoubleBuffering(false); // update meanSize
     step = getMeanShape() / Ndivision;
-    step10 = step * MaudPreferences.getDouble("SampleShapeIntegral.speedCheckBorder", 0.001);
-    step4 = step * MaudPreferences.getDouble("SampleShapeIntegral.emptyBorderFactor", 0.2);
+    step10 = step * MaudPreferences.getDouble("sampleShapeIntegral.speedCheckBorder", 0.001);
+    step4 = step * MaudPreferences.getDouble("sampleShapeIntegral.emptyBorderFactor", 0.2);
     Vector elementList = new Vector(300, 100);
     boolean addition = addElement(elementList, 0, 0, 0);
     int N = 1;
@@ -577,7 +577,7 @@ public class SampleShapeIntegral extends SampleShape implements Shape3D, SimpleF
 //    System.out.println(incidentAndDiffraction_angles[0][0] + " " + incidentAndDiffraction_angles[0][1]);
 //    System.out.println(incidentAndDiffraction_angles[0][2] + " " + incidentAndDiffraction_angles[0][3]);
 //    System.out.println(incidentAndDiffraction_angles[0][4] + " " + incidentAndDiffraction_angles[0][5]);
-    int iterations = MaudPreferences.getInteger("SampleShapeIntegral.iterationsNumber", 15);
+    int iterations = MaudPreferences.getInteger("sampleShapeIntegral.iterationsNumber", 15);
     LeastSquareFit solver = new LeastSquareFit(this, iterations);
     solver.outputEnabled = false;
     solver.setPrecision(0.000001);

@@ -154,5 +154,4 @@ public class GeometryXRFInstrument extends GeometryBraggBrentano {
 
 		return lp * 0.1;
 	}
-
 }

@@ -161,9 +161,9 @@ public class MultiSpectraFromReflectionFlatCCD extends OvalSpectraSelection {
             "camera.defaultHeight", 100.0), 2);*/
     if (prop != null && prop.containsKey(BrukerImageReader.brukerImage)) {
     param.addNumericField("Eta step for spectra (deg)", MaudPreferences.getDouble(
-            "BrukerImage.defaultDiffractionConeInterval", 5.0), 2);
+            "brukerImage.defaultDiffractionConeInterval", 5.0), 2);
     param.addNumericField("2theta step for spectra (deg)", MaudPreferences.getDouble(
-            "BrukerImage.defaultDiffractionStepAngle", 0.02), 4);
+            "brukerImage.defaultDiffractionStepAngle", 0.02), 4);
     } else {
       param.addNumericField("Eta step for spectra (deg)", MaudPreferences.getDouble(
               "pixelDetector.defaultDiffractionConeInterval", 5.0), 2);
@@ -219,8 +219,8 @@ public class MultiSpectraFromReflectionFlatCCD extends OvalSpectraSelection {
       MaudPreferences.setPref("pixelDetector.trackerRadius", diameter);
 //      MaudPreferences.setPref("camera.defaultHeight", cameraHeight);
       if (prop != null && prop.containsKey(BrukerImageReader.brukerImage)) {
-        MaudPreferences.setPref("BrukerImage.defaultDiffractionConeInterval", coneAngleStep);
-        MaudPreferences.setPref("BrukerImage.defaultDiffractionStepAngle", theta2AngleStep);
+        MaudPreferences.setPref("brukerImage.defaultDiffractionConeInterval", coneAngleStep);
+        MaudPreferences.setPref("brukerImage.defaultDiffractionStepAngle", theta2AngleStep);
       } else {
         MaudPreferences.setPref("pixelDetector.defaultDiffractionConeInterval", coneAngleStep);
         MaudPreferences.setPref("pixelDetector.defaultDiffractionStepAngle", theta2AngleStep);
@@ -334,8 +334,8 @@ public class MultiSpectraFromReflectionFlatCCD extends OvalSpectraSelection {
 //      MaudPreferences.setPref("camera.defaultHeight", cameraHeight);
         Properties prop = imp.getProperties();
         if (prop != null && prop.containsKey(BrukerImageReader.brukerImage)) {
-        MaudPreferences.setPref("BrukerImage.defaultDiffractionConeInterval", coneAngleStep);
-        MaudPreferences.setPref("BrukerImage.defaultDiffractionStepAngle", theta2AngleStep);
+        MaudPreferences.setPref("brukerImage.defaultDiffractionConeInterval", coneAngleStep);
+        MaudPreferences.setPref("brukerImage.defaultDiffractionStepAngle", theta2AngleStep);
         } else {
         MaudPreferences.setPref("pixelDetector.defaultDiffractionConeInterval", coneAngleStep);
         MaudPreferences.setPref("pixelDetector.defaultDiffractionStepAngle", theta2AngleStep);

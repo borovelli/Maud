@@ -14,16 +14,20 @@ public class Spacegroup {
 	public String schoenflies;
 	public String centering_type;
 	public String symmetry;
+	public boolean centrosymmetric;
+	public int laueGroup;
+	public int pointGroup;
 
 	public Vector<Symop> symops = new Vector<Symop>();
 
-	public Spacegroup(int n, String sf, String hm, String h, String c, String sym) {
+	public Spacegroup(int n, String sf, String hm, String h, String c, String sym, boolean cs) {
 		number = n;
 		schoenflies = sf;
 		hermann_mauguin = hm;
 		hall = h;
 		centering_type = c;
 		symmetry = sym;
+		centrosymmetric = cs;
 	}
 
 	public void setHermann_mauguin(String hermann_mauguinSymbol) {

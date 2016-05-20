@@ -1,7 +1,6 @@
 package it.unitn.ing.esqui.client;
 
 import it.unitn.ing.rista.awt.myJFrame;
-import it.unitn.ing.rista.util.Misc;
 
 import java.awt.*;
 import java.awt.event.*;

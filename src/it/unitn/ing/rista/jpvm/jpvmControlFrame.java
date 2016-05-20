@@ -254,9 +254,12 @@ public class jpvmControlFrame extends myJFrame {
       }
     }
     textArea.setText(sbuffer.toString());
-    JScrollBar scrollBar = scrollarea.getVerticalScrollBar();
-    if (scrollBar != null)
-      scrollBar.setValue(scrollBar.getMinimum());
+    if (scrollarea.getVerticalScrollBar() != null)
+	    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+		    public void run() {
+			    scrollarea.getVerticalScrollBar().setValue(0);
+		    }
+	    });
   }
 
   public void addHost() {

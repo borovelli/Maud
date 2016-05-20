@@ -173,6 +173,16 @@ public class RadiationType extends XRDcat {
 		return getRadiationWavelength(index);
 	}
 
+	public double getShortestWavelengthForFluorescence() {
+		double shortestWave = getRadiationWavelengthForFluorescence(0);
+		for (int i = 1; i < getLinesCount(); i++) {
+			double wave = getRadiationWavelengthForFluorescence(i);
+			if (wave < shortestWave)
+				shortestWave = wave;
+		}
+		return shortestWave;
+	}
+
 	public double getRadiationWeightForFluorescence(int index) {
 		return getRadiationWeigth(index);
 	}

@@ -118,8 +118,8 @@ public class TDSWarren extends TDSModel {
 
   public void updateStringtoDoubleBuffering(boolean firstLoading) {
     super.updateStringtoDoubleBuffering(false);
-    relaxation_factor = MaudPreferences.getDouble("TDSLogFunction.relaxationFactor", 0.01);
-    useFhkl = MaudPreferences.getBoolean("TDSFunction.useFhkl", false);
+    relaxation_factor = MaudPreferences.getDouble("tdsLogFunction.relaxationFactor", 0.01);
+    useFhkl = MaudPreferences.getBoolean("tdsFunction.useFhkl", false);
   }
 
   public void updateParametertoDoubleBuffering(boolean firstLoading) {

@@ -661,6 +661,7 @@ public class Layer extends XRDcat {
       absorption = (double[]) layerAbsorption.get(rad);
     else {
       absorption[0] = getThicknessValue() * getAbsorption(rad);
+//	    System.out.println(getThicknessValue() + " ----- " + getAbsorption(rad));
       layerAbsorption.put(rad, absorption);
     }
     return absorption[0];
@@ -857,7 +858,7 @@ public class Layer extends XRDcat {
 		// to be implemented by subclasses
 		Vector<AtomQuantity> composition = getChemicalComposition();
 		printLine(out, "       Atom   fractions");
-		printLine(out, "n  label  atom  fraction(at)  fraction(at)");
+		printLine(out, "n  label  atom  fraction(at)  fraction(wt)");
 		for (int i1 = 0; i1 < composition.size(); i1++)
 			printLine(out, (i1 + 1) + ") " + composition.elementAt(i1).label
 					+ " " + composition.elementAt(i1).quantity  + " " + composition.elementAt(i1).quantity_weight);

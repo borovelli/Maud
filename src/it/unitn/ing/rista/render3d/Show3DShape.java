@@ -69,7 +69,7 @@ public class Show3DShape extends JPanel {
 
     setLayout(new BorderLayout());
 
-    if (Constants.OpenGL) {
+/*    if (Constants.OpenGL) {
       try {
         canvasStruct3d = new Crystallite3Dgl(crystalliteShape, drawmode, resolution, scaleplot);
         GLProfile glp = GLProfile.getDefault();
@@ -82,10 +82,10 @@ public class Show3DShape extends JPanel {
         canvasStruct3d = new Crystallite3Djgl(crystalliteShape, drawmode, resolution, scaleplot);
         add((Component) canvasStruct3d, BorderLayout.CENTER);
       }
-    } else {
+    } else {*/
       canvasStruct3d = new Crystallite3Djgl(crystalliteShape, drawmode, resolution, scaleplot);
       add((Component) canvasStruct3d, BorderLayout.CENTER);
-    }
+ //   }
 
     // canvas.setSize(new Dimension(300, 300));
     add(panel3DButtons = new JPanel(), BorderLayout.SOUTH);

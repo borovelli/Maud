@@ -364,7 +364,7 @@ public class FullProfStructureModel extends StructureFactorModel {
           output.newLine();
           output.write("!");
           output.newLine();
-          T_SgInfo sgInfo = aphase.getSgInfo();
+          T_SgInfo sgInfo = aphase.getPhaseInfo().SgInfo;
           String hallSymbol = sgInfo.getHallSymbolAsString();
           output.write("HALL " + hallSymbol + "                    <--Space group symbol");
           output.newLine();
@@ -377,7 +377,7 @@ public class FullProfStructureModel extends StructureFactorModel {
 //            double Za = aphase.getSitePositionNumber() / atom.getSiteMultiplicity();
 //            double Z = atom.getSiteMultiplicity() / Za;
             double occupancy = (atom.getOccupancy().getValueD() * atom.getSiteMultiplicity() /
-                aphase.getSitePositionNumber());
+		            aphase.getPhaseInfo().getSitePositionNumber());
             if (atom.useThisAtom && occupancy > 0) {
               double[] x = atom.getCoordinates(0);
               String oxidation = "";

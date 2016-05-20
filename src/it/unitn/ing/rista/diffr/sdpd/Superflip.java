@@ -283,10 +283,10 @@ public class Superflip extends StructureFactorSolveCrystalStructure {
           output.newLine();
           output.write("symmetry");
           output.newLine();
-          for (int i = 0; i < aphase.sitePositionv.size(); i++) {
-            output.write(changexyz((aphase.sitePositionv.elementAt(i)).getx()
-                + " " + (aphase.sitePositionv.elementAt(i)).gety()
-                + " " + (aphase.sitePositionv.elementAt(i)).getz()));
+          for (int i = 0; i < aphase.getPhaseInfo().getSitePositionNumber(); i++) {
+            output.write(changexyz((aphase.getPhaseInfo().getSitePosition(i)).getx()
+                + " " + (aphase.getPhaseInfo().getSitePosition(i)).gety()
+                + " " + (aphase.getPhaseInfo().getSitePosition(i)).getz()));
             output.newLine();
           }
           output.write("endsymmetry");
@@ -410,13 +410,13 @@ public class Superflip extends StructureFactorSolveCrystalStructure {
     Phase aphase = (Phase) getParent();
     int siteNumber = 1;
 //    if (useAllSites)
-    siteNumber = aphase.getSitePositionNumber();
+    siteNumber = aphase.getPhaseInfo().getSitePositionNumber();
     double factors = aphase.getActivePlanarDefects().getStructureFactorModifier(null);
     double[] divideFactors = aphase.getActivePlanarDefects().getDivisionFactors();
     double norm = Math.sqrt(factors) / (siteNumber * reducedCell[0] * reducedCell[1] * reducedCell[2]);
     SitePosition[] sitepos = new SitePosition[siteNumber];
     for (int i = 0; i < siteNumber; i++) {
-      sitepos[i] = aphase.sitePositionv.elementAt(i);
+      sitepos[i] = aphase.getPhaseInfo().getSitePosition(i);
     }
     double x[][] = new double[3][siteNumber], xf[] = new double[3];
 
@@ -719,7 +719,7 @@ public class Superflip extends StructureFactorSolveCrystalStructure {
     Phase aphase = (Phase) getParent();
     int siteNumber = 1;
 //    if (useAllSites)
-    siteNumber = aphase.getSitePositionNumber();
+    siteNumber = aphase.getPhaseInfo().getSitePositionNumber();
     double norm = 1.0;// / (siteNumber * reducedCell[0] * reducedCell[1] * reducedCell[2]);
     int index = 0;
     double totalMap = 0.0;
@@ -736,10 +736,10 @@ public class Superflip extends StructureFactorSolveCrystalStructure {
 
     System.out.println("Normalization factor: " + Fmt.format(norm) + ", total: "
         + totalMap);
-//    useAllSites = MaudPreferences.getBoolean("MEMmap.useAllSites", false);
+//    useAllSites = MaudPreferences.getBoolean("meemMap.useAllSites", false);
 //    if (reducedCell[0] != 1.0 || reducedCell[1] != 1.0 || reducedCell[2] != 1.0)
 //      useAllSites = true;
-//    useequivalentReflections = MaudPreferences.getBoolean("MEMmap.useMultipleReflections", false);
+//    useequivalentReflections = MaudPreferences.getBoolean("meemMap.useMultipleReflections", false);
 
   }
 
@@ -764,10 +764,10 @@ public class Superflip extends StructureFactorSolveCrystalStructure {
 
 //    System.out.println("Normalization factor: " + Fmt.format(norm) + ", total: "
 //        + totalMap);
-//    useAllSites = MaudPreferences.getBoolean("MEMmap.useAllSites", false);
+//    useAllSites = MaudPreferences.getBoolean("meemMap.useAllSites", false);
 //    if (reducedCell[0] != 1.0 || reducedCell[1] != 1.0 || reducedCell[2] != 1.0)
 //      useAllSites = true;
-//    useequivalentReflections = MaudPreferences.getBoolean("MEMmap.useMultipleReflections", false);
+//    useequivalentReflections = MaudPreferences.getBoolean("meemMap.useMultipleReflections", false);
 
   }*/
 
@@ -794,10 +794,10 @@ public class Superflip extends StructureFactorSolveCrystalStructure {
 
     numberOfParameters = computeParameterNumber();
 //		totalWeight = new double[numberOfParameters];
-//    useAllSites = MaudPreferences.getBoolean("MEMmap.useAllSites", false);
+//    useAllSites = MaudPreferences.getBoolean("meemMap.useAllSites", false);
 //    if (reducedCell[0] != 1.0 || reducedCell[1] != 1.0 || reducedCell[2] != 1.0)
 //      useAllSites = true;
-//    useequivalentReflections = MaudPreferences.getBoolean("MEMmap.useMultipleReflections", false);
+//    useequivalentReflections = MaudPreferences.getBoolean("meemMap.useMultipleReflections", false);
 
   }
 

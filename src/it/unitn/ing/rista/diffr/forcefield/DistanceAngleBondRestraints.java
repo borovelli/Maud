@@ -102,7 +102,7 @@ public class DistanceAngleBondRestraints extends ForceField {
 
   public void initParameters() {
     super.initParameters();
-    setMaximumDistance(MaudPreferences.getPref("Angle&BondRestraint.maximumDistance", "2.0"));
+    setMaximumDistance(MaudPreferences.getPref("angle&BondRestraint.maximumDistance", "2.0"));
   }
 
   public void setMaximumDistance(String s) {

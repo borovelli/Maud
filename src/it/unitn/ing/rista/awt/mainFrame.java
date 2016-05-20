@@ -250,7 +250,7 @@ public class mainFrame extends principalJFrame {
     pcontrol.increaseValue();
 
     String[] iconTB = {"New.gif", "OpenDoc.gif", "Redo.gif", "Save.gif", "SaveAll.gif",
-                       "Bulb.gif", "Calculator.gif", "Hammer.gif",
+                       "Bulb.gif", "Calculator.gif", "slot_machine_20.gif",
                        "LineGraph.gif",
                        "Help.gif"};
     String[] tbToolTipText = {"New Analysis: load the default analysis file",
@@ -260,7 +260,7 @@ public class mainFrame extends principalJFrame {
                               "Save current analysis as...",
                               "Open refine wizard panel",
                               "Compute spectra",
-                              "Launch parameters refinement (refine)",
+                              "Launch parameters refinement (I feel lucky!)",
                               "Plot selected dataset",
                               "General help for the MAUD program"
     };
@@ -576,10 +576,10 @@ public class mainFrame extends principalJFrame {
     // add object from CIF database.
     int index = getVisibleTabPanelIndex();
     String filename = Utility.openFileDialog(this, "Open CIF file or database", FileDialog.LOAD,
-        (String) MaudPreferences.getPref(MaudPreferences.databasePath),
-        null, Constants.filesfolder + FilePar.database[index]);
+        (String) MaudPreferences.getPref(databasePath, Constants.documentsDirectory),
+        null, Constants.documentsDirectory + FilePar.database[index]);
     final String[] folderAndName = Misc.getFolderandName(filename);
-    MaudPreferences.setPref(MaudPreferences.databasePath, folderAndName[0]);
+    MaudPreferences.setPref(databasePath, folderAndName[0]);
     parameterfile.loadObject(index, folderAndName[0] + folderAndName[1]);
   }
 
@@ -617,11 +617,11 @@ public class mainFrame extends principalJFrame {
     }
 
     String filename = Utility.openFileDialog(this, "Select the CIF database", FileDialog.LOAD,
-        (String) MaudPreferences.getPref(MaudPreferences.databasePath),
-        null, Constants.filesfolder + FilePar.database[index]);
+        MaudPreferences.getPref(databasePath, Constants.documentsDirectory),
+        null, Constants.documentsDirectory + FilePar.database[index]);
     if (filename != null) {
       String[] folderAndName = Misc.getFolderandName(filename);
-      MaudPreferences.setPref(MaudPreferences.databasePath, folderAndName[0]);
+      MaudPreferences.setPref(databasePath, folderAndName[0]);
       aobject.storeOnDB(folderAndName[0] + folderAndName[1]);
     }
 

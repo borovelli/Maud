@@ -1260,7 +1260,7 @@ C
                                                               double etamin, double etamax, double etastep) {
 
 // System.out.println(theta2min + " " + theta2max + " " + theta2step + " " + etamin + " " + etamax + " " + etastep + " ");
-	  double correctionExponent = MaudPreferences.getDouble("Image2D.exponentCorrectionValue", 0.0);
+	  double correctionExponent = MaudPreferences.getDouble("image2D.exponentCorrectionValue", 0.0);
     int spectrumPointsNumber = (int) ((theta2max - theta2min) / theta2step) + 1;
     int spectraNumber = (int) ((etamax - etamin) / etastep) + 1;
     double[][][] spectra = new double[3][spectraNumber][spectrumPointsNumber];
@@ -1451,7 +1451,7 @@ C
 	  double radius = 1.0;
 	  double denominator = 1.0 / (detectorDistance * detectorDistance);
 //	  boolean applyCorrection = MaudPreferences.getBoolean("image2D.applyDistanceCorrectionToIntensities", true);
-	  double correctionExponent = MaudPreferences.getDouble("image2D.exponentCorrectionValue", 0.5);
+	  double correctionExponent = MaudPreferences.getDouble("image2D.exponentCorrectionValue", 0.0);
     for (int i = 0; i < x.length; i++) {
 	    for (int j = 0; j < y.length; j++) {
 		    int itheta = (int) ((theta2[index] - theta2min) / theta2step + 0.5);

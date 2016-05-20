@@ -1,31 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- Ant makefile for Maud -->
 
-<project name="Maud" default="run_full" basedir=".">
+<project name="Maud" default="copy_full" basedir=".">
 
 	<property name="src" location="src"/>
     <property name="web" location="src/web"/>
 	<property name="inst" location="Installers"/>
-	<property name="build" location="build/build.ant"/>
+	<property name="build" location="${user.home}/Library/Developer/Maud/build"/>
+    <property name="build_ant" location="${build}/build.ant"/>
 	<property name="libs" location="libs"/>
 	<property name="script" location="script_files/macosx"/>
 	<property name="buildnumber" location="build_numbers"/>
-	<property name="keystore" value="build/myKeystore" />
-	<property name="keypasswd" value="rtamaud1" />
+	<!--property name="keystore" value="${build}/myKeystore" />
+	<property name="keypasswd" value="rtamaud1" /-->
 	<property name="myself" value="myself" />
 	<property file="${user.home}/.ant_maud.properties"/>
-    <property name="java_version" value="1.6" />
+    <property name="java_version" value="1.7" />
+    <property name="bundle.icon" value="maud.icns"/>
+    <property name="application_OSX.title" value="Maud.app"/>
 
 
     <target name="clean" description="Delete the build files.">
-    <delete dir="${build}" />
+    <delete dir="${build_ant}" />
   </target>
 
   <target name="clean_maud" description="Delete the build files.">
-    <delete dir="${build}" />
-    <delete file="build/Maud_dev.jar" />
-    <delete file="build/Maud_reduced.jar" />
-    <delete file="build/Maud_essential.jar" />
+    <delete dir="${build_ant}" />
+    <delete file="${build}/Maud_dev.jar" />
+    <delete file="${build}/Maud_reduced.jar" />
+    <delete file="${build}/Maud_essential.jar" />
   </target>
 
   <target name="encode_UTF8" depends="clean_maud" description="Encode source files in UTF-8">
@@ -35,14 +38,14 @@
 
   <target name="compile_open" depends="clean_maud" description="Compile Maud_dev.jar">
     <!-- First, ensure the build directory exists. -->
-    <delete dir="${build}" />
-    <delete file="build/Maud_dev.jar" />
-    <delete file="build/Maud_reduced.jar" />
-    <delete file="build/Maud_essential.jar" />
-    <mkdir dir="build" />
+    <delete dir="${build_ant}" />
+    <delete file="${build}/Maud_dev.jar" />
+    <delete file="${build}/Maud_reduced.jar" />
+    <delete file="${build}/Maud_essential.jar" />
     <mkdir dir="${build}" />
+    <mkdir dir="${build_ant}" />
     <!-- Build everything -->
-    <javac destdir="${build}" debug="on" target="${java_version}" encoding="UTF-8" >
+    <javac destdir="${build_ant}" debug="on" target="${java_version}" encoding="UTF-8" >
     	<src path="${src}" />
       <!--exclude name="it/unitn/ing/jsginfo/**" /-->
       <!--exclude name="it/unitn/ing/jgraph/**" /-->
@@ -53,7 +56,8 @@
       <exclude name="it/unitn/ing/esqui/wizard/AnalysisMeasurementWizard.java" />
       <exclude name="it/unitn/ing/esqui/wizard/WizardFrame.java" />
       <exclude name="it/unitn/ing/rista/mdyn/**" />
-      <!--exclude name="it/unitn/ing/rista/MaudApp.java" /-->
+      <exclude name="it/unitn/ing/rista/MaudApp.java" />
+        <exclude name="it/unitn/ing/rista/MaudetteApp.java" />
       <!--exclude name="com/hypernex/analysis/rietveld/PhotoplateSpectraIntegration.java" /-->
       <exclude name="it/unitn/ing/rista/awt/MaudAppMacOSFrame.java" />
       <exclude name="it/unitn/ing/rista/awt/MRJInterface.java" />
@@ -109,34 +113,33 @@
           <pathelement location="libs/current/EsquiClient.jar"/>
         <pathelement location="libs/current/nativewindow.all.jar"/>
         <pathelement location="libs/current/newt.all.jar"/>
-        <pathelement location="libs/current/gluegen-rt.jar"/>
 				<pathelement location="libs/current/miscLib.jar"/>
 				<pathelement location="libs/current/jgaec.jar"/>
         <pathelement location="libs/current/jgap.jar"/>
         <pathelement location="libs/current/jmol.jar"/>
-				<!--pathelement location="build/jnlp.jar"/-->
+				<!--pathelement location="${build}/jnlp.jar"/-->
 				<pathelement location="libs/current/ij.jar"/>
-				<!--pathelement location="build/jspline.jar"/>
-				<pathelement location="build/JNIAltivec.jar"/-->
+				<!--pathelement location="${build}/jspline.jar"/>
+				<pathelement location="${build}/JNIAltivec.jar"/-->
 				<pathelement location="libs/current/HTTPClient.jar"/>
 				<pathelement location="libs/current/jdom.jar"/>
 				<pathelement location="libs/current/rome.jar"/>
 				<pathelement location="libs/current/MySQL-ConnectorJ.jar"/>
         <pathelement location="libs/current/xgridlib.jar"/>
-				<!--pathelement location="build/capsapi_classes.zip"/>
-				<pathelement location="build/Apple_ui.jar"/-->
+				<!--pathelement location="${build}/capsapi_classes.zip"/>
+				<pathelement location="${build}/Apple_ui.jar"/-->
         <pathelement location="libs/current/aparapi.jar"/>
         <pathelement location="libs/current/joone-engine.jar"/>
         <pathelement location="libs/current/swingx.jar"/>
-        <!--pathelement location="build/jdic.jar"/>
-        <pathelement location="build/jhdf.jar"/>
-        <pathelement location="build/jhdf4obj.jar"/>
-        <pathelement location="build/jhdf5.jar"/>
-        <pathelement location="build/jhdf5obj.jar"/>
-        <pathelement location="build/jhdfobj.jar"/>
-        <pathelement location="build/quaqua.jar"/>
-        <pathelement location="build/nova/TestManager.jar"/>
-        <pathelement location="build/nova/NeuralWorks.jar"/-->
+        <!--pathelement location="${build}/jdic.jar"/>
+        <pathelement location="${build}/jhdf.jar"/>
+        <pathelement location="${build}/jhdf4obj.jar"/>
+        <pathelement location="${build}/jhdf5.jar"/>
+        <pathelement location="${build}/jhdf5obj.jar"/>
+        <pathelement location="${build}/jhdfobj.jar"/>
+        <pathelement location="${build}/quaqua.jar"/>
+        <pathelement location="${build}/nova/TestManager.jar"/>
+        <pathelement location="${build}/nova/NeuralWorks.jar"/-->
         <pathelement location="/System/Library/java"/>
 			</classpath>
     </javac>
@@ -146,14 +149,14 @@
 
   <target name="compile_full" depends="clean_maud" description="Compile all classes">
       <!-- First, ensure the build directory exists. -->
-      <delete dir="${build}" />
-      <delete file="build/Maud_dev.jar" />
-      <delete file="build/Maud_reduced.jar" />
-      <delete file="build/Maud_essential.jar" />
+      <delete dir="${build_ant}" />
+      <delete file="${build}/Maud_dev.jar" />
+      <delete file="${build}/Maud_reduced.jar" />
+      <delete file="${build}/Maud_essential.jar" />
       <mkdir dir="build" />
-      <mkdir dir="${build}" />
+      <mkdir dir="${build_ant}" />
       <!-- Build everything -->
-      <javac destdir="${build}" debug="on" target="${java_version}" encoding="UTF-8" >
+      <javac destdir="${build_ant}" debug="on" target="${java_version}" encoding="UTF-8" >
           <src path="${src}" />
           <!--exclude name="it/unitn/ing/jsginfo/**" /-->
           <!--exclude name="it/unitn/ing/jgraph/**" /-->
@@ -216,34 +219,33 @@
               <pathelement location="libs/current/EsquiClient.jar"/>
               <pathelement location="libs/current/nativewindow.all.jar"/>
               <pathelement location="libs/current/newt.all.jar"/>
-              <pathelement location="libs/current/gluegen-rt.jar"/>
               <pathelement location="libs/current/miscLib.jar"/>
               <pathelement location="libs/current/jgaec.jar"/>
               <pathelement location="libs/current/jgap.jar"/>
               <pathelement location="libs/current/jmol.jar"/>
-              <!--pathelement location="build/jnlp.jar"/-->
+              <!--pathelement location="${build}/jnlp.jar"/-->
               <pathelement location="libs/current/ij.jar"/>
-              <!--pathelement location="build/jspline.jar"/>
-              <pathelement location="build/JNIAltivec.jar"/-->
+              <!--pathelement location="${build}/jspline.jar"/>
+              <pathelement location="${build}/JNIAltivec.jar"/-->
               <pathelement location="libs/current/HTTPClient.jar"/>
               <pathelement location="libs/current/jdom.jar"/>
               <pathelement location="libs/current/rome.jar"/>
               <pathelement location="libs/current/MySQL-ConnectorJ.jar"/>
               <pathelement location="libs/current/xgridlib.jar"/>
-              <!--pathelement location="build/capsapi_classes.zip"/>
-              <pathelement location="build/Apple_ui.jar"/-->
+              <!--pathelement location="${build}/capsapi_classes.zip"/>
+              <pathelement location="${build}/Apple_ui.jar"/-->
               <pathelement location="libs/current/aparapi.jar"/>
               <pathelement location="libs/current/joone-engine.jar"/>
               <pathelement location="libs/current/swingx.jar"/>
-              <!--pathelement location="build/jdic.jar"/>
-              <pathelement location="build/jhdf.jar"/>
-              <pathelement location="build/jhdf4obj.jar"/>
-              <pathelement location="build/jhdf5.jar"/>
-              <pathelement location="build/jhdf5obj.jar"/>
-              <pathelement location="build/jhdfobj.jar"/>
-              <pathelement location="build/quaqua.jar"/>
-              <pathelement location="build/nova/TestManager.jar"/>
-              <pathelement location="build/nova/NeuralWorks.jar"/-->
+              <!--pathelement location="${build}/jdic.jar"/>
+              <pathelement location="${build}/jhdf.jar"/>
+              <pathelement location="${build}/jhdf4obj.jar"/>
+              <pathelement location="${build}/jhdf5.jar"/>
+              <pathelement location="${build}/jhdf5obj.jar"/>
+              <pathelement location="${build}/jhdfobj.jar"/>
+              <pathelement location="${build}/quaqua.jar"/>
+              <pathelement location="${build}/nova/TestManager.jar"/>
+              <pathelement location="${build}/nova/NeuralWorks.jar"/-->
               <pathelement location="/System/Library/java"/>
           </classpath>
       </javac>
@@ -253,249 +255,249 @@
 
   <target name="build_full" depends="compile_open" description="Build Maud.jar.">
     <!-- Copy needed files into the build directory. -->
-    <delete dir="${build}/ec" />
-    <delete dir="${build}/it/unitn/ing/esqui/client" />
-    <!--delete dir="${build}/it/unitn/ing/fortran" />
-    <delete dir="${build}/it/unitn/ing/jgraph" /-->
-    <!--delete dir="${build}/it/unitn/ing/jsginfo" /-->
-    <delete dir="${build}/HTTPClient" />
-    <copy file="${buildnumber}/Maud_full_build.number" todir="${build}" />
-    <copy file="${src}/ij/IJ_Props.txt" todir="${build}" />
-    <mkdir dir="${build}/files" />
-    <copy file="${src}/files/classnames.ins" todir="${build}/files" />
-    <copy file="${src}/files/atominfo.cif" todir="${build}/files" />
-    <copy file="${src}/files/default.par" todir="${build}/files" />
-    <copy file="${src}/files/marker.txt" todir="${build}/files" />
-    <copy file="${src}/files/Properties.3D" todir="${build}/files" />
-    <copy file="${src}/files/CWWARRAY.DAT" todir="${build}/files" />
-    <copy file="${src}/files/IADARRAY.DAT" todir="${build}/files" />
-    <copy file="${src}/files/ElamDB12.txt" todir="${build}/files" />
-    <copy file="${src}/files/ElectronScatteringFactors.txt" todir="${build}/files" />
-    <copy file="${src}/files/asf_Kissel.dat" todir="${build}/files" />
-    <copy file="${src}/files/integratedBessel.dat" todir="${build}/files" />
-    <copy file="${src}/files/ScatteringLengths.txt" todir="${build}/files" />
-    <copy file="${src}/files/CrossSection.dat" todir="${build}/files" />
-    <mkdir dir="${build}/media" />
-    <mkdir dir="${build}/media/music" />
-    <mkdir dir="${build}/media/music/samples" />
-    <copy file="media/music/samples/MO1.au" todir="${build}/media/music/samples" />
-    <copy file="media/music/samples/MO2.au" todir="${build}/media/music/samples" />
-    <copy file="media/music/samples/MO3.au" todir="${build}/media/music/samples" />
-    <copy file="${src}/it/unitn/ing/wizard/wizard.properties" todir="${build}/it/unitn/ing/wizard" />
-    <copy file="${src}/it/unitn/ing/wizard/backIcon.gif" todir="${build}/it/unitn/ing/wizard" />
-    <copy file="${src}/it/unitn/ing/wizard/cancelIcon.gif" todir="${build}/it/unitn/ing/wizard" />
-    <copy file="${src}/it/unitn/ing/wizard/finishIcon.gif" todir="${build}/it/unitn/ing/wizard" />
-    <copy file="${src}/it/unitn/ing/wizard/nextIcon.gif" todir="${build}/it/unitn/ing/wizard" />
+    <delete dir="${build_ant}/ec" />
+    <delete dir="${build_ant}/it/unitn/ing/esqui/client" />
+    <!--delete dir="${build_ant}/it/unitn/ing/fortran" />
+    <delete dir="${build_ant}/it/unitn/ing/jgraph" /-->
+    <!--delete dir="${build_ant}/it/unitn/ing/jsginfo" /-->
+    <delete dir="${build_ant}/HTTPClient" />
+    <copy file="${buildnumber}/Maud_full_build.number" todir="${build_ant}" />
+    <copy file="${src}/ij/IJ_Props.txt" todir="${build_ant}" />
+    <mkdir dir="${build_ant}/files" />
+    <!--copy file="${src}/files/classnames.ins" todir="${build_ant}/files" /-->
+    <copy file="${src}/files/atominfo.cif" todir="${build_ant}/files" />
+    <copy file="${src}/files/default.par" todir="${build_ant}/files" />
+    <copy file="${src}/files/marker.txt" todir="${build_ant}/files" />
+    <copy file="${src}/files/Properties.3D" todir="${build_ant}/files" />
+    <copy file="${src}/files/CWWARRAY.DAT" todir="${build_ant}/files" />
+    <copy file="${src}/files/IADARRAY.DAT" todir="${build_ant}/files" />
+    <!--copy file="${src}/files/ElamDB12.txt" todir="${build_ant}/files" />
+    <copy file="${src}/files/ElectronScatteringFactors.txt" todir="${build_ant}/files" />
+    <copy file="${src}/files/asf_Kissel.dat" todir="${build_ant}/files" />
+    <copy file="${src}/files/integratedBessel.dat" todir="${build_ant}/files" />
+    <copy file="${src}/files/ScatteringLengths.txt" todir="${build_ant}/files" />
+    <copy file="${src}/files/CrossSection.dat" todir="${build_ant}/files" /-->
+    <mkdir dir="${build_ant}/media" />
+    <mkdir dir="${build_ant}/media/music" />
+    <mkdir dir="${build_ant}/media/music/samples" />
+    <copy file="media/music/samples/MO1.au" todir="${build_ant}/media/music/samples" />
+    <copy file="media/music/samples/MO2.au" todir="${build_ant}/media/music/samples" />
+    <copy file="media/music/samples/MO3.au" todir="${build_ant}/media/music/samples" />
+    <copy file="${src}/it/unitn/ing/wizard/wizard.properties" todir="${build_ant}/it/unitn/ing/wizard" />
+    <copy file="${src}/it/unitn/ing/wizard/backIcon.gif" todir="${build_ant}/it/unitn/ing/wizard" />
+    <copy file="${src}/it/unitn/ing/wizard/cancelIcon.gif" todir="${build_ant}/it/unitn/ing/wizard" />
+    <copy file="${src}/it/unitn/ing/wizard/finishIcon.gif" todir="${build_ant}/it/unitn/ing/wizard" />
+    <copy file="${src}/it/unitn/ing/wizard/nextIcon.gif" todir="${build_ant}/it/unitn/ing/wizard" />
     <!-- Build Maud.jar. -->
-    <jar jarfile="build/Maud_dev.jar" basedir="${build}">
+    <jar jarfile="${build}/Maud_dev.jar" basedir="${build_ant}">
       <!--exclude name="it/unitn/ing/rista/diffr/cal/AngularInclinedFlatImageCalibration.class" />
       <exclude name="it/unitn/ing/rista/diffr/geometry/GeometryInclinedImage.class" /-->
   		<manifest>
     		<attribute name="Built-By" value="${user.name}"/>
-      	<attribute name="Main-class" value="it.unitn.ing.rista.Maud"/>
+      	<attribute name="Main-class" value="com.radiographema.Maud"/>
   		</manifest>
     </jar>
   </target>
 
   <target name="jar_nova_classes" depends="compile_full" description="Build Maud.jar.">
-    <mkdir dir="${build}/nova" />
-    <mkdir dir="${build}/nova/ImageConversionOriginal/com/hypernex/analysis/rietveld" />
-    <copy file="${build}/com/hypernex/analysis/rietveld/PhotoplateSpectraIntegration.class" todir="${build}/nova/ImageConversionOriginal/com/hypernex/analysis/rietveld" />
-    <mkdir dir="${build}/nova/ImageConversionASCII/com/hypernex/analysis/rietveld" />
-    <copy file="${build}/com/hypernex/analysis/rietveld/PhotoplateSaveToASCII.class" todir="${build}/nova/ImageConversionASCII/com/hypernex/analysis/rietveld" />
-    <mkdir dir="${build}/nova/ImageConversionTest/com/hypernex/analysis/rietveld" />
-    <copy file="${build}/com/hypernex/analysis/rietveld/PhotoplateConversionToASCII.class" todir="${build}/nova/ImageConversionTest/com/hypernex/analysis/rietveld" />
-    <mkdir dir="${build}/nova/QuantitativeTextureAnalysis/com/hypernex/analysis/rietveld" />
-    <copy file="${build}/com/hypernex/analysis/rietveld/QuantitativeTextureAnalysis.class" todir="${build}/nova/QuantitativeTextureAnalysis/com/hypernex/analysis/rietveld" />
+    <mkdir dir="${build_ant}/nova" />
+    <mkdir dir="${build_ant}/nova/ImageConversionOriginal/com/hypernex/analysis/rietveld" />
+    <copy file="${build_ant}/com/hypernex/analysis/rietveld/PhotoplateSpectraIntegration.class" todir="${build_ant}/nova/ImageConversionOriginal/com/hypernex/analysis/rietveld" />
+    <mkdir dir="${build_ant}/nova/ImageConversionASCII/com/hypernex/analysis/rietveld" />
+    <copy file="${build_ant}/com/hypernex/analysis/rietveld/PhotoplateSaveToASCII.class" todir="${build_ant}/nova/ImageConversionASCII/com/hypernex/analysis/rietveld" />
+    <mkdir dir="${build_ant}/nova/ImageConversionTest/com/hypernex/analysis/rietveld" />
+    <copy file="${build_ant}/com/hypernex/analysis/rietveld/PhotoplateConversionToASCII.class" todir="${build_ant}/nova/ImageConversionTest/com/hypernex/analysis/rietveld" />
+    <mkdir dir="${build_ant}/nova/QuantitativeTextureAnalysis/com/hypernex/analysis/rietveld" />
+    <copy file="${build_ant}/com/hypernex/analysis/rietveld/QuantitativeTextureAnalysis.class" todir="${build_ant}/nova/QuantitativeTextureAnalysis/com/hypernex/analysis/rietveld" />
     <!-- Build Maud.jar. -->
-    <jar jarfile="${build}/nova/ImageConversionOriginal/ImageConversionOriginal.jar" basedir="${build}/nova/ImageConversionOriginal">
+    <jar jarfile="${build_ant}/nova/ImageConversionOriginal/ImageConversionOriginal.jar" basedir="${build_ant}/nova/ImageConversionOriginal">
   		<manifest>
     		<attribute name="Built-By" value="${user.name}"/>
-      	<attribute name="Main-class" value="it.unitn.ing.rista.Maud"/>
+      	<attribute name="Main-class" value="com.radiographema.Maud"/>
   		</manifest>
     </jar>
-    <jar jarfile="${build}/nova/ImageConversionASCII/ImageConversionASCII.jar" basedir="${build}/nova/ImageConversionASCII">
+    <jar jarfile="${build_ant}/nova/ImageConversionASCII/ImageConversionASCII.jar" basedir="${build_ant}/nova/ImageConversionASCII">
   		<manifest>
     		<attribute name="Built-By" value="${user.name}"/>
-      	<attribute name="Main-class" value="it.unitn.ing.rista.Maud"/>
+      	<attribute name="Main-class" value="com.radiographema.Maud"/>
   		</manifest>
     </jar>
-    <jar jarfile="${build}/nova/ImageConversionTest/ImageConversionTest.jar" basedir="${build}/nova/ImageConversionTest">
+    <jar jarfile="${build_ant}/nova/ImageConversionTest/ImageConversionTest.jar" basedir="${build_ant}/nova/ImageConversionTest">
   		<manifest>
     		<attribute name="Built-By" value="${user.name}"/>
-      	<attribute name="Main-class" value="it.unitn.ing.rista.Maud"/>
+      	<attribute name="Main-class" value="com.radiographema.Maud"/>
   		</manifest>
     </jar>
-    <jar jarfile="${build}/nova/QuantitativeTextureAnalysis/QuantitativeTextureAnalysis.jar" basedir="${build}/nova/QuantitativeTextureAnalysis">
+    <jar jarfile="${build_ant}/nova/QuantitativeTextureAnalysis/QuantitativeTextureAnalysis.jar" basedir="${build_ant}/nova/QuantitativeTextureAnalysis">
   		<manifest>
     		<attribute name="Built-By" value="${user.name}"/>
-      	<attribute name="Main-class" value="it.unitn.ing.rista.Maud"/>
+      	<attribute name="Main-class" value="com.radiographema.Maud"/>
   		</manifest>
     </jar>
     <delete file="${user.home}/Analysis/Analysis_07/nova/LargePhotoplateExample/analysis/QuantitaveTextureAnalysis/QuantitativeTextureAnalysis.jar" />
-     <copy file="${build}/nova/QuantitativeTextureAnalysis/QuantitativeTextureAnalysis.jar" todir="${user.home}/Analysis/Analysis_07/nova/LargePhotoplateExample/analysis/QuantitaveTextureAnalysis" />
+     <copy file="${build_ant}/nova/QuantitativeTextureAnalysis/QuantitativeTextureAnalysis.jar" todir="${user.home}/Analysis/Analysis_07/nova/LargePhotoplateExample/analysis/QuantitaveTextureAnalysis" />
    </target>
 
   <target name="jar_radiographema_plugins" depends="compile_full" description="Build radiographema.jar.">
-    <mkdir dir="${build}/radiographema" />
-    <mkdir dir="${build}/radiographema/plugins/it/unitn/ing/rista/diffr/cal" />
-    <copy file="${build}/it/unitn/ing/rista/diffr/cal/AngularInclinedFlatImageCalibration.class" todir="${build}/radiographema/plugins/it/unitn/ing/rista/diffr/cal" />
-    <copy file="${build}/it/unitn/ing/rista/diffr/cal/AngularInclinedFlatImageCalibration$JPolAngOptionsD.class" todir="${build}/radiographema/plugins/it/unitn/ing/rista/diffr/cal" />
-    <mkdir dir="${build}/radiographema/plugins/it/unitn/ing/rista/diffr/geometry" />
-    <copy file="${build}/it/unitn/ing/rista/diffr/geometry/GeometryInclinedImage.class" todir="${build}/radiographema/plugins/it/unitn/ing/rista/diffr/geometry" />
-    <!--mkdir dir="${build}/radiographema/plugins/com/nova/xrd" />
-    <copy file="${build}/com/nova/xrd/InstrumentBroadeningNova.class" todir="${build}/radiographema/plugins/com/nova/xrd" />
-    <copy file="${build}/com/nova/xrd/InstrumentBroadeningNova$JBankOptionsD.class" todir="${build}/radiographema/plugins/com/nova/xrd" / -->
+    <mkdir dir="${build_ant}/radiographema" />
+    <mkdir dir="${build_ant}/radiographema/plugins/it/unitn/ing/rista/diffr/cal" />
+    <copy file="${build_ant}/it/unitn/ing/rista/diffr/cal/AngularInclinedFlatImageCalibration.class" todir="${build_ant}/radiographema/plugins/it/unitn/ing/rista/diffr/cal" />
+    <copy file="${build_ant}/it/unitn/ing/rista/diffr/cal/AngularInclinedFlatImageCalibration$JPolAngOptionsD.class" todir="${build_ant}/radiographema/plugins/it/unitn/ing/rista/diffr/cal" />
+    <mkdir dir="${build_ant}/radiographema/plugins/it/unitn/ing/rista/diffr/geometry" />
+    <copy file="${build_ant}/it/unitn/ing/rista/diffr/geometry/GeometryInclinedImage.class" todir="${build_ant}/radiographema/plugins/it/unitn/ing/rista/diffr/geometry" />
+    <!--mkdir dir="${build_ant}/radiographema/plugins/com/nova/xrd" />
+    <copy file="${build_ant}/com/nova/xrd/InstrumentBroadeningNova.class" todir="${build_ant}/radiographema/plugins/com/nova/xrd" />
+    <copy file="${build_ant}/com/nova/xrd/InstrumentBroadeningNova$JBankOptionsD.class" todir="${build_ant}/radiographema/plugins/com/nova/xrd" / -->
     <!-- Build Maud.jar. -->
-    <jar jarfile="${build}/radiographema/plugins/radiographema.jar" basedir="${build}/radiographema/plugins">
+    <jar jarfile="${build_ant}/radiographema/plugins/radiographema.jar" basedir="${build_ant}/radiographema/plugins">
   		<manifest>
     		<attribute name="Built-By" value="${user.name}"/>
   		</manifest>
     </jar>
     <!--delete file="${user.home}/Analysis/Analysis_07/nova/LargePhotoplateExample/bin/plugins/radiographema.jar" /!-->
-     <!--copy file="${build}/radiographema/plugins/radiographema.jar" todir="${user.home}/Analysis/Analysis_07/nova/LargePhotoplateExample/bin/plugins" /!-->
-    <copy file="${build}/radiographema/plugins/radiographema.jar" todir="${mirrorfulldir2}/plugins" />
+     <!--copy file="${build_ant}/radiographema/plugins/radiographema.jar" todir="${user.home}/Analysis/Analysis_07/nova/LargePhotoplateExample/bin/plugins" /!-->
+    <copy file="${build_ant}/radiographema/plugins/radiographema.jar" todir="${mirrorfulldir2}/plugins" />
    </target>
 
   <target name="jar_zurich_eth_plugins" depends="compile_full" description="Build sdpdETH.jar.">
-    <mkdir dir="${build}/ethZurich" />
-    <mkdir dir="${build}/ethZurich/plugins/it/unitn/ing/rista/diffr/sdpd" />
-    <copy file="${build}/it/unitn/ing/rista/diffr/sdpd/Superflip.class" todir="${build}/ethZurich/plugins/it/unitn/ing/rista/diffr/sdpd" />
-    <copy file="${build}/it/unitn/ing/rista/diffr/sdpd/Superflip$JSFSDPDOptionsD.class" todir="${build}/ethZurich/plugins/it/unitn/ing/rista/diffr/sdpd" />
-    <copy file="${build}/it/unitn/ing/rista/diffr/sdpd/Superflip$JSFSDPDOptionsD$1.class" todir="${build}/ethZurich/plugins/it/unitn/ing/rista/diffr/sdpd" />
-    <copy file="${build}/it/unitn/ing/rista/diffr/sdpd/Superflip$JSFSDPDOptionsD$2.class" todir="${build}/ethZurich/plugins/it/unitn/ing/rista/diffr/sdpd" />
-    <copy file="${build}/it/unitn/ing/rista/diffr/sdpd/Superflip$JSFSDPDOptionsD$3.class" todir="${build}/ethZurich/plugins/it/unitn/ing/rista/diffr/sdpd" />
-    <copy file="${build}/it/unitn/ing/rista/diffr/sdpd/Superflip$JSFSDPDOptionsD$4.class" todir="${build}/ethZurich/plugins/it/unitn/ing/rista/diffr/sdpd" />
+    <mkdir dir="${build_ant}/ethZurich" />
+    <mkdir dir="${build_ant}/ethZurich/plugins/it/unitn/ing/rista/diffr/sdpd" />
+    <copy file="${build_ant}/it/unitn/ing/rista/diffr/sdpd/Superflip.class" todir="${build_ant}/ethZurich/plugins/it/unitn/ing/rista/diffr/sdpd" />
+    <copy file="${build_ant}/it/unitn/ing/rista/diffr/sdpd/Superflip$JSFSDPDOptionsD.class" todir="${build_ant}/ethZurich/plugins/it/unitn/ing/rista/diffr/sdpd" />
+    <copy file="${build_ant}/it/unitn/ing/rista/diffr/sdpd/Superflip$JSFSDPDOptionsD$1.class" todir="${build_ant}/ethZurich/plugins/it/unitn/ing/rista/diffr/sdpd" />
+    <copy file="${build_ant}/it/unitn/ing/rista/diffr/sdpd/Superflip$JSFSDPDOptionsD$2.class" todir="${build_ant}/ethZurich/plugins/it/unitn/ing/rista/diffr/sdpd" />
+    <copy file="${build_ant}/it/unitn/ing/rista/diffr/sdpd/Superflip$JSFSDPDOptionsD$3.class" todir="${build_ant}/ethZurich/plugins/it/unitn/ing/rista/diffr/sdpd" />
+    <copy file="${build_ant}/it/unitn/ing/rista/diffr/sdpd/Superflip$JSFSDPDOptionsD$4.class" todir="${build_ant}/ethZurich/plugins/it/unitn/ing/rista/diffr/sdpd" />
     <!-- Build Maud.jar. -->
-    <jar jarfile="${build}/ethZurich/plugins/sdpdETH.jar" basedir="${build}/ethZurich/plugins">
+    <jar jarfile="${build_ant}/ethZurich/plugins/sdpdETH.jar" basedir="${build_ant}/ethZurich/plugins">
   		<manifest>
     		<attribute name="Built-By" value="${user.name}"/>
   		</manifest>
     </jar>
-    <copy file="${build}/ethZurich/plugins/sdpdETH.jar" todir="${mirrorfulldir2}/plugins" />
-    <copy file="${build}/ethZurich/plugins/sdpdETH.jar" todir="${installfulldirMac}/../../../../plugins" />
-    <copy file="${build}/ethZurich/plugins/sdpdETH.jar" todir="${installfulldirMac64}/../../../../plugins" />
-    <copy file="${build}/ethZurich/plugins/sdpdETH.jar" todir="${installfulldirUnix}/plugins" />
-    <copy file="${build}/ethZurich/plugins/sdpdETH.jar" todir="${installfulldirWindows}/plugins" />
-    <copy file="${build}/ethZurich/plugins/sdpdETH.jar" todir="${installfulldirLinux64}/plugins" />
-    <copy file="${build}/ethZurich/plugins/sdpdETH.jar" todir="${installfulldirWin64}/plugins" />
+    <copy file="${build_ant}/ethZurich/plugins/sdpdETH.jar" todir="${mirrorfulldir2}/plugins" />
+    <copy file="${build_ant}/ethZurich/plugins/sdpdETH.jar" todir="${installfulldirMac}/../../../../plugins" />
+    <copy file="${build_ant}/ethZurich/plugins/sdpdETH.jar" todir="${installfulldirMac64}/../../../../plugins" />
+    <copy file="${build_ant}/ethZurich/plugins/sdpdETH.jar" todir="${installfulldirUnix}/plugins" />
+    <copy file="${build_ant}/ethZurich/plugins/sdpdETH.jar" todir="${installfulldirWindows}/plugins" />
+    <copy file="${build_ant}/ethZurich/plugins/sdpdETH.jar" todir="${installfulldirLinux64}/plugins" />
+    <copy file="${build_ant}/ethZurich/plugins/sdpdETH.jar" todir="${installfulldirWin64}/plugins" />
    </target>
 
   <target name="jar_fullprof_plugins" depends="compile_full" description="Build fullprof.jar.">
-    <mkdir dir="${build}/fullprof" />
-    <mkdir dir="${build}/fullprof/plugins/it/unitn/ing/rista/diffr/sfm" />
-    <copy file="${build}/it/unitn/ing/rista/diffr/sfm/FullProfStructureModel.class" todir="${build}/fullprof/plugins/it/unitn/ing/rista/diffr/sfm" />
-    <copy file="${build}/it/unitn/ing/rista/diffr/sfm/FullProfStructureModel$JFPOptionsD.class" todir="${build}/fullprof/plugins/it/unitn/ing/rista/diffr/sfm" />
+    <mkdir dir="${build_ant}/fullprof" />
+    <mkdir dir="${build_ant}/fullprof/plugins/it/unitn/ing/rista/diffr/sfm" />
+    <copy file="${build_ant}/it/unitn/ing/rista/diffr/sfm/FullProfStructureModel.class" todir="${build_ant}/fullprof/plugins/it/unitn/ing/rista/diffr/sfm" />
+    <copy file="${build_ant}/it/unitn/ing/rista/diffr/sfm/FullProfStructureModel$JFPOptionsD.class" todir="${build_ant}/fullprof/plugins/it/unitn/ing/rista/diffr/sfm" />
     <!-- Build Maud.jar. -->
-    <jar jarfile="${build}/fullprof/plugins/fullprof.jar" basedir="${build}/fullprof/plugins">
+    <jar jarfile="${build_ant}/fullprof/plugins/fullprof.jar" basedir="${build_ant}/fullprof/plugins">
   		<manifest>
     		<attribute name="Built-By" value="${user.name}"/>
   		</manifest>
     </jar>
-    <copy file="${build}/fullprof/plugins/fullprof.jar" todir="${mirrorfulldir2}/plugins" />
-    <!--copy file="${build}/fullprof/plugins/fullprof.jar" todir="${installfulldirMac}/../../../../plugins" />
-    <copy file="${build}/fullprof/plugins/fullprof.jar" todir="${installfulldirMac64}/../../../../plugins" />
-    <copy file="${build}/fullprof/plugins/fullprof.jar" todir="${installfulldirUnix}/plugins" />
-    <copy file="${build}/fullprof/plugins/fullprof.jar" todir="${installfulldirWindows}/plugins" />
-    <copy file="${build}/fullprof/plugins/fullprof.jar" todir="${installfulldirWin64}/plugins" />
-    <copy file="${build}/fullprof/plugins/fullprof.jar" todir="${installfulldirLinux64}/plugins" /-->
+    <copy file="${build_ant}/fullprof/plugins/fullprof.jar" todir="${mirrorfulldir2}/plugins" />
+    <!--copy file="${build_ant}/fullprof/plugins/fullprof.jar" todir="${installfulldirMac}/../../../../plugins" />
+    <copy file="${build_ant}/fullprof/plugins/fullprof.jar" todir="${installfulldirMac64}/../../../../plugins" />
+    <copy file="${build_ant}/fullprof/plugins/fullprof.jar" todir="${installfulldirUnix}/plugins" />
+    <copy file="${build_ant}/fullprof/plugins/fullprof.jar" todir="${installfulldirWindows}/plugins" />
+    <copy file="${build_ant}/fullprof/plugins/fullprof.jar" todir="${installfulldirWin64}/plugins" />
+    <copy file="${build_ant}/fullprof/plugins/fullprof.jar" todir="${installfulldirLinux64}/plugins" /-->
    </target>
 
   <target name="jar_sir2k_plugins" depends="compile_full" description="Build sir2k.jar.">
-    <mkdir dir="${build}/sir2k" />
-    <mkdir dir="${build}/sir2k/plugins/it/unitn/ing/rista/diffr/sdpd" />
-    <copy file="${build}/it/unitn/ing/rista/diffr/sdpd/GiacovazzoSirIC.class" todir="${build}/sir2k/plugins/it/unitn/ing/rista/diffr/sdpd" />
-    <copy file="${build}/it/unitn/ing/rista/diffr/sdpd/GiacovazzoSirIC$JSirOptionsD.class" todir="${build}/sir2k/plugins/it/unitn/ing/rista/diffr/sdpd" />
+    <mkdir dir="${build_ant}/sir2k" />
+    <mkdir dir="${build_ant}/sir2k/plugins/it/unitn/ing/rista/diffr/sdpd" />
+    <copy file="${build_ant}/it/unitn/ing/rista/diffr/sdpd/GiacovazzoSirIC.class" todir="${build_ant}/sir2k/plugins/it/unitn/ing/rista/diffr/sdpd" />
+    <copy file="${build_ant}/it/unitn/ing/rista/diffr/sdpd/GiacovazzoSirIC$JSirOptionsD.class" todir="${build_ant}/sir2k/plugins/it/unitn/ing/rista/diffr/sdpd" />
     <!-- Build sir2k.jar. -->
-    <jar jarfile="${build}/sir2k/plugins/sir2k.jar" basedir="${build}/sir2k/plugins">
+    <jar jarfile="${build_ant}/sir2k/plugins/sir2k.jar" basedir="${build_ant}/sir2k/plugins">
   		<manifest>
     		<attribute name="Built-By" value="${user.name}"/>
   		</manifest>
     </jar>
-    <copy file="${build}/sir2k/plugins/sir2k.jar" todir="${mirrorfulldir2}/plugins" />
-    <!--copy file="${build}/sir2k/plugins/sir2k.jar" todir="${installfulldirMac}/../../../../plugins" />
-    <copy file="${build}/sir2k/plugins/sir2k.jar" todir="${installfulldirMac64}/../../../../plugins" />
-    <copy file="${build}/sir2k/plugins/sir2k.jar" todir="${installfulldirUnix}/plugins" />
-    <copy file="${build}/sir2k/plugins/sir2k.jar" todir="${installfulldirWindows}/plugins" />
-    <copy file="${build}/sir2k/plugins/sir2k.jar" todir="${installfulldirWin64}/plugins" />
-    <copy file="${build}/sir2k/plugins/sir2k.jar" todir="${installfulldirLinux64}/plugins" /-->
+    <copy file="${build_ant}/sir2k/plugins/sir2k.jar" todir="${mirrorfulldir2}/plugins" />
+    <!--copy file="${build_ant}/sir2k/plugins/sir2k.jar" todir="${installfulldirMac}/../../../../plugins" />
+    <copy file="${build_ant}/sir2k/plugins/sir2k.jar" todir="${installfulldirMac64}/../../../../plugins" />
+    <copy file="${build_ant}/sir2k/plugins/sir2k.jar" todir="${installfulldirUnix}/plugins" />
+    <copy file="${build_ant}/sir2k/plugins/sir2k.jar" todir="${installfulldirWindows}/plugins" />
+    <copy file="${build_ant}/sir2k/plugins/sir2k.jar" todir="${installfulldirWin64}/plugins" />
+    <copy file="${build_ant}/sir2k/plugins/sir2k.jar" todir="${installfulldirLinux64}/plugins" /-->
    </target>
 
   <target name="jar_abinit_plugins" depends="compile_full" description="Build Maud.jar.">
-    <mkdir dir="${build}/abinit" />
-    <mkdir dir="${build}/abinit/plugins/it/unitn/ing/rista/diffr/forcefield" />
-    <copy file="${build}/it/unitn/ing/rista/diffr/forcefield/ABINITEnergyComputation.class" todir="${build}/abinit/plugins/it/unitn/ing/rista/diffr/forcefield" />
-    <copy file="${build}/it/unitn/ing/rista/diffr/forcefield/ABINITEnergyComputation$JAbinitOptionsD.class" todir="${build}/abinit/plugins/it/unitn/ing/rista/diffr/forcefield" />
+    <mkdir dir="${build_ant}/abinit" />
+    <mkdir dir="${build_ant}/abinit/plugins/it/unitn/ing/rista/diffr/forcefield" />
+    <copy file="${build_ant}/it/unitn/ing/rista/diffr/forcefield/ABINITEnergyComputation.class" todir="${build_ant}/abinit/plugins/it/unitn/ing/rista/diffr/forcefield" />
+    <copy file="${build_ant}/it/unitn/ing/rista/diffr/forcefield/ABINITEnergyComputation$JAbinitOptionsD.class" todir="${build_ant}/abinit/plugins/it/unitn/ing/rista/diffr/forcefield" />
     <!-- Build Maud.jar. -->
-    <jar jarfile="${build}/abinit/plugins/abinit.jar" basedir="${build}/abinit/plugins">
+    <jar jarfile="${build_ant}/abinit/plugins/abinit.jar" basedir="${build_ant}/abinit/plugins">
   		<manifest>
     		<attribute name="Built-By" value="${user.name}"/>
   		</manifest>
     </jar>
-    <copy file="${build}/abinit/plugins/abinit.jar" todir="${mirrorfulldir2}/plugins" />
-    <copy file="${build}/abinit/plugins/abinit.jar" todir="${installfulldirMac}/../../../../plugins" />
-    <copy file="${build}/abinit/plugins/abinit.jar" todir="${installfulldirMac64}/../../../../plugins" />
-    <copy file="${build}/abinit/plugins/abinit.jar" todir="${installfulldirUnix}/plugins" />
-    <copy file="${build}/abinit/plugins/abinit.jar" todir="${installfulldirWindows}/plugins" />
-    <copy file="${build}/abinit/plugins/abinit.jar" todir="${installfulldirWin64}/plugins" />
-    <copy file="${build}/abinit/plugins/abinit.jar" todir="${installfulldirLinux64}/plugins" />
+    <copy file="${build_ant}/abinit/plugins/abinit.jar" todir="${mirrorfulldir2}/plugins" />
+    <copy file="${build_ant}/abinit/plugins/abinit.jar" todir="${installfulldirMac}/../../../../plugins" />
+    <copy file="${build_ant}/abinit/plugins/abinit.jar" todir="${installfulldirMac64}/../../../../plugins" />
+    <copy file="${build_ant}/abinit/plugins/abinit.jar" todir="${installfulldirUnix}/plugins" />
+    <copy file="${build_ant}/abinit/plugins/abinit.jar" todir="${installfulldirWindows}/plugins" />
+    <copy file="${build_ant}/abinit/plugins/abinit.jar" todir="${installfulldirWin64}/plugins" />
+    <copy file="${build_ant}/abinit/plugins/abinit.jar" todir="${installfulldirLinux64}/plugins" />
    </target>
 
   <target name="jar_inxitu_plugins" depends="compile_full" description="Build Maud.jar.">
-    <mkdir dir="${build}/inxitu" />
-    <mkdir dir="${build}/inxitu/plugins/it/unitn/ing/rista/diffr/microabs" />
-    <copy file="${build}/it/unitn/ing/rista/diffr/microabs/LaueMicroAbsorption.class" todir="${build}/inxitu/plugins/it/unitn/ing/rista/diffr/microabs" />
+    <mkdir dir="${build_ant}/inxitu" />
+    <mkdir dir="${build_ant}/inxitu/plugins/it/unitn/ing/rista/diffr/microabs" />
+    <copy file="${build_ant}/it/unitn/ing/rista/diffr/microabs/LaueMicroAbsorption.class" todir="${build_ant}/inxitu/plugins/it/unitn/ing/rista/diffr/microabs" />
     <!-- Build Maud.jar. -->
-    <jar jarfile="${build}/inxitu/plugins/inxitu.jar" basedir="${build}/inxitu/plugins">
+    <jar jarfile="${build_ant}/inxitu/plugins/inxitu.jar" basedir="${build_ant}/inxitu/plugins">
   		<manifest>
     		<attribute name="Built-By" value="${user.name}"/>
   		</manifest>
     </jar>
-    <copy file="${build}/inxitu/plugins/inxitu.jar" todir="${mirrorfulldir2}/plugins" />
+    <copy file="${build_ant}/inxitu/plugins/inxitu.jar" todir="${mirrorfulldir2}/plugins" />
    </target>
 
     <target name="jar_D19_plugins" depends="compile_full" description="Build Maud.jar.">
-        <mkdir dir="${build}/D19" />
-        <mkdir dir="${build}/D19/plugins/it/unitn/ing/rista/diffr/data" />
-        <copy file="${build}/it/unitn/ing/rista/diffr/data/D19ImageSummedDatafile.class" todir="${build}/D19/plugins/it/unitn/ing/rista/diffr/data" />
+        <mkdir dir="${build_ant}/D19" />
+        <mkdir dir="${build_ant}/D19/plugins/it/unitn/ing/rista/diffr/data" />
+        <copy file="${build_ant}/it/unitn/ing/rista/diffr/data/D19ImageSummedDatafile.class" todir="${build_ant}/D19/plugins/it/unitn/ing/rista/diffr/data" />
         <!-- Build Maud.jar. -->
-        <jar jarfile="${build}/inxitu/plugins/D19.jar" basedir="${build}/D19/plugins">
+        <jar jarfile="${build_ant}/inxitu/plugins/D19.jar" basedir="${build_ant}/D19/plugins">
             <manifest>
                 <attribute name="Built-By" value="${user.name}"/>
             </manifest>
         </jar>
-        <copy file="${build}/inxitu/plugins/D19.jar" todir="${mirrorfulldir2}/plugins" />
+        <copy file="${build_ant}/inxitu/plugins/D19.jar" todir="${mirrorfulldir2}/plugins" />
     </target>
 
     <!--target name="jar_test_plugins" depends="compile_full" description="Build Maud.jar.">
-        <mkdir dir="${build}/test" />
-        <mkdir dir="${build}/test/plugins/it/unitn/ing/rista/diffr/rsa" />
-        <copy file="${build}/it/unitn/ing/rista/diffr/rsa/PopaBalzarHarmonicStrainModel.class" todir="${build}/test/plugins/it/unitn/ing/rista/diffr/rsa" />
-        <copy file="${build}/it/unitn/ing/rista/diffr/rsa/PopaBalzarHarmonicStrainModel$JHStrainOptionsD.class" todir="${build}/test/plugins/it/unitn/ing/rista/diffr/rsa" />
-        <copy file="${build}/it/unitn/ing/rista/diffr/rsa/PopaBalzarHarmonicStrainModel$JHStrainOptionsD$1.class" todir="${build}/test/plugins/it/unitn/ing/rista/diffr/rsa" />
-        <copy file="${build}/it/unitn/ing/rista/diffr/rsa/PopaBalzarHarmonicStrainModel$JHStrainOptionsD$2.class" todir="${build}/test/plugins/it/unitn/ing/rista/diffr/rsa" />
-        <copy file="${build}/it/unitn/ing/rista/diffr/rsa/PopaBalzarHarmonicStrainModel$JHStrainOptionsD$3.class" todir="${build}/test/plugins/it/unitn/ing/rista/diffr/rsa" />
-        <copy file="${build}/it/unitn/ing/rista/diffr/rsa/PopaBalzarHarmonicStrainModel$JHStrainOptionsD$4.class" todir="${build}/test/plugins/it/unitn/ing/rista/diffr/rsa" />
-        <copy file="${build}/it/unitn/ing/rista/diffr/rsa/PopaBalzarHarmonicStrainModel$JHStrainOptionsD$5.class" todir="${build}/test/plugins/it/unitn/ing/rista/diffr/rsa" />
-        <copy file="${build}/it/unitn/ing/rista/diffr/rsa/PopaBalzarHarmonicStrainModel$HarmonicPane.class" todir="${build}/test/plugins/it/unitn/ing/rista/diffr/rsa" />
-        <jar jarfile="${build}/test/plugins/test.jar" basedir="${build}/test/plugins">
+        <mkdir dir="${build_ant}/test" />
+        <mkdir dir="${build_ant}/test/plugins/it/unitn/ing/rista/diffr/rsa" />
+        <copy file="${build_ant}/it/unitn/ing/rista/diffr/rsa/PopaBalzarHarmonicStrainModel.class" todir="${build_ant}/test/plugins/it/unitn/ing/rista/diffr/rsa" />
+        <copy file="${build_ant}/it/unitn/ing/rista/diffr/rsa/PopaBalzarHarmonicStrainModel$JHStrainOptionsD.class" todir="${build_ant}/test/plugins/it/unitn/ing/rista/diffr/rsa" />
+        <copy file="${build_ant}/it/unitn/ing/rista/diffr/rsa/PopaBalzarHarmonicStrainModel$JHStrainOptionsD$1.class" todir="${build_ant}/test/plugins/it/unitn/ing/rista/diffr/rsa" />
+        <copy file="${build_ant}/it/unitn/ing/rista/diffr/rsa/PopaBalzarHarmonicStrainModel$JHStrainOptionsD$2.class" todir="${build_ant}/test/plugins/it/unitn/ing/rista/diffr/rsa" />
+        <copy file="${build_ant}/it/unitn/ing/rista/diffr/rsa/PopaBalzarHarmonicStrainModel$JHStrainOptionsD$3.class" todir="${build_ant}/test/plugins/it/unitn/ing/rista/diffr/rsa" />
+        <copy file="${build_ant}/it/unitn/ing/rista/diffr/rsa/PopaBalzarHarmonicStrainModel$JHStrainOptionsD$4.class" todir="${build_ant}/test/plugins/it/unitn/ing/rista/diffr/rsa" />
+        <copy file="${build_ant}/it/unitn/ing/rista/diffr/rsa/PopaBalzarHarmonicStrainModel$JHStrainOptionsD$5.class" todir="${build_ant}/test/plugins/it/unitn/ing/rista/diffr/rsa" />
+        <copy file="${build_ant}/it/unitn/ing/rista/diffr/rsa/PopaBalzarHarmonicStrainModel$HarmonicPane.class" todir="${build_ant}/test/plugins/it/unitn/ing/rista/diffr/rsa" />
+        <jar jarfile="${build_ant}/test/plugins/test.jar" basedir="${build_ant}/test/plugins">
               <manifest>
                 <attribute name="Built-By" value="${user.name}"/>
               </manifest>
         </jar>
-        <copy file="${build}/test/plugins/test.jar" todir="${mirrorfulldir2}/plugins" />
+        <copy file="${build_ant}/test/plugins/test.jar" todir="${mirrorfulldir2}/plugins" />
        </target-->
 
   <target name="compile_textmode" depends="clean_maud" description="Compile Maud_essential.jar">
     <!-- First, ensure the build directory exists. -->
-    <delete dir="${build}" />
-    <delete file="build/Maud_dev.jar" />
-    <delete file="build/Maud_reduced.jar" />
-    <delete file="build/Maud_essential.jar" />
+    <delete dir="${build_ant}" />
+    <delete file="${build}/Maud_dev.jar" />
+    <delete file="${build}/Maud_reduced.jar" />
+    <delete file="${build}/Maud_essential.jar" />
     <mkdir dir="build" />
-    <mkdir dir="${build}" />
+    <mkdir dir="${build_ant}" />
     <!-- Build everything -->
-    <javac destdir="${build}" debug="on" target="${java_version}" encoding="UTF-8">
+    <javac destdir="${build_ant}" debug="on" target="${java_version}" encoding="UTF-8">
     	<src path="${src}"/>
       <exclude name="it/unitn/ing/esqui/client/**" />
       <exclude name="it/unitn/ing/esqui/server/**" />
@@ -543,34 +545,33 @@
           <pathelement location="libs/current/EsquiClient.jar"/>
           <pathelement location="libs/current/nativewindow.all.jar"/>
           <pathelement location="libs/current/newt.all.jar"/>
-          <pathelement location="libs/current/gluegen-rt.jar"/>
           <pathelement location="libs/current/miscLib.jar"/>
           <pathelement location="libs/current/jgaec.jar"/>
           <pathelement location="libs/current/jgap.jar"/>
           <pathelement location="libs/current/jmol.jar"/>
-          <!--pathelement location="build/jnlp.jar"/-->
+          <!--pathelement location="${build}/jnlp.jar"/-->
           <pathelement location="libs/current/ij.jar"/>
-          <!--pathelement location="build/jspline.jar"/>
-          <pathelement location="build/JNIAltivec.jar"/-->
+          <!--pathelement location="${build}/jspline.jar"/>
+          <pathelement location="${build}/JNIAltivec.jar"/-->
           <pathelement location="libs/current/HTTPClient.jar"/>
           <pathelement location="libs/current/jdom.jar"/>
           <pathelement location="libs/current/rome.jar"/>
           <pathelement location="libs/current/MySQL-ConnectorJ.jar"/>
           <pathelement location="libs/current/xgridlib.jar"/>
-          <!--pathelement location="build/capsapi_classes.zip"/>
-          <pathelement location="build/Apple_ui.jar"/-->
+          <!--pathelement location="${build}/capsapi_classes.zip"/>
+          <pathelement location="${build}/Apple_ui.jar"/-->
           <pathelement location="libs/current/aparapi.jar"/>
           <pathelement location="libs/current/joone-engine.jar"/>
           <pathelement location="libs/current/swingx.jar"/>
-          <!--pathelement location="build/jdic.jar"/>
-          <pathelement location="build/jhdf.jar"/>
-          <pathelement location="build/jhdf4obj.jar"/>
-          <pathelement location="build/jhdf5.jar"/>
-          <pathelement location="build/jhdf5obj.jar"/>
-          <pathelement location="build/jhdfobj.jar"/>
-          <pathelement location="build/quaqua.jar"/>
-          <pathelement location="build/nova/TestManager.jar"/>
-          <pathelement location="build/nova/NeuralWorks.jar"/-->
+          <!--pathelement location="${build}/jdic.jar"/>
+          <pathelement location="${build}/jhdf.jar"/>
+          <pathelement location="${build}/jhdf4obj.jar"/>
+          <pathelement location="${build}/jhdf5.jar"/>
+          <pathelement location="${build}/jhdf5obj.jar"/>
+          <pathelement location="${build}/jhdfobj.jar"/>
+          <pathelement location="${build}/quaqua.jar"/>
+          <pathelement location="${build}/nova/TestManager.jar"/>
+          <pathelement location="${build}/nova/NeuralWorks.jar"/-->
           <pathelement location="/System/Library/java"/>
 			</classpath>
     </javac>
@@ -580,31 +581,31 @@
 
   <target name="build_textmode" depends="compile_textmode" description="Build Maud.jar.">
     <!-- Copy needed files into the build directory. -->
-    <!--delete dir="${build}/ec" /-->
-    <delete dir="${build}/it/unitn/ing/esqui/client" />
-    <delete dir="${build}/gov" />
-    <!--delete dir="${build}/ij" /-->
-    <delete dir="${build}/org" />
-    <delete dir="${build}/it/unitn/ing/esqui" />
-    <delete dir="${build}/it/unitn/ing/xgridclient" />
-    <delete dir="${build}/it/unitn/ing/xgridagent" />
-    <!--delete dir="${build}/it/unitn/ing/rista/awt" /-->
-    <!--delete dir="${build}/it/unitn/ing/rista/jpvm" /-->
-    <delete dir="${build}/it/unitn/ing/rista/render3d" />
-    <!--delete dir="${build}/it/unitn/ing/fortran" /-->
-    <delete dir="${build}/it/unitn/ing/jgraph" />
-    <!--delete dir="${build}/it/unitn/ing/jsginfo" /-->
-    <delete dir="${build}/HTTPClient" />
-    <copy file="${buildnumber}/Maud_full_build.number" todir="${build}" />
-    <copy file="${src}/files/classnames.ins" todir="${build}" />
-    <mkdir dir="${build}/files" />
-    <copy file="${src}/files/atominfo.cif" todir="${build}/files" />
-    <copy file="${src}/files/default.par" todir="${build}/files" />
-    <copy file="${src}/files/marker.txt" todir="${build}/files" />
-    <copy file="${src}/files/Properties.3D" todir="${build}/files" />
-    <copy file="${src}/files/CWWARRAY.DAT" todir="${build}/files" />
-    <copy file="${src}/files/IADARRAY.DAT" todir="${build}/files" />
-    <unjar dest="${build}">
+    <!--delete dir="${build_ant}/ec" /-->
+    <delete dir="${build_ant}/it/unitn/ing/esqui/client" />
+    <delete dir="${build_ant}/gov" />
+    <!--delete dir="${build_ant}/ij" /-->
+    <delete dir="${build_ant}/org" />
+    <delete dir="${build_ant}/it/unitn/ing/esqui" />
+    <delete dir="${build_ant}/it/unitn/ing/xgridclient" />
+    <delete dir="${build_ant}/it/unitn/ing/xgridagent" />
+    <!--delete dir="${build_ant}/it/unitn/ing/rista/awt" /-->
+    <!--delete dir="${build_ant}/it/unitn/ing/rista/jpvm" /-->
+    <delete dir="${build_ant}/it/unitn/ing/rista/render3d" />
+    <!--delete dir="${build_ant}/it/unitn/ing/fortran" /-->
+    <delete dir="${build_ant}/it/unitn/ing/jgraph" />
+    <!--delete dir="${build_ant}/it/unitn/ing/jsginfo" /-->
+    <delete dir="${build_ant}/HTTPClient" />
+    <copy file="${buildnumber}/Maud_full_build.number" todir="${build_ant}" />
+    <!--copy file="${src}/files/classnames.ins" todir="${build_ant}" /-->
+    <mkdir dir="${build_ant}/files" />
+    <copy file="${src}/files/atominfo.cif" todir="${build_ant}/files" />
+    <copy file="${src}/files/default.par" todir="${build_ant}/files" />
+    <copy file="${src}/files/marker.txt" todir="${build_ant}/files" />
+    <copy file="${src}/files/Properties.3D" todir="${build_ant}/files" />
+    <copy file="${src}/files/CWWARRAY.DAT" todir="${build_ant}/files" />
+    <copy file="${src}/files/IADARRAY.DAT" todir="${build_ant}/files" />
+    <unjar dest="${build_ant}">
 			<patternset>
         <include name="*"/>
         <include name="**/*"/>
@@ -628,10 +629,10 @@
 			</fileset>
     </unjar>
     <!-- Build Maud.jar. -->
-    <jar jarfile="build/Maud_essential.jar" basedir="${build}">
+    <jar jarfile="${build}/Maud_essential.jar" basedir="${build_ant}">
   		<manifest>
     		<attribute name="Built-By" value="${user.name}"/>
-      	<attribute name="Main-class" value="it.unitn.ing.rista.MaudText"/>
+      	<attribute name="Main-class" value="com.radiographema.MaudText"/>
   		</manifest>
     </jar>
   </target>
@@ -639,19 +640,19 @@
 
   <target name="compile_xgridagent" depends="clean_maud" description="Compile xgridagent.jar">
     <!-- First, ensure the build directory exists. -->
-    <delete dir="${build}" />
-    <delete file="build/Maud_dev.jar" />
-    <delete file="build/Maud_reduced.jar" />
-    <delete file="build/Maud_essential.jar" />
+    <delete dir="${build_ant}" />
+    <delete file="${build}/Maud_dev.jar" />
+    <delete file="${build}/Maud_reduced.jar" />
+    <delete file="${build}/Maud_essential.jar" />
     <mkdir dir="build" />
-    <mkdir dir="${build}" />
+    <mkdir dir="${build_ant}" />
     <!-- Build everything -->
-    <javac destdir="${build}" debug="on" target="${java_version}" encoding="UTF-8">
+    <javac destdir="${build_ant}" debug="on" target="${java_version}" encoding="UTF-8">
     	<src path="${src}"/>
       <include name="com/deadmoo/xgridagent/**" />
       <include name="jint/scimark2/**" />
       <classpath>
-        <pathelement location="build/xgridlib.jar"/>
+        <pathelement location="${build}/xgridlib.jar"/>
 			</classpath>
     </javac>
     <buildnumber file="${buildnumber}/xgridagent.number"/>
@@ -660,7 +661,7 @@
 
   <target name="build_xgridagent" depends="compile_xgridagent" description="Build xgridagent.jar.">
     <!-- Copy needed files into the build directory. -->
-    <unjar dest="${build}">
+    <unjar dest="${build_ant}">
 			<patternset>
         <include name="*"/>
         <include name="**/*"/>
@@ -673,7 +674,7 @@
 			</fileset>
     </unjar>
     <!-- Build Maud.jar. -->
-    <jar jarfile="build/xgridagent.jar" basedir="${build}">
+    <jar jarfile="${build}/xgridagent.jar" basedir="${build_ant}">
   		<manifest>
     		<attribute name="Built-By" value="${user.name}"/>
       	<attribute name="Main-class" value="com.deadmoo.xgridagent.XGridAgent"/>
@@ -683,32 +684,32 @@
   </target>
 
   <target name="copy_xgridagent" depends="build_xgridagent" description="Copy the xgridagent libs to the final destination.">
-    <copy file="build/xgridagent.jar" tofile="${mirrorfulldir}/xgridagent.jar" />
-    <copy file="build/xgridagent.jar" tofile="${mirrorfulldir2}/lib/xgridagent.jar" />
-    <copy file="build/xgridagent.jar" tofile="${installfulldirMac}/xgridagent.jar" />
-    <copy file="build/xgridagent.jar" tofile="${installfulldirMac64}/xgridagent.jar" />
-    <copy file="build/xgridagent.jar" tofile="${installfulldirUnix}/lib/xgridagent.jar" />
-    <copy file="build/xgridagent.jar" tofile="${installfulldirLinux64}/lib/xgridagent.jar" />
-    <copy file="build/xgridagent.jar" tofile="${installfulldirWindows}/lib/xgridagent.jar" />
-    <copy file="build/xgridagent.jar" tofile="${installfulldirWin64}/lib/xgridagent.jar" />
-    <copy file="build/xgridagent.jar" tofile="${mirrorfulldir2}/xgrid/xgridagent.jar" />
+    <copy file="${build}/xgridagent.jar" tofile="${mirrorfulldir}/xgridagent.jar" />
+    <copy file="${build}/xgridagent.jar" tofile="${mirrorfulldir2}/lib/xgridagent.jar" />
+    <copy file="${build}/xgridagent.jar" tofile="${installfulldirMac}/xgridagent.jar" />
+    <copy file="${build}/xgridagent.jar" tofile="${installfulldirMac64}/xgridagent.jar" />
+    <copy file="${build}/xgridagent.jar" tofile="${installfulldirUnix}/lib/xgridagent.jar" />
+    <copy file="${build}/xgridagent.jar" tofile="${installfulldirLinux64}/lib/xgridagent.jar" />
+    <copy file="${build}/xgridagent.jar" tofile="${installfulldirWindows}/lib/xgridagent.jar" />
+    <copy file="${build}/xgridagent.jar" tofile="${installfulldirWin64}/lib/xgridagent.jar" />
+    <copy file="${build}/xgridagent.jar" tofile="${mirrorfulldir2}/xgrid/xgridagent.jar" />
   </target>
 
 
   <target name="compile_xgridclient" depends="clean_maud" description="Compile xgridclient.jar">
     <!-- First, ensure the build directory exists. -->
-    <delete dir="${build}" />
-    <delete file="build/Maud_dev.jar" />
-    <delete file="build/Maud_reduced.jar" />
-    <delete file="build/Maud_essential.jar" />
+    <delete dir="${build_ant}" />
+    <delete file="${build}/Maud_dev.jar" />
+    <delete file="${build}/Maud_reduced.jar" />
+    <delete file="${build}/Maud_essential.jar" />
     <mkdir dir="build" />
-    <mkdir dir="${build}" />
+    <mkdir dir="${build_ant}" />
     <!-- Build everything -->
-    <javac destdir="${build}" debug="on" target="${java_version}" encoding="UTF-8">
+    <javac destdir="${build_ant}" debug="on" target="${java_version}" encoding="UTF-8">
     	<src path="${src}"/>
       <include name="it/unitn/ing/xgridclient/**" />
       <classpath>
-        <pathelement location="build/xgridlib.jar"/>
+        <pathelement location="${build}/xgridlib.jar"/>
 			</classpath>
     </javac>
     <buildnumber file="${buildnumber}/xgridclient.number"/>
@@ -717,7 +718,7 @@
 
   <target name="build_xgridclient" depends="compile_xgridclient" description="Build xgridclient.jar.">
     <!-- Copy needed files into the build directory. -->
-    <unjar dest="${build}">
+    <unjar dest="${build_ant}">
 			<patternset>
         <include name="*"/>
         <include name="**/*"/>
@@ -730,7 +731,7 @@
 			</fileset>
     </unjar>
     <!-- Build Maud.jar. -->
-    <jar jarfile="build/xgridclient.jar" basedir="${build}">
+    <jar jarfile="${build}/xgridclient.jar" basedir="${build_ant}">
   		<manifest>
     		<attribute name="Built-By" value="${user.name}"/>
       	<attribute name="Main-class" value="it/unitn/ing/xgridclient/XGrid"/>
@@ -740,24 +741,24 @@
   </target>
 
   <target name="copy_xgridclient" depends="build_xgridclient" description="Copy the xgridclient libs to the final destination.">
-    <copy file="build/xgridclient.jar" tofile="${mirrorfulldir2}/xgrid/xgridclient.jar" />
+    <copy file="${build}/xgridclient.jar" tofile="${mirrorfulldir2}/xgrid/xgridclient.jar" />
   </target>
 
 
   <target name="compile_xgridhello" depends="clean_maud" description="Compile xgridhello.jar">
     <!-- First, ensure the build directory exists. -->
-    <delete dir="${build}" />
-    <delete file="build/Maud_dev.jar" />
-    <delete file="build/Maud_reduced.jar" />
-    <delete file="build/Maud_essential.jar" />
+    <delete dir="${build_ant}" />
+    <delete file="${build}/Maud_dev.jar" />
+    <delete file="${build}/Maud_reduced.jar" />
+    <delete file="${build}/Maud_essential.jar" />
     <mkdir dir="build" />
-    <mkdir dir="${build}" />
+    <mkdir dir="${build_ant}" />
     <!-- Build everything -->
-    <javac destdir="${build}" debug="on" target="${java_version}" encoding="UTF-8">
+    <javac destdir="${build_ant}" debug="on" target="${java_version}" encoding="UTF-8">
     	<src path="${src}"/>
       <include name="it/unitn/ing/xgridclient/XGridHello.java" />
       <classpath>
-        <pathelement location="build/xgridlib.jar"/>
+        <pathelement location="${build}/xgridlib.jar"/>
 			</classpath>
     </javac>
     <buildnumber file="${buildnumber}/xgridhello.number"/>
@@ -767,7 +768,7 @@
   <target name="build_xgridhello" depends="compile_xgridhello" description="Build xgridhello.jar.">
     <!-- Copy needed files into the build directory. -->
     <!-- Build Maud.jar. -->
-    <jar jarfile="build/xgridhello.jar" basedir="${build}">
+    <jar jarfile="${build}/xgridhello.jar" basedir="${build_ant}">
   		<manifest>
     		<attribute name="Built-By" value="${user.name}"/>
       	<attribute name="Main-class" value="it/unitn/ing/xgridclient/XGridHello"/>
@@ -777,25 +778,25 @@
   </target>
 
   <target name="copy_xgridhello" depends="build_xgridhello" description="Copy the xgridhello libs to the final destination.">
-    <copy file="build/xgridhello.jar" tofile="${mirrorfulldir2}/xgrid/xgridhello.jar" />
+    <copy file="${build}/xgridhello.jar" tofile="${mirrorfulldir2}/xgrid/xgridhello.jar" />
   </target>
 
 
   <target name="compile_xgridlauncher" depends="clean_maud" description="Compile xgridlauncher.jar">
     <!-- First, ensure the build directory exists. -->
-    <delete dir="${build}" />
-    <delete file="build/xgridlauncher.jar" />
+    <delete dir="${build_ant}" />
+    <delete file="${build}/xgridlauncher.jar" />
     <mkdir dir="build" />
-    <mkdir dir="${build}" />
+    <mkdir dir="${build_ant}" />
     <!-- Build everything -->
-    <javac destdir="${build}" debug="on" target="${java_version}" encoding="UTF-8">
+    <javac destdir="${build_ant}" debug="on" target="${java_version}" encoding="UTF-8">
     	<src path="${src}"/>
       <include name="it/unitn/ing/xgridagent/XGridJavaLauncher.java" />
       <!--include name="HTTPClient/*.java" />
       <include name="HTTPClient/**/*.java" /-->
       <classpath>
-        <pathelement location="build/base64.jar"/>
-        <!--pathelement location="build/commons-httpclient-3.0.jar"/-->
+        <pathelement location="${build}/base64.jar"/>
+        <!--pathelement location="${build}/commons-httpclient-3.0.jar"/-->
       </classpath>
     </javac>
     <buildnumber file="${buildnumber}/xgridlauncher.number"/>
@@ -805,7 +806,7 @@
   <target name="build_xgridlauncher" depends="compile_xgridlauncher" description="Build xgridlauncher.jar.">
     <!-- Copy needed files into the build directory. -->
     <!-- Build xgridlauncher.jar. -->
-    <unjar dest="${build}">
+    <unjar dest="${build_ant}">
 			<patternset>
         <include name="*"/>
         <include name="**/*"/>
@@ -820,7 +821,7 @@
          <include name="commons-codec-1.3.jar"/-->
 			</fileset>
     </unjar>
-    <jar jarfile="build/xgridlauncher.jar" basedir="${build}">
+    <jar jarfile="${build}/xgridlauncher.jar" basedir="${build_ant}">
   		<manifest>
     		<attribute name="Built-By" value="${user.name}"/>
       	<attribute name="Main-class" value="it.unitn.ing.xgridagent.XGridJavaLauncher"/>
@@ -833,17 +834,18 @@
 
 
   <target name="copy_full" depends="build_full" description="Copy the full build files to the final destination.">
-    <copy file="build/Maud_dev.jar" tofile="${mirrorfulldir}/Maud.jar" />
-    <copy file="build/Maud_dev.jar" tofile="${mirrorfulldir2}/Maud.jar" />
+    <copy file="${build}/Maud_dev.jar" tofile="${mirrorfulldir}/Maud.jar" />
+    <copy file="${build}/Maud_dev.jar" tofile="${mirrorfulldir2}/Maud.jar" />
 	<!--signjar jar="${mirrorfulldir}/Maud.jar" alias="${myself}" storepass="${keypasswd}" keystore="${keystore}"/-->
-    <copy file="build/Maud_dev.jar" tofile="${inst}/Maud.jar" />
-    <copy file="build/Maud_dev.jar" tofile="${installfulldirMac}/Maud.jar" />
-    <copy file="build/Maud_dev.jar" tofile="${installfulldirMac64}/Maud.jar" />
-    <copy file="build/Maud_dev.jar" tofile="${installfulldirUnix}/Maud.jar" />
-    <copy file="build/Maud_dev.jar" tofile="${installfulldirLinux64}/Maud.jar" />
-    <copy file="build/Maud_dev.jar" tofile="${installfulldirWindows}/Maud.jar" />
-    <copy file="build/Maud_dev.jar" tofile="${installfulldirWin64}/Maud.jar" />
-    <!--copy file="build/Maud_dev.jar" tofile="${user.home}/Analysis/Analysis_07/nova/LargePhotoplateExample/lib/maud/Maud.jar" /-->
+    <copy file="${build}/Maud_dev.jar" tofile="${inst}/Maud.jar" />
+      <copy file="${build}/Maud_dev.jar" tofile="${inst}/Maud_OSX/Maud.app/Contents/Resources/Java/Maud.jar" />
+    <copy file="${build}/Maud_dev.jar" tofile="${installfulldirMac}/Maud.jar" />
+    <copy file="${build}/Maud_dev.jar" tofile="${installfulldirMac64}/Maud.jar" />
+    <copy file="${build}/Maud_dev.jar" tofile="${installfulldirUnix}/Maud.jar" />
+    <copy file="${build}/Maud_dev.jar" tofile="${installfulldirLinux64}/Maud.jar" />
+    <copy file="${build}/Maud_dev.jar" tofile="${installfulldirWindows}/Maud.jar" />
+    <copy file="${build}/Maud_dev.jar" tofile="${installfulldirWin64}/Maud.jar" />
+    <!--copy file="${build}/Maud_dev.jar" tofile="${user.home}/Analysis/Analysis_07/nova/LargePhotoplateExample/lib/maud/Maud.jar" /-->
 <!--		<exec dir="." executable="cmd" os="Windows NT"> -->
 <!--  		<arg line="/c test.bat"/> -->
 <!--		<exec dir="." executable="/bin/sh" os="Mac OS X">
@@ -853,17 +855,17 @@
 
 
     <target name="copy_full_no_install" depends="build_full" description="Copy the full build files to the final destination.">
-        <!--copy file="build/Maud_dev.jar" tofile="${mirrorfulldir}/Maud.jar" />
-        <copy file="build/Maud_dev.jar" tofile="${mirrorfulldir2}/Maud.jar" /-->
+        <!--copy file="${build}/Maud_dev.jar" tofile="${mirrorfulldir}/Maud.jar" />
+        <copy file="${build}/Maud_dev.jar" tofile="${mirrorfulldir2}/Maud.jar" /-->
         <!--signjar jar="${mirrorfulldir}/Maud.jar" alias="${myself}" storepass="${keypasswd}" keystore="${keystore}"/-->
-        <copy file="build/Maud_dev.jar" tofile="${inst}/Maud.jar" />
-        <copy file="build/Maud_dev.jar" tofile="${installfulldirMac}/Maud.jar" />
-        <copy file="build/Maud_dev.jar" tofile="${installfulldirMac64}/Maud.jar" />
-        <copy file="build/Maud_dev.jar" tofile="${installfulldirUnix}/Maud.jar" />
-        <copy file="build/Maud_dev.jar" tofile="${installfulldirLinux64}/Maud.jar" />
-        <copy file="build/Maud_dev.jar" tofile="${installfulldirWindows}/Maud.jar" />
-        <copy file="build/Maud_dev.jar" tofile="${installfulldirWin64}/Maud.jar" />
-        <!--copy file="build/Maud_dev.jar" tofile="${user.home}/Analysis/Analysis_07/nova/LargePhotoplateExample/lib/maud/Maud.jar" /-->
+        <copy file="${build}/Maud_dev.jar" tofile="${inst}/Maud.jar" />
+        <copy file="${build}/Maud_dev.jar" tofile="${installfulldirMac}/Maud.jar" />
+        <copy file="${build}/Maud_dev.jar" tofile="${installfulldirMac64}/Maud.jar" />
+        <copy file="${build}/Maud_dev.jar" tofile="${installfulldirUnix}/Maud.jar" />
+        <copy file="${build}/Maud_dev.jar" tofile="${installfulldirLinux64}/Maud.jar" />
+        <copy file="${build}/Maud_dev.jar" tofile="${installfulldirWindows}/Maud.jar" />
+        <copy file="${build}/Maud_dev.jar" tofile="${installfulldirWin64}/Maud.jar" />
+        <!--copy file="${build}/Maud_dev.jar" tofile="${user.home}/Analysis/Analysis_07/nova/LargePhotoplateExample/lib/maud/Maud.jar" /-->
         <!--		<exec dir="." executable="cmd" os="Windows NT"> -->
         <!--  		<arg line="/c test.bat"/> -->
         <!--		<exec dir="." executable="/bin/sh" os="Mac OS X">
@@ -873,7 +875,7 @@
 
 
     <target name="run_full" depends="copy_full" description="Build and run Maud.">
-    <java fork="true" dir="." maxmemory ="1024M" classname="it.unitn.ing.rista.Maud">
+    <java fork="true" dir="." maxmemory ="1024M" classname="com.radiographema.Maud">
     	<jvmarg value="-Dapple.laf.useScreenMenuBar=true" />
     	<jvmarg value="-Dcom.apple.mrj.application.live-resize=false" />
       <classpath> 
@@ -886,7 +888,7 @@
   
 
   <target name="run_film" depends="copy_full" description="Build and run FilmScreamer.">
-    <java fork="true" dir="." maxmemory ="1024M" classname="it.unitn.ing.rista.FilmScreamer">
+    <java fork="true" dir="." maxmemory ="1024M" classname="com.radiographema.FilmScreamer">
     	<jvmarg value="-Dapple.laf.useScreenMenuBar=true" />
     	<jvmarg value="-Dcom.apple.mrj.application.live-resize=false" />
       <classpath> 
@@ -899,7 +901,7 @@
   
 
   <target name="run_maudette" depends="copy_full" description="Build and run Diffraction Screamer.">
-    <java fork="true" dir="." maxmemory ="1024M" classname="it.unitn.ing.rista.Maudette">
+    <java fork="true" dir="." maxmemory ="1024M" classname="com.radiographema.Maudette">
     	<jvmarg value="-Dapple.laf.useScreenMenuBar=true" />
     	<jvmarg value="-Dcom.apple.mrj.application.live-resize=false" />
       <classpath> 
@@ -912,7 +914,7 @@
   
 
   <target name="run_only" description="Run Maud.">
-    <java fork="true" dir="." maxmemory ="1024M" classname="it.unitn.ing.rista.Maud">
+    <java fork="true" dir="." maxmemory ="1024M" classname="com.radiographema.Maud">
 	    	<!---jvmarg value="-Dapple.laf.useScreenMenuBar=true" /-->
     	<jvmarg value="-Dcom.apple.mrj.application.live-resize=false" />
       <classpath> 
@@ -926,13 +928,13 @@
 
   <target name="compile_reduced" depends="clean_maud" description="Compile Maud_reduced.jar.">
     <!-- First, ensure the build directory exists. -->
-    <delete dir="${build}" />
-    <delete file="build/Maud_dev.jar" />
-    <delete file="build/Maud_reduced.jar" />
+    <delete dir="${build_ant}" />
+    <delete file="${build}/Maud_dev.jar" />
+    <delete file="${build}/Maud_reduced.jar" />
     <mkdir dir="build" />
-    <mkdir dir="${build}" />
+    <mkdir dir="${build_ant}" />
     <!-- Build everything -->
-    <javac destdir="${build}" debug="on" target="${java_version}" encoding="UTF-8">
+    <javac destdir="${build_ant}" debug="on" target="${java_version}" encoding="UTF-8">
     	<src path="${src}"/>
       <!--exclude name="it/unitn/ing/jsginfo/*" /--> 
       <!--exclude name="it/unitn/ing/jgraph/*" /--> 
@@ -1001,34 +1003,33 @@
           <pathelement location="libs/current/EsquiClient.jar"/>
           <pathelement location="libs/current/nativewindow.all.jar"/>
           <pathelement location="libs/current/newt.all.jar"/>
-          <pathelement location="libs/current/gluegen-rt.jar"/>
           <pathelement location="libs/current/miscLib.jar"/>
           <pathelement location="libs/current/jgaec.jar"/>
           <pathelement location="libs/current/jgap.jar"/>
           <pathelement location="libs/current/jmol.jar"/>
-          <!--pathelement location="build/jnlp.jar"/-->
+          <!--pathelement location="${build}/jnlp.jar"/-->
           <pathelement location="libs/current/ij.jar"/>
-          <!--pathelement location="build/jspline.jar"/>
-          <pathelement location="build/JNIAltivec.jar"/-->
+          <!--pathelement location="${build}/jspline.jar"/>
+          <pathelement location="${build}/JNIAltivec.jar"/-->
           <pathelement location="libs/current/HTTPClient.jar"/>
           <pathelement location="libs/current/jdom.jar"/>
           <pathelement location="libs/current/rome.jar"/>
           <pathelement location="libs/current/MySQL-ConnectorJ.jar"/>
           <pathelement location="libs/current/xgridlib.jar"/>
-          <!--pathelement location="build/capsapi_classes.zip"/>
-          <pathelement location="build/Apple_ui.jar"/-->
+          <!--pathelement location="${build}/capsapi_classes.zip"/>
+          <pathelement location="${build}/Apple_ui.jar"/-->
           <pathelement location="libs/current/aparapi.jar"/>
           <pathelement location="libs/current/joone-engine.jar"/>
           <pathelement location="libs/current/swingx.jar"/>
-          <!--pathelement location="build/jdic.jar"/>
-          <pathelement location="build/jhdf.jar"/>
-          <pathelement location="build/jhdf4obj.jar"/>
-          <pathelement location="build/jhdf5.jar"/>
-          <pathelement location="build/jhdf5obj.jar"/>
-          <pathelement location="build/jhdfobj.jar"/>
-          <pathelement location="build/quaqua.jar"/>
-          <pathelement location="build/nova/TestManager.jar"/>
-          <pathelement location="build/nova/NeuralWorks.jar"/-->
+          <!--pathelement location="${build}/jdic.jar"/>
+          <pathelement location="${build}/jhdf.jar"/>
+          <pathelement location="${build}/jhdf4obj.jar"/>
+          <pathelement location="${build}/jhdf5.jar"/>
+          <pathelement location="${build}/jhdf5obj.jar"/>
+          <pathelement location="${build}/jhdfobj.jar"/>
+          <pathelement location="${build}/quaqua.jar"/>
+          <pathelement location="${build}/nova/TestManager.jar"/>
+          <pathelement location="${build}/nova/NeuralWorks.jar"/-->
           <pathelement location="/System/Library/java"/>
 			</classpath>
     </javac>
@@ -1038,28 +1039,28 @@
 
   <target name="build_reduced" depends="compile_reduced" description="Build public Maud.jar.">
     <!-- Copy needed files into the build directory. -->
-    <delete dir="${build}/ec" />
-    <delete dir="${build}/it/unitn/ing/esqui/client" />
-    <delete dir="${build}/it/unitn/ing/fortran" />
-    <!--delete dir="${build}/it/unitn/ing/jgraph" /-->
-    <!--delete dir="${build}/it/unitn/ing/jsginfo" /-->
-    <delete dir="${build}/HTTPClient" />
-    <copy file="${buildnumber}/Maud_reduced_build.number" todir="${build}/Maud_full_build.number" />
-    <copy file="${src}/files/classnames.ins" todir="${build}" />
-    <copy file="IJ_Props.txt" todir="${build}" />
-    <mkdir dir="${build}/files" />
-    <copy file="${src}/files/atominfo.cif" todir="${build}/files" />
-    <copy file="${src}/files/default.par" todir="${build}/files" />
-    <copy file="${src}/files/marker.txt" todir="${build}/files" />
-    <copy file="${src}/files/Properties.3D" todir="${build}/files" />
-    <mkdir dir="${build}/media" />
-    <mkdir dir="${build}/media/music" />
-    <mkdir dir="${build}/media/music/samples" />
-    <copy file="media/music/samples/MO1.au" todir="${build}/media/music/samples" />
-    <copy file="media/music/samples/MO2.au" todir="${build}/media/music/samples" />
-    <copy file="media/music/samples/MO3.au" todir="${build}/media/music/samples" />
+    <delete dir="${build_ant}/ec" />
+    <delete dir="${build_ant}/it/unitn/ing/esqui/client" />
+    <delete dir="${build_ant}/it/unitn/ing/fortran" />
+    <!--delete dir="${build_ant}/it/unitn/ing/jgraph" /-->
+    <!--delete dir="${build_ant}/it/unitn/ing/jsginfo" /-->
+    <delete dir="${build_ant}/HTTPClient" />
+    <copy file="${buildnumber}/Maud_reduced_build.number" todir="${build_ant}/Maud_full_build.number" />
+    <!--copy file="${src}/files/classnames.ins" todir="${build_ant}" /-->
+    <copy file="IJ_Props.txt" todir="${build_ant}" />
+    <mkdir dir="${build_ant}/files" />
+    <copy file="${src}/files/atominfo.cif" todir="${build_ant}/files" />
+    <copy file="${src}/files/default.par" todir="${build_ant}/files" />
+    <copy file="${src}/files/marker.txt" todir="${build_ant}/files" />
+    <copy file="${src}/files/Properties.3D" todir="${build_ant}/files" />
+    <mkdir dir="${build_ant}/media" />
+    <mkdir dir="${build_ant}/media/music" />
+    <mkdir dir="${build_ant}/media/music/samples" />
+    <copy file="media/music/samples/MO1.au" todir="${build_ant}/media/music/samples" />
+    <copy file="media/music/samples/MO2.au" todir="${build_ant}/media/music/samples" />
+    <copy file="media/music/samples/MO3.au" todir="${build_ant}/media/music/samples" />
     <!-- Build Maud.jar. -->
-    <jar jarfile="build/Maud_reduced.jar" basedir="${build}">
+    <jar jarfile="${build}/Maud_reduced.jar" basedir="${build_ant}">
   		<manifest>
     		<attribute name="Built-By" value="${user.name}"/>
   		</manifest>
@@ -1068,7 +1069,7 @@
 
 
   <target name="copy_reduced" depends="build_reduced" description="Copy the reduced build files to the final destination.">
-    <copy file="build/Maud_reduced.jar" tofile="${mirrorreddir}/Maud.jar" />
+    <copy file="${build}/Maud_reduced.jar" tofile="${mirrorreddir}/Maud.jar" />
 		<!--signjar jar="${mirrorreddir}/Maud.jar" alias="${myself}" storepass="${keypasswd}" keystore="${keystore}"/-->
 <!--		<exec dir="." executable="cmd" os="Windows NT"> -->
 <!--  		<arg line="/c test.bat"/> -->
@@ -1132,12 +1133,12 @@
 
   <target name="prepare_miscLib" depends="clean" description="Compile miscLib.jar">
     <!-- First, ensure the build directory exists. -->
-    <delete dir="${build}" />
+    <delete dir="${build_ant}" />
     <mkdir dir="build" />
-    <mkdir dir="${build}" />
+    <mkdir dir="${build_ant}" />
     <!-- Build everything -->
 
-    <unjar dest="${build}">
+    <unjar dest="${build_ant}">
 			<patternset>
         <include name="*"/>
         <include name="**/*"/>
@@ -1162,20 +1163,20 @@
 
   <target name="build_miscLib" depends="prepare_miscLib" description="Build miscLib.jar.">
     <!-- Copy needed files into the build directory. -->
-    <copy file="${buildnumber}/miscLib_build.number" todir="${build}" />
+    <copy file="${buildnumber}/miscLib_build.number" todir="${build_ant}" />
     <!-- Build miscLib.jar. -->
-    <jar jarfile="build/miscLib.jar" basedir="${build}" />
+    <jar jarfile="${build}/miscLib.jar" basedir="${build_ant}" />
   </target>
 
 
   <target name="copy_miscLib" depends="build_miscLib" description="Copy all libraries files to the final destination.">
-    <copy file="build/miscLib.jar" tofile="${mirrorfulldir}/miscLib.jar" />
-    <copy file="build/miscLib.jar" tofile="${mirrorfulldir2}/lib/miscLib.jar" />
-    <copy file="build/miscLib.jar" tofile="${installfulldirMac}/miscLib.jar" />
-    <copy file="build/miscLib.jar" tofile="${installfulldirMac64}/miscLib.jar" />
-    <copy file="build/miscLib.jar" tofile="${installfulldirLinux64}/lib/miscLib.jar" />
-    <copy file="build/miscLib.jar" tofile="${installfulldirWindows}/lib/miscLib.jar" />
-    <copy file="build/miscLib.jar" tofile="${installfulldirWin64}/lib/miscLib.jar" />
+    <copy file="${build}/miscLib.jar" tofile="${mirrorfulldir}/miscLib.jar" />
+    <copy file="${build}/miscLib.jar" tofile="${mirrorfulldir2}/lib/miscLib.jar" />
+    <copy file="${build}/miscLib.jar" tofile="${installfulldirMac}/miscLib.jar" />
+    <copy file="${build}/miscLib.jar" tofile="${installfulldirMac64}/miscLib.jar" />
+    <copy file="${build}/miscLib.jar" tofile="${installfulldirLinux64}/lib/miscLib.jar" />
+    <copy file="${build}/miscLib.jar" tofile="${installfulldirWindows}/lib/miscLib.jar" />
+    <copy file="${build}/miscLib.jar" tofile="${installfulldirWin64}/lib/miscLib.jar" />
 		<!--signjar jar="${mirrorreddir}/lib/miscLib.jar" alias="${myself}" storepass="${keypasswd}" keystore="${keystore}"/-->
 <!--		<exec dir="." executable="cmd" os="Windows NT"> -->
 <!--  		<arg line="/c test.bat"/> -->
@@ -1187,11 +1188,11 @@
 
   <target name="compile_JSgInfo" depends="clean" description="Compile JSgInfo.jar">
     <!-- First, ensure the build directory exists. -->
-    <delete dir="${build}" />
+    <delete dir="${build_ant}" />
     <mkdir dir="build" />
-    <mkdir dir="${build}" />
+    <mkdir dir="${build_ant}" />
     <!-- Build everything -->
-    <javac destdir="${build}" debug="on" target="${java_version}" encoding="UTF-8">
+    <javac destdir="${build_ant}" debug="on" target="${java_version}" encoding="UTF-8">
     	<src path="${src}/it/unitn/ing/jsginfo"/>
       <exclude name="it/unitn/ing/jsginfo/sglib.java" />
       <exclude name="it/unitn/ing/jsginfo/sginfoh.tmp.java" />
@@ -1203,20 +1204,20 @@
 
   <target name="build_JSgInfo" depends="compile_JSgInfo" description="Build JSgInfo.jar.">
     <!-- Copy needed files into the build directory. -->
-    <copy file="${buildnumber}/JSgInfo_build.number" todir="${build}" />
+    <copy file="${buildnumber}/JSgInfo_build.number" todir="${build_ant}" />
     <!-- Build JSgInfo.jar. -->
-    <jar jarfile="build/JSgInfo.jar" basedir="${build}" />
+    <jar jarfile="${build}/JSgInfo.jar" basedir="${build_ant}" />
   </target>
 
 
   <target name="copy_JSgInfo" depends="build_JSgInfo" description="Copy the JSgInfo build files to the final destination.">
-    <copy file="build/JSgInfo.jar" tofile="${mirrorfulldir}/JSgInfo.jar" />
-    <copy file="build/JSgInfo.jar" tofile="${mirrorfulldir2}/lib/JSgInfo.jar" />
-    <copy file="build/JSgInfo.jar" tofile="${installfulldirMac}/JSgInfo.jar" />
-    <copy file="build/JSgInfo.jar" tofile="${installfulldirMac64}/JSgInfo.jar" />
-    <copy file="build/JSgInfo.jar" tofile="${installfulldirLinux64}/lib/JSgInfo.jar" />
-    <copy file="build/JSgInfo.jar" tofile="${installfulldirWindows}/lib/JSgInfo.jar" />
-    <copy file="build/JSgInfo.jar" tofile="${installfulldirWin64}/lib/JSgInfo.jar" />
+    <copy file="${build}/JSgInfo.jar" tofile="${mirrorfulldir}/JSgInfo.jar" />
+    <copy file="${build}/JSgInfo.jar" tofile="${mirrorfulldir2}/lib/JSgInfo.jar" />
+    <copy file="${build}/JSgInfo.jar" tofile="${installfulldirMac}/JSgInfo.jar" />
+    <copy file="${build}/JSgInfo.jar" tofile="${installfulldirMac64}/JSgInfo.jar" />
+    <copy file="${build}/JSgInfo.jar" tofile="${installfulldirLinux64}/lib/JSgInfo.jar" />
+    <copy file="${build}/JSgInfo.jar" tofile="${installfulldirWindows}/lib/JSgInfo.jar" />
+    <copy file="${build}/JSgInfo.jar" tofile="${installfulldirWin64}/lib/JSgInfo.jar" />
 		<!--signjar jar="${mirrorreddir}/lib/JSgInfo.jar" alias="${myself}" storepass="${keypasswd}" keystore="${keystore}"/-->
 <!--		<exec dir="." executable="cmd" os="Windows NT"> -->
 <!--  		<arg line="/c test.bat"/> -->
@@ -1228,16 +1229,16 @@
 
   <target name="compile_jgaec" depends="clean" description="Compile jgaec.jar">
     <!-- First, ensure the build directory exists. -->
-    <delete dir="${build}" />
+    <delete dir="${build_ant}" />
     <mkdir dir="build" />
-    <mkdir dir="${build}" />
+    <mkdir dir="${build_ant}" />
     <!-- Build everything -->
-    <javac destdir="${build}" debug="on" target="${java_version}" encoding="UTF-8">
+    <javac destdir="${build_ant}" debug="on" target="${java_version}" encoding="UTF-8">
       <src path="${src}/ec"/>
       <exclude name="vector/AtomVectorIndividual.java" />
       <exclude name="teambots/**" />
       <classpath>
-				<pathelement location="build/Maud_dev.jar"/>
+				<pathelement location="${build}/Maud_dev.jar"/>
 			</classpath>
     </javac>
     <buildnumber file="${buildnumber}/jgaec_build.number"/>
@@ -1246,21 +1247,21 @@
 
   <target name="build_jgaec" depends="compile_jgaec" description="Build jgaec.jar.">
     <!-- Copy needed files into the build directory. -->
-    <copy file="${buildnumber}/jgaec_build.number" todir="${build}" />
+    <copy file="${buildnumber}/jgaec_build.number" todir="${build_ant}" />
     <!-- Build jgaec.jar. -->
-    <jar jarfile="build/jgaec.jar" basedir="${build}" />
+    <jar jarfile="${build}/jgaec.jar" basedir="${build_ant}" />
   </target>
 
 
   <target name="copy_jgaec" description="Copy the jgaec build files to the final destination.">
-    <copy file="build/jgaec.jar" tofile="${mirrorfulldir}/jgaec.jar" />
-    <copy file="build/jgaec.jar" tofile="${mirrorfulldir2}/lib/jgaec.jar" />
-    <copy file="build/jgaec.jar" tofile="${installfulldirMac}/jgaec.jar" />
-    <copy file="build/jgaec.jar" tofile="${installfulldirMac64}/jgaec.jar" />
-    <copy file="build/jgaec.jar" tofile="${installfulldirUnix}/lib/jgaec.jar" />
-    <copy file="build/jgaec.jar" tofile="${installfulldirLinux64}/lib/jgaec.jar" />
-    <copy file="build/jgaec.jar" tofile="${installfulldirWindows}/lib/jgaec.jar" />
-    <copy file="build/jgaec.jar" tofile="${installfulldirWin64}/lib/jgaec.jar" />
+    <copy file="${build}/jgaec.jar" tofile="${mirrorfulldir}/jgaec.jar" />
+    <copy file="${build}/jgaec.jar" tofile="${mirrorfulldir2}/lib/jgaec.jar" />
+    <copy file="${build}/jgaec.jar" tofile="${installfulldirMac}/jgaec.jar" />
+    <copy file="${build}/jgaec.jar" tofile="${installfulldirMac64}/jgaec.jar" />
+    <copy file="${build}/jgaec.jar" tofile="${installfulldirUnix}/lib/jgaec.jar" />
+    <copy file="${build}/jgaec.jar" tofile="${installfulldirLinux64}/lib/jgaec.jar" />
+    <copy file="${build}/jgaec.jar" tofile="${installfulldirWindows}/lib/jgaec.jar" />
+    <copy file="${build}/jgaec.jar" tofile="${installfulldirWin64}/lib/jgaec.jar" />
 		<!--signjar jar="${mirrorreddir}/lib/jgaec.jar" alias="${myself}" storepass="${keypasswd}" keystore="${keystore}"/-->
 <!--		<exec dir="." executable="cmd" os="Windows NT"> -->
 <!--  		<arg line="/c test.bat"/> -->
@@ -1271,14 +1272,14 @@
 
 
   <target name="copy_jgap" description="Copy the jgap jar to the final destination.">
-    <copy file="build/jgap.jar" tofile="${mirrorfulldir}/jgap.jar" />
-    <copy file="build/jgap.jar" tofile="${mirrorfulldir2}/lib/jgap.jar" />
-    <copy file="build/jgap.jar" tofile="${installfulldirMac}/jgap.jar" />
-    <copy file="build/jgap.jar" tofile="${installfulldirMac64}/jgap.jar" />
-    <copy file="build/jgap.jar" tofile="${installfulldirUnix}/lib/jgap.jar" />
-    <copy file="build/jgap.jar" tofile="${installfulldirLinux64}/lib/jgap.jar" />
-    <copy file="build/jgap.jar" tofile="${installfulldirWindows}/lib/jgap.jar" />
-    <copy file="build/jgap.jar" tofile="${installfulldirWin64}/lib/jgap.jar" />
+    <copy file="${build}/jgap.jar" tofile="${mirrorfulldir}/jgap.jar" />
+    <copy file="${build}/jgap.jar" tofile="${mirrorfulldir2}/lib/jgap.jar" />
+    <copy file="${build}/jgap.jar" tofile="${installfulldirMac}/jgap.jar" />
+    <copy file="${build}/jgap.jar" tofile="${installfulldirMac64}/jgap.jar" />
+    <copy file="${build}/jgap.jar" tofile="${installfulldirUnix}/lib/jgap.jar" />
+    <copy file="${build}/jgap.jar" tofile="${installfulldirLinux64}/lib/jgap.jar" />
+    <copy file="${build}/jgap.jar" tofile="${installfulldirWindows}/lib/jgap.jar" />
+    <copy file="${build}/jgap.jar" tofile="${installfulldirWin64}/lib/jgap.jar" />
 		<!--signjar jar="${mirrorreddir}/lib/jgaec.jar" alias="${myself}" storepass="${keypasswd}" keystore="${keystore}"/-->
 <!--		<exec dir="." executable="cmd" os="Windows NT"> -->
 <!--  		<arg line="/c test.bat"/> -->
@@ -1289,14 +1290,14 @@
 
 
   <target name="copy_jmol" description="Copy the jmol jar to the final destination.">
-    <copy file="build/jmol.jar" tofile="${mirrorfulldir}/jmol.jar" />
-    <copy file="build/jmol.jar" tofile="${mirrorfulldir2}/lib/jmol.jar" />
-    <copy file="build/jmol.jar" tofile="${installfulldirMac}/jmol.jar" />
-    <copy file="build/jmol.jar" tofile="${installfulldirMac64}/jmol.jar" />
-    <copy file="build/jmol.jar" tofile="${installfulldirUnix}/lib/jmol.jar" />
-    <copy file="build/jmol.jar" tofile="${installfulldirLinux64}/lib/jmol.jar" />
-    <copy file="build/jmol.jar" tofile="${installfulldirWindows}/lib/jmol.jar" />
-    <copy file="build/jmol.jar" tofile="${installfulldirWin64}/lib/jmol.jar" />
+    <copy file="${build}/jmol.jar" tofile="${mirrorfulldir}/jmol.jar" />
+    <copy file="${build}/jmol.jar" tofile="${mirrorfulldir2}/lib/jmol.jar" />
+    <copy file="${build}/jmol.jar" tofile="${installfulldirMac}/jmol.jar" />
+    <copy file="${build}/jmol.jar" tofile="${installfulldirMac64}/jmol.jar" />
+    <copy file="${build}/jmol.jar" tofile="${installfulldirUnix}/lib/jmol.jar" />
+    <copy file="${build}/jmol.jar" tofile="${installfulldirLinux64}/lib/jmol.jar" />
+    <copy file="${build}/jmol.jar" tofile="${installfulldirWindows}/lib/jmol.jar" />
+    <copy file="${build}/jmol.jar" tofile="${installfulldirWin64}/lib/jmol.jar" />
 		<!--signjar jar="${mirrorreddir}/lib/jgaec.jar" alias="${myself}" storepass="${keypasswd}" keystore="${keystore}"/-->
 <!--		<exec dir="." executable="cmd" os="Windows NT"> -->
 <!--  		<arg line="/c test.bat"/> -->
@@ -1307,14 +1308,14 @@
 
 
   <target name="copy_joone" description="Copy the joone jar to the final destination.">
-    <copy file="build/joone-engine.jar" tofile="${mirrorfulldir}/joone-engine.jar" />
-    <copy file="build/joone-engine.jar" tofile="${mirrorfulldir2}/lib/joone-engine.jar" />
-    <copy file="build/joone-engine.jar" tofile="${installfulldirMac}/joone-engine.jar" />
-    <copy file="build/joone-engine.jar" tofile="${installfulldirMac64}/joone-engine.jar" />
-    <copy file="build/joone-engine.jar" tofile="${installfulldirUnix}/lib/joone-engine.jar" />
-    <copy file="build/joone-engine.jar" tofile="${installfulldirLinux64}/lib/joone-engine.jar" />
-    <copy file="build/joone-engine.jar" tofile="${installfulldirWindows}/lib/joone-engine.jar" />
-    <copy file="build/joone-engine.jar" tofile="${installfulldirWin64}/lib/joone-engine.jar" />
+    <copy file="${build}/joone-engine.jar" tofile="${mirrorfulldir}/joone-engine.jar" />
+    <copy file="${build}/joone-engine.jar" tofile="${mirrorfulldir2}/lib/joone-engine.jar" />
+    <copy file="${build}/joone-engine.jar" tofile="${installfulldirMac}/joone-engine.jar" />
+    <copy file="${build}/joone-engine.jar" tofile="${installfulldirMac64}/joone-engine.jar" />
+    <copy file="${build}/joone-engine.jar" tofile="${installfulldirUnix}/lib/joone-engine.jar" />
+    <copy file="${build}/joone-engine.jar" tofile="${installfulldirLinux64}/lib/joone-engine.jar" />
+    <copy file="${build}/joone-engine.jar" tofile="${installfulldirWindows}/lib/joone-engine.jar" />
+    <copy file="${build}/joone-engine.jar" tofile="${installfulldirWin64}/lib/joone-engine.jar" />
 		<!--signjar jar="${mirrorreddir}/lib/jgaec.jar" alias="${myself}" storepass="${keypasswd}" keystore="${keystore}"/-->
 <!--		<exec dir="." executable="cmd" os="Windows NT"> -->
 <!--  		<arg line="/c test.bat"/> -->
@@ -1325,9 +1326,9 @@
 
 
   <target name="copy_textmode" depends="build_textmode" description="Copy the Maud_essential jar to the final destination.">
-    <copy file="build/Maud_essential.jar" tofile="${mirrorfulldir2}/xgrid/Maud_essential.jar" />
-    <copy file="build/Maud_essential.jar" tofile="${inst}/Maud_all_xgrid/Maud/xgrid/Maud_essential.jar" />
-    <!--copy file="build/Maud_essential.jar" tofile="${user.home}/Analysis/Analysis_07/nova/LargePhotoplateExample/bin/Maud_essential.jar" />
+    <copy file="${build}/Maud_essential.jar" tofile="${mirrorfulldir2}/xgrid/Maud_essential.jar" />
+    <copy file="${build}/Maud_essential.jar" tofile="${inst}/Maud_all_xgrid/Maud/xgrid/Maud_essential.jar" />
+    <!--copy file="${build}/Maud_essential.jar" tofile="${user.home}/Analysis/Analysis_07/nova/LargePhotoplateExample/bin/Maud_essential.jar" />
 		<signjar jar="${mirrorreddir}/lib/jgaec.jar" alias="${myself}" storepass="${keypasswd}" keystore="${keystore}"/-->
 <!--		<exec dir="." executable="cmd" os="Windows NT"> -->
 <!--  		<arg line="/c test.bat"/> -->
@@ -1339,14 +1340,14 @@
 
   <target name="compile_JGraph" depends="clean" description="Compile JGraph.jar">
     <!-- First, ensure the build directory exists. -->
-    <delete dir="${build}" />
+    <delete dir="${build_ant}" />
     <mkdir dir="build" />
-    <mkdir dir="${build}" />
+    <mkdir dir="${build_ant}" />
     <!-- Build everything -->
-    <javac destdir="${build}" debug="on" target="${java_version}" encoding="UTF-8">
+    <javac destdir="${build_ant}" debug="on" target="${java_version}" encoding="UTF-8">
       <src path="${src}/it/unitn/ing/jgraph"/>
       <classpath>
-				<pathelement location="build/Maud_dev.jar"/>
+				<pathelement location="${build}/Maud_dev.jar"/>
 			</classpath>
     </javac>
     <buildnumber file="${buildnumber}/JGraph_build.number"/>
@@ -1355,21 +1356,21 @@
 
   <target name="build_JGraph" depends="compile_JGraph" description="Build JGraph.jar.">
     <!-- Copy needed files into the build directory. -->
-    <copy file="${buildnumber}/JGraph_build.number" todir="${build}" />
+    <copy file="${buildnumber}/JGraph_build.number" todir="${build_ant}" />
     <!-- Build JGraph.jar. -->
-    <jar jarfile="build/JGraph.jar" basedir="${build}" />
+    <jar jarfile="${build}/JGraph.jar" basedir="${build_ant}" />
   </target>
 
 
   <target name="copy_JGraph" depends="build_JGraph" description="Copy the JGraph build files to the final destination.">
-    <copy file="build/JGraph.jar" tofile="${mirrorfulldir}/JGraph.jar" />
-    <copy file="build/JGraph.jar" tofile="${mirrorfulldir2}/lib/JGraph.jar" />
-    <copy file="build/JGraph.jar" tofile="${installfulldirMac}/JGraph.jar" />
-    <copy file="build/JGraph.jar" tofile="${installfulldirMac64}/JGraph.jar" />
-    <copy file="build/JGraph.jar" tofile="${installfulldirUnix}/lib/JGraph.jar" />
-    <copy file="build/JGraph.jar" tofile="${installfulldirLinux64}/lib/JGraph.jar" />
-    <copy file="build/JGraph.jar" tofile="${installfulldirWindows}/lib/JGraph.jar" />
-    <copy file="build/JGraph.jar" tofile="${installfulldirWin64}/lib/JGraph.jar" />
+    <copy file="${build}/JGraph.jar" tofile="${mirrorfulldir}/JGraph.jar" />
+    <copy file="${build}/JGraph.jar" tofile="${mirrorfulldir2}/lib/JGraph.jar" />
+    <copy file="${build}/JGraph.jar" tofile="${installfulldirMac}/JGraph.jar" />
+    <copy file="${build}/JGraph.jar" tofile="${installfulldirMac64}/JGraph.jar" />
+    <copy file="${build}/JGraph.jar" tofile="${installfulldirUnix}/lib/JGraph.jar" />
+    <copy file="${build}/JGraph.jar" tofile="${installfulldirLinux64}/lib/JGraph.jar" />
+    <copy file="${build}/JGraph.jar" tofile="${installfulldirWindows}/lib/JGraph.jar" />
+    <copy file="${build}/JGraph.jar" tofile="${installfulldirWin64}/lib/JGraph.jar" />
 		<!--signjar jar="${mirrorreddir}/lib/JGraph.jar" alias="${myself}" storepass="${keypasswd}" keystore="${keystore}"/-->
 <!--		<exec dir="." executable="cmd" os="Windows NT"> -->
 <!--  		<arg line="/c test.bat"/> -->
@@ -1381,14 +1382,14 @@
 
   <target name="compile_Jsgt" depends="clean" description="Compile Jsgt.jar">
     <!-- First, ensure the build directory exists. -->
-    <delete dir="${build}" />
+    <delete dir="${build_ant}" />
     <mkdir dir="build" />
-    <mkdir dir="${build}" />
+    <mkdir dir="${build_ant}" />
     <!-- Build everything -->
-    <javac destdir="${build}" debug="on" target="${java_version}" encoding="UTF-8">
+    <javac destdir="${build_ant}" debug="on" target="${java_version}" encoding="UTF-8">
       <src path="${src}/gov/noaa/pmel"/>
       <!--classpath>
-			<pathelement location="build/Maud_dev.jar"/>
+			<pathelement location="${build}/Maud_dev.jar"/>
 			</classpath-->
     </javac>
     <buildnumber file="${buildnumber}/Jsgt_build.number"/>
@@ -1397,29 +1398,29 @@
 
   <target name="build_Jsgt" depends="compile_Jsgt" description="Build Jsgt.jar.">
     <!-- Copy needed files into the build directory. -->
-    <copy file="${buildnumber}/Jsgt_build.number" todir="${build}" />
+    <copy file="${buildnumber}/Jsgt_build.number" todir="${build_ant}" />
     <!-- Build JGraph.jar. -->
-    <jar jarfile="build/Jsgt.jar" basedir="${build}" />
+    <jar jarfile="${build}/Jsgt.jar" basedir="${build_ant}" />
   </target>
 
 
   <target name="copy_rome" description="Copy the rome and jdom libraries to the final destination.">
-    <copy file="build/jdom.jar" tofile="${mirrorfulldir}/jdom.jar" />
-    <copy file="build/rome.jar" tofile="${mirrorfulldir}/rome.jar" />
-    <copy file="build/jdom.jar" tofile="${mirrorfulldir2}/lib/jdom.jar" />
-    <copy file="build/rome.jar" tofile="${mirrorfulldir2}/lib/rome.jar" />
-    <copy file="build/jdom.jar" tofile="${installfulldirMac}/jdom.jar" />
-    <copy file="build/rome.jar" tofile="${installfulldirMac}/rome.jar" />
-    <copy file="build/jdom.jar" tofile="${installfulldirMac64}/jdom.jar" />
-    <copy file="build/rome.jar" tofile="${installfulldirMac64}/rome.jar" />
-    <copy file="build/jdom.jar" tofile="${installfulldirUnix}/lib/jdom.jar" />
-    <copy file="build/rome.jar" tofile="${installfulldirUnix}/lib/rome.jar" />
-    <copy file="build/jdom.jar" tofile="${installfulldirLinux64}/lib/jdom.jar" />
-    <copy file="build/rome.jar" tofile="${installfulldirLinux64}/lib/rome.jar" />
-    <copy file="build/jdom.jar" tofile="${installfulldirWindows}/lib/jdom.jar" />
-    <copy file="build/rome.jar" tofile="${installfulldirWindows}/lib/rome.jar" />
-    <copy file="build/jdom.jar" tofile="${installfulldirWin64}/lib/jdom.jar" />
-    <copy file="build/rome.jar" tofile="${installfulldirWin64}/lib/rome.jar" />
+    <copy file="${build}/jdom.jar" tofile="${mirrorfulldir}/jdom.jar" />
+    <copy file="${build}/rome.jar" tofile="${mirrorfulldir}/rome.jar" />
+    <copy file="${build}/jdom.jar" tofile="${mirrorfulldir2}/lib/jdom.jar" />
+    <copy file="${build}/rome.jar" tofile="${mirrorfulldir2}/lib/rome.jar" />
+    <copy file="${build}/jdom.jar" tofile="${installfulldirMac}/jdom.jar" />
+    <copy file="${build}/rome.jar" tofile="${installfulldirMac}/rome.jar" />
+    <copy file="${build}/jdom.jar" tofile="${installfulldirMac64}/jdom.jar" />
+    <copy file="${build}/rome.jar" tofile="${installfulldirMac64}/rome.jar" />
+    <copy file="${build}/jdom.jar" tofile="${installfulldirUnix}/lib/jdom.jar" />
+    <copy file="${build}/rome.jar" tofile="${installfulldirUnix}/lib/rome.jar" />
+    <copy file="${build}/jdom.jar" tofile="${installfulldirLinux64}/lib/jdom.jar" />
+    <copy file="${build}/rome.jar" tofile="${installfulldirLinux64}/lib/rome.jar" />
+    <copy file="${build}/jdom.jar" tofile="${installfulldirWindows}/lib/jdom.jar" />
+    <copy file="${build}/rome.jar" tofile="${installfulldirWindows}/lib/rome.jar" />
+    <copy file="${build}/jdom.jar" tofile="${installfulldirWin64}/lib/jdom.jar" />
+    <copy file="${build}/rome.jar" tofile="${installfulldirWin64}/lib/rome.jar" />
 		<!--signjar jar="${mirrorreddir}/lib/jdom.jar" alias="${myself}" storepass="${keypasswd}" keystore="${keystore}"/-->
 		<!--signjar jar="${mirrorreddir}/lib/rome.jar" alias="${myself}" storepass="${keypasswd}" keystore="${keystore}"/-->
 <!--		<exec dir="." executable="cmd" os="Windows NT"> -->
@@ -1431,14 +1432,14 @@
 
 
   <target name="copy_MySQL-ConnectorJ" description="Copy the jgaec build files to the final destination.">
-    <copy file="build/MySQL-ConnectorJ.jar" tofile="${mirrorfulldir}/MySQL-ConnectorJ.jar" />
-    <copy file="build/MySQL-ConnectorJ.jar" tofile="${mirrorfulldir2}/lib/MySQL-ConnectorJ.jar" />
-    <copy file="build/MySQL-ConnectorJ.jar" tofile="${installfulldirMac}/MySQL-ConnectorJ.jar" />
-    <copy file="build/MySQL-ConnectorJ.jar" tofile="${installfulldirMac64}/MySQL-ConnectorJ.jar" />
-    <copy file="build/MySQL-ConnectorJ.jar" tofile="${installfulldirUnix}/lib/MySQL-ConnectorJ.jar" />
-    <copy file="build/MySQL-ConnectorJ.jar" tofile="${installfulldirLinux64}/lib/MySQL-ConnectorJ.jar" />
-    <copy file="build/MySQL-ConnectorJ.jar" tofile="${installfulldirWindows}/lib/MySQL-ConnectorJ.jar" />
-    <copy file="build/MySQL-ConnectorJ.jar" tofile="${installfulldirWin64}/lib/MySQL-ConnectorJ.jar" />
+    <copy file="${build}/MySQL-ConnectorJ.jar" tofile="${mirrorfulldir}/MySQL-ConnectorJ.jar" />
+    <copy file="${build}/MySQL-ConnectorJ.jar" tofile="${mirrorfulldir2}/lib/MySQL-ConnectorJ.jar" />
+    <copy file="${build}/MySQL-ConnectorJ.jar" tofile="${installfulldirMac}/MySQL-ConnectorJ.jar" />
+    <copy file="${build}/MySQL-ConnectorJ.jar" tofile="${installfulldirMac64}/MySQL-ConnectorJ.jar" />
+    <copy file="${build}/MySQL-ConnectorJ.jar" tofile="${installfulldirUnix}/lib/MySQL-ConnectorJ.jar" />
+    <copy file="${build}/MySQL-ConnectorJ.jar" tofile="${installfulldirLinux64}/lib/MySQL-ConnectorJ.jar" />
+    <copy file="${build}/MySQL-ConnectorJ.jar" tofile="${installfulldirWindows}/lib/MySQL-ConnectorJ.jar" />
+    <copy file="${build}/MySQL-ConnectorJ.jar" tofile="${installfulldirWin64}/lib/MySQL-ConnectorJ.jar" />
 		<!--signjar jar="${mirrorreddir}/lib/MySQL-ConnectorJ.jar" alias="${myself}" storepass="${keypasswd}" keystore="${keystore}"/-->
 <!--		<exec dir="." executable="cmd" os="Windows NT"> -->
 <!--  		<arg line="/c test.bat"/> -->
@@ -1449,10 +1450,10 @@
 
 
   <!--target name="compile_ImageJ" depends="clean" description="Compile ImageJ.jar">
-    <delete dir="${build}" />
+    <delete dir="${build_ant}" />
     <mkdir dir="build" />
-    <mkdir dir="${build}" />
-    <javac destdir="${build}" debug="on" target="1.5" encoding="UTF-8">
+    <mkdir dir="${build_ant}" />
+    <javac destdir="${build_ant}" debug="on" target="1.5" encoding="UTF-8">
     	<src path="ImageJ"/>
       <exclude name="plugins/*" />
     </javac>
@@ -1461,23 +1462,23 @@
   
 
   <target name="build_ImageJ" depends="compile_ImageJ" description="Build ImageJ.jar.">
-     <copy file="ImageJ/IJ_Props.txt" todir="${build}" />
-    <copy file="ImageJ/images/microscope.gif" tofile="${build}/microscope.gif" />
-    <copy file="ImageJ/images/about.jpg" tofile="${build}/about.jpg" />
-    <copy file="${buildnumber}/ImageJ_build.number" todir="${build}" />
-    <jar jarfile="build/ij.jar" basedir="${build}" manifest="ImageJ/MANIFEST.MF" />
+     <copy file="ImageJ/IJ_Props.txt" todir="${build_ant}" />
+    <copy file="ImageJ/images/microscope.gif" tofile="${build_ant}/microscope.gif" />
+    <copy file="ImageJ/images/about.jpg" tofile="${build_ant}/about.jpg" />
+    <copy file="${buildnumber}/ImageJ_build.number" todir="${build_ant}" />
+    <jar jarfile="${build}/ij.jar" basedir="${build_ant}" manifest="ImageJ/MANIFEST.MF" />
   </target!-->
 
 
   <target name="copy_ImageJ" description="Copy the ImageJ build files to the final destination.">
-    <copy file="build/ij.jar" tofile="${mirrorfulldir}/ij.jar" />
-    <copy file="build/ij.jar" tofile="${mirrorfulldir2}/lib/ij.jar" />
-    <copy file="build/ij.jar" tofile="${installfulldirMac}/ij.jar" />
-    <copy file="build/ij.jar" tofile="${installfulldirMac64}/ij.jar" />
-    <copy file="build/ij.jar" tofile="${installfulldirUnix}/lib/ij.jar" />
-    <copy file="build/ij.jar" tofile="${installfulldirLinux64}/lib/ij.jar" />
-    <copy file="build/ij.jar" tofile="${installfulldirWindows}/lib/ij.jar" />
-    <copy file="build/ij.jar" tofile="${installfulldirWin64}/lib/ij.jar" />
+    <copy file="${build}/ij.jar" tofile="${mirrorfulldir}/ij.jar" />
+    <copy file="${build}/ij.jar" tofile="${mirrorfulldir2}/lib/ij.jar" />
+    <copy file="${build}/ij.jar" tofile="${installfulldirMac}/ij.jar" />
+    <copy file="${build}/ij.jar" tofile="${installfulldirMac64}/ij.jar" />
+    <copy file="${build}/ij.jar" tofile="${installfulldirUnix}/lib/ij.jar" />
+    <copy file="${build}/ij.jar" tofile="${installfulldirLinux64}/lib/ij.jar" />
+    <copy file="${build}/ij.jar" tofile="${installfulldirWindows}/lib/ij.jar" />
+    <copy file="${build}/ij.jar" tofile="${installfulldirWin64}/lib/ij.jar" />
 		<!--signjar jar="${mirrorreddir}/lib/ij.jar" alias="${myself}" storepass="${keypasswd}" keystore="${keystore}"/-->
 <!--		<exec dir="." executable="cmd" os="Windows NT"> -->
 <!--  		<arg line="/c test.bat"/> -->
@@ -1489,11 +1490,11 @@
 
   <target name="compile_HTTPClient" depends="clean" description="Compile HTTPClient.jar">
     <!-- First, ensure the build directory exists. -->
-    <delete dir="${build}" />
+    <delete dir="${build_ant}" />
     <mkdir dir="build" />
-    <mkdir dir="${build}" />
+    <mkdir dir="${build_ant}" />
     <!-- Build everything -->
-    <javac destdir="${build}" debug="on" target="1.5" encoding="UTF-8">
+    <javac destdir="${build_ant}" debug="on" target="1.5" encoding="UTF-8">
     	<src path="${src}/HTTPClient"/>
     </javac>
     <buildnumber file="${buildnumber}/HTTPClient_build.number"/>
@@ -1502,21 +1503,21 @@
 
   <target name="build_HTTPClient" depends="compile_HTTPClient" description="Build HTTPClient.jar.">
     <!-- Copy needed files into the build directory. -->
-    <copy file="${buildnumber}/HTTPClient_build.number" todir="${build}" />
+    <copy file="${buildnumber}/HTTPClient_build.number" todir="${build_ant}" />
     <!-- Build HTTPclient.jar. -->
-    <jar jarfile="build/HTTPClient.jar" basedir="${build}" />
+    <jar jarfile="${build}/HTTPClient.jar" basedir="${build_ant}" />
   </target>
 
 
   <target name="copy_HTTPclient" depends="build_HTTPClient" description="Copy the HTTPClient build files to the final destination.">
-    <copy file="build/HTTPClient.jar" tofile="${mirrorfulldir}/HTTPClient.jar" />
-    <copy file="build/HTTPClient.jar" tofile="${mirrorfulldir2}/lib/HTTPClient.jar" />
-    <copy file="build/HTTPClient.jar" tofile="${installfulldirMac}/HTTPClient.jar" />
-    <copy file="build/HTTPClient.jar" tofile="${installfulldirMac64}/HTTPClient.jar" />
-    <copy file="build/HTTPClient.jar" tofile="${installfulldirUnix}/lib/HTTPClient.jar" />
-    <copy file="build/HTTPClient.jar" tofile="${installfulldirLinux64}/lib/HTTPClient.jar" />
-    <copy file="build/HTTPClient.jar" tofile="${installfulldirWindows}/lib/HTTPClient.jar" />
-    <copy file="build/HTTPClient.jar" tofile="${installfulldirWin64}/lib/HTTPClient.jar" />
+    <copy file="${build}/HTTPClient.jar" tofile="${mirrorfulldir}/HTTPClient.jar" />
+    <copy file="${build}/HTTPClient.jar" tofile="${mirrorfulldir2}/lib/HTTPClient.jar" />
+    <copy file="${build}/HTTPClient.jar" tofile="${installfulldirMac}/HTTPClient.jar" />
+    <copy file="${build}/HTTPClient.jar" tofile="${installfulldirMac64}/HTTPClient.jar" />
+    <copy file="${build}/HTTPClient.jar" tofile="${installfulldirUnix}/lib/HTTPClient.jar" />
+    <copy file="${build}/HTTPClient.jar" tofile="${installfulldirLinux64}/lib/HTTPClient.jar" />
+    <copy file="${build}/HTTPClient.jar" tofile="${installfulldirWindows}/lib/HTTPClient.jar" />
+    <copy file="${build}/HTTPClient.jar" tofile="${installfulldirWin64}/lib/HTTPClient.jar" />
 		<!--signjar jar="${mirrorreddir}/lib/HTTPClient.jar" alias="${myself}" storepass="${keypasswd}" keystore="${keystore}"/-->
 <!--		<exec dir="." executable="cmd" os="Windows NT"> -->
 <!--  		<arg line="/c test.bat"/> -->
@@ -1531,7 +1532,6 @@
     <copy file="libs/jogl-2.0/jogl.all.jar" todir="${mirrorfulldir}" />
     <copy file="libs/jogl-2.0/nativewindow.all.jar" todir="${mirrorfulldir}" />
     <copy file="libs/jogl-2.0/newt.all.jar" todir="${mirrorfulldir}" />
-    <copy file="libs/jogl-2.0/gluegen-rt.jar" todir="${mirrorfulldir}" />
     <copy file="libs/jogl-2.0/macosx-universal/lib/libgluegen-rt.jnilib" todir="${mirrorfulldir}" />
     <copy file="libs/jogl-2.0/macosx-universal/lib/libjogl_desktop.jnilib" todir="${mirrorfulldir}" />
     <copy file="libs/jogl-2.0/macosx-universal/lib/libjogl_es1.jnilib" todir="${mirrorfulldir}" />
@@ -1541,7 +1541,6 @@
     <copy file="libs/jogl-2.0/jogl.all.jar" todir="${mirrorfulldir2}/lib" />
     <copy file="libs/jogl-2.0/nativewindow.all.jar" todir="${mirrorfulldir2}/lib" />
     <copy file="libs/jogl-2.0/newt.all.jar" todir="${mirrorfulldir2}/lib" />
-    <copy file="libs/jogl-2.0/gluegen-rt.jar" todir="${mirrorfulldir2}/lib" />
     <copy file="libs/jogl-2.0/macosx-universal/lib/libgluegen-rt.jnilib" todir="${mirrorfulldir2}" />
     <copy file="libs/jogl-2.0/macosx-universal/lib/libjogl_desktop.jnilib" todir="${mirrorfulldir2}" />
     <copy file="libs/jogl-2.0/macosx-universal/lib/libjogl_es1.jnilib" todir="${mirrorfulldir2}" />
@@ -1551,7 +1550,6 @@
     <copy file="libs/jogl-2.0/jogl.all.jar" todir="${installfulldirMac}" />
     <copy file="libs/jogl-2.0/nativewindow.all.jar" todir="${installfulldirMac}" />
     <copy file="libs/jogl-2.0/newt.all.jar" todir="${installfulldirMac}" />
-    <copy file="libs/jogl-2.0/gluegen-rt.jar" todir="${installfulldirMac}" />
     <copy file="libs/jogl-2.0/macosx-universal/lib/libgluegen-rt.jnilib" todir="${installfulldirMac}" />
     <copy file="libs/jogl-2.0/macosx-universal/lib/libjogl_desktop.jnilib" todir="${installfulldirMac}" />
     <copy file="libs/jogl-2.0/macosx-universal/lib/libjogl_es1.jnilib" todir="${installfulldirMac}" />
@@ -1561,7 +1559,6 @@
     <copy file="libs/jogl-2.0/jogl.all.jar" todir="${installfulldirMac64}" />
     <copy file="libs/jogl-2.0/nativewindow.all.jar" todir="${installfulldirMac64}" />
     <copy file="libs/jogl-2.0/newt.all.jar" todir="${installfulldirMac64}" />
-    <copy file="libs/jogl-2.0/gluegen-rt.jar" todir="${installfulldirMac64}" />
     <copy file="libs/jogl-2.0/macosx-universal/lib/libgluegen-rt.jnilib" todir="${installfulldirMac64}" />
     <copy file="libs/jogl-2.0/macosx-universal/lib/libjogl_desktop.jnilib" todir="${installfulldirMac64}" />
     <copy file="libs/jogl-2.0/macosx-universal/lib/libjogl_es1.jnilib" todir="${installfulldirMac64}" />
@@ -1571,7 +1568,6 @@
     <copy file="libs/jogl-2.0/jogl.all.jar" todir="${installfulldirUnix}/lib" />
     <copy file="libs/jogl-2.0/nativewindow.all.jar" todir="${installfulldirUnix}/lib" />
     <copy file="libs/jogl-2.0/newt.all.jar" todir="${installfulldirUnix}/lib" />
-    <copy file="libs/jogl-2.0/gluegen-rt.jar" todir="${installfulldirUnix}/lib" />
     <copy file="libs/jogl-2.0/linux-i586/lib/libgluegen-rt.so" todir="${installfulldirUnix}" />
     <copy file="libs/jogl-2.0/linux-i586/lib/libjogl_desktop.so" todir="${installfulldirUnix}" />
     <copy file="libs/jogl-2.0/linux-i586/lib/libjogl_es1.so" todir="${installfulldirUnix}" />
@@ -1582,7 +1578,6 @@
     <copy file="libs/jogl-2.0/jogl.all.jar" todir="${installfulldirLinux64}/lib" />
     <copy file="libs/jogl-2.0/nativewindow.all.jar" todir="${installfulldirLinux64}/lib" />
     <copy file="libs/jogl-2.0/newt.all.jar" todir="${installfulldirLinux64}/lib" />
-    <copy file="libs/jogl-2.0/gluegen-rt.jar" todir="${installfulldirLinux64}/lib" />
     <copy file="libs/jogl-2.0/linux-amd64/lib/libgluegen-rt.so" todir="${installfulldirLinux64}" />
     <copy file="libs/jogl-2.0/linux-amd64/lib/libjogl_desktop.so" todir="${installfulldirLinux64}" />
     <copy file="libs/jogl-2.0/linux-amd64/lib/libjogl_es1.so" todir="${installfulldirLinux64}" />
@@ -1593,8 +1588,6 @@
     <copy file="libs/jogl-2.0/jogl.all.jar" todir="${installfulldirWindows}/lib" />
     <copy file="libs/jogl-2.0/nativewindow.all.jar" todir="${installfulldirWindows}/lib" />
     <copy file="libs/jogl-2.0/newt.all.jar" todir="${installfulldirWindows}/lib" />
-    <copy file="libs/jogl-2.0/gluegen-rt.jar" todir="${installfulldirWindows}/lib" />
-    <copy file="libs/jogl-2.0/windows-i586/lib/gluegen-rt.dll" todir="${installfulldirWindows}" />
     <copy file="libs/jogl-2.0/windows-i586/lib/jogl_desktop.dll" todir="${installfulldirWindows}" />
     <copy file="libs/jogl-2.0/windows-i586/lib/jogl_es1.dll" todir="${installfulldirWindows}" />
     <copy file="libs/jogl-2.0/windows-i586/lib/jogl_es2.dll" todir="${installfulldirWindows}" />
@@ -1604,8 +1597,6 @@
     <copy file="libs/jogl-2.0/jogl.all.jar" todir="${installfulldirWin64}/lib" />
     <copy file="libs/jogl-2.0/nativewindow.all.jar" todir="${installfulldirWin64}/lib" />
     <copy file="libs/jogl-2.0/newt.all.jar" todir="${installfulldirWin64}/lib" />
-    <copy file="libs/jogl-2.0/gluegen-rt.jar" todir="${installfulldirWin64}/lib" />
-    <copy file="libs/jogl-2.0/windows-amd64/lib/gluegen-rt.dll" todir="${installfulldirWin64}" />
     <copy file="libs/jogl-2.0/windows-amd64/lib/jogl_desktop.dll" todir="${installfulldirWin64}" />
     <copy file="libs/jogl-2.0/windows-amd64/lib/jogl_es1.dll" todir="${installfulldirWin64}" />
     <copy file="libs/jogl-2.0/windows-amd64/lib/jogl_es2.dll" todir="${installfulldirWin64}" />
@@ -1622,7 +1613,7 @@
 
 
 <!--  <target name="copy_JNIAltivec" description="Copy the JNIAltivec build files to the final destination.">
-    <copy file="build/JNIAltivec.jar" tofile="${mirrorreddir}/lib/JNIAltivec.jar" />
+    <copy file="${build}/JNIAltivec.jar" tofile="${mirrorreddir}/lib/JNIAltivec.jar" />
     <copy file="${mirrorreddir}/lib/JNIAltivec.jar" tofile="${mirrorfulldir}/lib/JNIAltivec.jar" />
 		<exec dir="." executable="/bin/sh" os="Mac OS X">
   		<arg line="${script}/cpJNIAltivec.sh"/>
@@ -1633,26 +1624,26 @@
   <target name="build_Images" depends="clean" description="Build Images.jar.">
     <buildnumber file="${buildnumber}/Images_build.number"/>
     <!-- Copy needed files into the build directory. -->
-    <delete dir="${build}" />
-    <mkdir dir="${build}/images" />
-    <copy file="${buildnumber}/Images_build.number" todir="${build}/images" />
-    <copy todir="${build}/images" >
+    <delete dir="${build_ant}" />
+    <mkdir dir="${build_ant}/images" />
+    <copy file="${buildnumber}/Images_build.number" todir="${build_ant}/images" />
+    <copy todir="${build_ant}/images" >
     	<fileset dir="${src}/images" />
     </copy>
     <!-- Build Images.jar. -->
-    <jar jarfile="build/Images.jar" basedir="${build}" />
+    <jar jarfile="${build}/Images.jar" basedir="${build_ant}" />
   </target>
 
 
   <target name="copy_Images" depends="build_Images" description="Copy the Images jar files to the final destination.">
-    <copy file="build/Images.jar" todir="${mirrorfulldir}" />
-    <copy file="build/Images.jar" todir="${mirrorfulldir2}/lib" />
-    <copy file="build/Images.jar" todir="${installfulldirMac}" />
-    <copy file="build/Images.jar" todir="${installfulldirMac64}" />
-    <copy file="build/Images.jar" todir="${installfulldirUnix}/lib" />
-    <copy file="build/Images.jar" todir="${installfulldirLinux64}/lib" />
-    <copy file="build/Images.jar" todir="${installfulldirWindows}/lib" />
-    <copy file="build/Images.jar" todir="${installfulldirWin64}/lib" />
+    <copy file="${build}/Images.jar" todir="${mirrorfulldir}" />
+    <copy file="${build}/Images.jar" todir="${mirrorfulldir2}/lib" />
+    <copy file="${build}/Images.jar" todir="${installfulldirMac}" />
+    <copy file="${build}/Images.jar" todir="${installfulldirMac64}" />
+    <copy file="${build}/Images.jar" todir="${installfulldirUnix}/lib" />
+    <copy file="${build}/Images.jar" todir="${installfulldirLinux64}/lib" />
+    <copy file="${build}/Images.jar" todir="${installfulldirWindows}/lib" />
+    <copy file="${build}/Images.jar" todir="${installfulldirWin64}/lib" />
 		<!--signjar jar="${mirrorreddir}/lib/Images.jar" alias="${myself}" storepass="${keypasswd}" keystore="${keystore}"/-->
 <!--		<exec dir="." executable="cmd" os="Windows NT"> -->
 <!--  		<arg line="/c test.bat"/> -->
@@ -1665,26 +1656,26 @@
   <target name="build_Help" depends="clean" description="Build Help.jar.">
     <buildnumber file="${buildnumber}/Help_build.number"/>
     <!-- Copy needed files into the build directory. -->
-    <delete dir="${build}" />
-    <mkdir dir="${build}/help" />
-    <copy file="${buildnumber}/Help_build.number" todir="${build}/help" />
-    <copy todir="${build}/help" >
+    <delete dir="${build_ant}" />
+    <mkdir dir="${build_ant}/help" />
+    <copy file="${buildnumber}/Help_build.number" todir="${build_ant}/help" />
+    <copy todir="${build_ant}/help" >
     	<fileset dir="${src}/help" />
     </copy>
     <!-- Build Help.jar. -->
-    <jar jarfile="build/Help.jar" basedir="${build}" />
+    <jar jarfile="${build}/Help.jar" basedir="${build_ant}" />
   </target>
 
 
   <target name="copy_Help" depends="build_Help" description="Copy the Help jar files to the final destination.">
-    <copy file="build/Help.jar" todir="${mirrorfulldir}" />
-    <copy file="build/Help.jar" todir="${mirrorfulldir2}/lib" />
-    <copy file="build/Help.jar" todir="${installfulldirMac}" />
-    <copy file="build/Help.jar" todir="${installfulldirMac64}" />
-    <copy file="build/Help.jar" todir="${installfulldirUnix}/lib" />
-    <copy file="build/Help.jar" todir="${installfulldirLinux64}/lib" />
-    <copy file="build/Help.jar" todir="${installfulldirWindows}/lib" />
-    <copy file="build/Help.jar" todir="${installfulldirWin64}/lib" />
+    <copy file="${build}/Help.jar" todir="${mirrorfulldir}" />
+    <copy file="${build}/Help.jar" todir="${mirrorfulldir2}/lib" />
+    <copy file="${build}/Help.jar" todir="${installfulldirMac}" />
+    <copy file="${build}/Help.jar" todir="${installfulldirMac64}" />
+    <copy file="${build}/Help.jar" todir="${installfulldirUnix}/lib" />
+    <copy file="${build}/Help.jar" todir="${installfulldirLinux64}/lib" />
+    <copy file="${build}/Help.jar" todir="${installfulldirWindows}/lib" />
+    <copy file="${build}/Help.jar" todir="${installfulldirWin64}/lib" />
 		<!--signjar jar="${mirrorreddir}/lib/Help.jar" alias="${myself}" storepass="${keypasswd}" keystore="${keystore}"/-->
 <!--		<exec dir="." executable="cmd" os="Windows NT"> -->
 <!--  		<arg line="/c test.bat"/> -->
@@ -1697,26 +1688,28 @@
   <target name="build_Files" depends="clean" description="Build Files.jar.">
     <buildnumber file="${buildnumber}/Files_build.number"/>
     <!-- Copy needed files into the build directory. -->
-    <delete dir="${build}" />
-    <mkdir dir="${build}/files" />
-    <copy file="${buildnumber}/Files_build.number" todir="${build}/files" />
-    <copy todir="${build}/files" >
+    <delete dir="${build_ant}" />
+    <mkdir dir="${build_ant}/files" />
+      <mkdir dir="${build_ant}/ij" />
+    <copy file="${buildnumber}/Files_build.number" todir="${build_ant}/files" />
+      <copy file="${src}/ij/IJ_Props.txt" todir="${build_ant}" />
+    <copy todir="${build_ant}/files" >
     	<fileset dir="${src}/files" />
     </copy>
     <!-- Build Files.jar. -->
-    <jar jarfile="build/Files.jar" basedir="${build}" />
+    <jar jarfile="${build}/Files.jar" basedir="${build_ant}" />
   </target>
 
 
   <target name="copy_Files" depends="build_Files" description="Copy the Files jar files to the final destination.">
-    <copy file="build/Files.jar" todir="${mirrorfulldir}" />
-    <copy file="build/Files.jar" todir="${mirrorfulldir2}/lib" />
-    <copy file="build/Files.jar" todir="${installfulldirMac}" />
-    <copy file="build/Files.jar" todir="${installfulldirMac64}" />
-    <copy file="build/Files.jar" todir="${installfulldirUnix}/lib" />
-    <copy file="build/Files.jar" todir="${installfulldirLinux64}/lib" />
-    <copy file="build/Files.jar" todir="${installfulldirWindows}/lib" />
-    <copy file="build/Files.jar" todir="${installfulldirWin64}/lib" />
+    <copy file="${build}/Files.jar" todir="${mirrorfulldir}" />
+    <copy file="${build}/Files.jar" todir="${mirrorfulldir2}/lib" />
+    <copy file="${build}/Files.jar" todir="${installfulldirMac}" />
+    <copy file="${build}/Files.jar" todir="${installfulldirMac64}" />
+    <copy file="${build}/Files.jar" todir="${installfulldirUnix}/lib" />
+    <copy file="${build}/Files.jar" todir="${installfulldirLinux64}/lib" />
+    <copy file="${build}/Files.jar" todir="${installfulldirWindows}/lib" />
+    <copy file="${build}/Files.jar" todir="${installfulldirWin64}/lib" />
 		<!--signjar jar="${mirrorreddir}/lib/Files.jar" alias="${myself}" storepass="${keypasswd}" keystore="${keystore}"/-->
 <!--		<exec dir="." executable="cmd" os="Windows NT"> -->
 <!--  		<arg line="/c test.bat"/> -->
@@ -1729,26 +1722,26 @@
     <target name="build_Examples" depends="clean" description="Build Examples.jar.">
         <buildnumber file="${buildnumber}/Examples_build.number"/>
         <!-- Copy needed files into the build directory. -->
-        <delete dir="${build}" />
-        <mkdir dir="${build}/examples" />
-        <copy file="${buildnumber}/Examples_build.number" todir="${build}/examples" />
-        <copy todir="${build}/examples" >
+        <delete dir="${build_ant}" />
+        <mkdir dir="${build_ant}/examples" />
+        <copy file="${buildnumber}/Examples_build.number" todir="${build_ant}/examples" />
+        <copy todir="${build_ant}/examples" >
             <fileset dir="${src}/examples" />
         </copy>
         <!-- Build Examples.jar. -->
-        <jar jarfile="build/Examples.jar" basedir="${build}" />
+        <jar jarfile="${build}/Examples.jar" basedir="${build_ant}" />
     </target>
 
 
     <target name="copy_Examples" depends="build_Examples" description="Copy the Examples jar files to the final destination.">
-        <copy file="build/Examples.jar" todir="${mirrorfulldir}" />
-        <copy file="build/Examples.jar" todir="${mirrorfulldir2}/lib" />
-        <copy file="build/Examples.jar" todir="${installfulldirMac}" />
-        <copy file="build/Examples.jar" todir="${installfulldirMac64}" />
-        <copy file="build/Examples.jar" todir="${installfulldirUnix}/lib" />
-        <copy file="build/Examples.jar" todir="${installfulldirLinux64}/lib" />
-        <copy file="build/Examples.jar" todir="${installfulldirWindows}/lib" />
-        <copy file="build/Examples.jar" todir="${installfulldirWin64}/lib" />
+        <copy file="${build}/Examples.jar" todir="${mirrorfulldir}" />
+        <copy file="${build}/Examples.jar" todir="${mirrorfulldir2}/lib" />
+        <copy file="${build}/Examples.jar" todir="${installfulldirMac}" />
+        <copy file="${build}/Examples.jar" todir="${installfulldirMac64}" />
+        <copy file="${build}/Examples.jar" todir="${installfulldirUnix}/lib" />
+        <copy file="${build}/Examples.jar" todir="${installfulldirLinux64}/lib" />
+        <copy file="${build}/Examples.jar" todir="${installfulldirWindows}/lib" />
+        <copy file="${build}/Examples.jar" todir="${installfulldirWin64}/lib" />
         <!--signjar jar="${mirrorreddir}/lib/Files.jar" alias="${myself}" storepass="${keypasswd}" keystore="${keystore}"/-->
         <!--		<exec dir="." executable="cmd" os="Windows NT"> -->
         <!--  		<arg line="/c test.bat"/> -->
@@ -1858,7 +1851,7 @@
     </target>
 
 
-    <target name="rebuild_allLib" depends="copy_miscLib,copy_jgaec,copy_jgap,copy_jmol,copy_Files,copy_Examples,copy_Help,copy_Images,copy_HTTPclient,copy_ImageJ,copy_MySQL-ConnectorJ,copy_rome,copy_jogl,copy_joone" description="Deploy the full build files to the web server.">
+    <target name="rebuild_allLib" depends="copy_miscLib,copy_jgaec,copy_jgap,copy_jmol,copy_Files,copy_Examples,copy_Help,copy_Images,copy_HTTPclient,copy_ImageJ,copy_MySQL-ConnectorJ,copy_rome" description="Deploy the full build files to the web server.">
   </target>
 
 
@@ -1866,87 +1859,161 @@
   </target>
 
 
-  <target name="bundle" depends="build_full">
-    <!-- Import the AppBundlerTaks from ant lib directory -->
-      <copy file="build/Maud_dev.jar" tofile="${inst}/Maud.jar" />
-    <taskdef name="bundleapp"
-           classname="com.oracle.appbundler.AppBundlerTask"/>
+    <target name="bundle" depends="build_full">
+        <!-- Import the AppBundlerTaks from ant lib directory -->
+        <copy file="${build}/Maud_dev.jar" tofile="${inst}/Maud.jar" />
+        <taskdef name="bundleapp"
+                 classname="com.oracle.appbundler.AppBundlerTask"/>
 
-    <bundleapp outputdirectory="${inst}/Maud_OSX/"
-        name="Maud"
-        displayname="Maud"
-        identifier="com.radiographema.maud"
-        executableName="Maud"
-        shortversion="2.55"
-        icon="${inst}/maud.icns"
-        mainclassname="it.unitn.ing.rista.MaudApp"
-        copyright="Maud, for materials analysis, Copyright 1997-2015 Luca Lutterotti"
-        applicationCategory="public.app-category.productivity">
+        <bundleapp outputdirectory="${inst}/Maud_OSX/"
+                   name="Maud"
+                   displayname="Maud"
+                   identifier="com.radiographema.maud"
+                   executableName="Maud"
+                   shortversion="2.60"
+                   icon="${inst}/maud.icns"
+                   mainclassname="com.radiographema.Maud"
+                   copyright="Maud, for materials analysis, Copyright 1997-2016 Luca Lutterotti"
+                   applicationCategory="public.app-category.productivity">
 
-        <!-- The directory where your OpenJDK runtime is. -->
-        <runtime dir="${inst}/Home/"/>
+            <!-- The directory where your OpenJDK runtime is. -->
+            <runtime dir="${inst}/Home/"/>
 
-        <!-- The bundleapp task doesn't support classpathref so all 
-            the run classpath entries must be stated here too.
-        -->
-        <classpath file="${inst}/Maud.jar"/>
-        <classpath file="build/Files.jar"/>
-        <classpath file="build/Examples.jar"/>
-        <classpath file="libs/current/jmol.jar"/>
-        <classpath file="build/Help.jar"/>
-        <classpath file="build/Images.jar"/>
-        <classpath file="libs/current/miscLib.jar"/>
-        <classpath file="libs/current/HTTPClient.jar"/>
-        <classpath file="libs/current/jdom.jar"/>
-        <classpath file="libs/current/ij.jar"/>
-        <classpath file="libs/current/jgap.jar"/>
-        <classpath file="libs/current/jogl.all.jar"/>
-        <classpath file="libs/current/joone-engine.jar"/>
-        <classpath file="libs/current/jgaec.jar"/>
-        <classpath file="libs/current/jsplines.jar"/>
-        <classpath file="libs/current/jnlp.jar"/>
-        <classpath file="libs/current/MySQL-ConnectorJ.jar"/>
-        <classpath file="libs/current/swingx.jar"/>
-        <classpath file="libs/current/sqlite-jdbc.jar"/>
-        <classpath file="libs/current/newt.all.jar"/>
-        <classpath file="libs/current/nativewindow.all.jar"/>
-        <classpath file="libs/current/sqlite-jdbc.jar"/>
-        <classpath file="libs/current/gluegen-rt.jar"/>
-        <classpath file="libs/current/xgridagent.jar"/>
-        <classpath file="libs/current/xgridlib.jar"/>
+            <!-- The bundleapp task doesn't support classpathref so all
+                the run classpath entries must be stated here too.
+            -->
+            <classpath file="${inst}/Maud.jar"/>
+            <classpath file="${build}/Files.jar"/>
+            <classpath file="${build}/Examples.jar"/>
+            <classpath file="libs/current/jmol.jar"/>
+            <classpath file="${build}/Help.jar"/>
+            <classpath file="${build}/Images.jar"/>
+            <classpath file="libs/current/miscLib.jar"/>
+            <classpath file="libs/current/HTTPClient.jar"/>
+            <classpath file="libs/current/jdom.jar"/>
+            <classpath file="libs/current/ij.jar"/>
+            <classpath file="libs/current/jgap.jar"/>
+            <classpath file="libs/current/jogl.all.jar"/>
+            <classpath file="libs/current/joone-engine.jar"/>
+            <classpath file="libs/current/jgaec.jar"/>
+            <classpath file="libs/current/jsplines.jar"/>
+            <classpath file="libs/current/jnlp.jar"/>
+            <classpath file="libs/current/MySQL-ConnectorJ.jar"/>
+            <classpath file="libs/current/swingx.jar"/>
+            <classpath file="libs/current/sqlite-jdbc.jar"/>
+            <classpath file="libs/current/newt.all.jar"/>
+            <classpath file="libs/current/nativewindow.all.jar"/>
+            <classpath file="libs/current/sqlite-jdbc.jar"/>
+            <classpath file="libs/current/xgridagent.jar"/>
+            <classpath file="libs/current/xgridlib.jar"/>
 
-        <!-- Workaround since the icon parameter for bundleapp 
-             doesn't work. (It's not a bug in AppBundler but 
-             in the JavaAppLauncher, see Known Problems).
-        -->
-        <option value="-Xdock:icon=Contents/Resources/${bundle.icon}"/>
+            <!-- Workaround since the icon parameter for bundleapp
+                 doesn't work. (It's not a bug in AppBundler but
+                 in the JavaAppLauncher, see Known Problems).
+            -->
+            <option value="-Xdock:icon=Contents/Resources/${bundle.icon}"/>
 
-        <!-- Specify which architectures you want to support -->
-        <arch name="x86_64"/>
-        <arch name="i386"/>
+            <!-- Specify which architectures you want to support -->
+            <arch name="x86_64"/>
+            <arch name="i386"/>
 
-        <!-- Register the application as an editor for PNG and JPG files -->
-        <bundledocument extensions="par"
-                        icon="${bundle.icon}"
-                        name="Analysis"
-                        role="editor">
-        </bundledocument>
+            <!-- Register the application as an editor for PNG and JPG files -->
+            <bundledocument extensions="par"
+                            icon="${bundle.icon}"
+                            name="Analysis"
+                            role="editor">
+            </bundledocument>
 
-        <!-- OSX specific options, optional -->
-        <option value="-Dapple.laf.useScreenMenuBar=true"/>
-        <option value="-Dcom.apple.macos.use-file-dialog-packages=true"/>
-        <option value="-Dcom.apple.macos.useScreenMenuBar=true"/>
-        <option value="-Dapple.awt.application.name=Maud"/>
-        <option value="-Dcom.apple.smallTabs=true"/>
+            <!-- OSX specific options, optional -->
+            <option value="-Dapple.laf.useScreenMenuBar=true"/>
+            <option value="-Dcom.apple.macos.use-file-dialog-packages=true"/>
+            <option value="-Dcom.apple.macos.useScreenMenuBar=true"/>
+            <option value="-Dapple.awt.application.name=Maud"/>
+            <option value="-Dcom.apple.smallTabs=true"/>
 
-        <option value="-Xmx8192M"/>
-    </bundleapp>
-      <mkdir dir="${inst}/Maud_OSX/Maud.app/Contents/MacOS/lib" />
-      <copy file="cctbxForMaud/build/Debug/libcctbxForMaud.dylib" tofile="${inst}/Maud_OSX/Maud.app/Contents/Plugins/Home/jre/lib/libcctbxForMaud.dylib" />
-      <copy file="../../MaudX/cctbx/build/Release/libcctbx.dylib" tofile="${inst}/Maud_OSX/Maud.app/Contents/MacOS/lib/libcctbx.dylib" />
-  </target>
+            <option value="-Xmx8192M"/>
+        </bundleapp>
 
-    <target name="build_installer_mac" depends="bundle" description="Deploy the full build files to the web server.">
+        <mkdir dir="${inst}/Maud_OSX/Maud.app/Contents/MacOS/lib" />
+        <!--copy file="cctbxForMaud/build/Debug/libcctbxForMaud.dylib" tofile="${inst}/Maud_mac/Maud.app/Contents/Plugins/Home/jre/lib/libcctbxForMaud.dylib" /-->
+        <copy file="cctbxForMaud/libcctbx.dylib" tofile="${inst}/Maud_OSX/Maud.app/Contents/MacOS/lib/libcctbx.dylib" />
+        <copy file="cctbxForMaud/libcctbxForMaud.dylib" tofile="${inst}/Maud_OSX/Maud.app/Contents/MacOS/libcctbxForMaud.dylib" />
+
+        <bundleapp outputdirectory="${inst}/Maud_mac/"
+                   name="Maud"
+                   displayname="Maud"
+                   identifier="com.radiographema.maud"
+                   executableName="Maud"
+                   shortversion="2.60"
+                   icon="${inst}/maud.icns"
+                   mainclassname="com.radiographema.Maud"
+                   copyright="Maud, for materials analysis, Copyright 1997-2016 Luca Lutterotti"
+                   applicationCategory="public.app-category.productivity">
+
+            <!-- The directory where your OpenJDK runtime is. -->
+            <runtime dir="${inst}/Home/"/>
+
+            <!-- The bundleapp task doesn't support classpathref so all
+                the run classpath entries must be stated here too.
+            -->
+            <classpath file="${inst}/Maud.jar"/>
+            <classpath file="${build}/Files.jar"/>
+            <classpath file="${build}/Examples.jar"/>
+            <classpath file="libs/current/jmol.jar"/>
+            <classpath file="${build}/Help.jar"/>
+            <classpath file="${build}/Images.jar"/>
+            <classpath file="libs/current/miscLib.jar"/>
+            <classpath file="libs/current/HTTPClient.jar"/>
+            <classpath file="libs/current/jdom.jar"/>
+            <classpath file="libs/current/ij.jar"/>
+            <classpath file="libs/current/jgap.jar"/>
+            <classpath file="libs/current/jogl.all.jar"/>
+            <classpath file="libs/current/joone-engine.jar"/>
+            <classpath file="libs/current/jgaec.jar"/>
+            <classpath file="libs/current/jsplines.jar"/>
+            <classpath file="libs/current/jnlp.jar"/>
+            <classpath file="libs/current/MySQL-ConnectorJ.jar"/>
+            <classpath file="libs/current/swingx.jar"/>
+            <classpath file="libs/current/sqlite-jdbc.jar"/>
+            <classpath file="libs/current/newt.all.jar"/>
+            <classpath file="libs/current/nativewindow.all.jar"/>
+            <classpath file="libs/current/sqlite-jdbc.jar"/>
+            <classpath file="libs/current/xgridagent.jar"/>
+            <classpath file="libs/current/xgridlib.jar"/>
+
+            <!-- Workaround since the icon parameter for bundleapp
+                 doesn't work. (It's not a bug in AppBundler but
+                 in the JavaAppLauncher, see Known Problems).
+            -->
+            <option value="-Xdock:icon=Contents/Resources/${bundle.icon}"/>
+
+            <!-- Specify which architectures you want to support -->
+            <arch name="x86_64"/>
+            <arch name="i386"/>
+
+            <!-- Register the application as an editor for PNG and JPG files -->
+            <bundledocument extensions="par"
+                            icon="${bundle.icon}"
+                            name="Analysis"
+                            role="editor">
+            </bundledocument>
+
+            <!-- OSX specific options, optional -->
+            <option value="-Dapple.laf.useScreenMenuBar=true"/>
+            <option value="-Dcom.apple.macos.use-file-dialog-packages=true"/>
+            <option value="-Dcom.apple.macos.useScreenMenuBar=true"/>
+            <option value="-Dapple.awt.application.name=Maud"/>
+            <option value="-Dcom.apple.smallTabs=true"/>
+
+            <option value="-Xmx8192M"/>
+        </bundleapp>
+        <mkdir dir="${inst}/Maud_mac/Maud.app/Contents/MacOS/lib" />
+        <!--copy file="cctbxForMaud/build/Debug/libcctbxForMaud.dylib" tofile="${inst}/Maud_mac/Maud.app/Contents/Plugins/Home/jre/lib/libcctbxForMaud.dylib" /-->
+        <copy file="cctbxForMaud/libcctbx.dylib" tofile="${inst}/Maud_mac/Maud.app/Contents/MacOS/lib/libcctbx.dylib" />
+        <copy file="cctbxForMaud/libcctbxForMaud.dylib" tofile="${inst}/Maud_mac/Maud.app/Contents/MacOS/libcctbxForMaud.dylib" />
+    </target>
+
+    <target name="build_installer_osx" depends="bundle" description="Deploy the full build files to the web server.">
         <!--		<ftp server="${ftpfullserver}" userid="${ftpuserfull}" password="${passwdfull}" remotedir="${deployfulldir}">
                   <fileset file="${mirrorfulldir}/Maud.jar"/>
                 </ftp> -->
@@ -1958,6 +2025,25 @@
             <arg line="Maud.dmg.gz Maud"/>
         </exec-->
     </target>
+
+    <!--target name="build_app_bundle" depends="bundle1" description="Package the application for OSX">
+
+        <fx:deploy width="${javafx.run.width}" height="${javafx.run.height}"
+                   nativeBundles="all"
+                   outdir="${inst}/Maud_OSX1" outfile="${application.title}">
+            <fx:application name="${application.title}" mainClass="${javafx.main.class}"/>
+            <fx:resources>
+                <fx:fileset dir="${basedir}/${dist.dir}" includes="*.jar"/>
+            </fx:resources>
+            <fx:info title="${application.title}" vendor="${application.vendor}"/>
+        </fx:deploy>
+
+        <exec dir="${inst}/Maud_OSX1" executable="codesign" os="Mac OS X">
+            <arg line="-v -force -deep -s &quot;Mac Developer: Luca Lutterotti (46BWEFAJP5)&quot; -entitlements ../Maud.entitlements Maud.app"/>
+        </exec>
+    </target-->
+
+
 
     <target name="build_installers" depends="bundle, jar_abinit_plugins" description="Deploy the full build files to the web server.">
 <!--		<ftp server="${ftpfullserver}" userid="${ftpuserfull}" password="${passwdfull}" remotedir="${deployfulldir}">

@@ -20,6 +20,7 @@
 package it.unitn.ing.rista.util;
 
 import it.unitn.ing.rista.awt.Utility;
+import it.unitn.ing.rista.awt.*;
 
 import java.io.*;
 import java.util.StringTokenizer;
@@ -40,11 +41,11 @@ public class ConvertTextImageFromColumnsToArea {
 
   public static void run(Frame parent) {
     String filename = Utility.openFileDialog(parent, "Open 3 columns txt image file", FileDialog.LOAD,
-        (String) MaudPreferences.getPref(MaudPreferences.datafilePath),
+        (String) MaudPreferences.getPref(principalJFrame.datafilePath, Constants.documentsDirectory),
         null, null);
     if (filename != null) {
       String[] folderAndName = Misc.getFolderandName(filename);
-      MaudPreferences.setPref(MaudPreferences.datafilePath,
+      MaudPreferences.setPref(principalJFrame.datafilePath,
           folderAndName[0]);
       String string_1_ = folderAndName[0];
       String string_2_ = folderAndName[1];

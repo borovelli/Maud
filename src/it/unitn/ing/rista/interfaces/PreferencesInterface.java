@@ -30,6 +30,7 @@ package it.unitn.ing.rista.interfaces;
  */
 
 public class PreferencesInterface {
+
   public Object getValue(String key) {
     return key;
   }

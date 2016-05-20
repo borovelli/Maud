@@ -20,11 +20,13 @@
 
 package it.unitn.ing.rista.awt;
 
-import it.unitn.ing.rista.util.Constants;
-import it.unitn.ing.rista.util.Misc;
+import it.unitn.ing.rista.chemistry.XRayDataSqLite;
+import it.unitn.ing.rista.util.*;
 import it.unitn.ing.rista.diffr.Atom;
 import it.unitn.ing.rista.models.xyzTableModel;
 import it.unitn.ing.rista.interfaces.AtomsStructureI;
+import it.unitn.ing.rista.util.function.ParameterFunction;
+import it.unitn.ing.rista.util.function.PolynomialFunction;
 
 import javax.swing.*;
 import javax.swing.table.TableModel;
@@ -148,8 +150,18 @@ public class AtomPanel extends JPanel {
         chooseTheAtom();
       }
     });
+	  JButton infoButton = new JButton("Info");
+	  infoButton.addActionListener(new ActionListener() {
+		  public void actionPerformed(ActionEvent event) {
+			  showInfoPanel();
+		  }
+	  });
 
-    jPanel20.add(jPanel19 = new JPanel(new BorderLayout()), BorderLayout.CENTER);
+	  jPanel18.add(infoButton);
+
+
+
+	  jPanel20.add(jPanel19 = new JPanel(new BorderLayout()), BorderLayout.CENTER);
 
     jPanel19.add(jPanel17 = new JPanel(new GridLayout(0, 1, 6, 6)), BorderLayout.WEST);
     jPanel17.add(new JLabel("    Quantity:"));
@@ -406,6 +418,28 @@ public class AtomPanel extends JPanel {
     } else
       System.out.println("No atom or site selected");
   }
+
+	public void showInfoPanel() {
+		Atom anatom = getSelectedAtom();
+		int atomicNumber = anatom.getAtomicNumber();
+
+		int plotCounts = 3000;
+		double[] x = new double[plotCounts];
+		double[] y = new double[plotCounts];
+		double xstart = 1.01;
+		double xstep = 0.01;
+		for (int i = 0; i < plotCounts; i++) {
+			x[i] = xstart + i * xstep;
+			y[i] = XRayDataSqLite.getTotalAbsorptionForAtomAndEnergy(atomicNumber, x[i]);
+//			x[i] = MoreMath.log10(x[i]);
+			if (y[i] > 0)
+				y[i] = MoreMath.log10(y[i]);
+			else
+				y[i] = 0;
+		}
+		(new PlotSimpleData(this.parentD, x, y, false)).setVisible(true);
+
+	}
 
   public void dispose() {
     sitelabellist = null;

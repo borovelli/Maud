@@ -360,8 +360,8 @@ public class AtomInfo {
   public static void loadAtomConstants() {
     BufferedReader reader;
     if (MaudPreferences.getBoolean("atominfo.useAlternateAtominfoFileinPreferencesFolder", false)) {
-      reader = Misc.getReader(Constants.filesfolder, "atominfo.cif");
-      System.out.println("Reading alternate atominfo.cif at: " + Constants.filesfolder);
+      reader = Misc.getReader(Constants.documentsDirectory, "atominfo.cif");
+      System.out.println("Reading alternate atominfo.cif at: " + Constants.documentsDirectory);
     } else
       reader = Misc.getResourceReader(Constants.maudJar, "files/atominfo.cif");
     if (reader != null) {

@@ -334,8 +334,8 @@ public class PlanarDefectsSingleLayerModel extends PlanarDefects {
 		Maxk = (int) (1.0 / (Math.sqrt(soVector[1]) * dplanecut)) + 1;
 		Maxl = (int) (1.0 / (Math.sqrt(soVector[2]) * dplanecut)) + 1;
 
-		boolean showWarningMaxIndex = MaudPreferences.getBoolean("MillerIndices.showWarning", true);
-		int maxIndexPermitted = MaudPreferences.getInteger("MillerIndices.maxValue", 100);
+		boolean showWarningMaxIndex = MaudPreferences.getBoolean("millerIndices.showWarning", true);
+		int maxIndexPermitted = MaudPreferences.getInteger("millerIndices.maxValue", 100);
 		if (Maxh > maxIndexPermitted) {
 			Maxh = maxIndexPermitted;
 			if (showWarningMaxIndex)

@@ -193,7 +193,7 @@ public class StructureFactorPawleyMethod extends StructureFactorExtractor implem
 		  stringloopField[1].removeItemAt(i);
 		  stringloopField[2].removeItemAt(i);
 	  }
-	  if (MaudPreferences.getBoolean("Pawley_refinement.doNotRefineOutsideBound", true)) {
+	  if (MaudPreferences.getBoolean("pawley_refinement.doNotRefineOutsideBound", true)) {
 		  for (int i = 0; i < hklNumber && i < hklLocalNumber; i++) {
 			  Reflection reflex = aPhase.getReflex(i);
 			  if (!reflex.isGoodforStructureFactor())

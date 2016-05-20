@@ -56,7 +56,7 @@ public class MultiSpectraFromLinearImage implements PlugInFilter {
 			System.out.println("No image processor!");
 			return null;
 		}
-		int pointsPerPixel = MaudPreferences.getInteger("Image2D.pointsPerPixel", 1);
+		int pointsPerPixel = MaudPreferences.getInteger("image2D.pointsPerPixel", 1);
 		int minX = 0;
 		int maxX = imp.getWidth();
 		int minY = 0;

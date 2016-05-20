@@ -93,7 +93,7 @@ public class launchBasic extends PersistentThread {
 //      System.out.println("Computation: closing log");
       parameterfile.closeLogResultFile();
     }
-    if (outputframe != null && MaudPreferences.getBoolean("Computation.beepAtEnd", true))
+    if (outputframe != null && MaudPreferences.getBoolean("computation.beepAtEnd", false))
       Toolkit.getDefaultToolkit().beep();
   }
 

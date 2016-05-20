@@ -45,7 +45,7 @@ import java.io.*;
 
 public class StructureFactorModel extends XRDcat {
 
-  public boolean output = MaudPreferences.getBoolean("StructureFactors.output", false);
+  public boolean output = MaudPreferences.getBoolean("structureFactors.output", false);
 
   public StructureFactorModel(XRDcat aobj, String alabel) {
     super(aobj, alabel);

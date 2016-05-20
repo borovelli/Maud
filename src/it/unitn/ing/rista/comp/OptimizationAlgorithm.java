@@ -40,8 +40,9 @@ public class OptimizationAlgorithm extends XRDcat implements OptimizationAlgorit
   int numberOfIterations = 0;
   SimpleFunction simpleFittingFunction;
   public boolean outputEnabled = true;
+	public static String iterations = "analysis.iterations";
 
-  public OptimizationAlgorithm(XRDcat aobj, String alabel) {
+	public OptimizationAlgorithm(XRDcat aobj, String alabel) {
     super(aobj, alabel);
   }
 

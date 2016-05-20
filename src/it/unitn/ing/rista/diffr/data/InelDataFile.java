@@ -168,12 +168,12 @@ best thoughts
           }
           if (st.hasMoreTokens()) {
             double omega_angle = Double.valueOf(token = st.nextToken()).doubleValue();
-            datafile.setOmega(omega_angle);
+            datafile.setAngleValue(0, omega_angle);
           }
 
           if (st.hasMoreTokens()) {
             double chi_angle = Double.valueOf(token = st.nextToken()).doubleValue();
-            datafile.setChi(chi_angle);
+            datafile.setAngleValue(1, chi_angle);
           }
           if (st.hasMoreTokens())
             token = st.nextToken();  // X
@@ -182,7 +182,7 @@ best thoughts
           if (st.hasMoreTokens())
             token = st.nextToken();  // Z
           if (st.hasMoreTokens())
-            datafile.setPhi(token = st.nextToken());  // Phi
+            datafile.setString(3, token = st.nextToken());  // Phi
 
           datafile.dspacingbase = false;
           datafile.constantstep = false;

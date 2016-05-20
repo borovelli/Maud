@@ -25,6 +25,8 @@ import it.unitn.ing.rista.interfaces.PreferencesInterface;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.*;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
 /**
  *  The prefTableModel is a model interface for the JTable class that display
@@ -76,7 +78,20 @@ public class prefTableModel extends AbstractTableModel {
 	 * @see                 Hashtable
 	 */
 
-  public prefTableModel(Hashtable atable, PreferencesInterface aPrefs) {
+	public prefTableModel(Preferences atable, PreferencesInterface aPrefs) {
+		try {
+			String[] keys = atable.keys();
+			theTable = new Hashtable(keys.length);
+			for (int i = 0; i < keys.length; i++)
+				theTable.put(keys[i], aPrefs.getValue(keys[i]));
+			thePrefs = aPrefs;
+			refreshTable();
+		} catch (BackingStoreException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public prefTableModel(Hashtable atable, PreferencesInterface aPrefs) {
     theTable = atable;
     thePrefs = aPrefs;
     refreshTable();

@@ -172,7 +172,7 @@ public class XRFDetector extends Detector {
 	}
 
 	public double getThetaDetector(DiffrDataFile datafile, double twotheta) {
-		return getParameterValue(detector_2theta_id);
+		return getParameterValue(detector_2theta_id) + datafile.get2ThetaValue();
 	}
 
 	public double getEtaDetector(DiffrDataFile datafile) {
@@ -320,7 +320,7 @@ public class XRFDetector extends Detector {
 					if (intensities[j]  > maxIntensity) {
 						double sumEnergy = firstLineEnergy + secondLine.getEnergy();
 						if (sumEnergy < maxEnergyInKeV) {
-							FluorescenceLine newLine = new FluorescenceLine(sumEnergy, -1);
+							FluorescenceLine newLine = new FluorescenceLine(sumEnergy, -1, 0);
 							double totalSumIntensity = firstLineIntensityRatio * intensities[j];
 							newLine.setIntensity(totalSumIntensity);
 							firstLine.setIntensity(firstLine.getIntensity() - totalSumIntensity);

@@ -859,7 +859,7 @@ public class WIMVTexture extends DiscreteODFTexture {
 
   public void loadPFandComputeODF(Frame aframe) {
     String filename = Utility.openFileDialog(aframe, "Open PF file (Beartex format)", FileDialog.LOAD,
-            (String) MaudPreferences.getPref(MaudPreferences.analysisPath),
+            (String) MaudPreferences.getPref(FilePar.analysisPath, Constants.documentsDirectory),
             null, "");
     if (filename != null) {
       fromPF = true;

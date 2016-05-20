@@ -121,10 +121,10 @@ public class HybridMonteCarloRefinement extends OptimizationAlgorithm {
     super.initParameters();
     setTrialsNumber("100");
     // Least squares
-    stringField[1] = MaudPreferences.getPref(MaudPreferences.iterations, "3");
-    stringField[3] = MaudPreferences.getPref("LeastSquares.derivateStep", "0.0001");
-    stringField[4] = MaudPreferences.getPref("LeastSquares.doubleDerivate", "false");
-    stringField[2] = MaudPreferences.getPref("LeastSquares.precision", "0.00000001");
+    stringField[1] = MaudPreferences.getPref(iterations, "3");
+    stringField[3] = MaudPreferences.getPref("leastSquares.derivateStep", "0.0001");
+    stringField[4] = MaudPreferences.getPref("leastSquares.doubleDerivate", "false");
+    stringField[2] = MaudPreferences.getPref("leastSquares.precision", "0.00000001");
   }
 
   public void setTrialsNumber(String value) {
@@ -393,7 +393,7 @@ public class HybridMonteCarloRefinement extends OptimizationAlgorithm {
 
   public void updateStringtoDoubleBuffering(boolean firstLoading) {
 //    super.setIterations(Integer.parseInt(stringField[6]));
-    MaudPreferences.setPref(MaudPreferences.iterations, stringField[1]);
+//    MaudPreferences.setPref(iterations, stringField[1]);
     derstep = Double.parseDouble(stringField[3]);
     prcsn = Double.parseDouble(stringField[2]);
     doubleder = isDerivative2();

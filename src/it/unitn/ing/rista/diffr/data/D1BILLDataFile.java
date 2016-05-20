@@ -58,7 +58,7 @@ public class D1BILLDataFile extends MultDiffrDataFile {
     boolean loadSuccessfull = false;
     boolean tmpB = isAbilitatetoRefresh;
     isAbilitatetoRefresh = false;
-	  double d1b_chi_zero = MaudPreferences.getDouble("D1B.chiZero", -89.0);
+	  double d1b_chi_zero = MaudPreferences.getDouble("d1b.chiZero", -89.0);
 	  BufferedReader reader = getReader();
     if (reader != null) {
       try {
@@ -141,16 +141,16 @@ public class D1BILLDataFile extends MultDiffrDataFile {
 
 //        	System.out.println("Omega: " + token);
 	        if (newD1B)
-		        datafile.setOmega(d1bomega); // corretto MZ 2012 perchè nuovo setup conta omega già in positivo
+		        datafile.setAngleValue(0, d1bomega); // corretto MZ 2012 perchè nuovo setup conta omega già in positivo
 	        else
-	          datafile.setOmega(270.0 - d1bomega);
+	          datafile.setAngleValue(0, 270.0 - d1bomega);
           token = st.nextToken();
 //        	System.out.println("Chi: " + token);
           double chiD1B = Double.valueOf(token).doubleValue();
 	        if (newD1B)
 		        chiD1B = -chiD1B;
-          datafile.setChi(chiD1B + d1b_chi_zero);
-          datafile.setPhi(token = st.nextToken());
+          datafile.setAngleValue(1, chiD1B + d1b_chi_zero);
+          datafile.setString(3, token = st.nextToken()); // phi
           token = st.nextToken();
           radiation = Double.valueOf(token = st.nextToken()).doubleValue();
 	        // Luca: legge il valore radiation, ma non lo imposta poi per lo strumento

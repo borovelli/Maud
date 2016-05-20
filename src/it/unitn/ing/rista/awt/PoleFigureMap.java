@@ -253,7 +253,7 @@ public class PoleFigureMap extends JPanel {
     int[] red = new int[colrsNumber], green = new int[colrsNumber], blue = new int[colrsNumber];
     if (grayScale) {
       double fract = 248.0 / (colrsNumber - 1);
-      if (MaudPreferences.getBoolean("PlotPF.colors_inverted", false)) {
+      if (MaudPreferences.getBoolean("plotPF.colors_inverted", false)) {
         for (int i = 0; i < colrsNumber; i++) {
           int grayLevel = (int) (fract * i);
           red[i] = grayLevel;

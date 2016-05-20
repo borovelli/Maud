@@ -1,6 +1,6 @@
 package it.unitn.ing.esqui.client;
 
-import it.unitn.ing.rista.Maud;
+import com.radiographema.Maud;
 import it.unitn.ing.rista.util.Misc;
 import it.unitn.ing.rista.awt.myJFrame;
 

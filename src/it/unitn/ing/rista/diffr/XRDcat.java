@@ -47,6 +47,7 @@ import java.util.Enumeration;
  */
 
 public class XRDcat extends BaseFactoryObject implements basicObj, Cloneable {
+
   public boolean mustRemoved = false;
 
   private XRDcat parent;

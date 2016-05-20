@@ -105,11 +105,11 @@ public class SiemensDataFile extends it.unitn.ing.rista.diffr.MultDiffrDataFile 
 //              if (token.equals("_STEPTIME"))
 //								scansteptime = Double.valueOf(token = st.nextToken()).doubleValue();
               if (token.equals("_KHI"))
-                datafile.setChi(Double.valueOf(token = st.nextToken()).doubleValue());
+                datafile.setAngleValue(1, Double.valueOf(token = st.nextToken()).doubleValue());
               if (token.equals("_PHI"))
-                datafile.setPhi(Double.valueOf(token = st.nextToken()).doubleValue());
+                datafile.setAngleValue(2, Double.valueOf(token = st.nextToken()).doubleValue());
 	            if (token.equals("_THETA"))
-		            datafile.setOmega(Double.valueOf(token = st.nextToken()).doubleValue());
+		            datafile.setAngleValue(0, Double.valueOf(token = st.nextToken()).doubleValue());
               if (token.equalsIgnoreCase("_STEPTIME")) {
                 timeStep = st.nextToken();
               }

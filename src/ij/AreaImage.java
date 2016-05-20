@@ -2,8 +2,6 @@ package ij;
 
 //import ij.gui.MessageDialog;
 import it.unitn.ing.rista.diffr.DataFileSet;
-import it.unitn.ing.rista.util.Constants;
-import it.unitn.ing.rista.util.Misc;
 
 public class AreaImage extends ImageJ {
 

@@ -203,21 +203,21 @@ public class MetaDynamicsSearch extends OptimizationAlgorithm {
 
   public void initParameters() {
     super.initParameters();
-    stringField[cyclesIndex] = MaudPreferences.getPref("MetaDynamics.cycles", "50");
-    stringField[iterationsIndex] = MaudPreferences.getPref("MetaDynamics.iterations", "5");
-    stringField[precisionIndex] = MaudPreferences.getPref("MetaDynamics.precision", "0.00000001");
-    stringField[derivateStepIndex] = MaudPreferences.getPref("LeastSquares.derivateStep", "0.0001");
-    stringField[solutionsNumberIndex] = MaudPreferences.getPref("MetaDynamics.numberOfSolutions", "20");
-    stringField[HWHMnormIndex] = MaudPreferences.getPref("MetaDynamics.GaussianHWHMnormalized", "1.0");
-    stringField[intensityIndex] = MaudPreferences.getPref("MetaDynamics.GaussianIntensityStart", "1.0");
-    stringField[intensityStepIndex] = MaudPreferences.getPref("MetaDynamics.IntensityIncreaseStep", "0.1");
-    stringField[doubleDerIndex] = MaudPreferences.getPref("LeastSquares.doubleDerivate", "false");
-    stringField[fillMinimaIndex] = MaudPreferences.getPref("MetaDynamics.fillMinima", "true");
+    stringField[cyclesIndex] = MaudPreferences.getPref("metaDynamics.cycles", "50");
+    stringField[iterationsIndex] = MaudPreferences.getPref("metaDynamics.iterations", "5");
+    stringField[precisionIndex] = MaudPreferences.getPref("metaDynamics.precision", "0.00000001");
+    stringField[derivateStepIndex] = MaudPreferences.getPref("leastSquares.derivateStep", "0.0001");
+    stringField[solutionsNumberIndex] = MaudPreferences.getPref("metaDynamics.numberOfSolutions", "20");
+    stringField[HWHMnormIndex] = MaudPreferences.getPref("metaDynamics.GaussianHWHMnormalized", "1.0");
+    stringField[intensityIndex] = MaudPreferences.getPref("metaDynamics.GaussianIntensityStart", "1.0");
+    stringField[intensityStepIndex] = MaudPreferences.getPref("metaDynamics.IntensityIncreaseStep", "0.1");
+    stringField[doubleDerIndex] = MaudPreferences.getPref("leastSquares.doubleDerivate", "false");
+    stringField[fillMinimaIndex] = MaudPreferences.getPref("metaDynamics.fillMinima", "true");
   }
 
   public void updateStringtoDoubleBuffering(boolean firstLoading) {
     super.setIterations(Integer.parseInt(stringField[iterationsIndex]));
-    MaudPreferences.setPref(MaudPreferences.iterations, stringField[iterationsIndex]);
+//    MaudPreferences.setPref("metaDynamics.iterations", stringField[iterationsIndex]);
     derstep = Double.parseDouble(stringField[derivateStepIndex]);
     prcsn = Double.parseDouble(stringField[precisionIndex]);
     doubleder = isDerivative2();
@@ -284,7 +284,7 @@ public class MetaDynamicsSearch extends OptimizationAlgorithm {
 
     fittingFunction = funtionTominimize;
 
-    newModel = MaudPreferences.getBoolean("LeastSquares.newModelReduceMemory", true);
+    newModel = MaudPreferences.getBoolean("leastSquares.newModelReduceMemory", true);
     if (!(fittingFunction instanceof FilePar))
       newModel = false;
     updateStringtoDoubleBuffering(false);
@@ -540,7 +540,7 @@ public class MetaDynamicsSearch extends OptimizationAlgorithm {
         for (int i = 0; i < mdi; i++)
           c[i] = am[i];
         if (Constants.testing) {
-          boolean printMatrices = MaudPreferences.getBoolean("LeastSquares.printMatrices", false);
+          boolean printMatrices = MaudPreferences.getBoolean("leastSquares.printMatrices", false);
           if (printMatrices) {
             for (int i = 0; i < mdi; i++)
               System.out.println("am[" + i + "]" + am[i]);

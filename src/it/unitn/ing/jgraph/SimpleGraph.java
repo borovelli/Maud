@@ -20,6 +20,8 @@
 
 package it.unitn.ing.jgraph;
 
+import it.unitn.ing.rista.util.Constants;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
@@ -94,7 +96,7 @@ public class SimpleGraph extends JPanel {
 
     Markers marker = null;
     try {
-      marker = new Markers(getResource("/files/marker.txt"));
+      marker = new Markers(Constants.documentsDirectory + "marker.txt");
     } catch (java.io.IOException ioe) {
       ioe.printStackTrace();
     }

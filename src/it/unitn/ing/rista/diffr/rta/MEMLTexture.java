@@ -152,7 +152,7 @@ public class MEMLTexture extends DiscreteODFTexture implements MEMFunction {
 		stringField[5] = MaudPreferences.getPref("ewimv.defaultCellValue", "15.0");
 		setResolution(MaudPreferences.getPref(prefs[0], prefVal[0]));
 		useTubeProjection(MaudPreferences.getPref(prefs[4], prefVal[4]));
-		storeConversion(MaudPreferences.getBoolean(prefs[6], prefVal[6]));
+		storeConversion(MaudPreferences.getPref(prefs[6], prefVal[6]));
 		normalizePoleFigures(MaudPreferences.getBoolean("ewimv.normalizePoleFigures", true));
 		setODFcoverage("0");
 //    usePhon(MaudPreferences.getPref("debug.usePhon", "false"));
@@ -1366,7 +1366,7 @@ public class MEMLTexture extends DiscreteODFTexture implements MEMFunction {
 		tubeWeight = getTubeWeightD();
 		dist_factor2 = dist_factor * dist_factor;
 
-		phiturn = getDouble(prefs[2], Texture.prefVal[2]);
+		phiturn = getDouble(prefs[2], Double.parseDouble(Texture.prefVal[2]));
 		if (phiturn <= 0.0)
 			phiturn = resolution;
 

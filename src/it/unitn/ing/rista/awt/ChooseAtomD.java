@@ -60,6 +60,7 @@ public class ChooseAtomD extends myJDialog {
     p1 = new JPanel();
     p1.setLayout(new FlowLayout(FlowLayout.RIGHT, 12, 3));
     c1.add("Center", p1);
+
     p1.add(new JLabel("Isotope:"));
     isotopechoice = new JComboBox();
     rebuildIsotopeList(Atom.stripIsotopeNumber(Atom.stripOxidation(atomLabel)),

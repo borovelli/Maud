@@ -220,7 +220,12 @@ public class Misc {
     return tempstring.toString();
   }
 
-  public static final String getCurrentDateTime() {
+	public static String getFormattedValue(double valueD) {
+		float value = (float)valueD;
+		return Float.toString(value);
+	}
+
+	public static final String getCurrentDateTime() {
     return (new Date()).toString();
   }
 
@@ -381,7 +386,7 @@ public class Misc {
     return tmp.toString();
   }
 
-	public static java.net.URL getFilesResource(String name) {
+/*	public static java.net.URL getFilesResource(String name) {
 //  	name = "/" + name;
 //  System.out.println("get file: " + name);
 //	  System.out.println("get file: " + Constants.filesfolder + name);
@@ -395,7 +400,7 @@ public class Misc {
 			}
 		}
 		return getResourceURL(Constants.filesJar, "files/" + name);
-	}
+	}*/
 
 	public static java.net.URL getResourceURL(String jarFile, String name) {
 		Misc obj = new Misc();
@@ -458,7 +463,9 @@ public class Misc {
       System.out.println("File not found : " + file.getName());
       e.printStackTrace();
       if (file.getName().endsWith("default.par"))
-        in = Misc.getReader(Constants.filesJar + "/files/default.par");
+        in = Misc.getResourceReader(Constants.maudJar, "files/default.par");
+	    if (file.getName().endsWith("marker.txt"))
+		    in = Misc.getResourceReader(Constants.maudJar, "files/marker.txt");
     }
 //	  }
     return in;
@@ -718,7 +725,7 @@ public class Misc {
 		} else*/
     f1 = new File(fileToCheck);
 
-	  System.out.println("Check for file: " + f1.getAbsolutePath());
+//	  System.out.println("Check for file: " + f1.getAbsolutePath());
 
     if (f1 != null && f1.exists())
       return true;

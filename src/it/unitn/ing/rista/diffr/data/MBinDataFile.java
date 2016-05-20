@@ -76,9 +76,9 @@ public class MBinDataFile extends MultDiffrDataFile {
           datafile.initData(actualnumberofdata);
           datafile.dspacingbase = false;
           datafile.constantstep = false;
-          datafile.setOmega((double) reader.readFloat());
-          datafile.setChi((double) reader.readFloat());
-          datafile.setPhi((double) reader.readFloat());
+          datafile.setAngleValue(0, (double) reader.readFloat());
+          datafile.setAngleValue(1, (double) reader.readFloat());
+          datafile.setAngleValue(2, (double) reader.readFloat());
 
           for (int j = 0; j < actualnumberofdata; j++) {
             int Scan = reader.readInt();

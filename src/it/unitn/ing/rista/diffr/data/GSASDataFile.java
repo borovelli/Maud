@@ -182,9 +182,9 @@ public class GSASDataFile extends MultDiffrDataFile {
 
             datafile.title = new String(titleString);
 
-            datafile.setOmega(omega);
-            datafile.setChi(chi);
-            datafile.setPhi(phi);
+            datafile.setAngleValue(0, omega);
+            datafile.setAngleValue(1, chi);
+            datafile.setAngleValue(2, phi);
             datafile.setBankID(bankID);
 //	          System.out.println(datafile.getLabel() + ", setting bank ID and omega :" + bankID + " " + omega);
 

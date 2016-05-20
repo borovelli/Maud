@@ -108,11 +108,11 @@ public class ILLDataFile extends it.unitn.ing.rista.diffr.MultDiffrDataFile {
             while (st.hasMoreTokens()) {
               token = st.nextToken();
               if (i == 15)
-                datafile.setOmega(token);
+                datafile.setString(1, token);
               if (i == 16)
-                datafile.setChi(token);
+                datafile.setString(2, token);
               if (i == 17)
-                datafile.setPhi(token);
+                datafile.setString(3, token);
               i++;
             }
           }

@@ -21,6 +21,8 @@ public class XRayDataSqLite {
 			N1 = 9, N2 = 10, N3 = 11, N4 = 12, N5 = 13, N6 = 14, N7 = 15, O1 = 16, O2 = 17, O3 = 18, O4 = 19, O5 = 20, O6 = 21,
 			P1 = 22, P2 = 23, P3 = 24;
 
+	public static int[] mainShellIndex = {0, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5};
+
 	public static void main(String[] args) throws ClassNotFoundException
 	{
 		// load the sqlite-JDBC driver using the current class loader
@@ -97,6 +99,7 @@ public class XRayDataSqLite {
 	private static double[] trasformEL = {0.001, 1.0, 0.001};
 	private static String[] yield = {"fluo_yield"};
 	private static String[] costerKronigLabels = {"f1", "f12", "f13", "fp13", "f23"};
+	private static String[] costerKronigLabels_m = {"fM12", "fM13", "fM14", "fM15", "fM23", "fM24", "fM25", "fM34", "fM35", "fM45"};
 	private static String[] transitionLabels = {"transition_id", "energy_eV", "probability"};
 	private static double[] trasformL = {1.0, 0.001, 1.0};
 	private static String[] henkef1f2Labels = {"energy_eV", "f1", "f2"};
@@ -106,14 +109,18 @@ public class XRayDataSqLite {
 	public static Vector<double[]> aRho = null;
 	public static Vector<Vector<double[]>> ebelTauShell = null;
 	public static Vector<Vector<double[]>> ebelTauRange = null;
-	public static Vector<Vector<double[]>> shellData = null;
+	public static Vector<AtomShellData> shellData = null;
 	public static Vector<Vector<double[]>> yieldData = null;
-	public static Vector<double[]> costerKronigData = null;
+	public static Vector<double[]> costerKronigData_l = null;
+	public static Vector<double[]> costerKronigData_m = null;
 	public static Vector<Vector<int[]>> transitionShellIDs = null;
 	public static Vector<Vector<double[]>> transitionEnergies = null;
 	public static Vector<double[][]> henkeEnergyf1f2 = null;
+	public static double linesMinimumEnergy = 0.1;
 
 	public static void loadEbelAndShellTables(boolean forceReload) {
+
+		linesMinimumEnergy = MaudPreferences.getDouble("fluorescenceLines.minimum_keV", linesMinimumEnergy);
 
 		if (ebelElastic != null && !forceReload)
 			return;
@@ -128,7 +135,7 @@ public class XRayDataSqLite {
 		Connection connection = null;
 		try {
 			// create a database connection
-			String xray_database = MaudPreferences.getPref("fluorescence.database", Constants.filesfolder + "xraydata.db");
+			String xray_database = MaudPreferences.getPref("fluorescence.database", Constants.documentsDirectory + "xraydata.db");
 			connection = DriverManager.getConnection("jdbc:sqlite:" + xray_database);
 //			connection = DriverManager.getConnection("jdbc:sqlite:" + xray_database);
 			Statement statement = connection.createStatement();
@@ -152,19 +159,48 @@ public class XRayDataSqLite {
 				ebelInelastic.add(coeffs);
 			}
 
-			costerKronigData = new Vector<double[]>(atomsNumber, 1);
+			costerKronigData_l = new Vector<double[]>(atomsNumber, 1);
 			rs = statement.executeQuery("SELECT * FROM xraydata_coster_kronig_l");
+			boolean createInitial = true;
 			while(rs.next()) {
+				int z_id = rs.getInt("Z_id");
+				if (createInitial) {
+					for (int j = 0; j < z_id; j++) {
+						double[] coeffs = new double[costerKronigLabels.length];
+						coeffs[0] = 1.0;
+						costerKronigData_l.add(coeffs);
+					}
+					createInitial = false;
+				}
 				double[] coeffs = new double[costerKronigLabels.length];
 				for (int k = 0; k < costerKronigLabels.length; k++)
 					coeffs[k] = rs.getDouble(costerKronigLabels[k]);
-				costerKronigData.add(coeffs);
+				costerKronigData_l.add(coeffs);
 			}
+
+/*			costerKronigData_m = new Vector<double[]>(atomsNumber, 1);
+			rs = statement.executeQuery("SELECT * FROM xraydata_coster_kronig_m");
+			createInitial = true;
+			while(rs.next()) {
+				int z_id = rs.getInt("Z_id");
+				if (createInitial) {
+					for (int j = 0; j < z_id; j++) {
+						double[] coeffs = new double[costerKronigLabels_m.length];
+						coeffs[0] = 1.0;
+						costerKronigData_m.add(coeffs);
+					}
+					createInitial = false;
+				}
+				double[] coeffs = new double[costerKronigLabels_m.length];
+				for (int k = 0; k < costerKronigLabels_m.length; k++)
+					coeffs[k] = rs.getDouble(costerKronigLabels_m[k]);
+				costerKronigData_m.add(coeffs);
+			}*/
 
 			aRho = new Vector<double[]>(atomsNumber, 1);
 			ebelTauShell = new Vector<Vector<double[]>>(atomsNumber, 1);
 			ebelTauRange = new Vector<Vector<double[]>>(atomsNumber, 1);
-			shellData = new Vector<Vector<double[]>>(atomsNumber, 1);
+			shellData = new Vector<AtomShellData>(atomsNumber, 1);
 			yieldData = new Vector<Vector<double[]>>(atomsNumber, 1);
 			transitionShellIDs = new Vector<Vector<int[]>>(atomsNumber, 1);
 			transitionEnergies = new Vector<Vector<double[]>>(atomsNumber, 1);
@@ -230,18 +266,20 @@ public class XRayDataSqLite {
 				}
 				ebelTauRange.setElementAt(oneElement, z_id);
 
-				oneElement = new Vector<double[]>();
+				AtomShellData dataElement = new AtomShellData(z_id);
 				rsr = statement.executeQuery("SELECT * FROM xraydata_shell_data WHERE Z_id = " +
 						elementNumberAsString);
 				while (rsr.next()) {
-//					String shellID = rsr.getString("shell_id");
+					String shellID = rsr.getString("shell_id");
+					ShellDataAndID newData = new ShellDataAndID(shellID);
 					coeffs = new double[energyLevels.length];
 					for (int k = 0; k < energyLevels.length; k++)
 						coeffs[k] = rsr.getDouble(energyLevels[k]) * trasformEL[k];  // in KeV
-					oneElement.add(coeffs);
+					newData.addData(coeffs);
+					dataElement.addData(newData);
 				}
 //				System.out.println("Setting shellData for element: " + z_id + ", number of shells: " + oneElement.size());
-				shellData.setElementAt(oneElement, z_id);
+				shellData.setElementAt(dataElement, z_id);
 /*				System.out.println(z_id + " ");
 				for (int i = 0; i < oneElement.size(); i++)
 					System.out.print(oneElement.elementAt(i)[0] + " ");
@@ -317,7 +355,7 @@ public class XRayDataSqLite {
 		}
 	}
 
-	private static int getShellNumberFromLabel(String label) {
+	public static int getShellNumberFromLabel(String label) {
 		for (int i = 0; i < shellIDs.length; i++)
 			if (label.equalsIgnoreCase(shellIDs[i]))
 				return i;
@@ -353,8 +391,8 @@ public class XRayDataSqLite {
 		return f1f2;
 	}
 
-	public static double getCoherentScatteringForAtomAndEnergy(int atomNumber, double energyInKeV) {
-		return MoreMath.getEbelLogarithmicInterpolation(ebelElastic.elementAt(atomNumber), energyInKeV);
+	public static double getCoherentScatteringForAtomAndEnergy(int atomNumber_1, double energyInKeV) {
+		return MoreMath.getEbelLogarithmicInterpolation(ebelElastic.elementAt(atomNumber_1), energyInKeV);
 	}
 
 	public static double getIncoherentScatteringForAtomAndEnergy(int atomNumber_1, double energyInKeV) {
@@ -364,35 +402,52 @@ public class XRayDataSqLite {
 	public static double getPhotoAbsorptionForAtomAndEnergy(int atomNumber_1, double energyInKeV) {
 		int shellNumber = getHighestShellIdForAtomAndEnergy(atomNumber_1, energyInKeV);
 		if (shellNumber < 0)
-			return 0;
+			return -1;
+		int mainShellNumber = mainShellIndex[shellNumber];
 		Vector<double[]> elementData = ebelTauRange.elementAt(atomNumber_1);
-		if (shellNumber >= elementData.size())
-			return 0;
-		double result = MoreMath.getEbelLogarithmicInterpolation(elementData.elementAt(shellNumber), energyInKeV);
+		if (mainShellNumber >= elementData.size())
+			mainShellNumber = elementData.size() - 1;
+//		System.out.println((atomNumber_1 + 1) + " " + energyInKeV + " " + shellNumber + " " + mainShellNumber);
+		double result = MoreMath.getEbelLogarithmicInterpolation(elementData.elementAt(mainShellNumber), energyInKeV);
 		// now we divide by the jump ratio for certain shellIDs
 		if (shellNumber > L1 && shellNumber < M1) {
-			Vector<double[]> shellEnergiesAndJumps = shellData.elementAt(atomNumber_1);
-			for (int i = shellNumber; i > L1; i--)
-				result /= shellEnergiesAndJumps.elementAt(i-1)[1];
+			AtomShellData atomData = shellData.elementAt(atomNumber_1);
+//			Vector<double[]> shellEnergiesAndJumps = shellData.elementAt(atomNumber_1);
+//			System.out.print("Lx, Dividing by: ");
+			for (int i = shellNumber; i > L1; i--) {
+				result /= atomData.data.elementAt(i - 1).data[1];
+//				System.out.print(atomData.data.elementAt(i - 1).data[1] + " ");
+			}
+//			System.out.println();
 		} else if (shellNumber > M1 && shellNumber < N1) {
-			Vector<double[]> shellEnergiesAndJumps = shellData.elementAt(atomNumber_1);
-			for (int i = shellNumber; i > M1; i--)
-				result /= shellEnergiesAndJumps.elementAt(i-1)[1];
+			AtomShellData atomData = shellData.elementAt(atomNumber_1);
+			// Vector<double[]> shellEnergiesAndJumps = shellData.elementAt(atomNumber_1);
+//			System.out.print("Mx, Dividing by: ");
+			for (int i = shellNumber; i > M1; i--) {
+				result /= atomData.data.elementAt(i - 1).data[1];
+//				System.out.print(atomData.data.elementAt(i - 1).data[1] + " ");
+			}
+//			System.out.println();
 		}
 		return result;
 	}
 
 	public static int getHighestShellIdForAtomAndEnergy(int atomNumber_1, double energyInKeV) {
-		Vector<double[]> shellEnergies = shellData.elementAt(atomNumber_1);
-		if (shellEnergies == null) {
-			System.out.println("Warning: problem with atom number(-1) " + atomNumber_1);
-		} else {
+		try {
+			AtomShellData atomData = shellData.elementAt(atomNumber_1);
+			if (atomData == null) {
+				System.out.println("Warning: problem with atom number(-1) " + atomNumber_1);
+			} else {
 //			System.out.println("Finding shell for energy: " + energyIneV + " and atom number: " + atomNumber_1);
-			for (int i = 0; i < shellEnergies.size(); i++) {
+				for (int i = 0; i < atomData.data.size(); i++) {
 //				System.out.println("Check energy: " + shellEnergies.elementAt(i)[0]);
-				if (shellEnergies.elementAt(i)[0] <= energyInKeV)
-					return i;
+					if (atomData.data.elementAt(i).data[0] <= energyInKeV)
+						return i;
+				}
 			}
+		} catch (Exception e) {
+			System.out.println("Exception retrieving photo absorption data for atom number: " + atomNumber_1 + ", at energy: " + energyInKeV + " KeV");
+			e.printStackTrace(System.out);
 		}
 		return -1;
 	}
@@ -404,14 +459,24 @@ public class XRayDataSqLite {
 	}
 
 	public static double getJumpRatio(int atomNumber_1, int shellID) {
-		if (shellID < 0 || shellID >= shellData.elementAt(atomNumber_1).size())
-			return 0;
-		return shellData.elementAt(atomNumber_1).elementAt(shellID)[1];
+		ShellDataAndID data = shellData.elementAt(atomNumber_1).getDataFor(shellID);
+		if (data != null)
+			return data.data[1];
+		return 0;
+	}
+
+	public static double getAbsorptionEdge(int atomNumber_1, int shellID) {
+		ShellDataAndID data = shellData.elementAt(atomNumber_1).getDataFor(shellID);
+		if (data != null)
+			return data.data[0];
+		return 0;
 	}
 
 	public static double getTauShell(int atomNumber_1, int shellID, double energyInKeV) {
 		if (shellID < 0)
 			return 0;
+		if (shellID >= ebelTauShell.elementAt(atomNumber_1).size())
+			shellID = ebelTauShell.elementAt(atomNumber_1).size() - 1;
 		return MoreMath.getEbelLogarithmicInterpolation(ebelTauShell.elementAt(atomNumber_1).elementAt(shellID),
 				energyInKeV);
 	}
@@ -426,24 +491,25 @@ public class XRayDataSqLite {
 //				System.out.println((atomNumber_1 + 1) + " " + shellID + " " + energyInKeV + " " + sensitivity + " " + ck_coeff[0]);
 				break;
 			case L2:
-				ck_coeff = costerKronigData.elementAt(atomNumber_1);
+				ck_coeff = costerKronigData_l.elementAt(atomNumber_1);
 				sensitivity = getTauShell(atomNumber_1, L2, energyInKeV) +
 						ck_coeff[1] * getTauShell(atomNumber_1, L1, energyInKeV);
 				break;
 			case L3:
-				ck_coeff = costerKronigData.elementAt(atomNumber_1);
+				ck_coeff = costerKronigData_l.elementAt(atomNumber_1);
 				sensitivity = getTauShell(atomNumber_1, L3, energyInKeV) +
 						ck_coeff[4] * getTauShell(atomNumber_1, L2, energyInKeV) +
 						(ck_coeff[2] + ck_coeff[3] + ck_coeff[1] * ck_coeff[4]) * getTauShell(atomNumber_1, L1, energyInKeV);
 				break;
 			default: {}
 		}
-//		System.out.println((atomNumber_1 + 1) + " " + shellID + " " + energyInKeV + " " + sensitivity + " " + ck_coeff[0]);
+//		System.out.println((atomNumber_1 + 1) + " " + shellID + " " + energyInKeV + " " + sensitivity);
 		return sensitivity;
 	}
 
 	public static Vector<FluorescenceLine> getFluorescenceLinesFor(int atomNumber, double energyInKeV) {
-		return getFluorescenceLinesFor(atomNumber, energyInKeV, 1.0);
+		linesMinimumEnergy = MaudPreferences.getDouble("fluorescenceLines.minimum_keV", linesMinimumEnergy);
+		return getFluorescenceLinesFor(atomNumber, energyInKeV, linesMinimumEnergy);
 	}
 
 	public static Vector<FluorescenceLine> getFluorescenceLinesFor(int atomNumber, double energyInKeV,
@@ -457,21 +523,47 @@ public class XRayDataSqLite {
 		for (int i = 0; i < shellIDsData.size(); i++) {
 			double[] transitionEnergy = shellEnergies.elementAt(i);
 			int innerShell = shellIDsData.elementAt(i)[0];
-//			double fluorescenceYield = edge.getFluorescenceYield();
-//			double jumpRatio = edge.getJumpRatio();
-//			System.out.println((atomNumber + 1) + " " + transitionEnergy[0]);
 			if (innerShell >= 0 && transitionEnergy[0] > minimumEnergyInKeV && energyInKeV > transitionEnergy[0]) {
 				double fluorescenceYield = getFluorescenceYield(atomNumber, innerShell);
-// it's already in taushell				double jumpRatio = getJumpRatio(atomNumber, innerShell);
-//				double jumpFactor = (jumpRatio - 1.0) / jumpRatio;
 				double sensitivity = getSensitivity(atomNumber, innerShell, energyInKeV);
-				FluorescenceLine aLine = new FluorescenceLine(transitionEnergy[0], innerShell);
-				aLine.setFluorescenceYeld(fluorescenceYield);
-//			System.out.println((atomNumber + 1) + " " + transitionEnergy[0] + " " + fluorescenceYield + " " + sensitivity + " " + transitionEnergy[1]);
+				FluorescenceLine aLine = new FluorescenceLine(transitionEnergy[0], innerShell, getAbsorptionEdge(atomNumber, innerShell));
+				aLine.setFluorescenceYield(fluorescenceYield);
+				if (sensitivity < 0)
+					sensitivity = 0;
 				aLine.setIntensity(fluorescenceYield * sensitivity * transitionEnergy[1]); // this is the probability
 				aLine.setTransitionProbability(transitionEnergy[1]);
 				linesForAtom.addElement(aLine);
+			}
+		}
+		return linesForAtom;
+	}
 
+	public static Vector<FluorescenceLine> getFluorescenceLinesNoSensitivityFor(int atomNumber, double energyInKeV) {
+		linesMinimumEnergy = MaudPreferences.getDouble("fluorescenceLines.minimum_keV", linesMinimumEnergy);
+		return getFluorescenceLinesNoSensitivityFor(atomNumber, energyInKeV, linesMinimumEnergy);
+	}
+
+	public static Vector<FluorescenceLine> getFluorescenceLinesNoSensitivityFor(int atomNumber, double energyInKeV,
+	                                                               double minimumEnergyInKeV) {
+		atomNumber--;
+		Vector<FluorescenceLine> linesForAtom = new Vector(0, 10);
+		loadEbelAndShellTables(false);
+
+		Vector<int[]> shellIDsData = transitionShellIDs.elementAt(atomNumber);
+		Vector<double[]> shellEnergies = transitionEnergies.elementAt(atomNumber);
+		for (int i = 0; i < shellIDsData.size(); i++) {
+			double[] transitionEnergy = shellEnergies.elementAt(i);
+			int innerShell = shellIDsData.elementAt(i)[0];
+			if (innerShell >= 0 && transitionEnergy[0] > minimumEnergyInKeV && energyInKeV > transitionEnergy[0]) {
+				double fluorescenceYield = getFluorescenceYield(atomNumber, innerShell);
+				FluorescenceLine aLine = new FluorescenceLine(transitionEnergy[0], innerShell, getAbsorptionEdge(atomNumber, innerShell));
+				aLine.setFluorescenceYield(fluorescenceYield);
+				aLine.setIntensity(fluorescenceYield * transitionEnergy[1]); // this is the probability without sensitivity
+				aLine.setTransitionProbability(transitionEnergy[1]);
+				linesForAtom.addElement(aLine);
+/*				if (atomNumber > 80)
+					System.out.println(atomNumber + ", Line: " + energyInKeV + " " + transitionEnergy[0] + " " +
+							innerShell + " " + transitionEnergy[1] + " " + fluorescenceYield + " " + getAbsorptionEdge(atomNumber, innerShell));*/
 			}
 		}
 		return linesForAtom;
@@ -479,59 +571,37 @@ public class XRayDataSqLite {
 
 }
 
-/*
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+class AtomShellData {
+	int atomNumber = -1;
+	Vector<ShellDataAndID> data;
 
-public class Sample
-{
-  public static void main(String[] args) throws ClassNotFoundException
-  {
-    // load the sqlite-JDBC driver using the current class loader
-    Class.forName("org.sqlite.JDBC");
+	public AtomShellData(int anAtomNumber) {
+		atomNumber = anAtomNumber;
+		data = new Vector<ShellDataAndID>();
+	}
 
-    Connection connection = null;
-    try
-    {
-      // create a database connection
-      connection = DriverManager.getConnection("jdbc:sqlite:sample.db");
-      Statement statement = connection.createStatement();
-      statement.setQueryTimeout(30);  // set timeout to 30 sec.
+	public void addData(ShellDataAndID newData) {
+		data.add(newData);
+	}
 
-      statement.executeUpdate("drop table if exists person");
-      statement.executeUpdate("create table person (id integer, name string)");
-      statement.executeUpdate("insert into person values(1, 'leo')");
-      statement.executeUpdate("insert into person values(2, 'yui')");
-      ResultSet rs = statement.executeQuery("select * from person");
-      while(rs.next())
-      {
-        // read the result set
-        System.out.println("name = " + rs.getString("name"));
-        System.out.println("id = " + rs.getInt("id"));
-      }
-    }
-    catch(SQLException e)
-    {
-      // if the error message is "out of memory",
-      // it probably means no database file is found
-      System.err.println(e.getMessage());
-    }
-    finally
-    {
-      try
-      {
-        if(connection != null)
-          connection.close();
-      }
-      catch(SQLException e)
-      {
-        // connection close failed.
-        System.err.println(e);
-      }
-    }
-  }
+	public ShellDataAndID getDataFor(int shellID) {
+		for (int i = 0; i < data.size(); i++)
+			if (data.elementAt(i).shellID == shellID)
+				return data.elementAt(i);
+		return null;
+	}
 }
-*/
+
+class ShellDataAndID {
+	int shellID = -1;
+	double[] data = null;
+
+	public ShellDataAndID(String shellIDs) {
+		shellID = XRayDataSqLite.getShellNumberFromLabel(shellIDs);
+	}
+
+	public void addData(double[] newData) {
+		data = newData;
+	}
+}
+

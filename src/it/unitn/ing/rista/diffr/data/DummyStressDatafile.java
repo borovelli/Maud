@@ -83,7 +83,7 @@ public class DummyStressDatafile extends MultDiffrDataFile {
           String valueT = "true";
           datafile.setField("_riet_meas_datafile_calibrated", valueT, "0", "0", "0", false, null, null, null, null, null,
               false, false);
-          datafile.setChi(chi_angle);
+          datafile.setAngleValue(1, chi_angle);
           datanumber = 1023;
           datafile.setCompute(false);
           datafile.initData(datanumber);

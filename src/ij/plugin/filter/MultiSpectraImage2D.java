@@ -75,7 +75,7 @@ public class MultiSpectraImage2D extends MultiSpectraGeneration {
     checkExistingRoi();
     (new Thread() {
       public void run() {
-        double radius = MaudPreferences.getDouble("Image2D.DetectorDistance", 2000.0);
+        double radius = MaudPreferences.getDouble("image2D.DetectorDistance", 2000.0);
         LaueCircleStepRoi roi = new LaueCircleStepRoi(imp, radius);
         roi.setUsableRectangle(usableRectangle);
         imp.setRoi(roi);
@@ -101,11 +101,11 @@ public class MultiSpectraImage2D extends MultiSpectraGeneration {
 //    param.addNumericField("Selection height (mm)", MaudPreferences.getDouble(
 //            "camera.defaultHeight", 100.0), 2);
     param.addNumericField("Starting angle (in deg)", MaudPreferences.getDouble(
-            "Image2D.StartingAngle", 0.0), 2);
+            "image2D.StartingAngle", 0.0), 2);
     param.addNumericField("Final angle (in deg)", MaudPreferences.getDouble(
-            "Image2D.FinalAngle", 360.0), 2);
+            "image2D.FinalAngle", 360.0), 2);
     param.addNumericField("Number of spectra", MaudPreferences.getInteger(
-            "Image2D.nSpectraDivision", 72), 0);
+            "image2D.nSpectraDivision", 72), 0);
     param.addNumericField("Omega angle (in deg)", MaudPreferences.getDouble(
             "camera.defaultOmegaAngle", 15.0), 2);
     param.addNumericField("Chi angle (in deg)", MaudPreferences.getDouble(
@@ -115,11 +115,11 @@ public class MultiSpectraImage2D extends MultiSpectraGeneration {
     param.addCheckbox("2-Theta angles calibrated",
             MaudPreferences.getBoolean("anglesCalibration.imageToSpectra", false));
     param.addNumericField("Image tilting Sx", MaudPreferences.getDouble(
-            "Image2D.tiltingErrorSx", 0.0), 6);
+            "image2D.tiltingErrorSx", 0.0), 6);
     param.addNumericField("Image tilting Sy", MaudPreferences.getDouble(
-            "Image2D.tiltingErrorSy", 0.0), 6);
+            "image2D.tiltingErrorSy", 0.0), 6);
     param.addCheckbox("Reflection image", MaudPreferences.getBoolean(
-            "Image2D.reflection", false));
+            "image2D.reflection", false));
 //		param.addChoice("Analysis mode", modes, modes[mode]);
 //		param.addCheckbox("Show Hotspots", hotspots);
 
@@ -130,7 +130,7 @@ public class MultiSpectraImage2D extends MultiSpectraGeneration {
 //			hotspots = param.getNextBoolean();
       param.resetIndices();
       double radius = param.getNextNumber();
-      MaudPreferences.setPref("Image2D.DetectorDistance", radius);
+      MaudPreferences.setPref("image2D.DetectorDistance", radius);
 	    AreaImage.getData().getInstrument().
 			    getAngularCalibration().setRadius(Double.toString(radius));
       double x = param.getNextNumber();
@@ -146,23 +146,23 @@ public class MultiSpectraImage2D extends MultiSpectraGeneration {
       double Sx = param.getNextNumber();
       double Sy = param.getNextNumber();
       boolean reflection = param.getNextBoolean();
-      MaudPreferences.setPref("Image2D.centerX", x);
-      MaudPreferences.setPref("Image2D.centerY", y);
+      MaudPreferences.setPref("image2D.centerX", x);
+      MaudPreferences.setPref("image2D.centerY", y);
 	    AreaImage.getData().getInstrument().
 			    getAngularCalibration().setOriginalCenterX(Double.toString(x));
 	    AreaImage.getData().getInstrument().
 			    getAngularCalibration().setOriginalCenterY(Double.toString(y));
-      MaudPreferences.setPref("Image2D.roiCircle", diameter);
-      MaudPreferences.setPref("Image2D.StartingAngle", startingAngle);
-      MaudPreferences.setPref("Image2D.FinalAngle", finalAngle);
-      MaudPreferences.setPref("Image2D.nSpectraDivision", nDivision);
+      MaudPreferences.setPref("image2D.roiCircle", diameter);
+      MaudPreferences.setPref("image2D.StartingAngle", startingAngle);
+      MaudPreferences.setPref("image2D.FinalAngle", finalAngle);
+      MaudPreferences.setPref("image2D.nSpectraDivision", nDivision);
       MaudPreferences.setPref("camera.defaultOmegaAngle", omega);
       MaudPreferences.setPref("camera.defaultChiAngle", chi);
       MaudPreferences.setPref("camera.defaultPhiAngle", phi);
       MaudPreferences.setPref("anglesCalibration.imageToSpectra", calibrated);
-      MaudPreferences.setPref("Image2D.tiltingErrorSx", Sx);
-      MaudPreferences.setPref("Image2D.tiltingErrorSy", Sy);
-      MaudPreferences.setPref("Image2D.reflection", reflection);
+      MaudPreferences.setPref("image2D.tiltingErrorSx", Sx);
+      MaudPreferences.setPref("image2D.tiltingErrorSy", Sy);
+      MaudPreferences.setPref("image2D.reflection", reflection);
       roi.setRadius(radius);
       roi.setStartingPoint(x, y);
       roi.setCircle(diameter);
@@ -225,18 +225,18 @@ public class MultiSpectraImage2D extends MultiSpectraGeneration {
         boolean calibrated = getNextBoolean();
         double Sx = getNextNumber();
         double Sy = getNextNumber();
-        MaudPreferences.setPref("Image2D.centerX", x);
-        MaudPreferences.setPref("Image2D.centerY", y);
-        MaudPreferences.setPref("Image2D.roiCircle", diameter);
-        MaudPreferences.setPref("Image2D.StartingAngle", startingAngle);
-        MaudPreferences.setPref("Image2D.FinalAngle", finalAngle);
-        MaudPreferences.setPref("Image2D.nSpectraDivision", nDivision);
+        MaudPreferences.setPref("image2D.centerX", x);
+        MaudPreferences.setPref("image2D.centerY", y);
+        MaudPreferences.setPref("image2D.roiCircle", diameter);
+        MaudPreferences.setPref("image2D.StartingAngle", startingAngle);
+        MaudPreferences.setPref("image2D.FinalAngle", finalAngle);
+        MaudPreferences.setPref("image2D.nSpectraDivision", nDivision);
         MaudPreferences.setPref("camera.defaultOmegaAngle", omega);
         MaudPreferences.setPref("camera.defaultChiAngle", chi);
         MaudPreferences.setPref("camera.defaultPhiAngle", phi);
         MaudPreferences.setPref("anglesCalibration.imageToSpectra", calibrated);
-        MaudPreferences.setPref("Image2D.tiltingErrorSx", Sx);
-        MaudPreferences.setPref("Image2D.tiltingErrorSy", Sy);
+        MaudPreferences.setPref("image2D.tiltingErrorSx", Sx);
+        MaudPreferences.setPref("image2D.tiltingErrorSy", Sy);
         roi.setRadius(radius);
         roi.setStartingPoint(x, y);
         roi.setCircle(diameter);

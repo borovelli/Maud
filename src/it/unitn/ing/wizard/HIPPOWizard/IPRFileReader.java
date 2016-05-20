@@ -16,7 +16,7 @@ public class IPRFileReader {
 	}
 	
 	public void read(HIPPOdata data) throws IOException {
-		double maxBankToleranceTheta = MaudPreferences.getDouble("HippoWizard.maxDelta2ThetaForBankGrouping", 2.0);
+		double maxBankToleranceTheta = MaudPreferences.getDouble("hippoWizard.maxDelta2ThetaForBankGrouping", 2.0);
 		String line;
 		int lineCounter = 0;
 		while ((line = input.readLine()) != null) {

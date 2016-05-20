@@ -178,10 +178,10 @@ public class HybridRefinement extends OptimizationAlgorithm implements GAProblem
     setCrossOverType(0);
     setNumberOfPopulations(1);
     // Least squares
-    stringField[6] = MaudPreferences.getPref(MaudPreferences.iterations, "3");
-    stringField[8] = MaudPreferences.getPref("LeastSquares.derivateStep", "0.0001");
-    stringField[9] = MaudPreferences.getPref("LeastSquares.doubleDerivate", "false");
-    stringField[7] = MaudPreferences.getPref("LeastSquares.precision", "0.00000001");
+    stringField[6] = MaudPreferences.getPref(iterations, "3");
+    stringField[8] = MaudPreferences.getPref("leastSquares.derivateStep", "0.0001");
+    stringField[9] = MaudPreferences.getPref("leastSquares.doubleDerivate", "false");
+    stringField[7] = MaudPreferences.getPref("leastSquares.precision", "0.00000001");
   }
 
   public void setNumberOfPopulations(int value) {
@@ -254,7 +254,7 @@ public class HybridRefinement extends OptimizationAlgorithm implements GAProblem
 
   public void updateStringtoDoubleBuffering(boolean firstLoading) {
 //    super.setIterations(Integer.parseInt(stringField[6]));
-    MaudPreferences.setPref(MaudPreferences.iterations, stringField[6]);
+//    MaudPreferences.setPref(iterations, stringField[6]);
     derstep = Double.parseDouble(stringField[8]);
     prcsn = Double.parseDouble(stringField[7]);
     doubleder = isDerivative2();

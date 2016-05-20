@@ -302,8 +302,9 @@ public class AngularInclinedFlatImageCalibration extends AngularCalibration {
     double zs = dataset.getZshift();
     double rx = dataset.getSample().getRadiusDimensionXD();
     double ry = dataset.getSample().getRadiusDimensionYD();
-    double omega = datafile.getOmegaValue();
-	  double chi = datafile.getChiValue();
+	  double[] tiltingAngles = datafile.getTiltingAngle();
+    double omega = tiltingAngles[0];
+	  double chi = tiltingAngles[1];
 
 	  if (Math.abs(omega) > 1.0E-9)
       zs /= Math.cos((90.0 - omega) * Constants.DEGTOPI);
@@ -347,10 +348,11 @@ public class AngularInclinedFlatImageCalibration extends AngularCalibration {
 
 		double zs = datafile.getDataFileSet().getZshift();
 //    System.out.println("zs = " + zs);
-		double omega = datafile.getOmegaValue();
+		double[] tiltingAngles = datafile.getTiltingAngle();
+		double omega = tiltingAngles[0];
 		if (Math.abs(omega) > 1.0E-9)
 			zs /= Math.sin(omega * Constants.DEGTOPI);
-		double chi = datafile.getChiValue();
+		double chi = tiltingAngles[1];
 		zs /= Math.cos(chi * Constants.DEGTOPI);
 		double dx = zs * Math.sin((180.0 - detector2Theta) * Constants.DEGTOPI);
 		double dd = zs * Math.cos((180.0 - detector2Theta) * Constants.DEGTOPI);
@@ -514,10 +516,10 @@ public class AngularInclinedFlatImageCalibration extends AngularCalibration {
 			datafile.isAbilitatetoRefresh = false;
 
 			datafile.setDataType(datafile.DIFFRACTION_IMAGE);
-			datafile.setOmega(omega);
-			datafile.setChi(chi);
-			datafile.setPhi(phi);
-			datafile.setEta(etaStart + spectrumIndex * coneInterval);
+			datafile.setAngleValue(0, omega);
+			datafile.setAngleValue(1, chi);
+			datafile.setAngleValue(2, phi);
+			datafile.setAngleValue(3, etaStart + spectrumIndex * coneInterval);
 
 /*            datafile.setField("_riet_meas_datafile_calibrated", "true", "0", "0", "0", false, null, null, null, null,
                 false);

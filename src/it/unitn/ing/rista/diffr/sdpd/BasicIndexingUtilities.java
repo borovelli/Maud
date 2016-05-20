@@ -64,14 +64,14 @@ public class BasicIndexingUtilities {
     double[] newfft = new double[fftlength];
     for (int i = 0; i < fftlength; i++)
       newfft[i] = fft[i];
-    double cutFactor = MaudPreferences.getDouble("Smoothing.fourierZeros", 0.6);
+    double cutFactor = MaudPreferences.getDouble("smoothing.fourierZeros", 0.6);
     if (cutFactor < 0 || cutFactor >= 1) {
       cutFactor = 0.6;
-      MaudPreferences.setPref("Smoothing.fourierZeros", Double.toString(cutFactor));
+      MaudPreferences.setPref("smoothing.fourierZeros", Double.toString(cutFactor));
     }
     int cut = (int) (fftlength * cutFactor);
-    int mode = MaudPreferences.getInteger("Smoothing.fourierMode", 1);
-    double mfactor = MaudPreferences.getDouble("Smoothing.multiplyingFactor", 3.9);
+    int mode = MaudPreferences.getInteger("smoothing.fourierMode", 1);
+    double mfactor = MaudPreferences.getDouble("smoothing.multiplyingFactor", 3.9);
     int zeros = (fftlength - cut) / 2;
     int fftlength2 = fftlength / 2;
     double step = 2.0 / cut * mfactor;

@@ -23,6 +23,8 @@ package it.unitn.ing.rista.util;
 import it.unitn.ing.rista.interfaces.PreferencesInterface;
 
 import java.io.*;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
 
 /**
@@ -35,31 +37,22 @@ import java.io.*;
 
 public class ParameterPreferences extends PreferencesInterface {
 
-  public static SortedProperties prefs = null;
+	public static Preferences prefs;
 
   public ParameterPreferences() {
   }
 
   public static void loadPreferences() {
 
-    InputStream preferencesFile = Misc.getInputStream(Constants.filesfolder, "preferences.Parameters");
-    prefs = new SortedProperties();
-    // Default values
-
-    if (preferencesFile != null) {
-      try {
-        prefs.load(preferencesFile);
-//        if (Constants.testing)
-//          prefs.list(System.out);
-      } catch (Exception e) {
-        System.out.println("Parameter preferences file not found (first run?), a new one will be created on exit");
-//				e.printStackTrace();
-      }
-    }
+	  prefs = Preferences.userRoot().node(ParameterPreferences.class.getName());
 
   }
 
-  public Object getValue(String key) {
+	public static boolean contains(String key) {
+		return prefs.get(key, null) != null;
+	}
+
+	public Object getValue(String key) {
     return ParameterPreferences.getPref(key);
   }
 
@@ -68,16 +61,13 @@ public class ParameterPreferences extends PreferencesInterface {
   }
 
   public static Object getPref(String key) {
-    return prefs.getProperty(key);
+    return getPref(key, "");
   }
 
   public static String getPref(String key, String defaultValue) {
-    if (prefs.getProperty(key) == null) {
-      addPref(key, defaultValue);
-      if (Constants.testing)
-        System.out.println("Adding preference: " + key + ", value: " + defaultValue);
-    }
-    return (String) getPref(key);
+	  if (!contains(key))
+		  prefs.put(key, defaultValue);
+    return prefs.get(key, defaultValue);
   }
 
   public static void setPref(String key, Object value) {
@@ -85,36 +75,17 @@ public class ParameterPreferences extends PreferencesInterface {
   }
 
   public static void setPref(String key, String value) {
-    prefs.setProperty(key, value);
+    prefs.put(key, value);
   }
 
   public static void setPref(String key, double value) {
-    prefs.setProperty(key, Fmt.format(value));
-  }
-
-  public static void addPref(String key, String value) {
-    prefs.setProperty(key, value);
-  }
-
-  public static double getDouble(String key) {
-    return Double.valueOf((String) getPref(key)).doubleValue();
-  }
-
-  public static double getDouble(String key, String defaultValue) {
-    return Double.valueOf(getPref(key, defaultValue)).doubleValue();
+    prefs.put(key, Fmt.format(value));
   }
 
   public static double getDouble(String key, double defaultValue) {
-    return getDouble(key, Double.toString(defaultValue));
-  }
-
-  public static void savePreferences() {
-    FileOutputStream preferencesFile = Misc.getFileOutputStream(Constants.filesfolder, "preferences.Parameters");
-    if (preferencesFile != null)
-      try {
-        prefs.store(preferencesFile, " Parameter preferences, version " + Constants.getVersion());
-      } catch (IOException e) {
-      }
+	  if (!contains(key))
+		  prefs.putDouble(key, defaultValue);
+    return prefs.getDouble(key, defaultValue);
   }
 
 }

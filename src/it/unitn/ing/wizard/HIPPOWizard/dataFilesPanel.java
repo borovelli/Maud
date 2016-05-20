@@ -31,7 +31,7 @@ public class dataFilesPanel extends JPanel {
 	private JList listDataFiles;
 	private DefaultListModel dataFilesModel;
 	private int lastSelectedData = -1;
-	double omegaOffset = MaudPreferences.getDouble("HippoWizard.omegaOffset", 0.0);
+	double omegaOffset = MaudPreferences.getDouble("hippoWizard.omegaOffset", 0.0);
 
   HIPPOdata data;
 

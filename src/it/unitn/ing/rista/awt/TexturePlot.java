@@ -382,8 +382,8 @@ public class TexturePlot extends myJFrame {
 
 
     String filename = Utility.openFileDialog(this, "Open PF file (Beartex, apf, xrdml or CIF format)", FileDialog.LOAD,
-        (String) MaudPreferences.getPref(MaudPreferences.analysisPath),
-        null, "");
+        MaudPreferences.getPref(FilePar.analysisPath, Constants.documentsDirectory),
+        null, MaudPreferences.getPref(FilePar.analysisPath, Constants.documentsDirectory));
     if (filename != null) {
       Vector expPF = poleFigureInput(filename, thesample);
       int numberPoleFiguresPF = (expPF.size() - 1) / 2;
@@ -1114,11 +1114,11 @@ public class TexturePlot extends myJFrame {
     (new JWizardDisableD(this, thesample, thephase, hklnumbersel)).setVisible(true);
   }
 
-  static String gridResString = "TexturePlot.gridResolution";
-  static String zoomString = "TexturePlot.zoomFactor";
-  static String maxAngleString = "TexturePlot.maxAzimuthalAngle";
-  static String logTexturePlotString = "TexturePlot.logScale";
-  static String numberofColors = "TexturePlot.colorsNumber";
+  static String gridResString = "texturePlot.gridResolution";
+  static String zoomString = "texturePlot.zoomFactor";
+  static String maxAngleString = "texturePlot.maxAzimuthalAngle";
+  static String logTexturePlotString = "texturePlot.logScale";
+  static String numberofColors = "texturePlot.colorsNumber";
   public static int lastResolution = MaudPreferences.getInteger(gridResString, 201);
   public static double zoom = MaudPreferences.getDouble(zoomString, 1); // must be a power of 2
   public static double filterWidth = MaudPreferences.getDouble("texturePlot.gaussFilterWidth", 0.0);
@@ -1314,7 +1314,7 @@ public class TexturePlot extends myJFrame {
 
     Constants.grayShaded = grayShadedCB.isSelected();
 
-    if (Constants.OpenGL) {
+/*    if (Constants.OpenGL) {
       try {
         pole3D = new PoleRendering3Dgl(pole, mode, resolution, maxAngle, logScale, colrsNumber);
         GLProfile glp = GLProfile.getDefault();
@@ -1327,10 +1327,10 @@ public class TexturePlot extends myJFrame {
         pole3D = new PoleRendering3Djgl(pole, mode, resolution, maxAngle, logScale, colrsNumber);
         poleFrame.getContentPane().add((Component) pole3D);
       }
-    } else {
+    } else {*/
       pole3D = new PoleRendering3Djgl(pole, mode, resolution, maxAngle, logScale, colrsNumber);
       poleFrame.getContentPane().add((Component) pole3D);
-    }
+ //   }
 
     poleFrame.setSize(500, 500);
     poleFrame.setVisible(true);
