@@ -101,7 +101,7 @@ public class Phase extends XRDcat {
       "_atom_site_label", "_diffrn_refln_id"
   };
 
-  protected static String[] classlistc = {"superclass:it.unitn.ing.rista.diffr.Atom",
+  protected static String[] classlistc = {"superclass:it.unitn.ing.rista.diffr.AtomSite",
       "superclass:it.unitn.ing.rista.diffr.Reflex"};
 
   protected static String[] classlistcs = {
@@ -185,7 +185,7 @@ public class Phase extends XRDcat {
   private double so[] = new double[9];
 	private double full_so[] = new double[9];
   //  public int totalNumberOfAtoms = 0;
-  public Vector<Atom> fullAtomList = null;
+  public Vector<AtomSite> fullAtomList = null;
 //  private T_SgInfo SgInfo = null;
 	private PhaseInfo phaseInfo = null;
 
@@ -314,6 +314,7 @@ public class Phase extends XRDcat {
     setSizeStrainSymModel("Isotropic");
     setAntiphaseBoundary("none abm");
     setPlanarDefects("none pd");
+	  setSubordinateModel(microAbsorptionID, "No microabsorption");
     setSymmetry(cs[0]);
     setStrainModel("no strain");
 //		setStressModel(0);
@@ -409,7 +410,6 @@ public class Phase extends XRDcat {
         if ((obj = (basicObj) subordinateloopField[i].elementAt(j)) != null &&
             ((basicObj) subordinateloopField[i].elementAt(j)).getChildCount(searchString) > 0)
           childrens[k++] = obj;
-
 
     return childrens;
   }
@@ -612,7 +612,7 @@ public class Phase extends XRDcat {
       refreshCrystMicrostrain = true;
     }
     if (reason == Constants.ATOM_POSITION_CHANGED
-      /*(source instanceof StructureModel || source instanceof Atom || source instanceof Fragment)*/) {
+      /*(source instanceof StructureModel || source instanceof AtomSite || source instanceof Fragment)*/) {
       refreshAtoms = true;
       refreshEnergyComputation = true;
       fullAtomList = null;
@@ -666,7 +666,7 @@ public class Phase extends XRDcat {
       refreshCrystMicrostrain = true;
     }
     if (reason == Constants.ATOM_POSITION_CHANGED
-      /*(source instanceof StructureModel || source instanceof Atom || source instanceof Fragment)*/) {
+      /*(source instanceof StructureModel || source instanceof AtomSite || source instanceof Fragment)*/) {
       refreshAtoms = true;
       refreshEnergyComputation = true;
       fullAtomList = null;
@@ -688,7 +688,7 @@ public class Phase extends XRDcat {
     boolean oldStatus = isAbilitatetoRefresh;
     StructureModel structureM = getActiveStructureModel();
     for (int i = 0; i < getAtomList().size(); i++) {
-      Atom anatom = (Atom) getAtomList().get(i);
+      AtomSite anatom = (AtomSite) getAtomList().get(i);
       anatom.setParent(structureM);
       structureM.addAtom(anatom);
     }
@@ -860,12 +860,12 @@ public class Phase extends XRDcat {
 	}
 
 	public void addAtom() {
-    Atom newatom = new Atom(this);
+    AtomSite newatom = new AtomSite(this);
     addAtom(newatom);
-    newatom.setAtomSymbol("Ca");
+    newatom.addAtomWithSymbol("Ca");
   }
 
-  public void addAtom(Atom newatom) {
+  public void addAtom(AtomSite newatom) {
     addsubordinateloopField(0, newatom);
     refreshAtoms = true;
     refreshEnergyComputation = true;
@@ -1211,10 +1211,13 @@ public class Phase extends XRDcat {
 //    if (Constants.testing)
 //      System.out.println("Adding "+numbAtomn);
     for (int i = 0; i < numbAtomn; i++) {
-      Atom oldatom = getAtom(i);
-      Atom newatom = new Atom(this);
+      AtomSite oldatom = getAtom(i);
+      AtomSite newatom = new AtomSite(this);
       newatom.setSiteLabel(oldatom.getSiteLabel() + "a");
-      newatom.setAtomSymbol(oldatom.getAtomSymbol());
+	    for (int j = 0; j < oldatom.subordinateloopField[AtomSite.scattererLoopID].size(); j++) {
+		    newatom.addsubordinateloopField(AtomSite.scattererLoopID, ((XRDcat)
+				    oldatom.subordinateloopField[AtomSite.scattererLoopID].elementAt(j)).getCopy(this));
+	    }
       newatom.getLocalCoordX().setValue(oldatom.getLocalCoordX().getValueD() + traslx);
       newatom.getLocalCoordX().setEqualTo(oldatom.getLocalCoordX(), 1.0, traslx);
       newatom.getLocalCoordY().setValue(oldatom.getLocalCoordY().getValueD() + trasly);
@@ -2173,12 +2176,12 @@ public static final String getSpaceGroup(int index, int sgconv) {
     // to be implemented by subclasses
 	  getPhaseInfo().printCustomInformations(out);
 
-    printLine(out, "       Atom list");
+    printLine(out, "       AtomSite list");
     printLine(out, "n  label  symbol  quantity  occupancy  x  y  z  multiplicity  B  radius  weight  neutron " +
         "scattering  neutron absorption");
     int totalNumber = fullAtomList.size();
     for (int i = 0; i < totalNumber; i++) {
-      Atom ato = fullAtomList.get(i);
+      AtomSite ato = fullAtomList.get(i);
       printLine(out, (i + 1) + ") " + ato.getInformationString());
     }
     newLine(out);
@@ -2221,8 +2224,8 @@ public static final String getSpaceGroup(int index, int sgconv) {
     }
   }
 
-  public Atom getAtom(int index) {
-    return (Atom) getAtomList().elementAt(index);
+  public AtomSite getAtom(int index) {
+    return (AtomSite) getAtomList().elementAt(index);
   }
 
   public void refreshFhklcompv() {
@@ -2246,7 +2249,7 @@ public static final String getSpaceGroup(int index, int sgconv) {
   public void refreshAtoms() {
 //	  System.out.println("Refresh atoms: " + refreshAtoms);
     if (refreshAtoms) {
-      fullAtomList = new Vector<Atom>(0, 1);
+      fullAtomList = new Vector<AtomSite>(0, 1);
       fullAtomList.addAll(getAtomList());
       fullAtomList.addAll(getActiveStructureModel().getFullAtomList());
 	    refreshOccupancyAndQuantity();
@@ -2266,7 +2269,7 @@ public static final String getSpaceGroup(int index, int sgconv) {
   public void checkAtomPositions() {
     refreshsgxyz();
     for (int i = 0; i < getFullAtomList().size(); i++) {
-      ((Atom) getFullAtomList().get(i)).collapsePositions();
+      ((AtomSite) getFullAtomList().get(i)).collapsePositions();
     }
     refreshOccupancyAndQuantity();
 //    getActiveStructureModel().checkAtomPositions();
@@ -2275,10 +2278,10 @@ public static final String getSpaceGroup(int index, int sgconv) {
   public void mergeEquivalentAtoms() {
     refreshsgxyz();
     for (int i = 0; i < getFullAtomList().size(); i++) {
-      Atom ato1 = ((Atom) getFullAtomList().get(i));
+      AtomSite ato1 = ((AtomSite) getFullAtomList().get(i));
       Vector found = new Vector(10, 10);
       for (int j = i + 1; j < getFullAtomList().size(); j++) {
-        Atom ato2 = getFullAtomList().get(j);
+        AtomSite ato2 = getFullAtomList().get(j);
         if (ato1.equalsByDistance(ato2))
           found.add(new Integer(j));
       }
@@ -2307,10 +2310,10 @@ public static final String getSpaceGroup(int index, int sgconv) {
 		double[] totalOccupancy = new double[getFullAtomList().size()];
 		for (int i = 0; i < getFullAtomList().size(); i++) {
 			if (totalOccupancy[i] == 0) {
-				Atom atom = getFullAtomList().get(i);
+				AtomSite atom = getFullAtomList().get(i);
 				totalOccupancy[i] = atom.getOccupancyValue();
 				for (int j = i + 1; j < getFullAtomList().size(); j++) {
-					Atom atomj = getFullAtomList().get(j);
+					AtomSite atomj = getFullAtomList().get(j);
 					if (atom.shareSiteWith(atomj)) {
 						totalOccupancy[i] += atomj.getOccupancyValue();
 						totalOccupancy[j] = -999;
@@ -2325,7 +2328,7 @@ public static final String getSpaceGroup(int index, int sgconv) {
 		}
 		System.out.println("Normalizing all atom occupancies by: " + maxOccupancy);
 		for (int i = 0; i < getFullAtomList().size(); i++) {
-			Atom atom = getFullAtomList().get(i);
+			AtomSite atom = getFullAtomList().get(i);
 			atom.getOccupancy().setValue(atom.getOccupancyValue() / maxOccupancy);
 			atom.computeQuantityFromOccupancy();
 		}
@@ -2336,7 +2339,7 @@ public static final String getSpaceGroup(int index, int sgconv) {
     return parameterValues[scaleFactorID];
   }
 
-  public Vector<Atom> getFullAtomList() {
+  public Vector<AtomSite> getFullAtomList() {
     if (fullAtomList == null)
       refreshAtoms();
     return fullAtomList;
@@ -2353,7 +2356,7 @@ public static final String getSpaceGroup(int index, int sgconv) {
 	  if (dspacing != 0.0)
 		  i_dspace = 0.25 / (dspacing * dspacing);
     for (int j = 0; j < getFullAtomList().size(); j++) {
-      Atom ato = getFullAtomList().get(j);
+      AtomSite ato = getFullAtomList().get(j);
       if (ato.useThisAtom) {
         double[] scatf = ato.scatfactor(dspacing, radType, tubeNumber);
         double DWfactor = Math.exp(-ato.getBfactorValue() * i_dspace);
@@ -2382,7 +2385,7 @@ public static final String getSpaceGroup(int index, int sgconv) {
       return 1.0;
     double atomScat = 0.0;
     for (int j = 0; j < nAtom; j++) {
-      Atom ato = getFullAtomList().get(j);
+      AtomSite ato = getFullAtomList().get(j);
       ato.refreshPositions(false);
       ato.refreshOccupancyAndQuantity();
       atomScat += ato.xrayscatfactor() * ato.getQuantityD();
@@ -2397,7 +2400,7 @@ public static final String getSpaceGroup(int index, int sgconv) {
       return 1.0;
     double atomScat = 0.0;
     for (int j = 0; j < nAtom; j++) {
-      Atom ato = (Atom) getFullAtomList().get(j);
+      AtomSite ato = (AtomSite) getFullAtomList().get(j);
       ato.refreshPositions(false);
       ato.refreshOccupancyAndQuantity();
       atomScat += ato.xrayscatfactor() * ato.getQuantityD();
@@ -2438,7 +2441,7 @@ public static final String getSpaceGroup(int index, int sgconv) {
     double[] params = new double[paramsNumber];
     int np = 0;
     for (int j = 0; j < nAtom; j++) {
-      Atom ato = (Atom) getFullAtomList().get(j);
+      AtomSite ato = (AtomSite) getFullAtomList().get(j);
       if (ato.useThisAtom) {
         params[np++] = ato.getLocalCoordX().getValueD();
         params[np++] = ato.getLocalCoordY().getValueD();
@@ -2452,7 +2455,7 @@ public static final String getSpaceGroup(int index, int sgconv) {
     int nAtom = getFullAtomList().size();
     int np = 0;
     for (int j = 0; j < nAtom; j++) {
-      Atom ato = (Atom) getFullAtomList().get(j);
+      AtomSite ato = (AtomSite) getFullAtomList().get(j);
       if (ato.useThisAtom) {
         ato.getLocalCoordX().setValue(params[np++]);
         ato.getLocalCoordY().setValue(params[np++]);
@@ -4120,8 +4123,8 @@ public static final String getSpaceGroup(int index, int sgconv) {
 //      System.out.println("Asymmetric unit assigned: " + maxRedCell[0] + " " + maxRedCell[1] + " " + maxRedCell[2]);
       for (int j = 0; j < 3; j++)
         reducedCellFactor[j] = maxRedCell[j];
-    } else
-      System.out.println("Warning: reduced cell not found!");
+    } // else
+      // System.out.println("Warning: reduced cell not found!");
   }
 
   public int getLaueGroup() {
@@ -4299,17 +4302,16 @@ public static final String getSpaceGroup(int index, int sgconv) {
 		Vector<AtomQuantity> chemicalComposition = new Vector<AtomQuantity>();
 		int numberAtoms = getFullAtomList().size();
 		for (int j = 0; j < numberAtoms; j++) {
-			Atom anAtom = getFullAtomList().get(j);
-			String symbol = AtomInfo.cutOxidationNumber(anAtom.getAtomSymbol());
-			double atomQuantities = anAtom.getSiteNumber();
-			AtomQuantity anAtomQuantity = new AtomQuantity(symbol, anAtom.getAtomWeight(), atomQuantities,
-					anAtom.getAtomWeight() * atomQuantities);
-			int index = anAtomQuantity.getPositionIn(chemicalComposition);
-			if (index >= 0) {
-				anAtomQuantity = chemicalComposition.elementAt(index);
-				anAtomQuantity.quantity += atomQuantities;
-			} else
-				chemicalComposition.add(anAtomQuantity);
+			Vector<AtomQuantity> atomSiteComposition = getFullAtomList().get(j).getChemicalComposition();
+			for (AtomQuantity atomQuantity : atomSiteComposition) {
+				int index = atomQuantity.getPositionIn(chemicalComposition);
+				if (index >= 0) {
+					AtomQuantity anAtomQuantity = chemicalComposition.elementAt(index);
+					anAtomQuantity.quantity += atomQuantity.quantity;
+					anAtomQuantity.quantity_weight += atomQuantity.quantity_weight;
+				} else
+					chemicalComposition.add(atomQuantity);
+			}
 		}
 		return chemicalComposition;
 	}
@@ -4336,46 +4338,24 @@ public static final String getSpaceGroup(int index, int sgconv) {
 			crystmic[1] = refl.microstrain;
 			return crystmic;
 		}
-    double[] crystmic = getActiveSizeStrainSym().getCrystalliteMicrostrain(refl.d_space, refl.getH(), refl.getK(), refl.getL(),
-		    texture_angles);
-    double cryst1 = crystmic[0];
-    double cryst2 = getPlanarDefectBroadening(refl);
-    if (cryst1 != 0.0 && cryst2 != 0.0)
-      crystmic[0] = 1.0 / (1.0 / cryst1 + 1.0 / cryst2);
-    else if (cryst2 != 0.0)
-      crystmic[0] = cryst2;
+		double[] crystmic = getActiveSizeStrainSym().getCrystalliteMicrostrain(refl.d_space, refl.getH(), refl.getK(), refl.getL(),
+				texture_angles);
+		double cryst1 = crystmic[0];
+		double cryst2 = getPlanarDefectBroadening(refl);
+		if (cryst1 != 0.0 && cryst2 != 0.0)
+			crystmic[0] = 1.0 / (1.0 / cryst1 + 1.0 / cryst2);
+		else if (cryst2 != 0.0)
+			crystmic[0] = cryst2;
 
-    crystmic[0] *= getActivePlanarDefects().getCrystalliteFactor(refl.getH(), refl.getK(), refl.getL());
-    crystmic[1] *= getActivePlanarDefects().getMicrostrainFactor(refl.getH(), refl.getK(), refl.getL());
-    return crystmic;
-  }
+		crystmic[0] *= getActivePlanarDefects().getCrystalliteFactor(refl.getH(), refl.getK(), refl.getL());
+		crystmic[1] *= getActivePlanarDefects().getMicrostrainFactor(refl.getH(), refl.getK(), refl.getL());
+		return crystmic;
+	}
 
-  public double getPlanarDefectBroadening(Reflection refl) {
+	public double getPlanarDefectBroadening(Reflection refl) {
     if (!getActivePlanarDefects().identifier.equals("none pd"))
       return getActivePlanarDefects().getCrystalliteEquivalent(refl);
     return 0.0;
-  }
-
-  public double getPlanarDefectDisplacement(Reflection refl) {
-    if (computeFaultAsymmetry)
-      return getActivePlanarDefects().getPlanarDefectDisplacement(refl);
-    return 0.0;
-  }
-
-  public double getPlanarDefectAsymmetry(Peak peak) {
-    return getActivePlanarDefects().getPlanarDefectAsymmetry(peak);
-  }
-
-  public double getPlanarDefectAsymmetryConstant1(Peak peak) {
-    if (computeFaultAsymmetry)
-      return getActivePlanarDefects().getPlanarDefectAsymmetryConstant1(getMeanCrystallite());
-    return 0.0f;
-  }
-
-  public double getPlanarDefectAsymmetryConstant2(Peak peak) {
-    if (computeFaultAsymmetry)
-      return getActivePlanarDefects().getPlanarDefectAsymmetryConstant2(peak);
-    return 0.0f;
   }
 
   public boolean isCubic() {
@@ -4401,7 +4381,7 @@ public static final String getSpaceGroup(int index, int sgconv) {
     if (getNumber(getSymmetry()) == 5)
       return 0;  // hexagonal
 
-    Atom anatom;
+    AtomSite anatom;
     int atomNumbers = getFullAtomList().size();
 
     for (int i = 0; i < atomNumbers; i++) {
@@ -4464,7 +4444,7 @@ public static final String getSpaceGroup(int index, int sgconv) {
   }
 
   public void freeAllCrystalParameters() {
-    Atom anatom;
+    AtomSite anatom;
     int atomNumbers = getAtomNumber();
     boolean share;
 
@@ -4711,47 +4691,46 @@ public static final String getSpaceGroup(int index, int sgconv) {
     try {
       out.write("loop_");
       out.newLine();
-      Atom ato = getFullAtomList().get(0);
+      AtomSite ato = getFullAtomList().get(0);
       out.write("_atom_site_label");
       out.newLine();
-      out.write(Atom.diclistc[0]);
+      out.write(AtomSite.diclistc[0]);
       out.newLine();
-      out.write(Atom.diclistc[ato.totstringloop]);
+      out.write(AtomSite.diclistc[ato.totstringloop]);
       out.newLine();
-      out.write(Atom.diclistc[ato.totstringloop + 1]);
+      out.write(AtomSite.diclistc[ato.totstringloop + 1]);
       out.newLine();
-      out.write(Atom.diclistc[ato.totstringloop + 2]);
+      out.write(AtomSite.diclistc[ato.totstringloop + 2]);
       out.newLine();
-      out.write(Atom.diclistc[ato.totstringloop + 3]);
+      out.write(AtomSite.diclistc[ato.totstringloop + 3]);
       out.newLine();
-      out.write(Atom.diclistc[ato.totstringloop + 4]);
+      out.write(AtomSite.diclistc[ato.totstringloop + 4]);
       out.newLine();
-      out.write(Atom.diclistc[3]);
+      out.write(AtomSite.diclistc[3]);
       out.newLine();
-      for (int i = 0; i < totalNumber; i++) {
-        ato = getFullAtomList().get(i);
-        if (ato.useThisAtom) {
-          out.write(ato.getLabel() + " ");
-          out.write(ato.getAtomSymbol());
-          Coordinates coord = ato.getCoordinates();
-          for (int j = 0; j < 1; j++) {
-            out.write(" ");
-            writeParameterCOD(out, ato.parameterField[j]);
-          }
-          out.write(" ");
-          out.write(Float.toString((float) coord.x));
-          out.write(" ");
-          out.write(Float.toString((float) coord.y));
-          out.write(" ");
-          out.write(Float.toString((float) coord.z));
-          for (int j = 4; j < 5; j++) {
-            out.write(" ");
-            writeParameterCOD(out, ato.parameterField[j]);
-          }
-          out.write(" " + ato.stringField[3]);
-          out.newLine();
-        }
-      }
+	    for (int i = 0; i < totalNumber; i++) {
+		    ato = getFullAtomList().get(i);
+		    if (ato.useThisAtom) {
+				 for (int j = 0; j < ato.subordinateloopField[AtomSite.scattererLoopID].size(); j++) {
+					 AtomScatterer atomScatterer = (AtomScatterer) ato.subordinateloopField[AtomSite.scattererLoopID].elementAt(j);
+					 out.write(ato.getLabel() + "_" + atomScatterer.getLabel() + " ");
+					 out.write(atomScatterer.getAtomSymbol());
+					 out.write(" ");
+					 writeParameterCOD(out, atomScatterer.parameterField[0]);
+					 Coordinates coord = ato.getCoordinates();
+					 out.write(" ");
+					 out.write(Float.toString((float) coord.x));
+					 out.write(" ");
+					 out.write(Float.toString((float) coord.y));
+					 out.write(" ");
+					 out.write(Float.toString((float) coord.z));
+					 out.write(" ");
+					 writeParameterCOD(out, ato.parameterField[4]);
+					 out.write(" " + ato.stringField[3]);
+					 out.newLine();
+				 }
+		    }
+	    }
       out.newLine();
     } catch (IOException ioe) {
       System.out.println("Error in writing the object " + toXRDcatString());

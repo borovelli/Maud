@@ -23,7 +23,6 @@ package it.unitn.ing.rista.diffr;
 import it.unitn.ing.rista.util.ListVector;
 import it.unitn.ing.rista.awt.*;
 
-import javax.swing.*;
 import java.util.Vector;
 /**
  *  The Structure is a 
@@ -66,14 +65,14 @@ public class StructureModel extends XRDcat {
     return null;
   }
 
-  public Atom getAtom(int index) {
+  public AtomSite getAtom(int index) {
     return null;
   }
 
   public void addAtom() {
   }
 
-  public void addAtom(Atom anatom) {
+  public void addAtom(AtomSite anatom) {
   }
 
   public void removeAtomAt(int number) {

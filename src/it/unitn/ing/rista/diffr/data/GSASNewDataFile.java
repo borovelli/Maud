@@ -152,9 +152,9 @@ public class GSASNewDataFile extends MultDiffrDataFile {
 
             datafile.title = new String(titleString);
 
-            datafile.setOmega(omega);
-            datafile.setChi(chi);
-            datafile.setPhi(phi);
+            datafile.setAngleValue(0, omega);
+            datafile.setAngleValue(1, chi);
+            datafile.setAngleValue(2, phi);
 
             int nchannel = Integer.valueOf(token = st.nextToken()).intValue();
             datafile.initData(nchannel);

@@ -21,6 +21,9 @@
 package it.unitn.ing.rista.diffr;
 
 import it.unitn.ing.rista.interfaces.*;
+import it.unitn.ing.rista.util.Constants;
+import it.unitn.ing.rista.util.MoreMath;
+
 import java.io.PrintStream;
 
 /**
@@ -125,11 +128,24 @@ public class basicPeak implements Peak {
     return energyDispersive; // todo cambiare come per dspacingBase
   }
 
-  public double getPlanarDefectAsymmetry() {
-    return getPhase().getPlanarDefectAsymmetry(this);
-  }
+	public double getPositionChangeForPlanarDefectDisplacement(double pos, int index) {
+		double planarDefectDisplacement = getReflex().getPlanarDefectDisplacement(index); // in d-space, delta(d)/d
+		if (planarDefectDisplacement != 0.0) {
+			if (!getdspacingBase()) {
+				planarDefectDisplacement *= 2.0 * Constants.PITODEG;
+				pos -= MoreMath.tand(pos * 0.5) * planarDefectDisplacement;
+			} else if (getEnergyDispersive()) {
+				planarDefectDisplacement += 1.0;
+				pos /= planarDefectDisplacement;
+			} else {
+				pos = pos + planarDefectDisplacement * Constants.PITODEG * MoreMath.tand(pos * 0.5);
+			}
+		}
+		return pos;
+	}
 
-  public void setReflex(Reflection refl) {
+
+	public void setReflex(Reflection refl) {
     reflex = refl;
     thephase = getReflex().getParent();
   }

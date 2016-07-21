@@ -617,7 +617,7 @@ public class PlotFitting extends PlotDataFile {
     String folder = folderAndName[0];
     filename = folderAndName[1];
 
-    if (!filename.endsWith(".cif"))
+    if (Constants.sandboxEnabled && !filename.endsWith(".cif"))
       filename = filename + ".cif";
 
     if (filename != null) {
@@ -683,7 +683,7 @@ public class PlotFitting extends PlotDataFile {
 		String folder = folderAndName[0];
 		filename = folderAndName[1];
 
-		if (!filename.endsWith(".prn"))
+		if (Constants.sandboxEnabled && !filename.endsWith(".prn"))
 			filename = filename + ".prn";
 
 		if (filename != null) {
@@ -726,7 +726,7 @@ public class PlotFitting extends PlotDataFile {
     String folder = folderAndName[0];
     filename = folderAndName[1];
 
-    if (!filename.endsWith(".cif"))
+    if (Constants.sandboxEnabled && !filename.endsWith(".cif"))
       filename = filename + ".cif";
 
     if (filename != null) {
@@ -789,7 +789,7 @@ public class PlotFitting extends PlotDataFile {
     filename = folderAndName[1];
     int numberphases = thePlotPanel.datafile[0].getFilePar().getActiveSample().phasesNumber();
 
-    if (!filename.endsWith(".cif"))
+    if (Constants.sandboxEnabled && !filename.endsWith(".cif"))
       filename = filename + ".cif";
 
     if (filename != null) {

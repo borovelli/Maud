@@ -26,8 +26,7 @@ import java.awt.event.ActionListener;
 import java.lang.*;
 import java.util.Vector;
 
-import it.unitn.ing.rista.awt.JOptionsDialog;
-import it.unitn.ing.rista.awt.JSubordinateLoopListPane;
+import it.unitn.ing.rista.awt.*;
 import it.unitn.ing.rista.chemistry.AtomInfo;
 import it.unitn.ing.rista.chemistry.XRayDataSqLite;
 import it.unitn.ing.rista.diffr.*;
@@ -172,7 +171,11 @@ public class XRFDetector extends Detector {
 	}
 
 	public double getThetaDetector(DiffrDataFile datafile, double twotheta) {
-		return getParameterValue(detector_2theta_id) + datafile.get2ThetaValue();
+		return getThetaDetector() + datafile.get2ThetaValue();
+	}
+
+	public double getThetaDetector() {
+		return getParameterValue(detector_2theta_id);
 	}
 
 	public double getEtaDetector(DiffrDataFile datafile) {
@@ -407,7 +410,7 @@ public class XRFDetector extends Detector {
 		JTextField spectrumIntensityTF;
 		JButton addSemiB = new JButton("Add element");
 		JButton removeSemiB = new JButton("Remove element");
-		elementTableModel semiconductorCompositionModel = null;
+		ElementalTableModel semiconductorCompositionModel = null;
 		JTable semiconductorCompositionTable = null;
 		JSubordinateLoopListPane absorptionMaterialPanel;
 
@@ -461,7 +464,7 @@ public class XRFDetector extends Detector {
 
 			jp1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 3, 3));
 			jpT.addTab("Semiconductor composition", jp1);
-			semiconductorCompositionModel = new elementTableModel(semiconductor_composition_id);
+			semiconductorCompositionModel = new ElementalTableModel(XRFDetector.this, semiconductor_composition_id);
 			semiconductorCompositionTable = new JTable(semiconductorCompositionModel);
 			JScrollPane semiconductorCompositionScrollpane = new JScrollPane(semiconductorCompositionTable);
 			JPanel jPanel = new JPanel(new BorderLayout(3, 3));
@@ -535,30 +538,13 @@ public class XRFDetector extends Detector {
 		}
 	}
 
-	public class elementTableModel extends AbstractTableModel {
+/*	public class elementTableModel extends AbstractTableModel {
 
-		/**
-		 * Column labels for the table
-		 */
 		private String columns[] = {"Atom", "Quantity"};
 
-		/**
-		 * Number of columns in the table, stored for speed enhancement.
-		 */
 		private int numColumns = columns.length;
 
-		/**
-		 * The object storing the preferences
-		 */
 		int subordinateListIndex = -1;
-
-		/**
-		 * Sets up the subordinate object loop where to retrieve the fields and
-		 * values to generate the table.
-		 *
-		 * @param listIndex				index of the subordinateLoop
-		 * @see                 XRDcat
-		 */
 
 		public elementTableModel(int listIndex) {
 			subordinateListIndex = listIndex;
@@ -579,34 +565,13 @@ public class XRFDetector extends Detector {
 			}
 		}
 
-		/**
-		 * @return the column number, equal to the number fields in the Hashtable
-		 */
-
 		public int getColumnCount() {
 			return numColumns;
 		}
 
-		/**
-		 * @return the row number
-		 */
-
 		public int getRowCount() {
 			return subordinateloopField[subordinateListIndex].size();
 		}
-
-		/**
-		 * Gives the content to be displayed at position row x column.
-		 * It is retrieved directly from the Hashtable.
-		 * In any row the elements are:
-		 *
-		 *  field 	value
-		 *
-		 * @param  row		the row position
-		 * @param  column	the column position
-		 * @return the element at position row x column
-		 *
-		 */
 
 		public Object getValueAt(int row, int column) {
 			switch (column) {
@@ -638,13 +603,6 @@ public class XRFDetector extends Detector {
 			fireTableCellUpdated(row, column);
 		}
 
-		/**
-		 * Gets the label of the <code>columnIndex</code> column
-		 *
-		 * @param columnIndex the column number
-		 * @return the appropriate label for the column
-		 */
-
 		public String getColumnName(int columnIndex) {
 			return columns[columnIndex];
 		}
@@ -652,9 +610,9 @@ public class XRFDetector extends Detector {
 		// Types of the columns.
 //	public Class[] cTypes = {String.class, String.class};
 
-	/*public Class getColumnClass(int column) {
-		return cTypes[column];
-	}*/
+	//public Class getColumnClass(int column) {
+	//	return cTypes[column];
+	//}
 
 		public Class getColumnClass(int c) {
 			switch (c) {
@@ -683,6 +641,6 @@ public class XRFDetector extends Detector {
 			return false;
 		}
 
-	}
+	}*/
 
 }

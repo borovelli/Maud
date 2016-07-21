@@ -94,15 +94,15 @@ public class PlanarDefects extends XRDcat {
     return 0.0;
   }
 
-  public double getPlanarDefectAsymmetry(Peak peak) {
+  public double getPlanarDefectAsymmetry(Reflection refl) {
     return 0.0;
   }
 
-  public double getPlanarDefectAsymmetryConstant1(double deff) {
+  public double getPlanarDefectAsymmetryConstant1(Reflection reflex) {
     return 0.0f;
   }
 
-  public double getPlanarDefectAsymmetryConstant2(Peak peak) {
+  public double getPlanarDefectAsymmetryConstant2(Reflection refl) {
     return 0.0f;
   }
 

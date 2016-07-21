@@ -56,6 +56,7 @@ public class ListVector extends Vector {
 
   public void updateList() {
     if (list != null) {
+//	    System.out.println("Updating list " + this.toString());
       list.setListData(this);
       list.invalidate();
       list.getParent().validate();
@@ -271,6 +272,8 @@ public class ListVector extends Vector {
   }
 
   public int setList(JList alist) {
+
+//	  System.out.println(toString() + " setting: " + alist + ", old is " + list);
     if (list != alist) {
       removeList();
       list = alist;
@@ -296,12 +299,13 @@ public class ListVector extends Vector {
           }
         });
       }
-      updateList();
+//      updateList();
     } else {
-      list.invalidate();
-      list.getParent().validate();
+//      list.invalidate();
+//      list.getParent().validate();
     }
-    return elementCount;
+	  updateList();
+	  return elementCount;
   }
 
   public void changeLabel(Object obj) {

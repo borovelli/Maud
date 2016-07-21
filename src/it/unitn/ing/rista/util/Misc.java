@@ -20,6 +20,7 @@
 
 package it.unitn.ing.rista.util;
 
+import it.unitn.ing.rista.awt.Utility;
 import it.unitn.ing.rista.diffr.Phase;
 import it.unitn.ing.rista.io.StringNumber;
 
@@ -460,12 +461,27 @@ public class Misc {
     try {
       in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
     } catch (IOException e) {
-      System.out.println("File not found : " + file.getName());
-      e.printStackTrace();
       if (file.getName().endsWith("default.par"))
         in = Misc.getResourceReader(Constants.maudJar, "files/default.par");
-	    if (file.getName().endsWith("marker.txt"))
+      else if (file.getName().endsWith("marker.txt"))
 		    in = Misc.getResourceReader(Constants.maudJar, "files/marker.txt");
+	    else {
+	      // Manual location
+	      String filename = Utility.openFileDialogForLoad("File not loaded, select it manually", "", file.getName());
+			if (filename != null) {
+				try {
+					in = new BufferedReader(new InputStreamReader(new FileInputStream(
+							new File(filename)), "UTF8"));
+				} catch (IOException ie) {
+					System.out.println("File not loaded: " + filename);
+					ie.printStackTrace();
+				}
+			} else {
+				System.out.println("File not found: " + file.getName());
+				e.printStackTrace();
+			}
+      }
+
     }
 //	  }
     return in;
@@ -493,11 +509,43 @@ public class Misc {
         ie.printStackTrace();
       }
     }
+//	  System.out.println("Filename to load: " + filename);
+	  if (in == null) {
+//		  System.out.println("Asking for a filename: " + filename);
+		  filename = Utility.openFileDialogForLoad("File not loaded, select it manually", "", filename);
+		  if (filename != null) {
+			  try {
+				  in = new FileInputStream(new File(filename));
+			  } catch (IOException ie) {
+				  System.out.println("File not loaded: " + filename);
+				  ie.printStackTrace();
+			  }
+		  }
+	  }
 //	  }
     return in;
   }
 
-  public static final OutputStream getOutputStream(String filename) {
+	public static final InputStream getInputStreamNoChance(String folder, String filename) {
+		if (filename == null || filename.equalsIgnoreCase("null"))
+			return null;
+		InputStream in = null;
+		filename = getCorrectFilename(folder + filename);
+		try {
+			in = new FileInputStream(new File(RelativeURL.getURL(filename).getFile()));
+		} catch (IOException e) {
+			try {
+				in = new FileInputStream(new File(filename));
+			} catch (IOException ie) {
+				in = null;
+				System.out.println("File not found: " + filename);
+				ie.printStackTrace();
+			}
+		}
+		return in;
+	}
+
+	public static final OutputStream getOutputStream(String filename) {
     if (filename == null || filename.equalsIgnoreCase("null"))
       return null;
     return getOutputStream("", filename);

@@ -23,7 +23,7 @@ public class Molecule
 
 
   /** Creates a molecule
-   * The public field atoms holds the Atom objects,
+   * The public field atoms holds the AtomSite objects,
    * public field body contains the Bond objects.
    */
 

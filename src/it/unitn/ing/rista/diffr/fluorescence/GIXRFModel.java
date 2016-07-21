@@ -146,6 +146,8 @@ public class GIXRFModel extends FluorescenceBase {
 
 	public void computeFluorescence(DiffrDataFile adatafile) {
 
+		XRayDataSqLite.checkMinimumEnergy();
+
 		Sample asample = adatafile.getDataFileSet().getSample();
 		Instrument ainstrument = adatafile.getDataFileSet().getInstrument();
 		Detector detector = ainstrument.getDetector();

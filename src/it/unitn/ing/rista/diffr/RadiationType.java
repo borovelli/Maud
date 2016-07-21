@@ -247,7 +247,7 @@ public class RadiationType extends XRDcat {
 			return;
 		super.updateParametertoDoubleBuffering(firstLoading);
 
-		energy = lambdaToEnergy(getRadiationWavelength());
+		energy = lambdaToEnergy(getMeanRadiationWavelength());
 	}
 
 	public double energyToLambda(double e)

@@ -58,6 +58,8 @@ public class Reflection {
   Phase phase = null;
 //	public int orderIndex;
   public int[] hlist = null, klist = null, llist = null;
+	public double[] pd_deltaD = null;
+	public double[] pd_deltaIndex = null;
 //	public int[] base_v = {1, 1, 1};
 
   public int Lsum = 0;
@@ -96,8 +98,8 @@ public class Reflection {
 	}
 
 	public Reflection(Phase aphase, int[] hlist, int[] klist, int[] llist, int multi,
-                    double d_space, int b_h, int b_k, int b_l) {
-    this(aphase, hlist[0], klist[0], llist[0], multi, d_space, b_h, b_k, b_l);
+	                  double d_space, int b_h, int b_k, int b_l) {
+		this(aphase, hlist[0], klist[0], llist[0], multi, d_space, b_h, b_k, b_l);
 
 		if (base_h != h || base_k != h || base_l != l) {
 			superReflection = true;
@@ -108,66 +110,66 @@ public class Reflection {
 
 		int cType = aphase.getClosePackedType();
 
-    hzero2 = hlist[0] * hlist[0] + klist[0] * klist[0] + llist[0] * llist[0];
-    hzero = Math.sqrt(hzero2);
+		hzero2 = hlist[0] * hlist[0] + klist[0] * klist[0] + llist[0] * llist[0];
+		hzero = Math.sqrt(hzero2);
 
-    int mult2 = multi / 2;
-    this.hlist = new int[mult2];
-    this.klist = new int[mult2];
-    this.llist = new int[mult2];
+		int mult2 = multi / 2;
+		this.hlist = new int[mult2];
+		this.klist = new int[mult2];
+		this.llist = new int[mult2];
 
-    phi = new double[multi];
-    beta = new double[multi];
+		phi = new double[multi];
+		beta = new double[multi];
 //		int PGIndex = SpaceGroups.getPGNumberLconvention(aphase.getPointGroup(), aphase.getMonoclinicAxis(), aphase.isRhombohedral());
 //		double[] acell = Angles.getLattice(aphase);
 //		double[] astar = Angles.getReciprocalLattice(aphase);
 
-    int Lzero, Lzerosign, is3N1, absLzero, h1, k1, l1;
+		int Lzero, Lzerosign, is3N1, absLzero, h1, k1, l1;
 
-    for (int i = 0; i < multi; i++) {
-      if (i < mult2) {
-        this.hlist[i] = hlist[i];
-        this.klist[i] = klist[i];
-        this.llist[i] = llist[i];
-        h1 = hlist[i];
-        k1 = klist[i];
-        l1 = llist[i];
-      } else {
-        h1 = -hlist[i - mult2];
-        k1 = -klist[i - mult2];
-        l1 = -llist[i - mult2];
-      }
+		pd_deltaD = new double[3];
+		pd_deltaIndex = new double[3];
 
-      //this are in radiants
-      double[] phicosphi = Angles.getPhicosPhi(aphase, h1, k1, l1);
+		for (int i = 0; i < multi; i++) {
+			if (i < mult2) {
+				this.hlist[i] = hlist[i];
+				this.klist[i] = klist[i];
+				this.llist[i] = llist[i];
+				h1 = hlist[i];
+				k1 = klist[i];
+				l1 = llist[i];
+			} else {
+				h1 = -hlist[i - mult2];
+				k1 = -klist[i - mult2];
+				l1 = -llist[i - mult2];
+			}
 
-      beta[i] = phicosphi[0];
-      phi[i] = phicosphi[1];
+			//this are in radiants
+			double[] phicosphi = Angles.getPhicosPhi(aphase, h1, k1, l1);
+			beta[i] = phicosphi[0];
+			phi[i] = phicosphi[1];
 
-/*			if (i == 0) {
-				System.out.println(Integer.toXRDcatString(h1) + " " + Integer.toXRDcatString(k1) + " " + Integer.toXRDcatString(l1));
-				System.out.println(phicosphi[0] * Constants.PITODEG);
-				System.out.println(phicosphi[1] * Constants.PITODEG);
-			}*/
+			if (cType == 2)
+				Lzero = 2 * l1 - h1 - k1;
+			else
+				Lzero = h1 + k1 + l1;
 
-      if (cType == 2)
-        Lzero = 2 * l1 - h1 - k1;
-      else
-        Lzero = h1 + k1 + l1;
-      is3N1 = MoreMath.is3Neven(Lzero);
-      if (is3N1 != 0) {
-        broadened++;
-        if (is3N1 == -1)
-          Lzerosign = -1;
-        else
-          Lzerosign = 1;
-        absLzero = Math.abs(Lzero);
-        Lsum += Lzerosign * Lzero;
-        Labssum += absLzero;
-        Lsumdivideabs += Lzerosign * Lzero / absLzero;
-      }
-    }
-  }
+			Lzerosign = MoreMath.is3Neven(Lzero);
+			pd_deltaD[Lzerosign + 1] += Lzerosign * Lzero;
+			pd_deltaIndex[Lzerosign + 1]++;
+			if (Lzerosign != 0) {
+				broadened++;
+				absLzero = Math.abs(Lzero);
+				Labssum += absLzero;
+				Lsum += Lzerosign * Lzero;
+				Lsumdivideabs += Lzerosign * Lzero / absLzero;
+			}
+		}
+		Lsumdivideabs *= broadened / (Constants.sqrt3 * Constants.PI * multiplicity);
+		for (int i = 0; i < 3; i++) {
+			pd_deltaD[i] *= Constants.sqrt3 / (2.0 * Constants.PI * hzero2 * multiplicity);
+			pd_deltaIndex[i] /= multi;
+		}
+	}
 
 	private static int hklmax = 500;
 	private static int idConst1 = hklmax * hklmax * 4;
@@ -239,8 +241,8 @@ public class Reflection {
     }
   }
 
-  public double getPlanarDefectDisplacement() {
-    return getParent().getPlanarDefectDisplacement(this);
+  public double getPlanarDefectDisplacement(int index) {
+    return getParent().getActivePlanarDefects().getPlanarDefectDisplacement(this) * pd_deltaD[index];
   }
 
   public Phase getParent() {

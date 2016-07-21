@@ -19,7 +19,7 @@
  */
 package it.unitn.ing.rista.diffr.cal;
 
-import com.sun.tools.javac.code.Attribute;
+//import com.sun.tools.javac.code.Attribute;
 import ij.ImagePlus;
 import ij.gui.FlatCCDReflectionSquareRoi;
 import ij.process.ImageProcessor;

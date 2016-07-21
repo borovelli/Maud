@@ -37,7 +37,7 @@ public class SizeStrainSymBFrules extends SizeStrainSymDefault {
   public SizeStrainSymBFrules(XRDcat aobj, String alabel) {
     super(aobj, alabel);
     initXRD();
-    identifier = "B-factors rules";
+    identifier = "Disabled B-factors rules";
     IDlabel = "B-factors rules";
     description = "select this to apply B-Factor model";
   }
@@ -47,7 +47,7 @@ public class SizeStrainSymBFrules extends SizeStrainSymDefault {
   }
 
   public SizeStrainSymBFrules() {
-    identifier = "Disabled B-factors rules";
+    identifier = "Disabled Disabled B-factors rules";
     IDlabel = "B-factors rules";
     description = "select this to apply B-Factor model";
   }

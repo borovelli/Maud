@@ -51,7 +51,7 @@ public class Atom {
   private Vector3 world = new Vector3();
 
   /**
-   * Atom name (in most cases just e.g. "H" or "C", but also
+   * AtomSite name (in most cases just e.g. "H" or "C", but also
    * more descriptive names like "CG2" are possible.
    */
   private String name;
@@ -63,7 +63,7 @@ public class Atom {
   private int number;
 
   /**
-   * Atom mass of one mol of atoms.
+   * AtomSite mass of one mol of atoms.
    * Unit: Gramms
    */
   private double mass;
@@ -91,7 +91,7 @@ public class Atom {
     getLoc().y = y;
     getLoc().z = z;
 
-  } // end Atom
+  } // end AtomSite
 
 
   /**
@@ -108,7 +108,7 @@ public class Atom {
     this(x, y, z);
     setName(tname);
 
-  } // end Atom
+  } // end AtomSite
 
 
   /**
@@ -270,9 +270,9 @@ public class Atom {
 
 
   /**
-   * Creates a string representation of an Atom
+   * Creates a string representation of an AtomSite
    *
-   * @return a string representation of this Atom
+   * @return a string representation of this AtomSite
    */
 
   public String toString() {
@@ -315,4 +315,4 @@ public class Atom {
   }
 
 
-} // end Atom
+} // end AtomSite

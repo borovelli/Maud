@@ -368,32 +368,35 @@ public class FullProfStructureModel extends StructureFactorModel {
           String hallSymbol = sgInfo.getHallSymbolAsString();
           output.write("HALL " + hallSymbol + "                    <--Space group symbol");
           output.newLine();
-          output.write("!Atom Typ       X        Y        Z     Biso      Occ     In Fin N_t Spc /Codes");
+          output.write("!AtomSite Typ       X        Y        Z     Biso      Occ     In Fin N_t Spc /Codes");
           output.newLine();
 //          double[] divideFactors = aphase.getActivePlanarDefects().getDivisionFactors(h, k, l);
 
           for (int i = 0; i < Nat; i++) {
-            Atom atom = (Atom) aphase.getFullAtomList().get(i);
+            AtomSite atom = aphase.getFullAtomList().get(i);
 //            double Za = aphase.getSitePositionNumber() / atom.getSiteMultiplicity();
 //            double Z = atom.getSiteMultiplicity() / Za;
             double occupancy = (atom.getOccupancy().getValueD() * atom.getSiteMultiplicity() /
 		            aphase.getPhaseInfo().getSitePositionNumber());
             if (atom.useThisAtom && occupancy > 0) {
               double[] x = atom.getCoordinates(0);
-              String oxidation = "";
-              if (atom.getOxidationNumber() != 0) {
-                if (atom.getOxidationNumber() > 0)
-                  oxidation += "+";
-                oxidation += Integer.toString(atom.getOxidationNumber());
-              }
-            output.write(atom.getLabel() + " " + Atom.stripOxidation(Atom.stripIsotopeNumber(
-                atom.getAtomSymbol())).toUpperCase() + oxidation + " " +
-                (x[0] /* divideFactors[0]*/) + " " + (x[1] /* divideFactors[1]*/) + " " +
-                (x[2] /* divideFactors[2]*/) + " " + (atom.getBfactorValue()) + " " +
-                occupancy + "  0  0  0  0");
-            output.newLine();
-            output.write("                0.00     0.00     0.00     0.00     0.00");
-            output.newLine();
+	            for (int j = 0; j < atom.getNumberOfScatterers(); j++) {
+		            AtomScatterer atomScatterer = atom.getAtomScatterer(j);
+		            String oxidation = "";
+		            if (atomScatterer.getOxidationNumber() != 0) {
+			            if (atomScatterer.getOxidationNumber() > 0)
+				            oxidation += "+";
+			            oxidation += Integer.toString(atomScatterer.getOxidationNumber());
+		            }
+		            output.write(atom.getLabel() + " " + AtomSite.stripOxidation(AtomSite.stripIsotopeNumber(
+				            atomScatterer.getAtomSymbol())).toUpperCase() + oxidation + " " +
+				            (x[0] /* divideFactors[0]*/) + " " + (x[1] /* divideFactors[1]*/) + " " +
+				            (x[2] /* divideFactors[2]*/) + " " + (atom.getBfactorValue()) + " " +
+				            occupancy * atomScatterer.getOccupancy() + "  0  0  0  0");
+		            output.newLine();
+		            output.write("                0.00     0.00     0.00     0.00     0.00");
+		            output.newLine();
+	            }
             }
           }
 

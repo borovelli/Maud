@@ -42,11 +42,11 @@ public class EsquiGoDataFile extends it.unitn.ing.rista.diffr.data.ItalStructure
   public EsquiGoDataFile(XRDcat aobj, String alabel) {
     super(aobj, alabel);
 
-    identifier = ".xrd";
+    identifier = ".xrd1";
   }
 
   public EsquiGoDataFile() {
-    identifier = ".xrd";
+    identifier = ".xrd1";
   }
 
   public boolean readallSpectra() {

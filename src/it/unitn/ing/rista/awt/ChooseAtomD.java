@@ -25,9 +25,7 @@ import java.util.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.FlowLayout;
-import java.net.URL;
 
-import it.unitn.ing.rista.util.*;
 import it.unitn.ing.rista.diffr.*;
 import it.unitn.ing.rista.chemistry.*;
 
@@ -54,7 +52,7 @@ public class ChooseAtomD extends myJDialog {
     p1.setLayout(new FlowLayout());
     c1.add("North", p1);
     PeriodicTable periodicTableP = new PeriodicTable(this,
-            Atom.stripIsotopeNumber(Atom.stripOxidation(atomLabel)));
+            AtomSite.stripIsotopeNumber(AtomSite.stripOxidation(atomLabel)));
     p1.add(periodicTableP);
 
     p1 = new JPanel();
@@ -63,19 +61,19 @@ public class ChooseAtomD extends myJDialog {
 
     p1.add(new JLabel("Isotope:"));
     isotopechoice = new JComboBox();
-    rebuildIsotopeList(Atom.stripIsotopeNumber(Atom.stripOxidation(atomLabel)),
+    rebuildIsotopeList(AtomSite.stripIsotopeNumber(AtomSite.stripOxidation(atomLabel)),
             AtomInfo.getIsotopicNumber(atomLabel));
 //		oxidationchoice.setSelectedIndex(AtomInfo.getOxidationNumber(atomLabel));
     p1.add(isotopechoice);
 
     p1.add(new JLabel("Oxidation state:"));
     oxidationchoice = new JComboBox();
-    rebuildOxidationList(Atom.stripIsotopeNumber(Atom.stripOxidation(atomLabel)),
+    rebuildOxidationList(AtomSite.stripIsotopeNumber(AtomSite.stripOxidation(atomLabel)),
             AtomInfo.getOxidationNumber(atomLabel));
 //		oxidationchoice.setSelectedIndex(AtomInfo.getOxidationNumber(atomLabel));
     p1.add(oxidationchoice);
 
-    selectedAtomLabel = Atom.stripIsotopeNumber(Atom.stripOxidation(atomLabel));
+    selectedAtomLabel = AtomSite.stripIsotopeNumber(AtomSite.stripOxidation(atomLabel));
 
 //		p1 = new JPanel();
 //		p1.setLayout(new FlowLayout(FlowLayout.RIGHT,5,5));
@@ -161,7 +159,7 @@ public class ChooseAtomD extends myJDialog {
     return getSelectedIsotope() + getSelectedAtom() + getSelectedOxidation();
   }
 
-  public static void getAtomType(Frame aframe, Atom anatom) {
+  public static void getAtomType(Frame aframe, AtomScatterer anatom) {
     ChooseAtomD chooseAtomD = new ChooseAtomD(aframe, anatom.getAtomSymbol());
     chooseAtomD.setVisible(true);
     while (chooseAtomD.isVisible()) {
@@ -170,7 +168,7 @@ public class ChooseAtomD extends myJDialog {
       } catch (InterruptedException e) {
       }
     }
-    anatom.setAtomSymbol(chooseAtomD.getSelectedAtomLabel());
+	 anatom.setAtomSymbol(chooseAtomD.getSelectedAtomLabel());
     chooseAtomD.dispose();
     chooseAtomD = null;
   }

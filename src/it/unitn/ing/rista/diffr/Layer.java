@@ -802,9 +802,12 @@ public class Layer extends XRDcat {
 	  if (chemicalComposition == null) {
 		  chemicalComposition = new Vector<AtomQuantity>();
 		  int phasenumber = checkPhaseNumber();
+		  double[] fraction = new double[phasenumber];
 		  double[] quantity = new double[phasenumber];
-		  for (int i = 0; i < phasenumber; i++)
-			  quantity[i] = getNormalizedPhaseQuantity(i) * getPhase(i).getDensity();
+		  for (int i = 0; i < phasenumber; i++) {
+			  fraction[i] = getNormalizedPhaseQuantity(i);
+			  quantity[i] = fraction[i] * getPhase(i).getDensity();
+		  }
 //			  System.out.println(getPhase(i).toString());
 		  double totAtomFraction = 0;
 		  double totAtomWtFraction = 0;
@@ -817,12 +820,16 @@ public class Layer extends XRDcat {
 			  for (int i1 = 0; i1 < composition.size(); i1++) {
 				  weightFractions[i1] = composition.elementAt(i1).quantity_weight;
 				  totalWeight += weightFractions[i1];
+				  atomicFractions[i1] = composition.elementAt(i1).quantity;
+				  totalFraction += atomicFractions[i1];
 			  }
-			  for (int i1 = 0; i1 < composition.size(); i1++)
+			  for (int i1 = 0; i1 < composition.size(); i1++) {
 				  weightFractions[i1] /= totalWeight;
+				  atomicFractions[i1] /= totalFraction;
+			  }
 			  for (int j = 0; j < composition.size(); j++) {
 				  weightFractions[j] *= quantity[i];
-				  atomicFractions[j] = weightFractions[j] / composition.elementAt(j).mass;
+				  atomicFractions[j] *= fraction[i];
 				  totAtomWtFraction += weightFractions[j];
 				  totAtomFraction += atomicFractions[j];
 				  AtomQuantity anAtomQuantity = new AtomQuantity(composition.elementAt(j).label, composition.elementAt(j).mass,
@@ -840,10 +847,18 @@ public class Layer extends XRDcat {
 				  }
 			  }
 		  }
+		  double totAtomFromWtFraction = 0;
+		  double[] fromWeightFractions = new double[chemicalComposition.size()];
 		  for (int i1 = 0; i1 < chemicalComposition.size(); i1++) {
 			  AtomQuantity atomQ = chemicalComposition.elementAt(i1);
 			  atomQ.quantity_weight /= totAtomWtFraction;
 			  atomQ.quantity /= totAtomFraction;
+			  fromWeightFractions[i1] = atomQ.quantity_weight / atomQ.mass;
+			  totAtomFromWtFraction += fromWeightFractions[i1];
+		  }
+		  for (int i1 = 0; i1 < chemicalComposition.size(); i1++) {
+			  fromWeightFractions[i1] /= totAtomFromWtFraction;
+//			  System.out.println(chemicalComposition.elementAt(i1).label + " " + chemicalComposition.elementAt(i1).quantity + " " + chemicalComposition.elementAt(i1).quantity_weight + " " + fromWeightFractions[i1]);
 		  }
 	  }
 //	  System.out.print("Layer " + toString() + " ");
@@ -857,16 +872,11 @@ public class Layer extends XRDcat {
 	public void printCustomInformations(OutputStream out) throws IOException {
 		// to be implemented by subclasses
 		Vector<AtomQuantity> composition = getChemicalComposition();
-		printLine(out, "       Atom   fractions");
+		printLine(out, "       AtomSite   fractions");
 		printLine(out, "n  label  atom  fraction(at)  fraction(wt)");
 		for (int i1 = 0; i1 < composition.size(); i1++)
 			printLine(out, (i1 + 1) + ") " + composition.elementAt(i1).label
 					+ " " + composition.elementAt(i1).quantity  + " " + composition.elementAt(i1).quantity_weight);
-		newLine(out);
-		printLine(out, "       Atom  fractions");
-		printLine(out, "n  label  atom  fraction");
-		for (int i1 = 0; i1 < composition.size(); i1++)
-			printLine(out, (i1 + 1) + ") " + composition.elementAt(i1).label + " " + composition.elementAt(i1).quantity_weight);
 		newLine(out);
 	}
 

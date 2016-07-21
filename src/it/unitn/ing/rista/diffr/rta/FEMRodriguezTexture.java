@@ -47,20 +47,20 @@ public class FEMRodriguezTexture extends Texture {
   public FEMRodriguezTexture(XRDcat obj, String alabel) {
     super(obj, alabel);
     initXRD();
-    identifier = "FEM Rodriguez Space (disabled)";
+    identifier = "Disabled FEM Rodriguez Space";
     IDlabel = "FEM Rodriguez Space";
     description = "select this to apply the FEM over Rodriguez Space";
   }
 
   public FEMRodriguezTexture(XRDcat afile) {
     this(afile, "FEM Rodriguez Texture");
-    identifier = "FEM Rodriguez Space (disabled)";
+    identifier = "Disabled FEM Rodriguez Space";
     IDlabel = "FEM Rodriguez Space";
     description = "select this to apply the FEM over Rodriguez Space";
   }
 
   public FEMRodriguezTexture() {
-    identifier = "FEM Rodriguez Space (disabled)";
+    identifier = "Disabled FEM Rodriguez Space";
     IDlabel = "FEM Rodriguez Space";
     description = "select this to apply the FEM over Rodriguez Space";
   }

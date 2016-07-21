@@ -21,6 +21,7 @@
 package it.unitn.ing.rista.awt;
 
 import it.unitn.ing.jgraph.*;
+import it.unitn.ing.rista.chemistry.XRayDataSqLite;
 import it.unitn.ing.rista.diffr.*;
 import it.unitn.ing.rista.util.*;
 import it.unitn.ing.rista.interfaces.Peak;
@@ -82,6 +83,11 @@ public class MultiPlotFitting extends PlotFitting {
   public void createGraph(DiffrDataFile[] afile) {
 
     getContentPane().setBackground(Color.white);
+
+	  int mode = PlotDataFile.checkScaleModeX();
+	  PlotDataFile.checkCalibrateIntensity();
+	  PlotDataFile.checkBackgroundSubtraction();
+	  XRayDataSqLite.checkMinimumEnergy();
 
     datafile = afile;
     boolean markExcludedRegion = MaudPreferences.getBoolean("excludedRegion.setZeroForPlot", true);
@@ -159,7 +165,7 @@ public class MultiPlotFitting extends PlotFitting {
         np = datafile[sn].finalindex - datafile[sn].startingindex;
 
         double data[] = new double[2 * np];
-        int mode = checkScaleModeX();
+        mode = checkScaleModeX();
         for (i = j = 0; i < np; i++, j += 2) {
           data[j] = datafile[sn].getXDataForPlot(i + datafile[sn].startingindex, mode);
           data[j + 1] = datafile[sn].getYSqrtData(i + datafile[sn].startingindex) + offset * sn;
@@ -303,7 +309,7 @@ public class MultiPlotFitting extends PlotFitting {
 
           datap = new PeakSet[dimension];
 
-          int mode = checkScaleModeX();
+          mode = checkScaleModeX();
 
           for (int ijn = 0; ijn < numberradiation; ijn++) {
             double wave = adataset.getInstrument().getRadiationType().getRadiationWavelength(ijn);
@@ -425,7 +431,7 @@ public class MultiPlotFitting extends PlotFitting {
         np = datafile[0].finalindex - datafile[0].startingindex;
 
         double data[] = new double[2 * np];
-        int mode = checkScaleModeX();
+        mode = checkScaleModeX();
         for (i = j = 0; i < np; i++, j += 2) {
           data[j] = (double) datafile[0].getXDataForPlot(i + datafile[0].startingindex, mode);
           if (datafile[0].xInsideRange(datafile[0].getXData(i + datafile[0].startingindex)) || !markExcludedRegion)
@@ -688,7 +694,7 @@ public class MultiPlotFitting extends PlotFitting {
 		String folder = folderAndName[0];
 		filename = folderAndName[1];
 
-		if (!filename.endsWith(".cif"))
+		if (Constants.sandboxEnabled && !filename.endsWith(".cif"))
 			filename = filename + ".cif";
 
 		if (filename != null) {
@@ -764,7 +770,7 @@ public class MultiPlotFitting extends PlotFitting {
 		String folder = folderAndName[0];
 		filename = folderAndName[1];
 
-		if (!filename.endsWith(".cif"))
+		if (Constants.sandboxEnabled && !filename.endsWith(".cif"))
 			filename = filename + ".cif";
 
 		if (filename != null) {
@@ -840,7 +846,7 @@ public class MultiPlotFitting extends PlotFitting {
 		filename = folderAndName[1];
 		int numberphases = datafile[0].getFilePar().getActiveSample().phasesNumber();
 
-		if (!filename.endsWith(".cif"))
+		if (Constants.sandboxEnabled && !filename.endsWith(".cif"))
 			filename = filename + ".cif";
 
 		if (filename != null) {

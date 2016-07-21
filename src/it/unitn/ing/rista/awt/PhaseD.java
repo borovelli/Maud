@@ -226,7 +226,7 @@ public class PhaseD extends myJFrame {
     generalContainer.add(createHKLlistPanel(), "options");
 
 /*
-     Here go the the Atom or Structure panel
+     Here go the the AtomSite or Structure panel
 */
     JPanel structureFactorPanel = new JPanel(new FlowLayout());
     centerPanel.addTab("Structure", null, structureFactorPanel);

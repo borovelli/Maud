@@ -194,8 +194,9 @@ public class FourierTransformPeak extends PseudoVoigtPeak {
 	  }
 
 	  double[] shapeAbs = diffrDataFile.getShapeAbsFactors(aphase, getOrderPosition());
-	  double asyConst1 = aphase.getPlanarDefectAsymmetryConstant1(this);
-	  double asyConst2 = aphase.getPlanarDefectAsymmetryConstant2(this);
+	  double asyConst1 = aphase.getActivePlanarDefects().getPlanarDefectAsymmetryConstant1(this.getReflex());
+	  double asyConst2 = aphase.getActivePlanarDefects().getPlanarDefectAsymmetryConstant2(this.getReflex());
+// not active, see reciprocal model			double planar_asymmetry = aphase.getActivePlanarDefects().getPlanarDefectAsymmetry(getReflex());
 
     int startingRad = 0;
     radiationWeight[0] = getRadiationWeight(0);
@@ -278,7 +279,7 @@ public class FourierTransformPeak extends PseudoVoigtPeak {
         if (logOutput && out != null) {
           try {
 		          out.print(" ");
-		          Constants.ifmt.write(getOrderPosition(), out);
+/*		          Constants.ifmt.write(getOrderPosition(), out);
 		          out.print(" ");
 		          Constants.ifmt.write(i, out);
 		          out.print(" " + phase_name);
@@ -318,7 +319,50 @@ public class FourierTransformPeak extends PseudoVoigtPeak {
 		          out.print(" ");
 		          Constants.ffmt.write((float) radiationWeight[i], out);
 		          out.print(" ");
-		          Constants.efmt.write((float) aphase.getScaleFactor(), out);
+		          Constants.efmt.write((float) aphase.getScaleFactor(), out);*/
+
+	          out.print(getOrderPosition());
+	          out.print(" ");
+	          out.print(i);
+	          out.print(" " + phase_name);
+	          out.print(refl.getH());
+	          out.print(" ");
+	          out.print(refl.getK());
+	          out.print(" ");
+	          out.print(refl.getL());
+	          out.print(" ");
+	          out.print((float) refl.d_space);
+	          out.print(" ");
+	          out.print((float) diffrDataFile.getDataFileSet().getStructureFactors(aphase)[1][getOrderPosition()]);
+	          out.print(" ");
+	          out.print((float) diffrDataFile.getDataFileSet().getStructureFactors(aphase)[0][getOrderPosition()]);
+	          out.print(" ");
+	          out.print((float) actualPosition[j]);
+	          out.print(" ");
+	          out.print((float) diffrDataFile.getStrains(aphase, getOrderPosition())[j]);
+	          out.print(" ");
+	          out.print((float) refl.getPlanarDefectDisplacement(1));
+	          out.print(" ");
+	          out.print((float) intensity[ipv]);
+	          out.print(" ");
+	          out.print((float) 0);
+	          out.print(" ");
+	          out.print((float) 0);
+	          out.print(" ");
+	          out.print((float) Fhkl);
+	          out.print(" ");
+	          out.print((float) intensitySingle);
+	          out.print(" ");
+	          out.print((float) lorentzPolarization[j]);
+	          out.print(" ");
+	          out.print((float) textureFactor[j]);
+	          out.print(" ");
+	          out.print((float) shapeAbs[j]);
+	          out.print(" ");
+	          out.print((float) radiationWeight[i]);
+	          out.print(" ");
+	          out.print((float) aphase.getScaleFactor());
+
 		          out.print(Constants.lineSeparator);
 		          out.flush();
 	          } catch (Exception io) {

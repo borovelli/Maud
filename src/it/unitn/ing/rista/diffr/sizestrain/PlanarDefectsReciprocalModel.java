@@ -68,7 +68,7 @@ public class PlanarDefectsReciprocalModel extends PlanarDefects {
 
 	// here we define the model string to appear in the GUI and the description string
 	// change it accordingly to your method, it should be an unique identifier
-	final static String id = "Reciprocal lattice";
+	final static String id = "Disabled Reciprocal lattice";
 	final static String desc = "select this to compute planar disorder by the reciprocal lattice model";
 
 	int[] orderModulation = new int[3];
@@ -146,8 +146,7 @@ public class PlanarDefectsReciprocalModel extends PlanarDefects {
 		return 1;
 	}
 
-	public double getPlanarDefectAsymmetry(Peak peak) {
-		Reflection refl = peak.getReflex();
+	public double getPlanarDefectAsymmetry(Reflection refl) {
 		double asy = 0;
 		int[] h = new int[3];
 		h[0] = Math.abs(refl.getH());

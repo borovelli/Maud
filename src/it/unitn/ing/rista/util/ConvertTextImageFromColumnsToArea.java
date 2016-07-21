@@ -41,7 +41,7 @@ public class ConvertTextImageFromColumnsToArea {
 
   public static void run(Frame parent) {
     String filename = Utility.openFileDialog(parent, "Open 3 columns txt image file", FileDialog.LOAD,
-        (String) MaudPreferences.getPref(principalJFrame.datafilePath, Constants.documentsDirectory),
+        MaudPreferences.getPref(principalJFrame.datafilePath, Constants.documentsDirectory),
         null, null);
     if (filename != null) {
       String[] folderAndName = Misc.getFolderandName(filename);
@@ -53,7 +53,7 @@ public class ConvertTextImageFromColumnsToArea {
 //        System.out.println("Opening: " + filename);
         File file = new File(filename);
         try {
-          Vector <int[]> data = new Vector <int[]> (1048576, 1048576);
+          Vector <int[]> data = new Vector <> (1048576, 1048576);
           BufferedReader dis = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
           String linedata = dis.readLine();
 
@@ -111,17 +111,22 @@ public class ConvertTextImageFromColumnsToArea {
           } else {
             tmp = string_2_.substring(0, index) + "IJ" + string_2_.substring(index, string_2_.length());
           }
-          file = new File(string_1_ + tmp);
+	       filename = Utility.openFileDialog(parent, "Choose filename to save...", FileDialog.SAVE,
+			        MaudPreferences.getPref(principalJFrame.datafilePath, ""),
+			        null, string_1_ + tmp);
+	        if (filename != null) {
+		        file = new File(filename);
 //          System.out.println("Opening: " + string_1_ + tmp);
-          BufferedWriter sis = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
+		        BufferedWriter sis = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
 //          index = 1;
-            for (int j = 0; j < dataNumberY; j++) {
-              for (int i = 0; i < dataNumberX; i++)
-              sis.write(Integer.toString(image[i][j]) + " ");
-            sis.write(eol);
+		        for (int j = 0; j < dataNumberY; j++) {
+			        for (int i = 0; i < dataNumberX; i++)
+				        sis.write(Integer.toString(image[i][j]) + " ");
+			        sis.write(eol);
 //            System.out.println("Wrote line: " + index++);
-          }
-          sis.close();
+		        }
+		        sis.close();
+	        }
         } catch (Exception e) {
           e.printStackTrace();
         }

@@ -21,9 +21,8 @@
 package it.unitn.ing.rista.diffr.forcefield;
 
 import it.unitn.ing.rista.awt.JOptionsDialog;
-import it.unitn.ing.rista.diffr.Atom;
-import it.unitn.ing.rista.diffr.ForceField;
-import it.unitn.ing.rista.diffr.XRDcat;
+import it.unitn.ing.rista.diffr.*;
+import it.unitn.ing.rista.diffr.AtomSite;
 import it.unitn.ing.rista.diffr.structure.StructureAtomic;
 import it.unitn.ing.rista.util.Coordinates;
 
@@ -174,8 +173,8 @@ public class ForceFieldLennardJones extends ForceField {
 		int na = m_Struct.getAtomList().size();
 		for (int i = 0; i < na; i++) {
 			for (int j = 0; j < na; j++) {
-				String atom1 = ((Atom) m_Struct.getAtomList().get(i)).getAtomSymbol();
-				String atom2 = ((Atom) m_Struct.getAtomList().get(j)).getAtomSymbol();
+				String atom1 = ((AtomSite) m_Struct.getAtomList().get(i)).getSiteLabel();
+				String atom2 = ((AtomSite) m_Struct.getAtomList().get(j)).getSiteLabel();
 				LennardJonesParams pij_tmp = new LennardJonesParams(atom1, atom2);
 				if (!atomPairs.contains(pij_tmp)) {
 					atomPairs.add(pij_tmp);
@@ -222,15 +221,15 @@ public class ForceFieldLennardJones extends ForceField {
 		for (int na1 = 0; na1 < m_Struct.getAtomList().size(); na1++) {
 			for (int na2 = 0; na2 < m_Struct.getAtomList().size(); na2++) {
 				if (na1 == na2) continue;
-				Atom atm1 = (Atom) m_Struct.getAtomList().get(na1);
-				Atom atm2 = (Atom) m_Struct.getAtomList().get(na2);
+				AtomSite atm1 = (AtomSite) m_Struct.getAtomList().get(na1);
+				AtomSite atm2 = (AtomSite) m_Struct.getAtomList().get(na2);
 				for (int np1 = 0; np1 < atm1.getCartesianCoords().size(); np1++) {
 					for (int np2 = 0; np2 < atm2.getCartesianCoords().size(); np2++) {
 						Coordinates acoord1 = atm1.getCartesianCoords(np1);
 						Coordinates acoord2 = atm2.getCartesianCoords(np2);
 
-						double c1 = getLennardJonesConst1(atm1.getAtomSymbol(), atm2.getAtomSymbol());
-						double c2 = getLennardJonesConst2(atm1.getAtomSymbol(), atm2.getAtomSymbol());
+						double c1 = getLennardJonesConst1(atm1.getFirstAtomSymbol(), atm2.getFirstAtomSymbol());
+						double c2 = getLennardJonesConst2(atm1.getFirstAtomSymbol(), atm2.getFirstAtomSymbol());
 
 						double rij = Math.sqrt(Math.pow(acoord1.x - acoord2.x, 2) + Math.pow(acoord1.y - acoord2.y, 2) + Math.pow(acoord1.z - acoord2.z, 2));
 						double r_6 = Math.pow(1/rij, 6);
@@ -303,7 +302,7 @@ public class ForceFieldLennardJones extends ForceField {
 		class ljTableModel extends AbstractTableModel {
 
 			public ljTableModel() {
-				columnNames = new String[]{"Atom 1", "Atom 2", "Const 1", "Const 2"};
+				columnNames = new String[]{"AtomSite 1", "AtomSite 2", "Const 1", "Const 2"};
 				data = new Object[getPairNumber()][4];
 				for (int nd = 0; nd < getPairNumber(); nd++) {
 					LennardJonesParams ljp12 = getLennardJonesParams(nd);

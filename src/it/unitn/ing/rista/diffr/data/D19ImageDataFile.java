@@ -285,14 +285,14 @@ public class D19ImageDataFile extends it.unitn.ing.rista.diffr.MultDiffrDataFile
                                 double omega, double chi, double phi) {
 
 //    String filename = Utility.openFileDialog(new Frame(), "Save as CIF (.esg)...",
-//            FileDialog.SAVE, null, null, "put a name (no extension)");
+//            FileDialog.SAVE, null, null, "put a name (with extension).esg");
     String[] folderAndName = Misc.getFolderandName(filename);
 
     String folder = folderAndName[0];
     filename = folderAndName[1];
 
     if (filename == null) return null;
-    if (!filename.endsWith(".esg"))
+    if (Constants.sandboxEnabled && !filename.endsWith(".esg"))
       filename = filename + ".esg";
 
     int nprofiles = profile[0].length;

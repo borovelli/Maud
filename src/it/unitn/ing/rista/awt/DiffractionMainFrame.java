@@ -20,6 +20,7 @@
 
 package it.unitn.ing.rista.awt;
 
+import com.radiographema.MaudText;
 import it.unitn.ing.rista.awt.treetable.*;
 import it.unitn.ing.rista.comp.OutputPanel;
 import it.unitn.ing.rista.comp.ParallelComputationController;
@@ -135,7 +136,7 @@ public class DiffractionMainFrame extends principalJFrame implements TreeEventRe
         "Submit structure to COD",
         "Load RSS feed",
         "-",
-        "Start refine on Xgrid",
+        "Refine in batch...",
       MENU_HELP + ":7",
         "Readme", // Help
         "Introduction",
@@ -274,7 +275,7 @@ public class DiffractionMainFrame extends principalJFrame implements TreeEventRe
       true,
       true,
       true,
-      Constants.testing,
+      true,
 
       true,
       true,
@@ -355,7 +356,8 @@ public class DiffractionMainFrame extends principalJFrame implements TreeEventRe
           Constants.testing ? "ESQUI client" : null, // Special
           Constants.testing ? "Test COD JDBC connection" : null,
           Constants.testing ? "Test COD HTTP connection" : null,
-          Constants.testing ? "Start refine on Xgrid" : null,
+          //Constants.testing ? "Start refine on Xgrid" : null,
+		      "Refine in batch...",
           null,
           null,
           null,
@@ -1429,6 +1431,24 @@ public class DiffractionMainFrame extends principalJFrame implements TreeEventRe
     }).start();
   }
 
+	void startBatchMode() {
+		(new PersistentThread() {
+			public void executeJob() {
+				String filename = Utility.browseFilename(DiffractionMainFrame.this, "Load the batch instruction file");
+				if (filename != null) {
+					Constants.textonly = true;
+//				Constants.stdoutput = Constants.CONSOLE_WINDOW;
+					System.out.println("Starting Maud program, wait........");
+					String[] args = new String[2];
+					args[0] = "-f";
+					args[1] = filename;
+					(new MaudText()).execute(MaudText.BATCH, args);
+					Constants.textonly = false;
+				}
+			}
+		}).start();
+	}
+
 /*  void refineWithXgridUsingConsoleCommand() {
 //        XGridClient.connect("trial", "/usr/bin/cal", new String[]{"2005"});
     String[] filenames = {"Maud_essential.jar", "analysis.par"};
@@ -1652,8 +1672,8 @@ public class DiffractionMainFrame extends principalJFrame implements TreeEventRe
       } else if (command.equals(mainMenuCommand[index][4])) {      // Test COD HTTP connection
         (new CODdatabaseConnector()).testConnection("localhost/cod", "root", "cod");
         return;
-      } else if (command.equals(mainMenuCommand[index][5])) {     // test XGrid connection
-        refineWithXgrid();
+      } else if (command.equals(mainMenuCommand[index][5])) {     // batch mode
+	      startBatchMode();
       } else if (command.equals(JPVMNetworkComputingCommand[0])) {     // Distribute computing configuration
         ParallelComputationController.configure();
         return;

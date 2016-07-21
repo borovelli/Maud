@@ -59,12 +59,12 @@ public class SimpleSite {
 
   public void loadAtomProperties() {
 //      atomNumber = AtomInfo.retrieveAtomNumber(stripIsotopeNumber(atomSymbol));
-      atomListNumber = AtomInfo.getAtomNumber(Atom.stripIsotopeNumber(atomSymbol));
-      isotopeListNumber = AtomInfo.getIsotopeNumber(Atom.stripOxidation(atomSymbol));
-      oxidationNumber = Atom.retrieveOxidationNumber(atomSymbol);
-    System.out.println("Atom: " + siteLabel);
-    System.out.println("Atom: " + atomSymbol);
-    System.out.println("Atom list number " + atomListNumber);
+      atomListNumber = AtomInfo.getAtomNumber(AtomSite.stripIsotopeNumber(atomSymbol));
+      isotopeListNumber = AtomInfo.getIsotopeNumber(AtomSite.stripOxidation(atomSymbol));
+      oxidationNumber = AtomSite.retrieveOxidationNumber(atomSymbol);
+    System.out.println("AtomSite: " + siteLabel);
+    System.out.println("AtomSite: " + atomSymbol);
+    System.out.println("AtomSite list number " + atomListNumber);
     System.out.println("Isotope list number " + isotopeListNumber);
     System.out.println("Oxidation list number " + oxidationNumber);
 //      weight = AtomInfo.retrieveAtomWeight(stripIsotopeNumber(atomSymbol));
@@ -73,7 +73,7 @@ public class SimpleSite {
   }
 
 /*  public double[] scatfactor(double dspacing, int radType, int tubeNumber) {
-    return Atom.scatfactor(dspacing, radType, tubeNumber,
+    return AtomSite.scatfactor(dspacing, radType, tubeNumber,
         atomListNumber, isotopeListNumber, oxidationNumber);
   }*/
 

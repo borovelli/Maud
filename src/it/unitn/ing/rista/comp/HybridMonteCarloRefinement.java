@@ -62,7 +62,7 @@ public class HybridMonteCarloRefinement extends OptimizationAlgorithm {
   int niter = 0;
   int ipflg = 0;
   int brkflg = 0;
-  double derstep = 0.0001;
+  double derstep = 0.001;
   boolean doubleder = false;
   double prcsn = 0.00000001;
   int iterationsLeastSquares = 5;
@@ -122,7 +122,7 @@ public class HybridMonteCarloRefinement extends OptimizationAlgorithm {
     setTrialsNumber("100");
     // Least squares
     stringField[1] = MaudPreferences.getPref(iterations, "3");
-    stringField[3] = MaudPreferences.getPref("leastSquares.derivateStep", "0.0001");
+    stringField[3] = MaudPreferences.getPref("leastSquares.derivateStep", "0.001");
     stringField[4] = MaudPreferences.getPref("leastSquares.doubleDerivate", "false");
     stringField[2] = MaudPreferences.getPref("leastSquares.precision", "0.00000001");
   }

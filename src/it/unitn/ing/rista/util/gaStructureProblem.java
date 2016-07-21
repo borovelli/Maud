@@ -28,7 +28,7 @@ import ec.util.Output;
 import ec.simple.SimpleFitness;
 import ec.simple.SimpleProblemForm;
 import ec.vector.DoubleVectorIndividual;
-/*luca import it.unitn.ing.rista.diffr.sdpd.StructureSolutionGANew;*/
+import it.unitn.ing.rista.diffr.sdpd.StructureSolutionGANew;
 import it.unitn.ing.rista.awt.MaudProgressBar;
 
 import javax.swing.*;
@@ -49,10 +49,10 @@ import java.io.IOException;
  * @since JDK1.1
  */
 
-public class gaStructureProblem {/* luca extends Problem implements SimpleProblemForm {
+public class gaStructureProblem extends Problem implements SimpleProblemForm {
 
 
-	private static StructureSolutionGANew gaMethod;*/
+	private static StructureSolutionGANew gaMethod;
 	private static gaTrialStatistics trialDialog = null;
 	public static final int RUNTRIAL = 0;
 	public static final int RUNFULL = 1;
@@ -61,7 +61,7 @@ public class gaStructureProblem {/* luca extends Problem implements SimpleProble
 	private static int nIndividualTotal = 0;
 
 
-/*luca	public static StructureSolutionGANew getGaMethod() {
+        public static StructureSolutionGANew getGaMethod() {
 		return gaMethod;
 	}
 
@@ -104,8 +104,8 @@ public class gaStructureProblem {/* luca extends Problem implements SimpleProble
 	}
 
 	public void evaluate(final EvolutionState state,
-											 final Individual ind,
-											 final int threadnum) {
+			final Individual ind,
+			final int threadnum) {
 		if (ind.evaluated) return;
 
 		if (!(ind instanceof DoubleVectorIndividual))
@@ -144,10 +144,10 @@ public class gaStructureProblem {/* luca extends Problem implements SimpleProble
 	}
 
 	public void describe(final Individual ind,
-											 final EvolutionState state,
-											 final int threadnum,
-											 final int log,
-											 final int verbosity) {
+			final EvolutionState state,
+			final int threadnum,
+			final int log,
+			final int verbosity) {
 
 	}
 
@@ -249,7 +249,7 @@ public class gaStructureProblem {/* luca extends Problem implements SimpleProble
 			setVisible(false);
 			dispose();
 		}
-	}*/
+	}
 }
 
 

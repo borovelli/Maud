@@ -20,8 +20,6 @@
 
 package it.unitn.ing.rista.diffr.rta;
 
-import com.amd.aparapi.*;
-import com.amd.aparapi.device.Device;
 import it.unitn.ing.rista.diffr.*;
 import it.unitn.ing.rista.util.*;
 
@@ -38,9 +36,9 @@ public class ExpHarmonicTexture extends HarmonicTexture {
   public static final String IDlabelS = "Exponential Harmonic";
   public static final String descriptionS = "select this to apply exponential Harmonic model of Van Houtte";
 
-  double odf[] = null;
+  double odf[][][] = null;
   boolean refreshODF = true;
-//  static boolean tubeProjection = MaudPreferences.getBoolean("expHarmonic.tubeProjection", true);
+  static boolean tubeProjection = MaudPreferences.getBoolean("expHarmonic.tubeProjection", true);
 
   public ExpHarmonicTexture(XRDcat aobj, String alabel) {
     super(aobj, alabel);
@@ -54,11 +52,34 @@ public class ExpHarmonicTexture extends HarmonicTexture {
     this(aobj, identifierS + " method");
   }
 
+  public ExpHarmonicTexture(String[] labels) {
+    this();
+    if (labels != null) {
+      if (labels.length > 1) {
+        identifier = labels[0];
+        IDlabel = labels[1];
+      }
+      if (labels.length > 2)
+        description = labels[2];
+    }
+  }
+
   public ExpHarmonicTexture() {
     identifier = identifierS;
     IDlabel = IDlabelS;
     description = descriptionS;
   }
+
+  public void updateStringtoDoubleBuffering(boolean firstLoading) {
+    super.updateStringtoDoubleBuffering(false);
+  }
+
+/*  public void refreshForNotificationUp(XRDcat source, int reason) {
+    refreshComputation = true;
+    if (source == this) {
+      refreshODF = true;
+    }
+  }*/
 
   public void updateParametertoDoubleBuffering(boolean firstLoading) {
     // to be implemented by subclasses
@@ -69,15 +90,70 @@ public class ExpHarmonicTexture extends HarmonicTexture {
     refreshODF = true;
   }
 
-/*  void computeODF() {
+  void computeODF() {
     initializeAll();
-  }*/
+  }
 
   public int getLaueGroupNumber() {
     return SpaceGroups.getLGNumberSiegfriedConv(getPhase().getPointGroup());
   }
 
-/*  void odfNormalization() {
+  void computeODFFromCoefficients() {
+
+    if (refreshODF) {
+      refreshODF = false;
+      Misc.println("Compute ODF!");
+    double vbg = 0.0, va = 0.0, hvg = 0., hvb = 0., a = 0., b = 0.;
+    double fn = 0.0;
+    normalizationFactor = 1.0;
+
+    double fnorm = 0.0;
+    double roundOffCorrection = 0.0;
+    for (int ng = 0; ng < alphama; ng++) {
+      hvg = resolutionR;
+      if (ng == 0 || ng == alphama1)
+        hvg /= 2;
+      for (int nb = 0; nb < betama; nb++) {
+        if (nb == 0) {
+          a = 0.0;
+          b = pi25g;
+        } else if (nb == betama1) {
+          b = nb * resolutionR;
+          a -= pi25g;
+        } else {
+          a = nb * resolutionR - pi25g;
+          b = a + resolutionR;
+        }
+        hvb = Math.cos(a) - Math.cos(b);
+        vbg = hvb * hvg;
+
+        for (int na = 0; na < alphama; na++) {
+          if (na == 0 || na == alphama1)
+            va = pi25g * vbg;
+          else
+            va = resolutionR * vbg;
+          odf[na][nb][ng] = getODF(na * resolutionR - pi25g, nb * resolutionR - pi25g,
+              ng * resolutionR - pi25g);
+          fnorm += odf[na][nb][ng] * va;
+          roundOffCorrection += va;
+        }
+
+      }
+    }
+
+//    double fnormTheoretical = Constants.PI * 8. * Constants.PI / fnorm;
+    normalizationFactor = roundOffCorrection / fnorm;
+      for (int ng = 0; ng < alphama; ng++)
+        for (int nb = 0; nb < betama; nb++)
+          for (int na = 0; na < alphama; na++)
+            odf[na][nb][ng] *= normalizationFactor;
+
+    }
+
+//	  Misc.println("Normalization factor: " + Fmt.format(fnormTheoretical));
+  }
+
+  void odfNormalization() {
 
     double vbg = 0.0, va = 0.0, hvg = 0., hvb = 0., a = 0., b = 0.;
     double fn = 0.0;
@@ -120,16 +196,20 @@ public class ExpHarmonicTexture extends HarmonicTexture {
     normalizationFactor = roundOffCorrection / fnorm;
 
 
-//	  System.out.println("Normalization factor: " + Fmt.format(fnormTheoretical));
-  }*/
+//	  Misc.println("Normalization factor: " + Fmt.format(fnormTheoretical));
+  }
 
   public double[] computeTextureFactor(double[][] texture_angles,
                                        double[] sctf, double fhir, int inv) {
-    return calculatePFbyTubeProjection(texture_angles, sctf[0], sctf[1], fhir, inv);
+    if (tubeProjection)
+      return calculatePFbyTubeProjection(texture_angles, sctf[0], sctf[1], fhir, inv);
+    else
+      return calculatePF(texture_angles, sctf[0], sctf[1], fhir, inv);
   }
 
-//  int actualRunningThreads = 0;
-//  int datafile = 0;
+  int actualRunningThreads = 0;
+  int datafile = 0;
+  double textF[][] = null;
   double[] cdsc = null;
   int LaueGroupSnumber = 0;
   double resolution = 5.0;
@@ -139,7 +219,7 @@ public class ExpHarmonicTexture extends HarmonicTexture {
   public static double integrationStepPFR = integrationStepPF * Constants.DEGTOPI;
   public static int nfismax = (int) (Constants.PI2 / integrationStepPFR + 1.00001);
   public static double pisimg = integrationStepPFR / (6.0 * Constants.PI) / 2;
-  int alphama = 0, betama = 0, betaalphama = 0;
+  int alphama = 0, betama = 0;
   int alphama1 = 0, betama1 = 0;
   double normalizationFactor = 1.0;
   int nge = 0, nbe = 0, nae = 0;
@@ -148,13 +228,11 @@ public class ExpHarmonicTexture extends HarmonicTexture {
   int rotationFold = 1;
   int mdb = 0;
   double dist_factor2 = 1.0; //Math.pow(3, 2/3);
-	int[] ml2;
-	int[] nl2;
 
   public void initializeAll() {
-//    tubeProjection = MaudPreferences.getBoolean("expHarmonic.tubeProjection", true);
+    tubeProjection = MaudPreferences.getBoolean("expHarmonic.tubeProjection", true);
     boolean newODF = false;
-    if (LaueGroupSnumber != getLaueGroupNumber() || odf == null/* && tubeProjection*/) {
+    if (LaueGroupSnumber != getLaueGroupNumber() || odf == null && tubeProjection) {
       LaueGroupSnumber = getLaueGroupNumber();
       refreshODF = true;
       newODF = true;
@@ -162,20 +240,21 @@ public class ExpHarmonicTexture extends HarmonicTexture {
     applySymmetryRules();
     alphama = Uwimvuo.getAlphamax(resolution);
     betama = (alphama + 1) / 2;
-	  betaalphama = alphama * betama;
     alphama1 = alphama - 1;
     betama1 = betama - 1;
-    integrationStepPF = MaudPreferences.getDouble(Texture.prefs[1], Double.parseDouble(Texture.prefVal[1]));
+    if (newODF)
+      odf = new double[alphama][betama][alphama];
+    if (refreshODF && tubeProjection)
+      computeODFFromCoefficients();
+    integrationStepPF = MaudPreferences.getDouble(Texture.prefs[1], 0.0);
     if (integrationStepPF <= 0.0)
       integrationStepPF = resolution / 2.0;
-	  if (integrationStepPF > 1.0)
-		  integrationStepPF = 1.0;
     integrationStepPFR = integrationStepPF * Constants.DEGTOPI;
     nfismax = (int) (Constants.PI2 / integrationStepPFR + 1.00001);
-//    System.out.println(nfismax);
+//    Misc.println(nfismax);
     pisimg = integrationStepPFR / (6.0 * Constants.PI);
-//    if (!tubeProjection)
-//      odfNormalization();
+    if (!tubeProjection)
+      odfNormalization();
     double dist_factor = resolution * 2.0;
     dist_factor2 = dist_factor * dist_factor;
 
@@ -253,103 +332,162 @@ public class ExpHarmonicTexture extends HarmonicTexture {
     odfMaxAnglesR[1] = odfMaxAngles[1] * Constants.DEGTOPI;
     odfMaxAnglesR[2] = odfMaxAngles[2] * Constants.DEGTOPI;
 
-	  int lMax = expansionDegree / 2;
-	  ml2 = new int[lMax];
-	  nl2 = new int[lMax];
-	  for (int l = 2, i = 0; l <= expansionDegree; l += 2, i++) {
-		  ml2[i] = SphericalHarmonics.getN(LGIndex, l);
-		  nl2[i] = SphericalHarmonics.getN(sampleSymmetry, l);
-	  }
+  }
 
-	  if (newODF)
-		  odf = new double[alphama * betaalphama];
-	  if (refreshODF/* && tubeProjection*/)
-		  computeODFFromCoefficients();
-
-	}
-
-	public void computeTextureFactor(final Phase aphase, final Sample asample) {
+  public void computeTextureFactor(final Phase aphase, final Sample asample) {
 
     if (!refreshComputation)
       return;
 
-    initializeAll();
-
-//    fiottu();
-//    odfNormalization();
-//		checkFullODF();
-
-    refreshComputation = false;
-
-    cdsc = aphase.lattice();
-
-//    double phoninp = subfmin();
-
-    int hkln = aphase.gethklNumber();
-
-    int totdatafile = 0;
-    for (int i = 0; i < asample.activeDatasetsNumber(); i++) {
-	    for (int j = 0; j < asample.getActiveDataSet(i).activedatafilesnumber(); j++)
-	      totdatafile += asample.getActiveDataSet(i).getActiveDataFile(j).positionsPerPattern;
-    }
-
-	  double[][] textF = new double[totdatafile][hkln];
-
-	  for (int ij = 0; ij < hkln; ij++) {
-		  double texAngle[][] = new double[2][totdatafile];
-
-//            for (int j = 0; j < hkln; j++) {
-		  Reflection refl = aphase.getReflectionVector().elementAt(ij);
-		  double[] sctf = Uwimvuo.tfhkl(refl.getH(), refl.getK(), refl.getL(), cdsc[7], cdsc[5], cdsc[3], cdsc[6], cdsc[0], cdsc[1]);
-		  double fhir = Math.acos(sctf[3]);
-		  int inv = Uwimvuo.equiv(LaueGroupSnumber, sctf);
-//      System.out.println("h k l, inv : " + refl.h + refl.k + refl.l + ", " + inv);
-
-		  int idatafile = 0;
-		  for (int i = 0; i < asample.activeDatasetsNumber(); i++) {
-			  int datafilenumber = asample.getActiveDataSet(i).activedatafilesnumber();
-			  for (int ij1 = 0; ij1 < datafilenumber; ij1++) {
-				  DiffrDataFile adatafile = asample.getActiveDataSet(i).getActiveDataFile(ij1);
-				  double[][] positions = adatafile.getPositions(aphase)[0];
-//				  for (int ppp = 0; ppp < adatafile.positionsPerPattern; ppp++) {
-					  double texture_angles[] = adatafile.getTextureAngles(positions[ij][0]);
-					  texAngle[0][idatafile] = (texture_angles[0] * Constants.DEGTOPI);
-					  texAngle[1][idatafile] = (texture_angles[1] * Constants.DEGTOPI);
-					  idatafile++;
-//				  }
-			  }
-		  }
-		  double[] texFactor = computeTextureFactor(texAngle, sctf, fhir, inv);
-		  idatafile = 0;
-		  for (int i = 0; i < asample.activeDatasetsNumber(); i++) {
-			  int datafilenumber = asample.getActiveDataSet(i).activedatafilesnumber();
-			  for (int ij1 = 0; ij1 < datafilenumber; ij1++) {
-//				  DiffrDataFile adatafile = asample.getActiveDataSet(i).getActiveDataFile(ij1);
-//				  for (int ppp = 0; ppp < adatafile.positionsPerPattern; ppp++) {
-					  textF[idatafile][ij] = texFactor[idatafile];
-				  idatafile++;
-//				  }
-			  }
-		  }
-//						refl.setExpTextureFactor(adatafile.getIndex(), textF[j][datafile]);
-//            }
-	  }
-
-		  int idatafile = 0;
-		  for (int i = 0; i < asample.activeDatasetsNumber(); i++) {
-			  int datafilenumber = asample.getActiveDataSet(i).activedatafilesnumber();
-			  for (int ij1 = 0; ij1 < datafilenumber; ij1++) {
-				  DiffrDataFile adatafile = asample.getActiveDataSet(i).getActiveDataFile(ij1);
-				  adatafile.setTextureFactors(aphase, textF[idatafile++]);
-			  }
-		  }
-
-	  // checking odf
-//		Reflection refl = (Reflection) aphase.reflectionv.elementAt(0);
-//		checkComputation(refl, 10.0 ,55.0);
+	  recomputedTextureFactor(aphase, asample, true);
   }
 
-  public double[] computeTextureFactor(Phase aphase, double[][] alphabeta, Reflection reflex) {
+	public double[][] recomputedTextureFactor(final Phase aphase, final Sample asample, final boolean setValues) {
+
+		initializeAll();
+
+		cdsc = aphase.lattice();
+
+		int hkln = aphase.gethklNumber();
+
+		int totdatafile = 0;
+		for (int i = 0; i < asample.activeDatasetsNumber(); i++) {
+			for (int j = 0; j < asample.getActiveDataSet(i).activedatafilesnumber(); j++)
+				totdatafile += asample.getActiveDataSet(i).getActiveDataFile(j).positionsPerPattern;
+		}
+
+		double[][] textF = new double[totdatafile][hkln];
+
+		final int maxThreads = Math.min(Constants.maxNumberOfThreads, hkln / 10);
+		int checkNumber = totdatafile * hkln;
+		if (maxThreads > 1 && checkNumber > 1000 &&
+				Constants.threadingGranularity >= Constants.MEDIUM_GRANULARITY) {
+			if (Constants.debugThreads)
+				System.out.println("Thread discrete texture computation " + getLabel());
+			int i;
+			PersistentThread[] threads = new PersistentThread[maxThreads];
+			for (i = 0; i < maxThreads; i++) {
+				final int totData = totdatafile;
+				final double[][] textFt = textF;
+				threads[i] = new PersistentThread(i) {
+					@Override
+					public void executeJob() {
+						int i1 = this.getJobNumberStart();
+						int i2 = this.getJobNumberEnd();
+
+						for (int ij = i1; ij < i2; ij++) {
+							double texAngle[][] = new double[2][totData];
+
+							Reflection refl = aphase.getReflectionVector().elementAt(ij);
+							double[] sctf = Uwimvuo.tfhkl(refl.getH(), refl.getK(), refl.getL(), cdsc[7], cdsc[5], cdsc[3], cdsc[6], cdsc[0], cdsc[1]);
+							double fhir = Math.acos(sctf[3]);
+							int inv = Uwimvuo.equiv(LaueGroupSnumber, sctf);
+//      System.out.println("h k l, inv : " + refl.h + refl.k + refl.l + ", " + inv);
+
+							int idatafile = 0;
+							for (int i = 0; i < asample.activeDatasetsNumber(); i++) {
+								int datafilenumber = asample.getActiveDataSet(i).activedatafilesnumber();
+								for (int ij1 = 0; ij1 < datafilenumber; ij1++) {
+									DiffrDataFile adatafile = asample.getActiveDataSet(i).getActiveDataFile(ij1);
+									double[][] positions = adatafile.getPositions(aphase)[0];
+//								  for (int ppp = 0; ppp < adatafile.positionsPerPattern; ppp++) {
+									double texture_angles[] = adatafile.getTextureAngles(positions[ij][0]);
+									texAngle[0][idatafile] = (texture_angles[0] * Constants.DEGTOPI);
+									texAngle[1][idatafile] = (texture_angles[1] * Constants.DEGTOPI);
+									idatafile++;
+//								  }
+								}
+							}
+							double[] texFactor = computeTextureFactor(texAngle, sctf, fhir, inv);
+							synchronized(asample) {
+								int index = 0;
+								for (int i = 0; i < asample.activeDatasetsNumber(); i++) {
+									int datafilenumber = asample.getActiveDataSet(i).activedatafilesnumber();
+									for (int ij1 = 0; ij1 < datafilenumber; ij1++) {
+										textFt[index][ij] = texFactor[index];
+										index++;
+									}
+								}
+							}
+						}
+
+					}
+				};
+			}
+			i = 0;
+			int istep = (int) (0.9999 + hkln / maxThreads);
+			for (int j = 0; j < maxThreads; j++) {
+				int is = i;
+				if (j < maxThreads - 1)
+					i = Math.min(i + istep, hkln);
+				else
+					i = hkln;
+				threads[j].setJobRange(is, i);
+				threads[j].start();
+			}
+			boolean running;
+			do {
+				running = false;
+				try {
+					Thread.sleep(Constants.timeToWaitThreadsEnding);
+				} catch (InterruptedException r) {
+				}
+				for (int h = 0; h < maxThreads; h++) {
+					if (!threads[h].isEnded())
+						running = true;
+				}
+			} while (running);
+
+		} else {
+			for (int ij = 0; ij < hkln; ij++) {
+				double texAngle[][] = new double[2][totdatafile];
+
+				Reflection refl = aphase.getReflectionVector().elementAt(ij);
+				double[] sctf = Uwimvuo.tfhkl(refl.getH(), refl.getK(), refl.getL(), cdsc[7], cdsc[5], cdsc[3], cdsc[6], cdsc[0], cdsc[1]);
+				double fhir = Math.acos(sctf[3]);
+				int inv = Uwimvuo.equiv(LaueGroupSnumber, sctf);
+//      System.out.println("h k l, inv : " + refl.h + refl.k + refl.l + ", " + inv);
+
+				int idatafile = 0;
+				for (int i = 0; i < asample.activeDatasetsNumber(); i++) {
+					int datafilenumber = asample.getActiveDataSet(i).activedatafilesnumber();
+					for (int ij1 = 0; ij1 < datafilenumber; ij1++) {
+						DiffrDataFile adatafile = asample.getActiveDataSet(i).getActiveDataFile(ij1);
+						double[][] positions = adatafile.getPositions(aphase)[0];
+//					  for (int ppp = 0; ppp < adatafile.positionsPerPattern; ppp++) {
+						double texture_angles[] = adatafile.getTextureAngles(positions[ij][0]);
+						texAngle[0][idatafile] = (texture_angles[0] * Constants.DEGTOPI);
+						texAngle[1][idatafile] = (texture_angles[1] * Constants.DEGTOPI);
+						idatafile++;
+//					  }
+					}
+				}
+				double[] texFactor = computeTextureFactor(texAngle, sctf, fhir, inv);
+				idatafile = 0;
+				for (int i = 0; i < asample.activeDatasetsNumber(); i++) {
+					int datafilenumber = asample.getActiveDataSet(i).activedatafilesnumber();
+					for (int ij1 = 0; ij1 < datafilenumber; ij1++) {
+						textF[idatafile][ij] = texFactor[idatafile];
+						idatafile++;
+					}
+				}
+			}
+		}
+		if (setValues) {
+			int idatafile = 0;
+			for (int i = 0; i < asample.activeDatasetsNumber(); i++) {
+				int datafilenumber = asample.getActiveDataSet(i).activedatafilesnumber();
+				for (int ij1 = 0; ij1 < datafilenumber; ij1++) {
+					DiffrDataFile adatafile = asample.getActiveDataSet(i).getActiveDataFile(ij1);
+					adatafile.setTextureFactors(aphase, textF[idatafile++]);
+				}
+			}
+		}
+
+		return textF;
+	}
+
+	public double[] computeTextureFactor(Phase aphase, double[][] alphabeta, Reflection reflex) {
 
 //    int numberOfPoints = alphabeta.length/2;
 
@@ -357,7 +495,7 @@ public class ExpHarmonicTexture extends HarmonicTexture {
 
     double[] cdsc = aphase.lattice();
 
-//    double phoninp = subfmin();
+//    float phoninp = subfmin();
 
     double[] sctf = Uwimvuo.tfhkl(reflex.getH(), reflex.getK(), reflex.getL(), cdsc[7], cdsc[5], cdsc[3], cdsc[6], cdsc[0], cdsc[1]);
     double fhir = Math.acos(sctf[3]);
@@ -376,7 +514,7 @@ public class ExpHarmonicTexture extends HarmonicTexture {
 
     double[][] textureAngles = new double[2][1];
     for (int i = 0; i < 2; i++)
-      textureAngles[i][0] = (texture_angles[i] * Constants.DEGTOPI);
+      textureAngles[i][0] = texture_angles[i] * Constants.DEGTOPI;
     double phi, beta;
     double dphi = maxPhi / (phiPointNumber - 1);
     double dbeta = maxBeta / (betaPointNumber - 1);
@@ -407,7 +545,7 @@ public class ExpHarmonicTexture extends HarmonicTexture {
 
     double[][] textureAngles = new double[2][1];
     for (int i = 0; i < 2; i++)
-      textureAngles[i][0] = (texture_angles[i] * Constants.DEGTOPI);
+      textureAngles[i][0] = texture_angles[i] * Constants.DEGTOPI;
     double[] sctf = new double[4];
 
     for (int i = 0; i < pointNumber; i++) {
@@ -438,7 +576,7 @@ public class ExpHarmonicTexture extends HarmonicTexture {
 
     double[] cdsc = aphase.lattice();
 
-//    double phoninp = subfmin();
+//    float phoninp = subfmin();
 
 //		int hkln = aphase.gethklNumber();
 
@@ -452,7 +590,7 @@ public class ExpHarmonicTexture extends HarmonicTexture {
     double x, y, r;
     double dxy = 2.0 * maxAngle / numberofPoints;
 
-//          System.out.println(2.0 * Math.asin(maxAngle / Constants.sqrt2) * Constants.PITODEG);
+//          Misc.println(2.0 * Math.asin(maxAngle / Constants.sqrt2) * Constants.PITODEG);
     int count = 0;
     int countIncluded = 0;
     for (int i = 0; i < numberofPoints; i++)
@@ -477,7 +615,7 @@ public class ExpHarmonicTexture extends HarmonicTexture {
           }
           texture_angles[1][countIncluded++] = phaseAng;
           included[count++] = true;
-//          System.out.println(texture_angles[0] + " " + texture_angles[1]);
+//          Misc.println(texture_angles[0] + " " + texture_angles[1]);
 
         } else {
           PFreconstructed[i][j] = Double.NaN;
@@ -503,15 +641,15 @@ public class ExpHarmonicTexture extends HarmonicTexture {
     return PFreconstructed;
   }
 
-/*  public double[] calculatePF(double[][] thetaphi,
+  public double[] calculatePF(double[][] thetaphi,
                               double sthi, double cthi, double fhir, int inv) {
-// Local variables
+/* Local variables */
     double ang;
     int nfis;
     double ca2, cb2, sa2;
 
-//     Calculation of a complete reduced pole figure
-       INPUT FIO given in the whole G-space OUTPUT POLREF=FS
+/*     Calculation of a complete reduced pole figure
+       INPUT FIO given in the whole G-space OUTPUT POLREF=FS */
 
 //    boolean negODFout = false;
 //    if (Constants.testing)
@@ -589,7 +727,7 @@ public class ExpHarmonicTexture extends HarmonicTexture {
       int n1 = referenceCounter[startingPoint];
       fs[n1] = 0.;
 
-// Projection thread loop, Simpson integration
+/* Projection thread loop, Simpson integration */
       double cr = Math.cos(thetaphi[0][n1]);
       double sr = Math.sin(thetaphi[0][n1]);
       for (nfis = 0; nfis < nfismax; nfis++) {
@@ -623,7 +761,7 @@ public class ExpHarmonicTexture extends HarmonicTexture {
         n1 = referenceCounter[n];
         fs[n1] = 0.;
 
-        // Projection thread loop, Simpson integration
+        /* Projection thread loop, Simpson integration */
         for (nfis = 0; nfis < nfismax; nfis++) {
           double ffak1 = 0.0;
           for (int repeat = 0; repeat < maxRepeat; repeat++) {
@@ -631,7 +769,7 @@ public class ExpHarmonicTexture extends HarmonicTexture {
             angles[1] = angle1[repeat][nfis];
             angles[2] = angle2[repeat][nfis];
 
-//						double f_odf = getODF(iaindex); // Luca_last1202 f[findex[0]][findex[1]][findex[2]];
+//						float f_odf = getODF(iaindex); // Luca_last1202 f[findex[0]][findex[1]][findex[2]];
             ffak1 += getODF(angles[0], angles[1], angles[2]);
           }
           if (0 < nfis && nfis < nfismax - 1) {
@@ -647,630 +785,17 @@ public class ExpHarmonicTexture extends HarmonicTexture {
       startingPoint = finalPointReference[nref];  // next one
     }
 
-//                                          Normalization to PINPF
-//		System.out.println(fs);
+/*                                          Normalization to PINPF */
+//		Misc.println(fs);
     return fs;
-  }*/
+  }
 
-		public final double getDTesseralFunction(int l, int m, int n,
-		                                         double alpha, double beta, double gamma) {
+  public double getODF(double alpha, double beta, double gamma) {
+    double odf = super.getODF(alpha, beta, gamma);
+    return Math.exp(odf - 1.0) / normalizationFactor;
+  }
 
-			double cx0, cx1;
-			double i1 = (MoreMath.odd(m + n)) ? -1 : 1;
-			double i2 = (MoreMath.odd(l)) ? -1 : 1;
-			int mabs = m > 0 ? m : -m ;
-			int nabs = n > 0 ? n : -n ;
-
-			double arg1 = mabs * alpha + nabs * gamma;
-			double arg2 = mabs * alpha - nabs * gamma;
-
-			if (m > 0) {
-				if (n > 0) {
-					cx0 = Math.cos(arg1);
-					cx1 = Math.cos(arg2);
-				} else if (n < 0) {
-					cx0 = -Math.sin(arg1);
-					cx1 = Math.sin(arg2);
-				} else {
-					cx0 = Constants.sqrt2 * Math.cos(arg1);
-					cx1 = 0;
-				}
-			} else if (m < 0) {
-				if (n > 0) {
-					cx0 = Math.sin(arg1);
-					cx1 = Math.sin(arg2);
-				} else if (n < 0) {
-					cx0 = Math.cos(arg1);
-					cx1 = -Math.cos(arg2);
-				} else {
-					cx0 = Constants.sqrt2 * Math.sin(arg1);
-					cx1 = 0.0;
-				}
-			} else {
-				if (n > 0) {
-					cx0 = Constants.sqrt2 * Math.cos(arg1);
-					cx1 = 0.0;
-				} else if (n < 0) {
-					cx0 = -Constants.sqrt2 * Math.sin(arg1);
-					cx1 = 0.0;
-				} else {
-					cx0 = Math.cos(arg1);
-					cx1 = 0;
-				}
-			}
-
-			double result;
-			if (cx1 != 0) {
-				double df0, df1;
-				double dftmp;
-				double dbeta = Constants.PI - beta;
-
-				double arg = Constants.PI_2 * (mabs - nabs);
-				dftmp = SphericalHarmonics.deltaV[l][0][mabs] * SphericalHarmonics.deltaV[l][0][nabs];
-				df0 = dftmp * Math.cos(arg);
-				df1 = df0;
-				for (int i = 1; i <= l; i++) {
-					dftmp = 2.0 * SphericalHarmonics.deltaV[l][i][mabs] * SphericalHarmonics.deltaV[l][i][nabs];
-					df0 += dftmp * Math.cos(beta * i - arg);
-					df1 += dftmp * Math.cos(dbeta * i - arg);
-				}
-				result = i1 * cx0 * df0 + i2 * cx1 * df1;
-			} else {
-				double arg = Constants.PI * (mabs - nabs) / 2.0;
-				double df = SphericalHarmonics.deltaV[l][0][mabs] * SphericalHarmonics.deltaV[l][0][nabs] *
-						Math.cos(arg);
-				for (int i = 1; i <= l; i++)
-					df += 2.0 * SphericalHarmonics.deltaV[l][i][mabs] * SphericalHarmonics.deltaV[l][i][nabs] *
-							Math.cos(beta * i - arg);
-				result = i1 * cx0 * df;
-			}
-			return result;
-		}
-
-		public void odf_comp(int index) {
-/*			for (int ng = 0; ng < alphama; ng++)
-				for (int nb = 0; nb < betama; nb++)
-					for (int na = 0; na < alphama; na++)
-						index = na + nb * alphama + ng * betaalphama;*/
-
-			int ng = index / betaalphama;
-			int remaining = index - ng * betaalphama;
-			int nb = remaining / alphama;
-			int na = remaining - nb * alphama;
-
-			double _odf = 0;
-			int k = 0;
-
-			double alpha = Constants.PI - resolutionR * na + pi25g;
-			double beta = resolutionR * nb - pi25g;
-			double gamma = Constants.PI - resolutionR * ng + pi25g;
-
-			for (int l = 2, i = 0; l <= expansionDegree; l += 2, i++)
-				for (int m = 1; m <= ml2[i]; m++)
-					for (int n = 1; n <= nl2[i]; n++) {
-						double Dlmu = 0;
-						for (int n1 = -l, i1 = 0; n1 <= l; n1++, i1++) {
-							double AlS = AlmunS[i + (n - 1) * lindex + i1 * lindex * sindex];
-							if (AlS != 0.0) {
-								double tmplmu = 0.0;
-								for (int m1 = -l, i2 = 0; m1 <= l; m1++, i2++) {
-									double AlC = AlmunC[i + (m - 1) * lindex + i2 * lindex * cindex];
-									if (AlC != 0.0)
-										tmplmu += AlC * getDTesseralFunction(l, m1, n1, alpha, beta, gamma);
-								}
-								Dlmu += tmplmu * AlS;
-							}
-						}
-						_odf += coefficient[k++] * Dlmu;
-					}
-
-			odf[index] = Math.exp(_odf);
-
-		}
-
-		public void computeODF() {
-
-		}
-
-
-
-
-
-	final static class ExponentialHarmonicODF extends Kernel {
-
-		double[] AlmunS, AlmunC, deltaV;
-		double resolutionR, pi25g;
-		int[] ml2, nl2;
-		int expansionDegree, alphama, betama, betaalphama, lindex, sindex, cindex, maxExpansion, maxExpansion2;
-		double[] coefficient;
-		double[] odf;
-
-		public final double getDTesseralFunction(int l, int m, int n,
-		                                         double alpha, double beta, double gamma) {
-
-			double cx0, cx1;
-			double i1 = (MoreMath.odd(m + n)) ? -1 : 1;
-			double i2 = (MoreMath.odd(l)) ? -1 : 1;
-			int mabs = m > 0 ? m : -m ;
-			int nabs = n > 0 ? n : -n ;
-
-			double arg1 = mabs * alpha + nabs * gamma;
-			double arg2 = mabs * alpha - nabs * gamma;
-
-			if (m > 0) {
-				if (n > 0) {
-					cx0 = Math.cos(arg1);
-					cx1 = Math.cos(arg2);
-				} else if (n < 0) {
-					cx0 = -Math.sin(arg1);
-					cx1 = Math.sin(arg2);
-				} else {
-					cx0 = Constants.sqrt2 * Math.cos(arg1);
-					cx1 = 0;
-				}
-			} else if (m < 0) {
-				if (n > 0) {
-					cx0 = Math.sin(arg1);
-					cx1 = Math.sin(arg2);
-				} else if (n < 0) {
-					cx0 = Math.cos(arg1);
-					cx1 = -Math.cos(arg2);
-				} else {
-					cx0 = Constants.sqrt2 * Math.sin(arg1);
-					cx1 = 0.0;
-				}
-			} else {
-				if (n > 0) {
-					cx0 = Constants.sqrt2 * Math.cos(arg1);
-					cx1 = 0.0;
-				} else if (n < 0) {
-					cx0 = -Constants.sqrt2 * Math.sin(arg1);
-					cx1 = 0.0;
-				} else {
-					cx0 = Math.cos(arg1);
-					cx1 = 0;
-				}
-			}
-
-			double result;
-			if (cx1 != 0) {
-				double df0, df1;
-				double dftmp;
-				double dbeta = Constants.PI - beta;
-
-				double arg = Constants.PI_2 * (mabs - nabs);
-				dftmp = deltaV[l + mabs * maxExpansion2] * deltaV[l + nabs * maxExpansion2];
-				df0 = dftmp * Math.cos(arg);
-				df1 = df0;
-				for (int i = 1; i <= l; i++) {
-					dftmp = 2.0 * deltaV[l + i * maxExpansion + mabs * maxExpansion2] *
-							deltaV[l + i * maxExpansion + nabs * maxExpansion2];
-					df0 += dftmp * Math.cos(beta * i - arg);
-					df1 += dftmp * Math.cos(dbeta * i - arg);
-				}
-				result = i1 * cx0 * df0 + i2 * cx1 * df1;
-			} else {
-				double arg = Constants.PI * (mabs - nabs) / 2.0;
-				double df = deltaV[l + mabs * maxExpansion2] * deltaV[l + nabs * maxExpansion2] * Math.cos(arg);
-				for (int i = 1; i <= l; i++)
-					df += 2.0 * deltaV[l + i * maxExpansion + mabs * maxExpansion2] *
-							deltaV[l + i * maxExpansion + nabs * maxExpansion2] * Math.cos(beta * i - arg);
-				result = i1 * cx0 * df;
-			}
-			return result;
-		}
-
-		@Override public void run() {
-
-			int index = getGlobalId(0);
-
-/*			for (int ng = 0; ng < alphama; ng++)
-				for (int nb = 0; nb < betama; nb++)
-					for (int na = 0; na < alphama; na++)
-						index = na + nb * alphama + ng * betaalphama;*/
-
-			int ng = index / betaalphama;
-			int remaining = index - ng * betaalphama;
-			int nb = remaining / alphama;
-			int na = remaining - nb * alphama;
-
-			double _odf = 0;
-			int k = 0;
-
-			double alpha = Constants.PI - resolutionR * na + pi25g;
-			double beta = resolutionR * nb - pi25g;
-			double gamma = Constants.PI - resolutionR * ng + pi25g;
-
-			for (int l = 2, i = 0; l <= expansionDegree; l += 2, i++)
-				for (int m = 1; m <= ml2[i]; m++)
-					for (int n = 1; n <= nl2[i]; n++) {
-						double Dlmu = 0;
-						for (int n1 = -l, i1 = 0; n1 <= l; n1++, i1++) {
-							double AlS = AlmunS[i + (n - 1) * lindex + i1 * lindex * sindex];
-							if (AlS != 0.0) {
-								double tmplmu = 0.0;
-								for (int m1 = -l, i2 = 0; m1 <= l; m1++, i2++) {
-									double AlC = AlmunC[i + (m - 1) * lindex + i2 * lindex * cindex];
-									if (AlC != 0.0)
-										tmplmu += AlC * getDTesseralFunction(l, m1, n1, alpha, beta, gamma);
-								}
-								Dlmu += tmplmu * AlS;
-							}
-						}
-						_odf += coefficient[k++] * Dlmu;
-					}
-
-			odf[index] = Math.exp(_odf);
-
-		}
-
-		public void computeODF(double[] _AlmunS, double[] _AlmunC, double _resolutionR, double _pi25g,
-		                       int[] _ml2, int[] _nl2, int _expansionDegree, int _alphama, int _betama,
-		                       int _lindex, int _sindex, int _cindex, double[] _deltaV, int _maxExpansion,
-		                       double[] _coefficient, double[] _odf) {
-
-			AlmunS = _AlmunS;
-			AlmunC = _AlmunC;
-			resolutionR = _resolutionR;
-			pi25g = _pi25g;
-			ml2 = _ml2;
-			nl2 = _nl2;
-			expansionDegree = _expansionDegree;
-			alphama = _alphama;
-			betama = _betama;
-			coefficient = _coefficient;
-			odf = _odf;
-			lindex = _lindex;
-			sindex = _sindex;
-			cindex = _cindex;
-			deltaV = _deltaV;
-			maxExpansion = _maxExpansion;
-			maxExpansion2 = maxExpansion * maxExpansion;
-
-			betaalphama = alphama * betama;
-
-			Device device = Constants.openclDevice;
-//			System.out.println("Using openCL device: " + Constants.openclDevice.getDeviceId());
-			Range range = device.createRange(betaalphama * alphama);
-			execute(range);
-//			execute(Range.create(betaalphama * alphama));
-		}
-
-	}
-
-	final static class FloatExponentialHarmonicODF extends Kernel {
-
-		float[] AlmunS, AlmunC, deltaV;
-		float resolutionR, pi25g;
-		int[] ml2, nl2;
-		int expansionDegree, alphama, betama, betaalphama, lindex, sindex, cindex, maxExpansion, maxExpansion2;
-		float[] coefficient;
-		float[] odf;
-
-		public final float getDTesseralFunction(int l, int m, int n,
-		                                         float alpha, float beta, float gamma) {
-
-			float cx0, cx1;
-			float i1 = (MoreMath.odd(m + n)) ? -1 : 1;
-			float i2 = (MoreMath.odd(l)) ? -1 : 1;
-			int mabs = m > 0 ? m : -m ;
-			int nabs = n > 0 ? n : -n ;
-
-			float arg1 = mabs * alpha + nabs * gamma;
-			float arg2 = mabs * alpha - nabs * gamma;
-
-			if (m > 0) {
-				if (n > 0) {
-					cx0 = cos(arg1);
-					cx1 = cos(arg2);
-				} else if (n < 0) {
-					cx0 = -sin(arg1);
-					cx1 = sin(arg2);
-				} else {
-					cx0 = Constants.sqrt2f * cos(arg1);
-					cx1 = 0;
-				}
-			} else if (m < 0) {
-				if (n > 0) {
-					cx0 = sin(arg1);
-					cx1 = sin(arg2);
-				} else if (n < 0) {
-					cx0 = cos(arg1);
-					cx1 = -cos(arg2);
-				} else {
-					cx0 = Constants.sqrt2f * sin(arg1);
-					cx1 = 0;
-				}
-			} else {
-				if (n > 0) {
-					cx0 = Constants.sqrt2f * cos(arg1);
-					cx1 = 0;
-				} else if (n < 0) {
-					cx0 = -Constants.sqrt2f * sin(arg1);
-					cx1 = 0;
-				} else {
-					cx0 = cos(arg1);
-					cx1 = 0;
-				}
-			}
-
-			float result;
-			if (cx1 != 0) {
-				float df0, df1;
-				float dftmp;
-				float dbeta = Constants.PIf - beta;
-
-				float arg = Constants.PI_2f * (mabs - nabs);
-				dftmp = deltaV[l + mabs * maxExpansion2] * deltaV[l + nabs * maxExpansion2];
-				df0 = dftmp * cos(arg);
-				df1 = df0;
-				for (int i = 1; i <= l; i++) {
-					dftmp = 2f * deltaV[l + i * maxExpansion + mabs * maxExpansion2] *
-							deltaV[l + i * maxExpansion + nabs * maxExpansion2];
-					df0 += dftmp * cos(beta * i - arg);
-					df1 += dftmp * cos(dbeta * i - arg);
-				}
-				result = i1 * cx0 * df0 + i2 * cx1 * df1;
-			} else {
-				float arg = Constants.PIf * (mabs - nabs) / 2;
-				float df = deltaV[l + mabs * maxExpansion2] * deltaV[l + nabs * maxExpansion2] * cos(arg);
-				for (int i = 1; i <= l; i++)
-					df += 2f * deltaV[l + i * maxExpansion + mabs * maxExpansion2] *
-							deltaV[l + i * maxExpansion + nabs * maxExpansion2] * cos(beta * i - arg);
-				result = i1 * cx0 * df;
-			}
-			return result;
-		}
-
-		@Override public void run() {
-
-			int index = getGlobalId(0);
-
-/*			for (int ng = 0; ng < alphama; ng++)
-				for (int nb = 0; nb < betama; nb++)
-					for (int na = 0; na < alphama; na++)
-						index = na + nb * alphama + ng * betaalphama;*/
-
-			int ng = index / betaalphama;
-			int remaining = index - ng * betaalphama;
-			int nb = remaining / alphama;
-			int na = remaining - nb * alphama;
-
-			float _odf = 0;
-			int k = 0;
-
-			float alpha = Constants.PIf - resolutionR * na + pi25g;
-			float beta = resolutionR * nb - pi25g;
-			float gamma = Constants.PIf - resolutionR * ng + pi25g;
-
-			for (int l = 2, i = 0; l <= expansionDegree; l += 2, i++)
-				for (int m = 1; m <= ml2[i]; m++)
-					for (int n = 1; n <= nl2[i]; n++) {
-						float Dlmu = 0;
-						for (int n1 = -l, i1 = 0; n1 <= l; n1++, i1++) {
-							float AlS = AlmunS[i + (n - 1) * lindex + i1 * lindex * sindex];
-							if (AlS != 0) {
-								float tmplmu = 0;
-								for (int m1 = -l, i2 = 0; m1 <= l; m1++, i2++) {
-									float AlC = AlmunC[i + (m - 1) * lindex + i2 * lindex * cindex];
-									if (AlC != 0)
-										tmplmu += AlC * getDTesseralFunction(l, m1, n1, alpha, beta, gamma);
-								}
-								Dlmu += tmplmu * AlS;
-							}
-						}
-						_odf += coefficient[k++] * Dlmu;
-					}
-
-			odf[index] = exp(_odf);
-
-		}
-
-		public void computeODF(float[] _AlmunS, float[] _AlmunC, float _resolutionR, float _pi25g,
-		                       int[] _ml2, int[] _nl2, int _expansionDegree, int _alphama, int _betama,
-		                       int _lindex, int _sindex, int _cindex, float[] _deltaV, int _maxExpansion,
-		                       float[] _coefficient, float[] _odf) {
-
-			AlmunS = _AlmunS;
-			AlmunC = _AlmunC;
-			resolutionR = _resolutionR;
-			pi25g = _pi25g;
-			ml2 = _ml2;
-			nl2 = _nl2;
-			expansionDegree = _expansionDegree;
-			alphama = _alphama;
-			betama = _betama;
-			coefficient = _coefficient;
-			odf = _odf;
-			lindex = _lindex;
-			sindex = _sindex;
-			cindex = _cindex;
-			deltaV = _deltaV;
-			maxExpansion = _maxExpansion;
-			maxExpansion2 = maxExpansion * maxExpansion;
-
-			betaalphama = alphama * betama;
-
-			Device device = Device.best();
-			Range range = device.createRange(betaalphama * alphama);
-			execute(range);
-//			execute(Range.create(betaalphama * alphama));
-		}
-
-	}
-
-	double[] AlmunS = null;
-	double[] AlmunC = null;
-	float[] fAlmunS = null;
-	float[] fAlmunC = null;
-	int lindex, sindex, cindex, lmax2;
-
-	private final void initializeAlmunSC(int lMax, int LGnumberS, int LGnumberC) {
-		int nlMax = 0;
-		for (int l = 2, i = 0; l <= lMax; l += 2, i++)
-			if (nlMax < nl2[i])
-				nlMax = nl2[i];
-		int mlMax = 0;
-		for (int l = 2, i = 0; l <= lMax; l += 2, i++)
-			if (mlMax < ml2[i])
-				mlMax = ml2[i];
-
-		lindex = lMax / 2;
-		sindex = nlMax;
-		cindex = mlMax;
-		lmax2 = 2 * lMax + 1;
-		AlmunS = new double[lindex * sindex * lmax2];
-		AlmunC = new double[lindex * cindex * lmax2];
-		for (int l = 2, i = 0; l <= lMax; l += 2, i++) {
-			for (int vu = 1; vu <= nl2[i]; vu++)
-				for (int n = -l; n <= l; n++)
-					AlmunS[i + (vu - 1) * lindex + (n + l) * lindex * sindex] = SphericalHarmonics.getAlmum(LGnumberS, l, vu, n);
-			for (int mu = 1; mu <= ml2[i]; mu++)
-				for (int m = -l; m <= l; m++)
-					AlmunC[i + (mu - 1) * lindex + (m + l) * lindex * cindex] = SphericalHarmonics.getAlmum(LGnumberC, l, mu, m);
-		}
-	}
-
-	private final void initializefAlmunSC(int lMax, int LGnumberS, int LGnumberC) {
-		int nlMax = 0;
-		for (int l = 2, i = 0; l <= lMax; l += 2, i++)
-			if (nlMax < nl2[i])
-				nlMax = nl2[i];
-		int mlMax = 0;
-		for (int l = 2, i = 0; l <= lMax; l += 2, i++)
-			if (mlMax < ml2[i])
-				mlMax = ml2[i];
-
-		lindex = lMax / 2;
-		sindex = nlMax;
-		cindex = mlMax;
-		lmax2 = 2 * lMax + 1;
-		fAlmunS = new float[lindex * sindex * lmax2];
-		fAlmunC = new float[lindex * cindex * lmax2];
-		for (int l = 2, i = 0; l <= lMax; l += 2, i++) {
-			for (int vu = 1; vu <= nl2[i]; vu++)
-				for (int n = -l; n <= l; n++)
-					fAlmunS[i + (vu - 1) * lindex + (n + l) * lindex * sindex] = (float)
-							SphericalHarmonics.getAlmum(LGnumberS, l, vu, n);
-			for (int mu = 1; mu <= ml2[i]; mu++)
-				for (int m = -l; m <= l; m++)
-					fAlmunC[i + (mu - 1) * lindex + (m + l) * lindex * cindex] = (float)
-							SphericalHarmonics.getAlmum(LGnumberC, l, mu, m);
-		}
-	}
-
-	void computeODFFromCoefficients() {
-
-		if (refreshODF) {
-			refreshODF = false;
-
-			boolean float_opencl = MaudPreferences.getBoolean("opencl.useFloat", true) && Constants.useOpenCL;
-
-			SphericalHarmonics.initialize();
-
-			float fresolutionR = (float) resolutionR, fpi25g = (float) pi25g;
-
-			int maxExpansion = SphericalHarmonics.maxExpansion;
-			int maxExpansion2 = maxExpansion * maxExpansion;
-			double[] deltaV = null;
-			float[] fdeltaV = null;
-			float[] fcoefficient = null;
-			int index = 0;
-			if (float_opencl) {
-				initializefAlmunSC(expansionDegree, sampleSymmetry, LGIndex);
-				fcoefficient = new float[coefficient.length];
-				for (int i = 0; i < coefficient.length; i++)
-					fcoefficient[i] = (float) coefficient[i];
-				fdeltaV = new float[maxExpansion * maxExpansion2];
-				for (int i = 0; i < maxExpansion; i++)
-					for (int j = 0; j < maxExpansion; j++)
-						for (int k = 0; k < maxExpansion; k++)
-							fdeltaV[index++] = (float) SphericalHarmonics.deltaV[i][j][k];
-			} else {
-				initializeAlmunSC(expansionDegree, sampleSymmetry, LGIndex);
-				deltaV = new double[maxExpansion * maxExpansion2];
-				for (int i = 0; i < maxExpansion; i++)
-					for (int j = 0; j < maxExpansion; j++)
-						for (int k = 0; k < maxExpansion; k++)
-							deltaV[index++] = SphericalHarmonics.deltaV[i][j][k];
-			}
-
-//      System.out.println("Compute ODF!");
-			double vbg, hvg, hvb, a = 0., b;
-			double[] va = new double[alphama * betaalphama];
-
-//	    double fn = 0.0;
-			normalizationFactor = 1.0;
-
-			double fnorm = 0.0;
-			double roundOffCorrection = 0.0;
-			index = 0;
-			for (int ng = 0; ng < alphama; ng++) {
-				hvg = resolutionR;
-				if (ng == 0 || ng == alphama1)
-					hvg /= 2;
-				for (int nb = 0; nb < betama; nb++) {
-					if (nb == 0) {
-						a = 0.0;
-						b = pi25g;
-					} else if (nb == betama1) {
-						b = nb * resolutionR;
-						a -= pi25g;
-					} else {
-						a = nb * resolutionR - pi25g;
-						b = a + resolutionR;
-					}
-					hvb = Math.cos(a) - Math.cos(b);
-					vbg = hvb * hvg;
-					for (int na = 0; na < alphama; na++) {
-						if (na == 0 || na == alphama1)
-							va[index] = pi25g * vbg;
-						else
-							va[index] = resolutionR * vbg;
-						roundOffCorrection += va[index++];
-					}
-				}
-			}
-
-			if (float_opencl) {
-				float[] fodf = new float[alphama * betaalphama];
-				(new FloatExponentialHarmonicODF()).computeODF(fAlmunS, fAlmunC, fresolutionR, fpi25g, ml2, nl2,
-						expansionDegree, alphama, betama, lindex, sindex, cindex, fdeltaV, maxExpansion, fcoefficient, fodf);
-				index = 0;
-				for (int ng = 0; ng < alphama; ng++)
-					for (int nb = 0; nb < betama; nb++)
-						for (int na = 0; na < alphama; na++) {
-							odf[index] = fodf[index];
-							fnorm += va[index] * odf[index++];
-						}
-			} else {
-				if (Constants.useOpenCL)
-					(new ExponentialHarmonicODF()).computeODF(AlmunS, AlmunC, resolutionR, pi25g, ml2, nl2,
-							expansionDegree, alphama, betama, lindex, sindex, cindex, deltaV, maxExpansion, coefficient, odf);
-				else
-					computeODF();
-
-				index = 0;
-				for (int ng = 0; ng < alphama; ng++)
-					for (int nb = 0; nb < betama; nb++)
-						for (int na = 0; na < alphama; na++)
-							fnorm += va[index] * odf[index++];
-			}
-
-//    double fnormTheoretical = Constants.PI * 8. * Constants.PI / fnorm;
-			normalizationFactor = roundOffCorrection / fnorm;
-			index = 0;
-			for (int ng = 0; ng < alphama; ng++)
-				for (int nb = 0; nb < betama; nb++)
-					for (int na = 0; na < alphama; na++)
-						odf[index++] *= normalizationFactor;
-
-		}
-
-//	  System.out.println("Normalization factor: " + Fmt.format(fnormTheoretical));
-	}
-
-	public double[] calculatePFbyTubeProjection(double[][] thetaphi,
+  public double[] calculatePFbyTubeProjection(double[][] thetaphi,
                                               double sthi, double cthi, double fhir, int inv) {
 /* Local variables */
     double ffak, ang, ca2, cb2, sa2,
@@ -1549,11 +1074,11 @@ public class ExpHarmonicTexture extends HarmonicTexture {
     }
 
 /*                                          Normalization to PINPF */
-//		System.out.println(fs);
+//		Misc.println(fs);
     return fs;
   } /* calpolo_ */
 
-/*  public void getIndicesR(double[] angles, int[] index) {
+  public void getIndicesR(double[] angles, int[] index) {
 
 //		if (alpha > Constants.PI2 - pi25g)
 //			alpha -= Constants.PI2;
@@ -1564,7 +1089,7 @@ public class ExpHarmonicTexture extends HarmonicTexture {
 
     applyCrystalSymmetryAndCheck(index);
 
-  }*/
+  }
 
   public void applyCrystalSymmetryAndCheck(int[] index) {
 
@@ -1696,10 +1221,7 @@ public class ExpHarmonicTexture extends HarmonicTexture {
   public double getODF(int[] index) {
 //    applyCrystalSymmetryLightCheck(index);
     applyCrystalSymmetryAndCheck(index);
-    return odf[index[0] + index[1] * alphama + index[2] * betaalphama];
+    return odf[index[0]][index[1]][index[2]];
   }
 
-  public double getParameterMinSignificantValue(int i) {
-    return 0;
-  }
 }

@@ -32,7 +32,7 @@ public class LaueMicroAbsorption  extends MicroAbsorption {
 
   public LaueMicroAbsorption(XRDcat aobj, String alabel) {
     super(aobj, alabel);
-    identifier = "Laue microabsorption";
+    identifier = "Disabled Laue microabsorption";
     IDlabel = "Laue microabsorption";
     description = "Laue microabsorption correction is performed (only for Laue transmission camera)";
     initXRD();
@@ -43,7 +43,7 @@ public class LaueMicroAbsorption  extends MicroAbsorption {
   }
 
   public LaueMicroAbsorption() {
-    identifier = "Laue microabsorption";
+    identifier = "Disabled Laue microabsorption";
     IDlabel = "Laue microabsorption";
     description = "Laue microabsorption correction is performed (only for Laue transmission camera)";
   }

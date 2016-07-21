@@ -196,7 +196,7 @@ public class DiffaXLayerModel {
 // 3/95; MMJT: Implemented Debye-Scherrer type broadening due to finite * 
 //             lateral layer widths. Added CHWDTH, RDWDTH. Modified the * 
 //             way the powder pattern is written to the array spec, so  * 
-//             that the low angle intensity begins at spec(1). Atom     * 
+//             that the low angle intensity begins at spec(1). AtomSite     *
 //             names are now case insensitive. The layer Bij factors    * 
 //             were reordered - B23, B31 become B13, B23.               * 
 //             GET_G modified to handle singularities better. (v1.80)   * 
@@ -8179,7 +8179,7 @@ int overlp_(void)
 			    s_copy(txt, "(inverted) are too close in layer", (
 				    ftnlen)33, (ftnlen)33);
 			}
-//                write(op,410) 'Atom ', a_name(nn,i), a_number(nn,i), 
+//                write(op,410) 'AtomSite ', a_name(nn,i), a_number(nn,i),
 //     |                   ' and atom ', a_name(m,i), a_number(m,i) 
 //                write(op,412) txt(1:PRUNE(txt)), i 
 //                write(op,420) 'Their combined occupancy is ', sum_occ 
@@ -11272,7 +11272,7 @@ boolean sfc(void)
 //  220 write(op,402) 'There are too many types of atoms in layer ', i 
 //      write(op,400) 'Atoms recorded so far are:' 
 //      do 110 j = 1, MAX_TA 
-//        write(op,403) '       Atom type ', j, '   ', atom_l(j) 
+//        write(op,403) '       AtomSite type ', j, '   ', atom_l(j)
 //  110 continue 
 //      write(op,402) '  Maximum number of types allowed is ', MAX_TA 
 //      return 

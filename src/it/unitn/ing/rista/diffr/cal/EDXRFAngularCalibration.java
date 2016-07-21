@@ -118,6 +118,8 @@ public class EDXRFAngularCalibration extends AngularCalibration {
       double value = datafile.getXDataForCalibration(i);
 
       angcal = zero + gain * value;
+//	    if (i == 0)
+//	      System.out.println(i + " " + value + " " + angcal);
 
       datafile.setCalibratedXDataOnly(i, angcal);
     }

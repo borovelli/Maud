@@ -378,8 +378,8 @@ public class ParameterTreeTableFrame extends myJFrame {
 				objs.add(obj);
 				objs.addAll(getAllChildren(obj, getSearchString()));
 				for (int i = 0; i < objs.size(); i++)
-					if (objs.get(i) instanceof Atom)
-						((Atom) objs.get(i)).setAnisotropicBfactors();
+					if (objs.get(i) instanceof AtomSite)
+						((AtomSite) objs.get(i)).setAnisotropicBfactors();
 			}
 		} else
 			System.out.println("Nothing selected in the three path!");

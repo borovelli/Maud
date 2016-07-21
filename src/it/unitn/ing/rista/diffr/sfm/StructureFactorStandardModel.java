@@ -20,11 +20,9 @@
 
 package it.unitn.ing.rista.diffr.sfm;
 
-import it.unitn.ing.rista.awt.PlotSimpleData;
 import it.unitn.ing.rista.diffr.*;
 import it.unitn.ing.rista.util.*;
 
-import java.awt.*;
 import java.util.Vector;
 
 /**
@@ -80,7 +78,7 @@ public class StructureFactorStandardModel extends StructureFactorModel {
 	  Instrument ainstrument = adataset.getInstrument();
 	  final Radiation rad1 = ainstrument.getRadiationType().getRadiation(0);
 //	  final int radType = rad1.getRadiationIDNumber();
-	  Vector<Atom> atomList = phase.getFullAtomList();
+	  Vector<AtomSite> atomList = phase.getFullAtomList();
 		double volume = phase.getCellVolume();
 	  double t = 1, t_corr = 1, constV = 1;
 	  if (rad1.isDynamical()) { // dynamical scattering
@@ -95,7 +93,7 @@ public class StructureFactorStandardModel extends StructureFactorModel {
 			int atomNumber = atomList.size();
 			double[][] scatteringFactors = new double[atomNumber][2];
 			for (int j = 0; j < atomNumber; j++) {
-				double[] scat = atomList.get(j).scatfactorNoDispersion(0.0, rad1);
+				double[] scat = atomList.get(j).scatfactor(0.0, rad1);
 				scatteringFactors[j][0] = scat[0];
 				scatteringFactors[j][1] = scat[1];
 //				System.out.println(atomList.get(j).getLabel() + " " + scat[0] + " " + scat[1]);
@@ -224,10 +222,10 @@ public class StructureFactorStandardModel extends StructureFactorModel {
 		double scatf1, scatf2;
 		double a1 = 0.0;
 		double a2 = 0.0;
-		Vector<Atom> atomList = phase.getFullAtomList();
+		Vector<AtomSite> atomList = phase.getFullAtomList();
 		int atomNumber = atomList.size();
 		for (int j = 0; j < atomNumber; j++) {
-			Atom ato = atomList.get(j);
+			AtomSite ato = atomList.get(j);
 			ato.trowException = true;
 			if (ato.useThisAtom) {
 				double scatFactor = ato.getOccupancyValue();
@@ -257,10 +255,10 @@ public class StructureFactorStandardModel extends StructureFactorModel {
 			double a1 = 0.0;
 			double a2 = 0.0;
 			double i_4dspace2 = 0.25 / (refl.d_space * refl.d_space);
-			Vector<Atom> atomList = phase.getFullAtomList();
+			Vector<AtomSite> atomList = phase.getFullAtomList();
 			int atomNumber = atomList.size();
 			for (int j = 0; j < atomNumber; j++) {
-				Atom ato = atomList.get(j);
+				AtomSite ato = atomList.get(j);
 				double[][] x = ato.getQuickAtomCoordinates();
 				ato.trowException = true;
 				if (ato.useThisAtom) {
@@ -286,7 +284,7 @@ public class StructureFactorStandardModel extends StructureFactorModel {
 
 /*	public static double Fhklcomp(Phase phase, Vector<Reflection> reflections, double[][] scatf) {
 		double scatf1, scatf2;
-		Vector<Atom> atomList = phase.getFullAtomList();
+		Vector<AtomSite> atomList = phase.getFullAtomList();
 		int atomNumber = atomList.size();
 		double structurefactor = 0.0;
 		double[] divideFactors = phase.getActivePlanarDefects().getDivisionFactors();
@@ -304,7 +302,7 @@ public class StructureFactorStandardModel extends StructureFactorModel {
 					l1 = -l1;
 				}
 				for (int j = 0; j < atomNumber; j++) {
-					Atom ato = atomList.get(j);
+					AtomSite ato = atomList.get(j);
 					double[][] x = ato.getQuickAtomCoordinates();
 					ato.trowException = true;
 					if (ato.useThisAtom) {

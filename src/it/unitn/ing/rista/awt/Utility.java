@@ -128,7 +128,7 @@ public class Utility {
     return filename;
   }
 
-  public static String browseFilenametoSave(Frame parent, String title) {
+	public static String browseFilenametoSave(Frame parent, String title) {
     String filename = openFileDialog(parent, title, FileDialog.SAVE,
 		    MaudPreferences.getPref(principalJFrame.datafilePath, Constants.documentsDirectory), null, null);
     if (filename != null) {
@@ -168,7 +168,11 @@ public class Utility {
     return null;
   }
 
-  public static String openFileDialog(Frame frameParent, String title, int loading,
+	public static String openFileDialogForLoad(String title, String preferredPath, String filenameToLoad) {
+		return openFileDialog(new Frame(), title, FileDialog.LOAD, preferredPath, null, filenameToLoad);
+	}
+
+	public static String openFileDialog(Frame frameParent, String title, int loading,
                                       String preferredPath, String extensionFilter, String filenameForSave) {
     String filename = null;
     FileDialog fd = new FileDialog(frameParent, title, loading);
@@ -176,7 +180,7 @@ public class Utility {
     }
     if (preferredPath != null)
       fd.setDirectory(Misc.checkForWindowsPath(preferredPath));
-    if (filenameForSave != null && loading == FileDialog.SAVE)
+    if (filenameForSave != null)
       fd.setFile(filenameForSave);
     fd.setVisible(true);
     if (fd.getFile() != null) {

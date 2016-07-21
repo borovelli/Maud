@@ -92,7 +92,7 @@ public class SampleShapePopa extends SampleShape implements Shape3D {
   public SampleShapePopa(XRDcat aobj, String alabel) {
     super(aobj, alabel);
     initXRD();
-    identifier = "Popa shape";
+    identifier = "Disabled Popa shape";
     IDlabel = "Popa shape";
     description = "Shape described by harmonic coefficients";
   }
@@ -102,7 +102,7 @@ public class SampleShapePopa extends SampleShape implements Shape3D {
   }
 
   public SampleShapePopa() {
-    identifier = "Popa shape";
+    identifier = "Disabled Popa shape";
     IDlabel = "Popa shape";
     description = "Shape described by harmonic coefficients";
   }

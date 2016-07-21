@@ -344,7 +344,7 @@ public class Parameter extends Object implements Cloneable, basicObj {
           obj.notifyParameterChanged(this);
         if (registeredParameters != null)
           for (int i = 0; i < registeredParameters.size(); i++)
-            ((Parameter) registeredParameters.elementAt(i)).updateValue();
+            (registeredParameters.elementAt(i)).updateValue();
       }
     }
   }

@@ -22,14 +22,13 @@ package it.unitn.ing.rista.awt;
 
 import it.unitn.ing.rista.diffr.structure.StructureAtomic;
 import it.unitn.ing.rista.diffr.Parameter;
-import it.unitn.ing.rista.diffr.Atom;
+import it.unitn.ing.rista.diffr.AtomSite;
 import it.unitn.ing.rista.diffr.Fragment;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -341,7 +340,7 @@ public class StructureParamEditD extends JOptionsDialog {
 		if (na > 0) {
 			structNode.add(atomTree);
 			for (int i = 0; i < na; i++) {
-				Atom a_tmp = m_Struct.getAtom(i);
+				AtomSite a_tmp = m_Struct.getAtom(i);
 				DefaultMutableTreeNode atomNode = new DefaultMutableTreeNode(a_tmp.getLabel());
 				atomTree.add(atomNode);
 				Vector atomParams = a_tmp.getParameterVector(true, false);

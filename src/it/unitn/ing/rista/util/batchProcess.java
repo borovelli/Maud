@@ -63,6 +63,7 @@ public class batchProcess {
   public void process() {
     if (filename != null) {
       folderandname = Misc.getFolderandName(filename);
+	    System.out.println("Working in directory: " + folderandname[0]);
 
       String thecife;
       int newtoken, tokentype;
@@ -324,7 +325,9 @@ public class batchProcess {
 	  }*/
 	  if (filenameToSave == null)
       filenameToSave = analysis.getDirectory() + analysis.getFileName();
-    if (analysis != null) {
+	  else
+	   filenameToSave = folderandname[0] + filenameToSave;
+	  if (analysis != null) {
       long time = System.currentTimeMillis();
       if (wizardindex == 999) {
 //        System.out.println("Starting function computation for analysis file: " + analysis.toXRDcatString());
@@ -406,15 +409,15 @@ public class batchProcess {
       }
       if (simpleResultFileName != null) {
         String[] folderAndName = Misc.getFolderandName(simpleResultFileName);
-        analysis.appendResultsTo(folderAndName[0], folderAndName[1], true);
+        analysis.appendResultsTo(folderandname[0] + folderAndName[0], folderAndName[1], true);
       }
       if (resultFileName != null) {
         String[] folderAndName = Misc.getFolderandName(resultFileName);
-        analysis.appendResultsTo(folderAndName[0], folderAndName[1], false);
+        analysis.appendResultsTo(folderandname[0] + folderAndName[0], folderAndName[1], false);
       }
       if (plotOutputFileName != null) {
         String[] folderAndName = Misc.getFolderandName(plotOutputFileName);
-        exportExperimentalComputedData(analysis, folderAndName[0], folderAndName[1]);
+        exportExperimentalComputedData(analysis, folderandname[0] + folderAndName[0], folderAndName[1]);
       }
     }
   }

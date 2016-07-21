@@ -20,9 +20,7 @@
 
 package it.unitn.ing.rista.awt;
 
-import it.unitn.ing.rista.awt.JSubordListPane;
 import it.unitn.ing.rista.diffr.*;
-
 import java.awt.Frame;
 
 /**

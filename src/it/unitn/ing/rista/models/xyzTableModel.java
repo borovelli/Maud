@@ -22,7 +22,7 @@ package it.unitn.ing.rista.models;
 
 import javax.swing.table.AbstractTableModel;
 
-import it.unitn.ing.rista.diffr.Atom;
+import it.unitn.ing.rista.diffr.AtomSite;
 
 import java.lang.*;
 
@@ -30,7 +30,7 @@ import java.lang.*;
  *  The xyzTableModel is a model interface for the JTable class that display
  *  the actual list of xyz positions of an atom of a given phase.
  *  The columns report the progressive number and the three atomic coordinates.
- *  It retrieves the column and row data from the Atom class.
+ *  It retrieves the column and row data from the AtomSite class.
  *
  *
  * @version $Revision: 1.3 $, $Date: 2004/08/12 09:36:09 $
@@ -56,19 +56,19 @@ public class xyzTableModel extends AbstractTableModel {
   private int numRows = 0;
 
   /**
-   * The Atom object where the xyz data are to be retrieved.
+   * The AtomSite object where the xyz data are to be retrieved.
    */
-  private Atom theatom = null;
+  private AtomSite theatom = null;
 
   /**
    * Sets up the atom object where to retrieve the xyz positions and
    * retrieve from it the number of positions to store as number of rows.
    *
    * @param anatom				the atom
-   * @see                 Atom
+   * @see                 AtomSite
    */
 
-  public xyzTableModel(Atom anatom) {
+  public xyzTableModel(AtomSite anatom) {
     theatom = anatom;
     anatom.refreshPositions(false);
     numRows = anatom.getSiteMultiplicity();
@@ -101,7 +101,7 @@ public class xyzTableModel extends AbstractTableModel {
    * @param  column	the column position
    * @return the element at position row x column
    *
-   * @see Atom
+   * @see AtomSite
    */
 
   public Object getValueAt(int row, int column) {

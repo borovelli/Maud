@@ -89,6 +89,17 @@ public class AngularDisalignment extends AngularCalibration {
     super.initParameters();
   }
 
+	public void initializeAsNew() {
+		if (initialized)
+			return;
+		initialized = true;
+
+		addparameterloopField(0, new Parameter(this, getParameterString(0, 0), 0,
+				ParameterPreferences.getDouble(getParameterString(0, 0) + ".min", -0.1),
+				ParameterPreferences.getDouble(getParameterString(0, 0) + ".max", 0.1)));
+	}
+
+
   public void updateParametertoDoubleBuffering(boolean firstLoading) {
     if (getFilePar().isLoadingFile() || !isAbilitatetoRefresh)
       return;
@@ -107,8 +118,8 @@ public class AngularDisalignment extends AngularCalibration {
 
   public void addCoeff(int index, String value) {
     addparameterloopField(0, new Parameter(this, getParameterString(0, index), value, "0",
-            ParameterPreferences.getPref(getParameterString(0, index) + ".min", "-1"),
-            ParameterPreferences.getPref(getParameterString(0, index) + ".max", "1"), false));
+            ParameterPreferences.getPref(getParameterString(0, index) + ".min", "-0.1"),
+            ParameterPreferences.getPref(getParameterString(0, index) + ".max", "0.1"), false));
   }
 
   public Parameter getCoeffP(int index) {
@@ -143,7 +154,13 @@ public class AngularDisalignment extends AngularCalibration {
     return 0.0;
   }
 
-  public JOptionsDialog getOptionsDialog(Frame parent) {
+	public boolean freeAllBasicParameters() {
+		for (int i = 0; i < numberofelementPL(0); i++)
+			getCoeffP(i).setRefinableCheckBound();
+		return true;
+	}
+
+	public JOptionsDialog getOptionsDialog(Frame parent) {
     JOptionsDialog adialog = new JPolAngOptionsD(parent, this);
     return adialog;
   }

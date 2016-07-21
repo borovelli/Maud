@@ -20,18 +20,14 @@
 package it.unitn.ing.rista.diffr.forcefield;
 
 import it.unitn.ing.rista.diffr.*;
-import it.unitn.ing.rista.diffr.structure.StructureAtomic;
 import it.unitn.ing.rista.util.*;
 import it.unitn.ing.rista.awt.JOptionsDialog;
-import it.unitn.ing.rista.awt.Utility;
 
 import javax.swing.*;
 import java.io.*;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 /**
  * The ABINITEnergyComputation is a class to
@@ -346,7 +342,7 @@ public class ABINITEnergyComputation extends ForceField {
           output.write("xred");
           int natom = 0;
           for (int i = 0; i < atoms.size(); i++) {
-            Atom atom = (Atom) atoms.elementAt(i);
+            AtomSite atom = (AtomSite) atoms.elementAt(i);
             Coordinates coord = atom.getCoordinates();
             output.write("   " + coord.x + " " + coord.y + " " + coord.z);
             output.newLine();
@@ -361,7 +357,7 @@ public class ABINITEnergyComputation extends ForceField {
           output.write("typat");
           for (int i = 0; i < atoms.size(); i++) {
 	          for (int j = 0; j < atomTypes.length; j++)
-		          if (((Atom) atoms.elementAt(i)).getAtomicNumber() == atomTypes[j])
+		          if (((AtomSite) atoms.elementAt(i)).getAtomScatterer(0).getAtomicNumber() == atomTypes[j])
                 output.write(" " + (j + 1));
           }
           output.newLine();
@@ -406,10 +402,10 @@ public class ABINITEnergyComputation extends ForceField {
 		int totalRef = 0;
 		if (atoms.size() == 0)
 			return atomTypesNumber;
-		atomTypesNumber[0] = ((Atom) atoms.elementAt(0)).getAtomicNumber();
+		atomTypesNumber[0] = ((AtomSite) atoms.elementAt(0)).getAtomScatterer(0).getAtomicNumber();
 		totalRef++;
 		for (int i = 1; i < atoms.size(); i++) {
-			int atomNumber = ((Atom) atoms.elementAt(i)).getAtomicNumber();
+			int atomNumber = ((AtomSite) atoms.elementAt(i)).getAtomScatterer(0).getAtomicNumber();
 			boolean alreadyIn = false;
 			for (int j = 0; j < totalRef; j++) {
 				if (alreadyIn = (atomNumber == atomTypesNumber[j]))

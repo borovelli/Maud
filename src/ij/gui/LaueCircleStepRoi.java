@@ -167,7 +167,7 @@ public class LaueCircleStepRoi extends LaueCircleRoi {
 
     DataFileSet data = AreaImage.getData();
     String filename = Utility.openFileDialog(new Frame(), "Save as CIF (.esg)...",
-            FileDialog.SAVE, data.getFilePar().getDirectory(), null, "put a name (no extension)");
+            FileDialog.SAVE, data.getFilePar().getDirectory(), null, "put a name (with extension).esg");
     if (filename == null)
       return;
 
@@ -177,7 +177,7 @@ public class LaueCircleStepRoi extends LaueCircleRoi {
     filename = folderAndName[1];
 
     if (filename == null) return;
-    if (!filename.endsWith(".esg"))
+    if (Constants.sandboxEnabled && !filename.endsWith(".esg"))
       filename = filename + ".esg";
 
     IJ.wait(250);  // give system time to redraw ImageJ window
@@ -195,7 +195,7 @@ public class LaueCircleStepRoi extends LaueCircleRoi {
 	                double stepIntegration) {
 
 		if (filename == null) return;
-		if (!filename.endsWith(".esg"))
+		if (Constants.sandboxEnabled && !filename.endsWith(".esg"))
 			filename = filename + ".esg";
 
 		String title = "noTitle";

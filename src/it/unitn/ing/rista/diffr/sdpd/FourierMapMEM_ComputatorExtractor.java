@@ -23,7 +23,7 @@ package it.unitn.ing.rista.diffr.sdpd;
 import it.unitn.ing.rista.diffr.*;
 import it.unitn.ing.rista.util.*;
 import it.unitn.ing.rista.comp.*;
-import it.unitn.ing.rista.MaudText;
+import com.radiographema.MaudText;
 import it.unitn.ing.rista.interfaces.MEMFunction;
 import it.unitn.ing.rista.io.cif.CIFdictionary;
 import it.unitn.ing.rista.io.cif.CIFtoken;

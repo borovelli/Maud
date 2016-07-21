@@ -77,7 +77,7 @@ public class StructureSolutionMethod extends StructureFactorModel {
 		Instrument ainstrument = adataset.getInstrument();
 		RadiationType rad1 = ainstrument.getRadiationType();
 		phase.refreshFhklcompv();
-//		Vector<Atom> atomList = phase.getFullAtomList();
+//		Vector<AtomSite> atomList = phase.getFullAtomList();
 		int hkln = phase.gethklNumber();
 		final double[] fhkl = new double[hkln];
 //		double volume = phase.getCellVolume();

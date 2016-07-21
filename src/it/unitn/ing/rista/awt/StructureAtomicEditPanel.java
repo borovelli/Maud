@@ -30,8 +30,6 @@ import it.unitn.ing.rista.io.MolecularImporter;
 
 import javax.swing.*;
 import javax.swing.tree.*;
-import javax.media.opengl.*;
-import javax.media.opengl.awt.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Vector;
@@ -366,7 +364,7 @@ public class StructureAtomicEditPanel extends iJPanel {
 
       panel3DButtons.add(btnAtomColors = new JButton(
               new ImageIcon(Misc.getResourceURL(Constants.imagesJar, Constants.iconfolder + "Palette.gif"))));
-      btnAtomColors.setToolTipText("Edit Atom Colors");
+      btnAtomColors.setToolTipText("Edit AtomSite Colors");
       btnAtomColors.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
           btnAtomColorsActionPerformed(evt);
@@ -812,7 +810,7 @@ public class StructureAtomicEditPanel extends iJPanel {
           Vector fullAtomList = ((Fragment) n_child.getUserObject()).getFullAtomList();
           AtomsStructureI atomstructure = (AtomsStructureI) n_parent.getUserObject();
           for (int i = 0; i < fullAtomList.size(); i++) {
-            Atom ato = (Atom) ((XRDcat) fullAtomList.elementAt(i)).getCopy((XRDcat) atomstructure);
+            AtomSite ato = (AtomSite) ((XRDcat) fullAtomList.elementAt(i)).getCopy((XRDcat) atomstructure);
             atomstructure.addAtom(ato);
           }
           atomstructure.removeFragmentAt(n_parent.getIndex(n_child));
@@ -825,11 +823,11 @@ public class StructureAtomicEditPanel extends iJPanel {
        TreePath cur_sel = treeFragments.getSelectionPath();
        if (cur_sel != null) {
          DefaultMutableTreeNode n_child = (DefaultMutableTreeNode) (cur_sel.getLastPathComponent());
-         Atom[] atomlist = m_atomPanel.getSelectedAtoms();
+         AtomSite[] atomlist = m_atomPanel.getSelectedAtoms();
          if (atomlist != null) {
            AtomsStructureI atomstructure = (AtomsStructureI) n_child.getUserObject();
            for (int i = 0; i < atomlist.length; i++) {
-             Atom ato = (Atom) atomlist[i].getCopy((XRDcat) atomstructure);
+             AtomSite ato = (AtomSite) atomlist[i].getCopy((XRDcat) atomstructure);
              double[] lcoord = {ato.getLocalCoordX().getValueD(), ato.getLocalCoordY().getValueD(),
                  ato.getLocalCoordZ().getValueD()};
              double[] acoord = ato.transformAbsoluteCoordToLocal(lcoord);
@@ -852,8 +850,8 @@ public class StructureAtomicEditPanel extends iJPanel {
            Vector atomList = ((Fragment) n_child.getUserObject()).getAtomList();
            AtomsStructureI atomstructure = (AtomsStructureI) n_parent.getUserObject();
            for (int i = 0; i < atomList.size(); i++) {
-             Atom originalAtom = (Atom) atomList.elementAt(i);
-             Atom ato = (Atom) ((XRDcat) atomList.elementAt(i)).getCopy((XRDcat) atomstructure);
+             AtomSite originalAtom = (AtomSite) atomList.elementAt(i);
+             AtomSite ato = (AtomSite) ((XRDcat) atomList.elementAt(i)).getCopy((XRDcat) atomstructure);
              double[] lcoord = {ato.getLocalCoordX().getValueD(), ato.getLocalCoordY().getValueD(),
                  ato.getLocalCoordZ().getValueD()};
              double[] acoord = originalAtom.transformLocalCoordToAbsolute(lcoord);
@@ -1083,8 +1081,8 @@ public class StructureAtomicEditPanel extends iJPanel {
       comboAtom1.removeAllItems();
       comboAtom2.removeAllItems();
       for (int na = 0; na < m_Struct.getAtomNumber(); na++) {
-        comboAtom1.addItem(((Atom) m_Struct.getAtomList().get(na)).getLabel());
-        comboAtom2.addItem(((Atom) m_Struct.getAtomList().get(na)).getLabel());
+        comboAtom1.addItem(((AtomSite) m_Struct.getAtomList().get(na)).getLabel());
+        comboAtom2.addItem(((AtomSite) m_Struct.getAtomList().get(na)).getLabel());
       }
 			retrieveBond();
 			if (listBonds != null) {

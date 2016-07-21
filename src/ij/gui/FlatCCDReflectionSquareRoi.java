@@ -397,7 +397,7 @@ public class FlatCCDReflectionSquareRoi extends LaueOvalRoi {
     if (!batchProcessing) {
       data = AreaImage.getData();
       filename = Utility.openFileDialog(new Frame(), "Save as CIF (.esg)...",
-                 FileDialog.SAVE, data.getFilePar().getDirectory(), null, "put a name (no extension)");
+                 FileDialog.SAVE, data.getFilePar().getDirectory(), null, "put a name (with extension).esg");
     } else {
       data = theData;
       filename = tiffFileName;
@@ -411,7 +411,7 @@ public class FlatCCDReflectionSquareRoi extends LaueOvalRoi {
     filename = folderAndName[1];
 
     if (filename == null) return;
-    if (!filename.endsWith(".esg"))
+    if (Constants.sandboxEnabled && !filename.endsWith(".esg"))
       filename = filename + ".esg";
 
     IJ.wait(250);  // give system time to redraw ImageJ window

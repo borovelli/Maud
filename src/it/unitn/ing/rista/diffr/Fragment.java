@@ -83,7 +83,7 @@ public class Fragment extends XRDcat implements AtomsStructureI {
 
   protected static String[] classlistc = {
 
-    "it.unitn.ing.rista.diffr.Atom",
+    "it.unitn.ing.rista.diffr.AtomSite",
     "it.unitn.ing.rista.diffr.Fragment",
     "it.unitn.ing.rista.diffr.Bond"
 
@@ -503,7 +503,7 @@ public class Fragment extends XRDcat implements AtomsStructureI {
     int na = getAtomNumber();
     int nf = getFragmentNumber();
     for (int i = 0; i < na; i++) {
-      Atom anatom = getAtom(i);
+      AtomSite anatom = getAtom(i);
       anatom.refreshPositions(true);
       Coordinates coord = anatom.getLocalCoordinates();
       coord.x += dx;
@@ -541,7 +541,7 @@ public class Fragment extends XRDcat implements AtomsStructureI {
 
     for (int na = 0; na < getAtomNumber(); na++) {
 
-      Atom a_tmp = getAtom(na);
+      AtomSite a_tmp = getAtom(na);
       a_tmp.refreshPositions();
 //System.out.println("a_tmp.getx(0): " + a_tmp.getx(0));
 //System.out.println("a_tmp.gety(0): " + a_tmp.gety(0));
@@ -604,7 +604,7 @@ public class Fragment extends XRDcat implements AtomsStructureI {
     double y_diff = y - old_pivot.y;
     double z_diff = z - old_pivot.z;
     for (int na = 0; na < getAtomList().size(); na++) {
-      Atom atm = getAtom(na);
+      AtomSite atm = getAtom(na);
       atm.refreshPositions();
       Coordinates a_coord = atm.getCoordinates();
       atm.setCoordinates(new Coordinates((a_coord.x + x_diff), (a_coord.y + y_diff), (a_coord.z + z_diff)));
@@ -629,7 +629,7 @@ public class Fragment extends XRDcat implements AtomsStructureI {
 /*  public void translate(double dx, double dy, double dz) {
     Coordinates old_pivot = getPivotCoords();
     for (int na = 0; na < getAtomList().size(); na++) {
-      Atom atm = getAtom(na);
+      AtomSite atm = getAtom(na);
       atm.refreshPositions();
       Coordinates a_coord = atm.getCoordinates();
       atm.setCoordinates(new Coordinates((a_coord.x + dx), (a_coord.y + dy), (a_coord.z + dz)));
@@ -663,7 +663,7 @@ public class Fragment extends XRDcat implements AtomsStructureI {
       double x_rot = EI[0][0] * rel_coords.x + EI[0][1] * rel_coords.y + EI[0][2] * rel_coords.z;
       double y_rot = EI[0][0] * rel_coords.x + EI[0][1] * rel_coords.y + EI[0][2] * rel_coords.z;
       double z_rot = EI[0][0] * rel_coords.x + EI[0][1] * rel_coords.y + EI[0][2] * rel_coords.z;
-      Atom atm = getAtom(na);
+      AtomSite atm = getAtom(na);
       atm.setCoordinates(new Coordinates((pivot.x + x_rot), (pivot.y + y_rot), (pivot.z + z_rot)));
       atm.refreshPositions();
     }
@@ -690,7 +690,7 @@ public class Fragment extends XRDcat implements AtomsStructureI {
     Coordinates old_orient = getOrientation();
     double[][] EI = eulerMatrixInverted(da, db, dc);
     for (int na = 0; na < getAtomList().size(); na++) {
-      Atom atm = getAtom(na);
+      AtomSite atm = getAtom(na);
       Coordinates rel_coords = getAtomRelativeCoordinates(na);
       double x_rot = EI[0][0] * rel_coords.x + EI[0][1] * rel_coords.y + EI[0][2] * rel_coords.z;
       double y_rot = EI[0][0] * rel_coords.x + EI[0][1] * rel_coords.y + EI[0][2] * rel_coords.z;
@@ -738,7 +738,7 @@ public class Fragment extends XRDcat implements AtomsStructureI {
 
 //    System.out.println("getAtomList().size() " + getAtomList().size());
     for (int na = 0; na < getAtomList().size(); na++) {
-      Atom atm = getAtom(na);
+      AtomSite atm = getAtom(na);
       atm.refreshPositions();
       Coordinates a_coord = atm.getCoordinates();
       Coordinates rel_coords = getAtomRelativeCoordinates(na);
@@ -780,7 +780,7 @@ public class Fragment extends XRDcat implements AtomsStructureI {
     Coordinates old_orient = getOrientation();
     double[][] EI = eulerMatrixInverted(da, db, dc);
     for (int na = 0; na < getAtomList().size(); na++) {
-      Atom atm = getAtom(na);
+      AtomSite atm = getAtom(na);
       atm.refreshPositions();
       Coordinates a_coord = atm.getCoordinates();
       Coordinates rel_coords = getAtomRelativeCoordinates(na);
@@ -837,17 +837,17 @@ public class Fragment extends XRDcat implements AtomsStructureI {
     return numberofelementSubL(AtomListID);
   }
 
-  public Atom getAtom(int index) {
-    return (Atom) getAtomList().elementAt(index);
+  public AtomSite getAtom(int index) {
+    return (AtomSite) getAtomList().elementAt(index);
   }
 
   public void addAtom() {
-    Atom newatom = new Atom(this);
+    AtomSite newatom = new AtomSite(this);
     addAtom(newatom);
-    newatom.setAtomSymbol("Ca");
+    newatom.addAtomWithSymbol("Ca");
   }
 
-  public void addAtom(Atom newatom) {
+  public void addAtom(AtomSite newatom) {
     addsubordinateloopField(0, newatom);
     getPhaseParent().refreshAtoms = true;
     getPhaseParent().fullAtomList = null;
@@ -1063,9 +1063,9 @@ public class Fragment extends XRDcat implements AtomsStructureI {
     return null;
   }
 
-/*  public void addAtom(Atom atm) {
+/*  public void addAtom(AtomSite atm) {
     addsubordinateloopField(AtomListID, atm);
-//    System.out.println("addAtom(Atom atm)");
+//    System.out.println("addAtom(AtomSite atm)");
     atomRelativeCoordinates.add(calcRelativeCoords(atm));
     //  probably the following is not necessary, the refreshing should go through the usual default notify
     //  but just to be sure
@@ -1073,7 +1073,7 @@ public class Fragment extends XRDcat implements AtomsStructureI {
 //    getPhaseParent().fullAtomList = null;
   }
 
-  public void removeAtom(Atom atm) {
+  public void removeAtom(AtomSite atm) {
     removeAtomAt(getAtomList().indexOf(atm));
   }
 
@@ -1087,7 +1087,7 @@ public class Fragment extends XRDcat implements AtomsStructureI {
   }
 
   public void addAtom() {
-    Atom newatom = new Atom(this);
+    AtomSite newatom = new AtomSite(this);
     addAtom(newatom);
     newatom.setAtomSymbol("Ca");
   }
@@ -1164,11 +1164,11 @@ public class Fragment extends XRDcat implements AtomsStructureI {
     double m_y = 0.0;
     double m_z = 0.0;
     for (int na = 0; na < getAtomList().size(); na++) {
-      Atom a_tmp = getAtom(na);
+      AtomSite a_tmp = getAtom(na);
       a_tmp.refreshPositions(true);
 //      System.out.println("a_tmp.getAtomSymbol() " + a_tmp.getAtomSymbol());
       Coordinates a_coord = a_tmp.getCoordinates();
-      double a_mass = a_tmp.getWeight();
+      double a_mass = a_tmp.getMeanWeight();
       M += a_mass;
       m_x += a_mass * a_coord.x;
       m_y += a_mass * a_coord.y;
@@ -1189,7 +1189,7 @@ public class Fragment extends XRDcat implements AtomsStructureI {
   public double getWeight() {
     double M = 0.0;
     for (int na = 0; na < getAtomList().size(); na++)
-      M += getAtom(na).getWeight();
+      M += getAtom(na).getMeanWeight();
     for (int nf = 0; nf < getFragmentList().size(); nf++)
       M += getFragment(nf).getWeight();
     return M;
@@ -1308,7 +1308,7 @@ public class Fragment extends XRDcat implements AtomsStructureI {
 		double[] a1 = new double[2];
 
 		for (int j = 0; j < getAtomNumber(); j++) {
-			Atom ato = getAtom(j);
+			AtomSite ato = getAtom(j);
 			double[] scatf = ato.scatfactor(dspacing, rad);
 			double scatFactor = ato.DebyeWaller(h, k, l, dspacing, rad) * ato.getOccupancyValue();
 			scatf[0] *= scatFactor;
@@ -1334,7 +1334,7 @@ public class Fragment extends XRDcat implements AtomsStructureI {
 		double[] a1 = new double[2];
 		int nAtom = getAtomNumber();
 		for (int j = 0; j < nAtom; j++) {
-			Atom ato = getAtom(j);
+			AtomSite ato = getAtom(j);
 			double[] scatf = ato.scatfactor(dspacing, rad);
 			double DWfactor = ato.DebyeWaller(h, k, l, dspacing, rad);
 			double scatFactor = DWfactor * ato.getQuantityD() / ato.getSiteMultiplicity();
@@ -1363,7 +1363,7 @@ public class Fragment extends XRDcat implements AtomsStructureI {
 		if (nAtom <= 0)
 			return a1;
 		for (int j = 0; j < nAtom; j++) {
-			Atom ato = getAtom(j);
+			AtomSite ato = getAtom(j);
 			double[] scatf = ato.scatfactor(dspacing, rad);
 			double DWfactor = ato.DebyeWaller(h, k, l, dspacing, rad);
 			double scatFactor = DWfactor * ato.getQuantityD() / ato.getSiteMultiplicity();
@@ -1383,7 +1383,7 @@ public class Fragment extends XRDcat implements AtomsStructureI {
 	public double getCellWeigth() {
 		double weight = 0.0;
 		for (int j = 0; j < getAtomNumber(); j++)
-			weight += ((Atom) getAtomList().elementAt(j)).getSiteWeight();
+			weight += ((AtomSite) getAtomList().elementAt(j)).getSiteWeight();
 		for (int i = 0; i < getFragmentNumber(); i++)
 			weight += getFragment(i).getCellWeigth();
 		return weight;

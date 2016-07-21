@@ -20,6 +20,8 @@
 
 package it.unitn.ing.rista.util;
 import it.unitn.ing.rista.interfaces.PreferencesInterface;
+
+import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 /**
@@ -33,11 +35,18 @@ import java.util.prefs.Preferences;
 
 public class MaudPreferences extends PreferencesInterface {
 
-
 	public static Preferences prefs;
 
   public MaudPreferences() {
   }
+
+	public static void resetPreferences() {
+		try {
+			prefs.clear();
+		} catch (BackingStoreException e) {
+			e.printStackTrace();
+		}
+	}
 
   public static void loadPreferences() {
 	  prefs = Preferences.userRoot().node(MaudPreferences.class.getName());

@@ -1076,7 +1076,8 @@ public class Sample extends Maincat {
               if (phaseIndex == numberOfPhases - 1)
                 index++;
               phaseIndex++;
-              tadataset.addPhasePeaks(aphase, Sample.this, false);
+	            if (tadataset.activedatafilesnumber() > 0)
+                  tadataset.addPhasePeaks(aphase, Sample.this, false);
             } else {
               phaseIndex++;
               if (phaseIndex == numberOfPhases)
@@ -1506,7 +1507,7 @@ public class Sample extends Maincat {
         aphase.refreshPositions = false;
         aphase.gethklNumber();
           for (int i = 0; i < activeDatasetsNumber(); i++) {
-            if (getActiveDataSet(i) != null) {
+            if (getActiveDataSet(i) != null && getActiveDataSet(i).isDiffraction()) {
 	            for (int j = 0; j < getActiveDataSet(i).activedatafilesnumber(); j++) {
                 DiffrDataFile adatafile = getActiveDataSet(i).getActiveDataFile(j);
 		            adatafile.computePosition(aphase);
@@ -1649,6 +1650,7 @@ public class Sample extends Maincat {
 			Phase aphase = getPhase(ki);
 			aphase.refreshPositions = true;
 				for (int i = 0; i < activeDatasetsNumber(); i++) {
+					if (getActiveDataSet(i).isDiffraction())
 					for (int j = 0; j < getActiveDataSet(i).activedatafilesnumber(); j++) {
 						DiffrDataFile adatafile = getActiveDataSet(i).getActiveDataFile(j);
 						adatafile.computePositionForStrained(aphase);

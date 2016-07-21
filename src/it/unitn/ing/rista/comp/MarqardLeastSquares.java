@@ -36,7 +36,7 @@ public class MarqardLeastSquares {
   int niter = 0;
   int ipflg = 0;
   int brkflg = 0;
-  double derstep = 0.0001;
+  double derstep = 0.001;
   boolean doubleder = false;
   double prcsn = 0.00000001;
   int n0 = 0;

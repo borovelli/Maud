@@ -211,24 +211,20 @@ public class PlanarDefectsWarren extends PlanarDefects {
     // return delta(d)/d
     if (cpType != 1)
       return 0.0;
-    return -Constants.sqrt3 * faultdiff * refl.Lsum /
-        (4.0 * Constants.PI * refl.hzero2 * refl.multiplicity);
+    return -faultdiff;
   }
 
-  public double getPlanarDefectAsymmetryConstant1(double deff) {
+  public double getPlanarDefectAsymmetryConstant1(Reflection reflex) {
     if (cpType != 1)
       return 0.0f;
-    double c2 = 2.0 * Constants.PI * deff;
+    double c2 = 2.0 * Constants.PI;
     return c2;
   }
 
-  public double getPlanarDefectAsymmetryConstant2(Peak peak) {
+  public double getPlanarDefectAsymmetryConstant2(Reflection refl) {
     if (cpType != 1)
       return 0.0f;
-    Reflection refl = peak.getReflex();
-    double asy = faultasy * refl.Lsumdivideabs * refl.broadened /
-        (Constants.sqrt3 * Constants.PI * refl.multiplicity);
-
+    double asy = faultasy * refl.Lsumdivideabs;
     return asy;
   }
 

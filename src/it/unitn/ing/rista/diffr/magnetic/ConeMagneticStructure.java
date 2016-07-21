@@ -207,7 +207,7 @@ public class ConeMagneticStructure extends MagneticStructure {
 
     double i_dspace = 0.25 / (dspacing * dspacing);
     for (int j = 0; j < aphase.getFullAtomList().size(); j++) {   // to be ported to the new model
-      Atom ato = (Atom) aphase.getFullAtomList().get(j);
+      AtomSite ato = (AtomSite) aphase.getFullAtomList().get(j);
       if (ato.useThisAtom) {
       double magscatf = ato.magneticScatfactor(dspacing, radType);
 

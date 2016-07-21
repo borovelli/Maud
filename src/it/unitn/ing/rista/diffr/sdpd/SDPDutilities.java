@@ -85,43 +85,44 @@ public class SDPDutilities {
         }
         Vector atoms = aphase.getFullAtomList();
         for (int i = 0; i < atoms.size(); i++) {
-          Atom atom = (Atom) atoms.get(i);
-          printStream.print("SFAC " + Atom.stripIsotopeNumber(Atom.stripOxidation(atom.getAtomSymbol())) + " ");
+          AtomSite atom = (AtomSite) atoms.get(i); // todo fix, now AtomSite may contain more atoms types
+	        AtomScatterer atomScatterer = atom.getAtomScatterer(0);
+          printStream.print("SFAC " + AtomSite.stripIsotopeNumber(AtomSite.stripOxidation(atomScatterer.getAtomSymbol())) + " ");
 	        if (radType.isNeutron()) {
               for (int j = 0; j < 4; j++)
                 printStream.print("0.0 0.0 ");
               printStream.print("=");
               printStream.print(Constants.lineSeparator);
               printStream.print("     ");
-              printStream.print(Fmt.format(radType.getRadiation(0).neutronSF[atom.getIsotopicListNumber()]) + " ");
+              printStream.print(Fmt.format(radType.getRadiation(0).neutronSF[atomScatterer.getIsotopicListNumber()]) + " ");
               printStream.print("0.0 0.0 ");
 	        } else if (radType.isElectron()) {
               for (int j = 0; j < 4; j++)
-                printStream.print(Fmt.format(radType.getRadiation(0).electronSF[atom.getAtomicListNumber()][j]) + " " +
-                    Fmt.format(radType.getRadiation(0).electronSF[atom.getAtomicListNumber()][j + 4]) + " ");
+                printStream.print(Fmt.format(radType.getRadiation(0).electronSF[atomScatterer.getAtomicListNumber()][j]) + " " +
+                    Fmt.format(radType.getRadiation(0).electronSF[atomScatterer.getAtomicListNumber()][j + 4]) + " ");
               printStream.print("=");
               printStream.print(Constants.lineSeparator);
               printStream.print("     ");
-              printStream.print(Fmt.format(radType.getRadiation(0).electronSF[atom.getAtomicListNumber()][8]) + " ");
+              printStream.print(Fmt.format(radType.getRadiation(0).electronSF[atomScatterer.getAtomicListNumber()][8]) + " ");
 	        } else {
 		        for (int j = 0; j < 4; j++)
-			        printStream.print(Fmt.format(radType.getRadiation(0).xraySF[atom.getAtomicListNumber()][j]) + " " +
-					        Fmt.format(radType.getRadiation(0).xraySF[atom.getAtomicListNumber()][j + 4]) + " ");
+			        printStream.print(Fmt.format(radType.getRadiation(0).xraySF[atomScatterer.getAtomicListNumber()][j]) + " " +
+					        Fmt.format(radType.getRadiation(0).xraySF[atomScatterer.getAtomicListNumber()][j + 4]) + " ");
 		        printStream.print("=");
 		        printStream.print(Constants.lineSeparator);
 		        printStream.print("     ");
-		        printStream.print(Fmt.format(radType.getRadiation(0).xraySF[atom.getAtomicListNumber()][8]) + " ");
+		        printStream.print(Fmt.format(radType.getRadiation(0).xraySF[atomScatterer.getAtomicListNumber()][8]) + " ");
 		        printStream.print(Fmt.format(0.0) + " ");
 		        printStream.print(Fmt.format(0.0) + " ");
 	        }
 
-          printStream.print(Fmt.format(atom.getSiteAbsorption(0) * 1.66043) + " ");
-          printStream.print(Fmt.format(atom.getAtomRadius()));
+          printStream.print(Fmt.format(atom.getSiteAbsorption(radType.getRadiationEnergy()) * 1.66043) + " ");
+          printStream.print(Fmt.format(atomScatterer.getAtomRadius()));
           printStream.print(Constants.lineSeparator);
         }
         printStream.print("UNIT ");
         for (int i = 0; i < atoms.size(); i++) {
-          Atom atom = (Atom) atoms.get(i);
+          AtomSite atom = (AtomSite) atoms.get(i);
           printStream.print(Fmt.format(atom.getQuantityD()) + " ");
         }
         printStream.print(Constants.lineSeparator);

@@ -179,14 +179,14 @@ public class ForceFieldSimpleRepulsion extends ForceField {
 		return dst.atm1 + " " + dst.atm2 + " " + String.valueOf(dst.dist);
 	}
 
-  public Atom getAtom(String label) {
+  public AtomSite getAtom(String label) {
     StructureAtomic m_Struct = getParentStructure();
     Phase aphase = m_Struct.getPhaseParent();
     Vector atoms = aphase.getFullAtomList();
 
     int na = atoms.size();
     for (int i = 0; i < na; i++) {
-      Atom atom1 = (Atom) atoms.get(i);
+      AtomSite atom1 = (AtomSite) atoms.get(i);
       if (atom1.getLabel().equalsIgnoreCase(label))
         return atom1;
     }
@@ -201,11 +201,11 @@ public class ForceFieldSimpleRepulsion extends ForceField {
 		ArrayList atomPairs = new ArrayList();
 		int na = atoms.size();
 		for (int i = 0; i < na; i++) {
-      Atom atm1 = ((Atom) atoms.get(i));
+      AtomSite atm1 = ((AtomSite) atoms.get(i));
       atm1.computeCartesianCoords(false);
 			for (int j = 0; j < na; j++) {
-				String atom1 = atm1.getAtomSymbol();
-				String atom2 = ((Atom) atoms.get(j)).getAtomSymbol();
+				String atom1 = atm1.getFirstAtomSymbol();
+				String atom2 = ((AtomSite) atoms.get(j)).getFirstAtomSymbol();
 				RepulsionDistance rij_tmp = new RepulsionDistance(atom1, atom2);
 				if (!atomPairs.contains(rij_tmp)) {
 					atomPairs.add(rij_tmp);
@@ -251,14 +251,14 @@ public class ForceFieldSimpleRepulsion extends ForceField {
     ArrayList atomT = new ArrayList();
     na = atoms.size();
     for (int i = 0; i < na; i++) {
-      Atom atom1 = (Atom) atoms.get(i);
+      AtomSite atom1 = (AtomSite) atoms.get(i);
       if (!atom1.isDummyAtom()) {
         for (int k = 0; k < na; k++) {
-          Atom atom3 = (Atom) atoms.get(k);
+          AtomSite atom3 = (AtomSite) atoms.get(k);
           if (!atom3.isDummyAtom()) {
             for (int j = k + 1; j < na; j++) {
               if (i != j && i != k) {
-                Atom atom2 = (Atom) atoms.get(j);
+                AtomSite atom2 = (AtomSite) atoms.get(j);
                 if (!atom2.isDummyAtom()) {
                   double dist1 = DistanceAngleBondRestraints.getDistance(atom1, atom2);
                   double dist2 = DistanceAngleBondRestraints.getDistance(atom1, atom3);
@@ -372,7 +372,7 @@ public class ForceFieldSimpleRepulsion extends ForceField {
     getAngles().setElementAt(r12, index);
   }
 
-  public void setOptimumAngle(int index, Atom atm1, Atom atm2, Atom atm3, double dist, double kappa) {
+  public void setOptimumAngle(int index, AtomSite atm1, AtomSite atm2, AtomSite atm3, double dist, double kappa) {
     OptimumAngle r12 = new OptimumAngle(atm1, atm2, atm3, dist, kappa);
     OptimumAngle rij = (OptimumAngle) getAngles().elementAt(index);
     if (r12.equals(rij))
@@ -402,17 +402,17 @@ public class ForceFieldSimpleRepulsion extends ForceField {
     Vector atoms = aphase.getFullAtomList();
 		double PEnergy = 0.0;
 		for (int na1 = 0; na1 < atoms.size(); na1++) {
-      Atom atm1 = (Atom) atoms.get(na1);
+      AtomSite atm1 = (AtomSite) atoms.get(na1);
       if (!atm1.isDummyAtom()) {
       for (int na2 = 0; na2 < atoms.size(); na2++) {
 				if (na1 != na2) {
-				Atom atm2 = (Atom) atoms.get(na2);
+				AtomSite atm2 = (AtomSite) atoms.get(na2);
         if (!atm2.isDummyAtom()) {
 				for (int np1 = 0; np1 < atm1.getCartesianCoords().size(); np1++) {
 					for (int np2 = 0; np2 < atm2.getCartesianCoords().size(); np2++) {
 						Coordinates acoord1 = atm1.getCartesianCoords(np1);
 						Coordinates acoord2 = atm2.getCartesianCoords(np2);
-						double rmin = getRepulsionRadius(atm1.getAtomSymbol(), atm2.getAtomSymbol());
+						double rmin = getRepulsionRadius(atm1.getFirstAtomSymbol(), atm2.getFirstAtomSymbol());
 						double rij = Math.sqrt(Math.pow(acoord1.x - acoord2.x, 2) + Math.pow(acoord1.y - acoord2.y, 2) +
                 Math.pow(acoord1.z - acoord2.z, 2));
 
@@ -528,9 +528,9 @@ public class ForceFieldSimpleRepulsion extends ForceField {
         setRepulsionDistance(atm1, atm2, dist.doubleValue());
       }
       for (int nd = 0; nd < angleData.length; nd++) {
-        Atom atm1 = (Atom) angleData[nd][0];
-        Atom atm2 = (Atom) angleData[nd][1];
-        Atom atm3 = (Atom) angleData[nd][2];
+        AtomSite atm1 = (AtomSite) angleData[nd][0];
+        AtomSite atm2 = (AtomSite) angleData[nd][1];
+        AtomSite atm3 = (AtomSite) angleData[nd][2];
         Double dist = (Double) angleData[nd][4];
         Double kappa = (Double) angleData[nd][5];
         setOptimumAngle(nd, atm1, atm2, atm3, dist.doubleValue(), kappa.doubleValue());
@@ -541,7 +541,7 @@ public class ForceFieldSimpleRepulsion extends ForceField {
     class srTableModel extends AbstractTableModel {
 
       public srTableModel() {
-        columnNames = new String[]{"Atom 1", "Atom 2", "Min. Distance"};
+        columnNames = new String[]{"AtomSite 1", "AtomSite 2", "Min. Distance"};
         data = new Object[getPairNumber()][3];
         for (int nd = 0; nd < getPairNumber(); nd++) {
           RepulsionDistance r12 = getRepulsionDistance(nd);
@@ -587,7 +587,7 @@ public class ForceFieldSimpleRepulsion extends ForceField {
     class anTableModel extends AbstractTableModel {
 
       public anTableModel() {
-        angleColumnNames = new String[]{"Pivot atom", "Atom 1", "Atom 2", "Act. Angle", "Min. Angle", "Strength"};
+        angleColumnNames = new String[]{"Pivot atom", "AtomSite 1", "AtomSite 2", "Act. Angle", "Min. Angle", "Strength"};
         angleData = new Object[getAnglesNumber()][6];
         for (int nd = 0; nd < getAnglesNumber(); nd++) {
           OptimumAngle r12 = getOptimumAngle(nd);
@@ -677,7 +677,7 @@ public class ForceFieldSimpleRepulsion extends ForceField {
 		class srTableModel extends AbstractTableModel {
 
 			public srTableModel() {
-				columnNames = new String[]{"Atom 1", "Atom 2", "Min. Distance"};
+				columnNames = new String[]{"AtomSite 1", "AtomSite 2", "Min. Distance"};
 				data = new Object[getPairNumber()][3];
 				for (int nd = 0; nd < getPairNumber(); nd++) {
 					RepulsionDistance r12 = getRepulsionDistance(nd);
@@ -756,16 +756,16 @@ public class ForceFieldSimpleRepulsion extends ForceField {
 	}
 
   public class OptimumAngle {
-    public Atom atm1;
-    public Atom atm2;
-    public Atom atm3;
+    public AtomSite atm1;
+    public AtomSite atm2;
+    public AtomSite atm3;
     public double angle;
     public double kappa;
 
     public OptimumAngle() {
     }
 
-    public OptimumAngle(Atom a1, Atom a2, Atom a3) {
+    public OptimumAngle(AtomSite a1, AtomSite a2, AtomSite a3) {
       atm1 = a1;
       atm2 = a2;
       atm3 = a3;
@@ -773,7 +773,7 @@ public class ForceFieldSimpleRepulsion extends ForceField {
       kappa = 0.0;
     }
 
-    public OptimumAngle(Atom a1, Atom a2, Atom a3, double d) {
+    public OptimumAngle(AtomSite a1, AtomSite a2, AtomSite a3, double d) {
       atm1 = a1;
       atm2 = a2;
       atm3 = a3;
@@ -781,7 +781,7 @@ public class ForceFieldSimpleRepulsion extends ForceField {
       kappa = 0.0;
     }
 
-    public OptimumAngle(Atom a1, Atom a2, Atom a3, double d, double kappaSpring) {
+    public OptimumAngle(AtomSite a1, AtomSite a2, AtomSite a3, double d, double kappaSpring) {
       atm1 = a1;
       atm2 = a2;
       atm3 = a3;

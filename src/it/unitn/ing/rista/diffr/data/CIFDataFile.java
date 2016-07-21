@@ -214,7 +214,7 @@ public class CIFDataFile extends it.unitn.ing.rista.diffr.DiffrDataFile {
 								setWeight(j, 1.0 / tmpweight);
 							else
 								setWeight(j, 1.0);
-							System.out.println(dataX.elementAt(j) + " " + intensityValue + " " + tmpweight);
+//							System.out.println(dataX.elementAt(j) + " " + intensityValue + " " + tmpweight);
 						}
 						dataX = null;
 						dataY = null;

@@ -19,6 +19,7 @@
  */
 package it.unitn.ing.rista.diffr.fluorescence;
 
+import it.unitn.ing.rista.chemistry.XRayDataSqLite;
 import it.unitn.ing.rista.diffr.*;
 import it.unitn.ing.rista.diffr.detector.XRFDetector;
 import it.unitn.ing.rista.diffr.radiation.XrayEbelTubeRadiation;
@@ -64,6 +65,8 @@ public class TubeSpectrumTransmission extends Fluorescence {
 	 */
 
 	public void computeFluorescence(DiffrDataFile adatafile) {
+
+		XRayDataSqLite.checkMinimumEnergy();
 
 		Instrument ainstrument = adatafile.getDataFileSet().getInstrument();
 		double incidentIntensity = ainstrument.getIntensityValue();

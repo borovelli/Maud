@@ -376,12 +376,12 @@ public class NovaQuantitativeAnalysis {
         silicon.setSpaceGroup(true, "Fd-3m:1", false);  // :1 = first setting
         silicon.setCellValue(0, 5.430938);  // 0 = a, 1 = b, 2 = c, 3 = alpha, 4 = beta, 5 = gamma
         // adding atoms, this must be done for every atom site
-        Atom atom = new Atom(silicon);
+        AtomSite atom = new AtomSite(silicon);
         StructureModel structure = silicon.getActiveStructureModel();
         structure.addAtom(atom);
         // setting lable and symbol
         atom.setSiteLabel("Si1");
-        atom.setAtomSymbol("Si");
+        atom.addAtomWithSymbol("Si");
         // setting coordinates x, y, z
         atom.getLocalCoordX().setValue(0.0);
         atom.getLocalCoordY().setValue(0.0);
@@ -403,12 +403,12 @@ public class NovaQuantitativeAnalysis {
         nickel.setSpaceGroup(true, "Fm-3m", false);  // :1 = first setting
         nickel.setCellValue(0, 3.529608);  // 0 = a, 1 = b, 2 = c, 3 = alpha, 4 = beta, 5 = gamma
         // adding atoms, this must be done for every atom site
-        atom = new Atom(nickel);
+        atom = new AtomSite(nickel);
         structure = nickel.getActiveStructureModel();
         structure.addAtom(atom);
         // setting lable and symbol
         atom.setSiteLabel("Ni1");
-        atom.setAtomSymbol("Ni");
+        atom.addAtomWithSymbol("Ni");
         // setting coordinates x, y, z
         atom.getLocalCoordX().setValue(0.0);
         atom.getLocalCoordY().setValue(0.0);
@@ -453,7 +453,7 @@ public class NovaQuantitativeAnalysis {
   public String[] saveDataAsCIF(double[][][] profile, double etaStart, double etaStep) {
 
 //    String filename = Utility.openFileDialog(new Frame(), "Save as CIF (.esg)...",
-//            FileDialog.SAVE, null, null, "put a name (no extension)");
+//            FileDialog.SAVE, null, null, "put a name (with extension).esg");
     String filename = "../SISBuffer/CurrentAnalysis.esg";
     if (filename == null)
       return null;
@@ -464,7 +464,7 @@ public class NovaQuantitativeAnalysis {
     filename = folderAndName[1];
 
     if (filename == null) return null;
-    if (!filename.endsWith(".esg"))
+    if (Constants.sandboxEnabled && !filename.endsWith(".esg"))
       filename = filename + ".esg";
 
     int nprofiles = profile[0].length;

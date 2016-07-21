@@ -20,8 +20,8 @@
 
 package it.unitn.ing.rista.interfaces;
 
+import it.unitn.ing.rista.diffr.AtomSite;
 import it.unitn.ing.rista.util.ListVector;
-import it.unitn.ing.rista.diffr.Atom;
 import it.unitn.ing.rista.diffr.Phase;
 
 
@@ -47,9 +47,9 @@ public interface AtomsStructureI {
 
   public void removeAtomAt(int i);
 
-  public Atom getAtom(int i);
+  public AtomSite getAtom(int i);
 
-  public void addAtom(Atom newatom);
+  public void addAtom(AtomSite newatom);
 
   public void removeFragmentAt(int i);
 

@@ -39,7 +39,7 @@ public class SizeStrainOnlyVoigt extends SizeStrainModel {
   public SizeStrainOnlyVoigt(XRDcat aobj, String alabel) {
     super(aobj, alabel);
     initXRD();
-    identifier = "Voigt microstrain";
+    identifier = "Disabled Voigt microstrain";
     IDlabel = "Voigt microstrain";
     description = "select this to apply the Voigt microstrain model";
   }

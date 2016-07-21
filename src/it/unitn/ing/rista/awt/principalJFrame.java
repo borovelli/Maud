@@ -281,7 +281,11 @@ public class principalJFrame extends myJFrame {
     new Client("ESQUI Client");
   }
 
-  void newWizard_Action() {
+	void newWizard_Action() {
+		newFile_Action(null, null);
+	}
+
+  void newWizard_Action_disable() {
     String superClassName = "it.unitn.ing.esqui.wizard.BaseWizard";
     Vector actionClassesList = Constants.getClassList(superClassName);
 

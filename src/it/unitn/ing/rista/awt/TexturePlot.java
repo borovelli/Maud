@@ -1119,7 +1119,7 @@ public class TexturePlot extends myJFrame {
   static String maxAngleString = "texturePlot.maxAzimuthalAngle";
   static String logTexturePlotString = "texturePlot.logScale";
   static String numberofColors = "texturePlot.colorsNumber";
-  public static int lastResolution = MaudPreferences.getInteger(gridResString, 201);
+  public static int lastResolution = MaudPreferences.getInteger(gridResString, 101);
   public static double zoom = MaudPreferences.getDouble(zoomString, 1); // must be a power of 2
   public static double filterWidth = MaudPreferences.getDouble("texturePlot.gaussFilterWidth", 0.0);
 

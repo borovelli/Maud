@@ -298,7 +298,7 @@ public class PlotDataFile extends GraphFrame {
     String folder = folderAndName[0];
     filename = folderAndName[1];
 
-    if (!filename.endsWith(".cif"))
+    if (Constants.sandboxEnabled && !filename.endsWith(".cif"))
       filename = filename + ".cif";
 
     if (filename != null) {
@@ -354,7 +354,7 @@ public class PlotDataFile extends GraphFrame {
     String folder = folderAndName[0];
     filename = folderAndName[1];
 
-    if (!filename.endsWith(".cif"))
+    if (Constants.sandboxEnabled && !filename.endsWith(".cif"))
       filename = filename + ".cif";
 
     if (filename != null) {
@@ -449,11 +449,11 @@ public class PlotDataFile extends GraphFrame {
       }
   }
 
-  static int backSubtract = -1;
+//  static int backSubtract = -1;
 
   public static boolean subtractBackground() {
-    if (backSubtract == -1)
-      checkBackgroundSubtraction();
+//    if (backSubtract == -1)
+//      checkBackgroundSubtraction();
     return plotNoBkgDefault;
   }
 
@@ -461,19 +461,15 @@ public class PlotDataFile extends GraphFrame {
     plotNoBkgDefault = MaudPreferences.getBoolean(plotNoBkg, plotNoBkgDefault);
   }
 
-  static int calIntensity = -1;
+//  static int calIntensity = -1;
 
   public static boolean calibrateIntensity() {
-    if (calIntensity == -1)
-      checkCalibrateIntensity();
     return plotCalIntensityDefault;
   }
 
-	static int lpIntensity = -1;
+//	static int lpIntensity = -1;
 
 	public static boolean calibrateIntensityForLorentzPolarization() {
-		if (lpIntensity == -1)
-			checkCalibrateIntensity();
 		return plotLPIntensityDefault;
 	}
 

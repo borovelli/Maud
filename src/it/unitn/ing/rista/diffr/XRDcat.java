@@ -1525,7 +1525,7 @@ public class XRDcat extends BaseFactoryObject implements basicObj, Cloneable {
     return parameterValues[index];
   }
 
-  public Parameter getParameter(int index) {
+	public Parameter getParameter(int index) {
     return parameterField[index];
   }
 
@@ -1699,6 +1699,15 @@ public class XRDcat extends BaseFactoryObject implements basicObj, Cloneable {
   public XRDcat setSubordinateField(String cif, String astring) {
     cif = validateCIF(cif);
     astring = validateString(astring);
+
+	  if (this instanceof Phase) {
+		  if (ciftonumber(cif) == Phase.textureID && astring.equalsIgnoreCase("none"))
+			  astring = "none tex";
+		  else if (ciftonumber(cif) == Phase.microAbsorptionID && astring.toLowerCase().startsWith("none"))
+			  astring = "No microabsorption";
+		  else if (ciftonumber(cif) == Phase.planarDefectsID && astring.toLowerCase().startsWith("no"))
+			  astring = "none pd";
+	  }
 
     int index = ciftonumber(cif);
     XRDcat obj = null;

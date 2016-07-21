@@ -76,11 +76,11 @@ public class Structure3Djgl extends AnimatedRendering3Djgl {
 		Phase aphase = (Phase) ((XRDcat) objectToRender).getParent();
 		aphase.refreshAtoms();
 		for (int na = 0; na < aphase.getFullAtomList().size(); na++) {
-			Atom a_tmp = (Atom) aphase.getFullAtomList().get(na);
+			AtomSite a_tmp = (AtomSite) aphase.getFullAtomList().get(na);
       if (a_tmp.getOccupancyValue() > 0.0) {
       float atom_color[] = new float[4];
 			a_tmp.refreshPositions(true);
-			Color atomColor = AtomColorPreferences.getColor(AtomInfo.cutOxidationNumber(a_tmp.getAtomSymbol()));
+			Color atomColor = AtomColorPreferences.getColor(AtomInfo.cutOxidationNumber(a_tmp.getFirstAtomSymbol()));
 			atom_color[0] = (float) atomColor.getRed() / 255f;
 			atom_color[1] = (float) atomColor.getGreen() / 255f;
 			atom_color[2] = (float) atomColor.getBlue() / 255f;
@@ -94,7 +94,7 @@ public class Structure3Djgl extends AnimatedRendering3Djgl {
 				jgl.glu.GLUquadricObj quadObj = glu.gluNewQuadric();
 				glu.gluQuadricDrawStyle(quadObj, glu.GLU_FILL);
 				glu.gluQuadricNormals(quadObj, glu.GLU_SMOOTH);
-        glu.gluSphere(quadObj, a_tmp.getRadius()/scaleplot, 16, 16);
+        glu.gluSphere(quadObj, a_tmp.getMeanRadius()/scaleplot, 16, 16);
         gl.glTranslatef((float) -abs_c.x/scaleplot, (float) -abs_c.y/scaleplot, (float) -abs_c.z/scaleplot);
 			}
       }

@@ -40,7 +40,7 @@ public class StructureFactorSolveCrystalStructure extends StructureFactorModel {
   public StructureFactorSolveCrystalStructure(XRDcat aobj, String alabel) {
     super(aobj, alabel);
     initXRD();
-    identifier = "structure solution model";
+    identifier = "Disabled structure solution model";
     IDlabel = "structure solution model";
     description = "select this to solve the structure and use structure factors from solution";
   }
@@ -50,7 +50,7 @@ public class StructureFactorSolveCrystalStructure extends StructureFactorModel {
   }
 
   public StructureFactorSolveCrystalStructure() {
-    identifier = "structure solution model";
+    identifier = "Disabled structure solution model";
     IDlabel = "structure solution model";
     description = "select this to solve the structure and use structure factors from solution";
   }
@@ -86,7 +86,7 @@ public class StructureFactorSolveCrystalStructure extends StructureFactorModel {
 		Instrument ainstrument = adataset.getInstrument();
 		RadiationType rad1 = ainstrument.getRadiationType();
 		phase.refreshFhklcompv();
-//		Vector<Atom> atomList = phase.getFullAtomList();
+//		Vector<AtomSite> atomList = phase.getFullAtomList();
 		int hkln = phase.gethklNumber();
 		final double[] fhkl = new double[hkln];
 //		double volume = phase.getCellVolume();

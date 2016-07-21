@@ -313,17 +313,17 @@ END;
           calName = calName.substring(0, index) + ".cal";
         String calibrationFile = Misc.filterFileName(calName);
 
-        DataInputStream calreader = getDataBufferedInputStream(calibrationFile);
+        DataInputStream calreader = getDataBufferedInputStreamNoChance(calibrationFile);
         String s1 = "", s2 = "";
         if (calreader == null) {
           index = calibrationFile.lastIndexOf("/");
           calibrationFile = calibrationFile.substring(index + 1);
           s1 = getFolder() + calibrationFile;
-          calreader = getDataBufferedInputStream(s1);
+          calreader = getDataBufferedInputStreamNoChance(s1);
         }
         if (calreader == null) {
           s2 = getFilePar().getDirectory() + calibrationFile;
-          calreader = getDataBufferedInputStream(s2);
+          calreader = getDataBufferedInputStreamNoChance(s2);
         }
         if (calreader == null) {  // still we don't find the calibration file, asking to the user
           calibrationFile = Utility.browseFilename(new Frame(),
@@ -331,7 +331,7 @@ END;
           calibrationFile = Misc.filterFileName(calibrationFile);
           System.out.println("Find to read: " + calibrationFile);
 
-          calreader = getDataBufferedInputStream(calibrationFile);
+          calreader = getDataBufferedInputStreamNoChance(calibrationFile);
         }
 //        System.out.println("Trying to read: " + s1);
 //        System.out.println("Trying to read: " + s2);
@@ -539,6 +539,17 @@ END;
       return new DataInputStream(new BufferedInputStream(in));
     return null;
   }
+
+	public static DataInputStream getDataBufferedInputStreamNoChance(String filename) {
+		return getDataBufferedInputStreamNoChance("", filename);
+	}
+
+	public static DataInputStream getDataBufferedInputStreamNoChance(String folder, String filename) {
+		InputStream in = Misc.getInputStreamNoChance(folder, filename);
+		if (in != null)
+			return new DataInputStream(new BufferedInputStream(in));
+		return null;
+	}
 
 }
 

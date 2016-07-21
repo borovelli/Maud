@@ -37,7 +37,7 @@ public class IntegralEWIMVTexture extends MEMLTexture {
 
   public IntegralEWIMVTexture(XRDcat aobj, String alabel) {
     super(aobj, alabel);
-    identifier = "Integral E-WIMV";
+    identifier = "Disabled Integral E-WIMV";
     IDlabel = "Integral E-WIMV";
     description = "select this to apply the arbitrary grid Integral E-WIMV method";
   }
@@ -47,7 +47,7 @@ public class IntegralEWIMVTexture extends MEMLTexture {
   }
 
   public IntegralEWIMVTexture() {
-    identifier = "Integral E-WIMV";
+    identifier = "Disabled Integral E-WIMV";
     IDlabel = "Integral E-WIMV";
     description = "select this to apply the arbitrary grid Integral E-WIMV method";
   }

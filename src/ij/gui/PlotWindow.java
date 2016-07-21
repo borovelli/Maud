@@ -292,7 +292,7 @@ public class PlotWindow extends ImageWindow implements ActionListener, Clipboard
         output.newLine();
         output.write(DiffrDataFile.CIFXcoord2T);
         output.newLine();
-        output.write(DiffrDataFile.intensityCIFstring);
+        output.write(DiffrDataFile.intensityExpCIFstring);
         output.newLine();
         for (int i = 0; i < nPoints; i++) {
           output.write(" " + Fmt.format(xmin + stepx * i) + " " + Fmt.format(yValues[i]));

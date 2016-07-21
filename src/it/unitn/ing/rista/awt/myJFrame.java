@@ -669,32 +669,39 @@ public class myJFrame extends iconJFrame implements ParentFrame, ClipboardOwner,
   }
 
   public void addComponenttolist(Component comp, Parameter apar) {
-    if (apar == null || comp == null)
-      return;
-    if (componentVector.contains(comp)) {
-      int index = componentVector.indexOf(comp);
-      Parameter tmpPar = (Parameter) parameterVector.elementAt(index);
-      tmpPar.setComponent(null);
-      if (comp instanceof JTextField)
-        ((JTextField) comp).setText(apar.getValue());
-      parameterVector.setElementAt(apar, index);
-      apar.setComponent(comp);
-    } else {
-      if (comp instanceof JTextField)
-        ((JTextField) comp).setText(apar.getValue());
-      parameterVector.addElement(apar);
-      componentVector.addElement(comp);
-      apar.setComponent(comp);
-    }
-    if (!listenerVector.contains(comp)) {
-      MyMouse amouselistener = new MyMouse();
-      comp.addMouseListener(amouselistener);
-      listenerVector.addElement(comp);
-      listenerVector.addElement(amouselistener);
-    }
-    comp.setBackground(ligthgrayc);
-    comp.invalidate();
-    comp.getParent().validate();
+	  if (apar == null || comp == null)
+		  return;
+	  if (componentVector.contains(comp)) {
+		  int index = componentVector.indexOf(comp);
+		  Parameter tmpPar = (Parameter) parameterVector.elementAt(index);
+		  if (tmpPar != apar) {
+			  tmpPar.setComponent(null);
+			  if (comp instanceof JTextField)
+				  ((JTextField) comp).setText(apar.getValue());
+			  parameterVector.setElementAt(apar, index);
+			  apar.setComponent(comp);
+		  }
+	  } else {
+		  if (comp instanceof JTextField)
+			  ((JTextField) comp).setText(apar.getValue());
+		  parameterVector.addElement(apar);
+		  componentVector.addElement(comp);
+		  apar.setComponent(comp);
+	  }
+	  comp.setBackground(ligthgrayc);
+	  comp.revalidate();
+	  comp.repaint();
+	  if (!listenerVector.contains(comp)) {
+		  MyMouse amouselistener = new MyMouse();
+		  comp.addMouseListener(amouselistener);
+		  listenerVector.addElement(comp);
+		  listenerVector.addElement(amouselistener);
+	  }
+	  comp.setBackground(ligthgrayc);
+	  comp.revalidate();
+	  comp.repaint();
+//	  System.out.println("Magenta: " + comp.toString());
+	  comp.setBackground(ligthgrayc);
   }
 
   public void removeComponentfromlist(Component comp) {
@@ -711,9 +718,10 @@ public class myJFrame extends iconJFrame implements ParentFrame, ClipboardOwner,
         listenerVector.removeElementAt(index + 1);
         listenerVector.removeElementAt(index);
       }
+//	    System.out.println("White: " + comp.toString());
       comp.setBackground(whitec);
-      comp.invalidate();
-      comp.getParent().validate();
+      comp.revalidate();
+	    comp.repaint();
     }
   }
 

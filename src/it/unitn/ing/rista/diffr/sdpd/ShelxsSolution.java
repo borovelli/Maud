@@ -71,7 +71,7 @@ public class ShelxsSolution extends StructureSolutionMethod {
   public ShelxsSolution(XRDcat aobj, String alabel) {
     super(aobj, alabel);
     initXRD();
-    identifier = "Shelxs (Sheldrick)";
+    identifier = "Disabled Shelxs (Sheldrick)";
     IDlabel = "Shelxs (Sheldrick)";
     description = "select this to obtain a structure solution by Shelxs (Sheldrick)";
   }
@@ -81,7 +81,7 @@ public class ShelxsSolution extends StructureSolutionMethod {
   }
 
   public ShelxsSolution() {
-    identifier = "Shelxs (Sheldrick)";
+    identifier = "Disabled Shelxs (Sheldrick)";
     IDlabel = "Shelxs (Sheldrick)";
     description = "select this to obtain a structure solution by Shelxs (Sheldrick)";
   }

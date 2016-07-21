@@ -236,20 +236,20 @@ public class DiffrDataFile extends XRDcat {
 	Vector overallVector = null;
 
 	// phaseLorentzPolarization[number of reflection][number of points per pattern]
-	private Map<Phase, double[][]> phaseLorentzPolarization = new Hashtable<Phase, double[][]>();
+	private Map<Phase, double[][]> phaseLorentzPolarization = new Hashtable<>();
 	// phaseShapeAbsFactors[number of reflection][number of points per pattern]
-	private Map<Phase, double[][]> phaseShapeAbsFactors = new Hashtable<Phase, double[][]>();
+	private Map<Phase, double[][]> phaseShapeAbsFactors = new Hashtable<>();
 
 	// phaseTextureFactors[2(meas,calc)][number of reflection][number of points per pattern]
-	private Map<Phase, int[]> phaseReflectionIDs = new Hashtable<Phase, int[]>();
-	private Map<Phase, double[][][]> phaseTextureFactors = new Hashtable<Phase, double[][][]>();
-	private Map<Phase, double[][]> phaseStrainFactors = new Hashtable<Phase, double[][]>();
-	private Map<Phase, double[][][]> phaseCrystallitesMicrostrains = new Hashtable<Phase, double[][][]>();
-	private Map<Phase, double[][][]> phaseInstBroadFactors = new Hashtable<Phase, double[][][]>();
-	private Map<Phase, double[][][]> phaseBroadFactors = new Hashtable<Phase, double[][][]>();
+	private Map<Phase, int[]> phaseReflectionIDs = new Hashtable<>();
+	private Map<Phase, double[][][]> phaseTextureFactors = new Hashtable<>();
+	private Map<Phase, double[][]> phaseStrainFactors = new Hashtable<>();
+	private Map<Phase, double[][][]> phaseCrystallitesMicrostrains = new Hashtable<>();
+	private Map<Phase, double[][][]> phaseInstBroadFactors = new Hashtable<>();
+	private Map<Phase, double[][][]> phaseBroadFactors = new Hashtable<>();
 	// phasePositions[radnumber][number of reflection][number of points per pattern]
-	private Map<Phase, double[][][]> phasePositions = new Hashtable<Phase, double[][][]>();
-	private Map<Phase, int[][][][]> phaseMinMaxIndices = new Hashtable<Phase, int[][][][]>();
+	private Map<Phase, double[][][]> phasePositions = new Hashtable<>();
+	private Map<Phase, int[][][][]> phaseMinMaxIndices = new Hashtable<>();
 	static final int dateTimeFieldID = maxAngleNumber + 12;
 	static final int datafileWeightFieldID = maxAngleNumber + 13;
 	static final int scaleFactorDiffractionFluoID = 3;
@@ -257,13 +257,23 @@ public class DiffrDataFile extends XRDcat {
 //	private String measurementTime;
 
 	public DiffrDataFile(XRDcat aobj, String alabel) {
-    super(aobj, alabel);
-    setParent(aobj);
-    initXRD();
-    initDatafile(alabel);
+		super(aobj, alabel);
+		setParent(aobj);
+		initXRD();
+		initDatafile(alabel);
   }
 
-  public DiffrDataFile(XRDcat aobj) {
+/*	public DiffrDataFile(XRDcat aobj, String alabel, boolean fromFile) {
+		super(aobj, alabel);
+		setParent(aobj);
+		initXRD();
+		if (fromFile)
+			initDatafile(alabel);
+		else
+			dataLoaded = true;
+	}*/
+
+	public DiffrDataFile(XRDcat aobj) {
     this(aobj, "Datafile_x");
   }
 
@@ -371,6 +381,7 @@ public class DiffrDataFile extends XRDcat {
   public boolean readallSpectra(boolean askForRange) {
 	  boolean oldPermission = Constants.refreshTreePermitted;
 	  Constants.refreshTreePermitted = false;
+//	  System.out.println("Reading data: " + getFolder() + toXRDcatString() + " " + identifier);
     boolean result = readallSpectra();
 	  Constants.refreshTreePermitted = oldPermission;
 	  return result;
@@ -1455,7 +1466,8 @@ public class DiffrDataFile extends XRDcat {
 		for (int i = 0; i < maxAngleNumber; i++)
 			setString(i + 1, Double.toString(offset[i] + Double.valueOf(getString(i + 1)) * mult[i]));
     for (int i = 0; i < this.datanumber; i++)
-      setCalibratedXData(i, this.getXDataOriginal(i) * mult[4] + offset[4]);
+      setCalibratedXData(i, this.getXDataOriginal(i) * mult[maxAngleNumber] + offset[maxAngleNumber]);
+		calibrated = false;
   }
 
   public Parameter getMonitorCounts() {
@@ -1618,9 +1630,11 @@ public class DiffrDataFile extends XRDcat {
     }
 
     try {
-      if (twothetacalibrated != null)
-        return twothetacalibrated[index];
-      else {
+      if (twothetacalibrated != null) {
+//	      if (index == 0)
+//	         System.out.println(index + " " + twothetacalibrated[index]);
+	      return twothetacalibrated[index];
+      } else {
         out.println(this.toXRDcatString() + ", data vector not initialize!!");
         return twotheta[index];
       }
@@ -5917,21 +5931,6 @@ public class DiffrDataFile extends XRDcat {
 
 // position from d-space + sample positioning errors
     pos = getCorrectedPosition(asample, pos);
-
-// planar defects
-    double planarDefectDisplacement = refl.getPlanarDefectDisplacement(); // in d-space, delta(d)/d
-    if (planarDefectDisplacement != 0.0) {
-      if (!dspacingbase) {
-        planarDefectDisplacement *= 2.0 * Constants.PITODEG;
-          pos -= MoreMath.tand(pos * 0.5) * planarDefectDisplacement;
-      } else if (energyDispersive) {
-        planarDefectDisplacement += 1.0;
-          pos /= planarDefectDisplacement;
-      } else {
-        planarDefectDisplacement += 1.0;
-          pos *= planarDefectDisplacement;
-      }
-    }
 
     if (strain != 0.0)
       pos = getPositionForStrained(pos, strain);

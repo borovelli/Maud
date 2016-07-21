@@ -43,102 +43,158 @@ from the older one.
 
 Maud Version notes:
 
+(29/06/2016):   2.67.
+                Maud.jar has been moved to the lib directory.
+
+(29/06/2016):   2.66. The "Swimming" release.
+                I learned you have to start swimming in air first.....
+                Corrected a bug resulting in wrong elemental fraction in the
+                output results.
+                This was affecting principally results coming from XRF. The bug
+                was introduced after 2.5 version.
+                Improved the fitting for high asymmetry coming from the Warren
+                planar defect model. You cannot use the Warren model in
+                combination with distributions of cystallites and microstrains.
+                This will be targeted in a future release.
+
+(29/06/2016):   2.65. The "Out for breakfast" release.
+                Some breakfast may take longer than others.....
+                Bug correction release.
+
+(23/06/2016):   2.64. The "Asino" release.
+                You are never too old to do mistakes.....
+                Speed up release. Found a bug with the new preferences system
+                that was slowing down everything, from calculation to plotting.
+                Some other bugs connected to the new initialization of Maud
+                corrected.
+
+(23/06/2016):   2.61. The "Tangerin" release.
+                Rediscovering an old group.....
+                This will be released as a public beta finally. The version is
+                adressing all installation and first running problems as well
+                as transitioning to the new OSes (starting to use the sandboxing
+                when required). This means you may encounter some issues with
+                the old analysis files like the data is not loaded, but need
+                to be reloaded manually. From this version on, the data is
+                saved inside the analysis file and is no more an option.
+                The XRF computation is now reliable and nearly mature, M and
+                N lines also.
+                To help and to make more easy to insert impurities atoms
+                (fundamental for XRF) the definition of atom sites and
+                content has changed. It is no more necessary to duplicate
+                an atom site to add a different atom. Each atom site may
+                be shared by several different atoms for which only the
+                type and partial occupation must be specified. The sum
+                of all partial occupations in a site is kept by the program
+                normalized to the total occupation of the site that can
+                be also specified.
+                The Java Virtual machine is now embedded in the program and
+                does not need to be separately installed. The installation
+                archive is larger for downoad, but the program run more reliably
+                with the correct JVM it needs.
+                On OS X or future macOS, the program is sandboxed. This means
+                it can only load and save files that the user specifically
+                select or specify through the dialog box or in a special
+                directory inside: ~/Library/Containers/com.radiographema.maud
+                You need also to specify the extension when saving. Is no
+                more added by default (for datafiles and analysis files).
+
 (2/04/2015):    2.57. The "Montparnasse" release.
-								Should say everything.....
-								Switched to java 1.7 as a requirement.
+                Should say everything.....
+                Switched to java 1.7 as a requirement.
 
 (7/26/2015):    2.56. The "Insomnia" release.
-								I like when is only the computer not sleeping...
-								Corrected a bug for tensor homogenization when using spherical
-								components in standard functions.
+                I like when is only the computer not sleeping...
+                Corrected a bug for tensor homogenization when using spherical
+                components in standard functions.
 
 (4/30/2015):    2.55. The "Chinese VISA" release.
-								It is harder to get one than to get rid of all Maud bugs...
-								Some bugs corrected and an update to the fluorescence
-								background computation when using a Bremsstrahlung.
+                It is harder to get one than to get rid of all Maud bugs...
+                Some bugs corrected and an update to the fluorescence
+                background computation when using a Bremsstrahlung.
 
 (4/01/2015):    2.54. The "April fool" release.
-								Trust it or not....
-								Updated the image importer for GADDS to include new detectors
-								with more than 1k x 1k pixels.
-								Corrected a bug on the XRF analysis on conversion from atom
-								fractions to atom weights.
+                Trust it or not....
+                Updated the image importer for GADDS to include new detectors
+                with more than 1k x 1k pixels.
+                Corrected a bug on the XRF analysis on conversion from atom
+                fractions to atom weights.
 
 (2/04/2015):    2.53. The "......" release.
-								Not very good today.
-								Added the possibility to show peaks information (hkl, phase)
-								on the plot. Right-click the mouse and select the last entry
-								on Peaks info, then move the mouse over your pattern and see
-								which are the more close-by peaks. Works for fluorescence too.
+                Not very good today.
+                Added the possibility to show peaks information (hkl, phase)
+                on the plot. Right-click the mouse and select the last entry
+                on Peaks info, then move the mouse over your pattern and see
+                which are the more close-by peaks. Works for fluorescence too.
 
 (1/28/2015):    2.52. The "Rigolor" release.
-								For the one who like the fresh snow.
-								Multithreading related bug on fluorescence computation was
-								resolved. Adjusted some plot label position to make them
-								visible in certain cases these were not.
-								Added the "_maud_output_plot_filename" option to the Maud
-								batch system. Adding the keyword in the loop and specifying
-								the filename, the full data/fitting is exported in such file
-								(fitting including the pattern calculated for each phase).
+                For the one who like the fresh snow.
+                Multithreading related bug on fluorescence computation was
+                resolved. Adjusted some plot label position to make them
+                visible in certain cases these were not.
+                Added the "_maud_output_plot_filename" option to the Maud
+                batch system. Adding the keyword in the loop and specifying
+                the filename, the full data/fitting is exported in such file
+                (fitting including the pattern calculated for each phase).
 
 (1/15/2015):    2.51. The "Panarotta" release.
-								For the kids.
-								Adjusted and optimized computation for the Ebel tube diffraction.
-								Some bugs corrected.
+                For the kids.
+                Adjusted and optimized computation for the Ebel tube diffraction.
+                Some bugs corrected.
 
 (10/28/2014):   2.50. The "Equinox" release.
-								Its working well now.
-								Options added to reduce the analysis file on saving.
-								The options can be found in the refinement options panel and
-								these have also a default value in the Maud preferences as:
-								analysis_default.storeStructureFactors (true the advised value)
-								analysis_default.storeTextureFactors (true the advised value).
-								You can turn them off (false) per analysis in the refinement
-								options panel to reduce the analysis file size. It is advisable
-								to do it only if you need to send the analysis by email or have
-								disk space problem, as doing it and you will loose on saving
-								all the structure factors and/or texture factors extracted and
-								on reloading you will need to recalculate those factors (this
-								was in reality the standard saving mode for Maud 2.33 or
-								earlier).
+                Its working well now.
+                Options added to reduce the analysis file on saving.
+                The options can be found in the refinement options panel and
+                these have also a default value in the Maud preferences as:
+                analysis_default.storeStructureFactors (true the advised value)
+                analysis_default.storeTextureFactors (true the advised value).
+                You can turn them off (false) per analysis in the refinement
+                options panel to reduce the analysis file size. It is advisable
+                to do it only if you need to send the analysis by email or have
+                disk space problem, as doing it and you will loose on saving
+                all the structure factors and/or texture factors extracted and
+                on reloading you will need to recalculate those factors (this
+                was in reality the standard saving mode for Maud 2.33 or
+                earlier).
 
 (10/02/2014):   2.48. The "Michele" release.
-								Thanks to Michele perseverance, D19 and EWIMV/WIMV fixed.
-								This is an important release as finally the small bug affecting
-								the texture refinement using EWIMV and WIMV in the beta version
-								was found and corrected. Also D19 is working perfectly now
-								like D1B always has.
-								Fixed also a bug in the computation of the fluorescence line
-								intensities for air and windows.
+                Thanks to Michele perseverance, D19 and EWIMV/WIMV fixed.
+                This is an important release as finally the small bug affecting
+                the texture refinement using EWIMV and WIMV in the beta version
+                was found and corrected. Also D19 is working perfectly now
+                like D1B always has.
+                Fixed also a bug in the computation of the fluorescence line
+                intensities for air and windows.
 
 (09/08/2014):   2.47. The "Smart Lab" release.
-								Back to Trento, new lab, new instrument, new office, old work.
-								Few bugs corrected.
+                Back to Trento, new lab, new instrument, new office, old work.
+                Few bugs corrected.
 
 (07/03/2014):   2.46. The "Formation" release.
-								Maud formation in Caen.
-								Some bugs correction. The absorption for the thin film thickness
-								was not working for diffraction in the last couple of version.
-								Another bug introduced recently for chi instrument broadening
-								and a tan(theta) option in the asymmetry not loaded correctly
-								from previous versions.
-								Two new planar defects models. One for modulated planar defects
-								like the one you find in Kaolinite. An example will be added
-								shortly. Second one is for polymers (fibers) where the chain
-								ends are always a bit disordered.
+                Maud formation in Caen.
+                Some bugs correction. The absorption for the thin film thickness
+                was not working for diffraction in the last couple of version.
+                Another bug introduced recently for chi instrument broadening
+                and a tan(theta) option in the asymmetry not loaded correctly
+                from previous versions.
+                Two new planar defects models. One for modulated planar defects
+                like the one you find in Kaolinite. An example will be added
+                shortly. Second one is for polymers (fibers) where the chain
+                ends are always a bit disordered.
 
 (05/20/2014):   2.45. The "ESRF" release.
-								Always nice to visit Grenoble.
-								Just one bug preventing the crystal structure refinement wizard
-								to run completely with atoms sharing the same site.
+                Always nice to visit Grenoble.
+                Just one bug preventing the crystal structure refinement wizard
+                to run completely with atoms sharing the same site.
 
 (05/20/2014):   2.44. The "Monopoly" release.
-								Kids growing.
-								Several bugs corrected.
-								XRF working now especially XRF-XRR combination.
-								Added Parrat recursive method to XRR (select in the dataset edit
-								panel.
-								Modified the electron dynamical correction.
+                Kids growing.
+                Several bugs corrected.
+                XRF working now especially XRF-XRR combination.
+                Added Parrat recursive method to XRR (select in the dataset edit
+                panel.
+                Modified the electron dynamical correction.
 
 (01/11/2013):   2.43. The "Typhoon" release.
                 First visit to Japan. Impressed by J-Parc and I haven't seen

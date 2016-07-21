@@ -70,7 +70,7 @@ public class GiacovazzoSirIC extends StructureSolutionMethod {
   public GiacovazzoSirIC(XRDcat aobj, String alabel) {
     super(aobj, alabel);
     initXRD();
-    identifier = "Sir201x (Giacovazzo et al.)";
+    identifier = "Disabled Sir201x (Giacovazzo et al.)";
     IDlabel = "Sir201x (Giacovazzo et al.)";
     description = "select this to use Sir201x (Giacovazzo et al.) for structure solution and structure factor comp.";
   }
@@ -80,7 +80,7 @@ public class GiacovazzoSirIC extends StructureSolutionMethod {
   }
 
   public GiacovazzoSirIC() {
-    identifier = "Sir201x (Giacovazzo et al.)";
+    identifier = "Disabled Sir201x (Giacovazzo et al.)";
     IDlabel = "Sir201x (Giacovazzo et al.)";
     description = "select this to use Sir201x (Giacovazzo et al.) for structure solution and structure factor comp.";
   }

@@ -52,12 +52,16 @@ public class MoreMath {
   }
 
   public static final int is3Neven(int value) {
-    int i = value / 3;
-    if (i * 3 == value)
-      return 0;
-    else if (i * 3 + 1 == value || i * 3 - 2 == value)
-      return 1;
-    return -1;
+	  int residual = value % 3;
+	  if (residual < 0) {
+		  residual += 3;
+	  } else if (residual == 0) {
+		  return 0;
+	  }
+	  if (residual == 1) {
+		  return 1;
+	  }
+	  return -1;
   }
 
   public static final boolean isMultipleOf(int value, int factor) {

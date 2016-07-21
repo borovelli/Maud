@@ -83,7 +83,7 @@ public class StructureAtomic extends StructureModel implements AtomsStructureI {
 
   protected static String[] classlistc = {
 
-		"it.unitn.ing.rista.diffr.Atom",
+		"it.unitn.ing.rista.diffr.AtomSite",
 		"it.unitn.ing.rista.diffr.Fragment",
 		"it.unitn.ing.rista.diffr.Bond"
 
@@ -183,10 +183,10 @@ public class StructureAtomic extends StructureModel implements AtomsStructureI {
 			Vector atomList = getFullAtomList();
 			if (value)
 				for (int i = 0; i < atomList.size(); i++)
-					((Atom) atomList.elementAt(i)).convertAtomDisplacementsToDimensionless();
+					((AtomSite) atomList.elementAt(i)).convertAtomDisplacementsToDimensionless();
 			else
 				for (int i = 0; i < atomList.size(); i++)
-					((Atom) atomList.elementAt(i)).convertAtomDisplacementsFromDimensionless();
+					((AtomSite) atomList.elementAt(i)).convertAtomDisplacementsFromDimensionless();
 		}
 		if (value)
 			stringField[2] = "true";
@@ -239,17 +239,17 @@ public class StructureAtomic extends StructureModel implements AtomsStructureI {
     return getAtomList().size();
   }
 
-  public Atom getAtom(int index) {
-    return (Atom) getAtomList().elementAt(index);
+  public AtomSite getAtom(int index) {
+    return (AtomSite) getAtomList().elementAt(index);
   }
 
   public void addAtom() {
-    Atom newatom = new Atom(this);
+    AtomSite newatom = new AtomSite(this);
     addAtom(newatom);
-    newatom.setAtomSymbol("Ca");
+    newatom.addAtomWithSymbol("Ca");
   }
 
-  public void addAtom(Atom newatom) {
+  public void addAtom(AtomSite newatom) {
     addsubordinateloopField(AtomListID, newatom);
     getPhaseParent().refreshAtoms = true;
     getPhaseParent().fullAtomList = null;
@@ -330,7 +330,7 @@ public class StructureAtomic extends StructureModel implements AtomsStructureI {
   }
 
   public void freeAllCrystalParameters() {
-    Atom anatom;
+    AtomSite anatom;
     int atomNumbers = getAtomNumber();
     boolean share;
 
@@ -352,10 +352,13 @@ public class StructureAtomic extends StructureModel implements AtomsStructureI {
   public void convertAtomsForSG(double traslx, double trasly, double traslz) {
     int numbAtomn = getAtomNumber();
     for (int i = 0; i < numbAtomn; i++) {
-      Atom oldatom = getAtom(i);
-      Atom newatom = new Atom(this);
+      AtomSite oldatom = getAtom(i);
+      AtomSite newatom = new AtomSite(this);
       newatom.setSiteLabel(oldatom.getSiteLabel() + "a");
-      newatom.setAtomSymbol(oldatom.getAtomSymbol());
+	    for (int j = 0; j < oldatom.subordinateloopField[AtomSite.scattererLoopID].size(); j++) {
+		    newatom.addsubordinateloopField(AtomSite.scattererLoopID, ((XRDcat)
+				    oldatom.subordinateloopField[AtomSite.scattererLoopID].elementAt(j)).getCopy(this));
+	    }
       newatom.getLocalCoordX().setValue(oldatom.getLocalCoordX().getValueD() + traslx);
       newatom.getLocalCoordX().setEqualTo(oldatom.getLocalCoordX(), 1.0, traslx);
       newatom.getLocalCoordY().setValue(oldatom.getLocalCoordY().getValueD() + trasly);

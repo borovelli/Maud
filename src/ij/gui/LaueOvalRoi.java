@@ -113,7 +113,7 @@ public class LaueOvalRoi extends LaueOvalStepRoi {
 
     DataFileSet data = AreaImage.getData();
     String filename = Utility.openFileDialog(new Frame(), "Save as CIF (.esg)...",
-            FileDialog.SAVE, data.getFilePar().getDirectory(), null, "put a name (no extension)");
+            FileDialog.SAVE, data.getFilePar().getDirectory(), null, "put a name (with extension).esg");
     if (filename == null)
       return;
 
@@ -125,7 +125,7 @@ public class LaueOvalRoi extends LaueOvalStepRoi {
     IJ.wait(250);  // give system time to redraw ImageJ window
     IJ.showStatus("Saving plot values...");
     if (filename == null) return;
-    if (!filename.endsWith(".esg"))
+    if (Constants.sandboxEnabled && !filename.endsWith(".esg"))
       filename = filename + ".esg";
     save(folder, filename, profile, startX, endX);
 

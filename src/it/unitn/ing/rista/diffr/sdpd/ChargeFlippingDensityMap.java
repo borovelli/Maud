@@ -93,7 +93,7 @@ public class ChargeFlippingDensityMap extends StructureSolutionMethod {
   public ChargeFlippingDensityMap(XRDcat aobj, String alabel) {
     super(aobj, alabel);
     initXRD();
-    identifier = "Charge Flipping";
+    identifier = "Disabled Charge Flipping";
     IDlabel = "Charge Flipping";
     description = "select this to obtain Density Maps by Charge Flipping";
   }
@@ -103,7 +103,7 @@ public class ChargeFlippingDensityMap extends StructureSolutionMethod {
   }
 
   public ChargeFlippingDensityMap() {
-    identifier = "Charge Flipping";
+    identifier = "Disabled Charge Flipping";
     IDlabel = "Charge Flipping";
     description = "select this to obtain Density Maps by Charge Flipping";
   }

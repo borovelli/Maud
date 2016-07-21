@@ -20,6 +20,7 @@
 
 package it.unitn.ing.rista.diffr;
 
+import it.unitn.ing.rista.awt.ElementalTableModel;
 import it.unitn.ing.rista.awt.JOptionsDialog;
 import it.unitn.ing.rista.chemistry.AtomInfo;
 import it.unitn.ing.rista.chemistry.XRayDataSqLite;
@@ -152,6 +153,10 @@ public class AbsorptionWindow extends XRDcat {
 		return getParameterValue(window_density_id);
 	}
 
+	public void setWindowDensity(double value) {
+		getParameter(window_density_id).setValue(value);
+	}
+
 	public void computeAbsorptionForLineWithEnergy(double[][] energyInKeVIntensity) {
 		for (int j = 0; j < energyInKeVIntensity[0].length; j++) {
 			double absorption = 0;
@@ -246,8 +251,9 @@ public class AbsorptionWindow extends XRDcat {
 		JTextField windowDensityTF;
 		JTextField fluorescenceIntensityTF;
 		JButton addWindowB = new JButton("Add element");
+		JButton airWindowB = new JButton("Set as air");
 		JButton removeWindowB = new JButton("Remove element");
-		elementTableModel windowCompositionModel = null;
+		ElementalTableModel windowCompositionModel = null;
 		JTable windowCompositionTable = null;
 
 		public JAbsorptionWindowOptionsD(Frame parent, XRDcat obj) {
@@ -284,7 +290,7 @@ public class AbsorptionWindow extends XRDcat {
 
 			jp1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 3, 3));
 			jpT.addTab("Material composition", jp1);
-			windowCompositionModel = new elementTableModel(window_composition_id);
+			windowCompositionModel = new ElementalTableModel(AbsorptionWindow.this, window_composition_id);
 			windowCompositionTable = new JTable(windowCompositionModel);
 			JScrollPane windowCompositionScrollpane = new JScrollPane(windowCompositionTable);
 			JPanel jPanel = new JPanel(new BorderLayout(3, 3));
@@ -296,6 +302,7 @@ public class AbsorptionWindow extends XRDcat {
 			jp2.add(jp3);
 			jp3.add(addWindowB);
 			jp3.add(removeWindowB);
+			jp3.add(airWindowB);
 			addWindowB.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent actionEvent) {
@@ -309,6 +316,15 @@ public class AbsorptionWindow extends XRDcat {
 					windowCompositionModel.remove(index);
 				}
 			});
+			airWindowB.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent actionEvent) {
+					windowCompositionModel.setAsAir();
+					AbsorptionWindow.this.setWindowDensity(0.0012);
+					windowDensityTF.setText("0.0012");
+				}
+			});
+
 
 /*			JPanel plotButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 3, 3));
 			eastPanel.add(BorderLayout.SOUTH, plotButtonPanel);
@@ -349,30 +365,11 @@ public class AbsorptionWindow extends XRDcat {
 
 	}
 
-	public class elementTableModel extends AbstractTableModel {
+/*	public class elementTableModel extends AbstractTableModel {
 
-		/**
-		 * Column labels for the table
-		 */
 		private String columns[] = {"Atom", "Quantity"};
-
-		/**
-		 * Number of columns in the table, stored for speed enhancement.
-		 */
 		private int numColumns = columns.length;
-
-		/**
-		 * The object storing the preferences
-		 */
 		int subordinateListIndex = -1;
-
-		/**
-		 * Sets up the subordinate object loop where to retrieve the fields and
-		 * values to generate the table.
-		 *
-		 * @param listIndex				index of the subordinateLoop
-		 * @see                 XRDcat
-		 */
 
 		public elementTableModel(int listIndex) {
 			subordinateListIndex = listIndex;
@@ -393,34 +390,13 @@ public class AbsorptionWindow extends XRDcat {
 			}
 		}
 
-		/**
-		 * @return the column number, equal to the number fields in the Hashtable
-		 */
-
 		public int getColumnCount() {
 			return numColumns;
 		}
 
-		/**
-		 * @return the row number
-		 */
-
 		public int getRowCount() {
 			return subordinateloopField[subordinateListIndex].size();
 		}
-
-		/**
-		 * Gives the content to be displayed at position row x column.
-		 * It is retrieved directly from the Hashtable.
-		 * In any row the elements are:
-		 *
-		 *  field 	value
-		 *
-		 * @param  row		the row position
-		 * @param  column	the column position
-		 * @return the element at position row x column
-		 *
-		 */
 
 		public Object getValueAt(int row, int column) {
 			switch (column) {
@@ -452,13 +428,6 @@ public class AbsorptionWindow extends XRDcat {
 			fireTableCellUpdated(row, column);
 		}
 
-		/**
-		 * Gets the label of the <code>columnIndex</code> column
-		 *
-		 * @param columnIndex the column number
-		 * @return the appropriate label for the column
-		 */
-
 		public String getColumnName(int columnIndex) {
 			return columns[columnIndex];
 		}
@@ -466,9 +435,9 @@ public class AbsorptionWindow extends XRDcat {
 		// Types of the columns.
 //	public Class[] cTypes = {String.class, String.class};
 
-	/*public Class getColumnClass(int column) {
-		return cTypes[column];
-	}*/
+	//public Class getColumnClass(int column) {
+	//	return cTypes[column];
+	//}
 
 		public Class getColumnClass(int c) {
 			switch (c) {
@@ -497,7 +466,7 @@ public class AbsorptionWindow extends XRDcat {
 			return false;
 		}
 
-	}
+	}*/
 
 
 }

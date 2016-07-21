@@ -101,11 +101,11 @@ public class Structure3Dgl extends AnimatedRendering3Dgl {
 
     aphase.refreshAtoms();
     for (int na = 0; na < aphase.getFullAtomList().size(); na++) {
-      Atom a_tmp = (Atom) aphase.getFullAtomList().get(na);
+      AtomSite a_tmp = (AtomSite) aphase.getFullAtomList().get(na);
       float atom_color[] = new float[4];
 //      System.out.println(AtomInfo.cutOxidationNumber(a_tmp.getAtomSymbol()));
       a_tmp.refreshPositions(true);
-      Color atomColor = AtomColorPreferences.getColor(AtomInfo.cutOxidationNumber(a_tmp.getAtomSymbol()));
+      Color atomColor = AtomColorPreferences.getColor(AtomInfo.cutOxidationNumber(a_tmp.getFirstAtomSymbol()));
       atom_color[0] = (float) atomColor.getRed() / 255f;
       atom_color[1] = (float) atomColor.getGreen() / 255f;
       atom_color[2] = (float) atomColor.getBlue() / 255f;
@@ -120,7 +120,7 @@ public class Structure3Dgl extends AnimatedRendering3Dgl {
         atomChar[0] = (float) abs_c.x/scaleplot;
         atomChar[1] = (float) abs_c.y/scaleplot;
         atomChar[2] = (float) abs_c.z/scaleplot;
-        atomChar[3] = (float) a_tmp.getRadius()/scaleplot;
+        atomChar[3] = (float) a_tmp.getMeanRadius()/scaleplot;
         allAtoms.add(atom_color);
         allAtoms.add(atomChar);
       }

@@ -40,7 +40,7 @@ public class SizeStrainWarrenAverbach extends SizeStrainModel {
   public SizeStrainWarrenAverbach(XRDcat aobj, String alabel) {
     super(aobj, alabel);
     initXRD();
-    identifier = "Warren-Averbach";
+    identifier = "Disabled Warren-Averbach";
     IDlabel = "Warren-Averbach";
     description = "select this to apply the Warren-Averbach model";
   }
@@ -50,7 +50,7 @@ public class SizeStrainWarrenAverbach extends SizeStrainModel {
   }
 
   public SizeStrainWarrenAverbach() {
-    identifier = "Warren-Averbach";
+    identifier = "Disabled Warren-Averbach";
     IDlabel = "Warren-Averbach";
     description = "select this to apply the Warren-Averbach model";
   }

@@ -21,7 +21,9 @@ public class XRayDataSqLite {
 			N1 = 9, N2 = 10, N3 = 11, N4 = 12, N5 = 13, N6 = 14, N7 = 15, O1 = 16, O2 = 17, O3 = 18, O4 = 19, O5 = 20, O6 = 21,
 			P1 = 22, P2 = 23, P3 = 24;
 
-	public static int[] mainShellIndex = {0, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5};
+	public static int[] mainShellNumber = {0, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5};
+	public static int[] mainShellIndex = {K, L1, L1, L1, M1, M1, M1, M1, M1, N1, N1, N1, N1, N1, N1, N1,
+			O1, O1, O1, O1, O1, O1, P1, P1, P1};
 
 	public static void main(String[] args) throws ClassNotFoundException
 	{
@@ -98,8 +100,11 @@ public class XRayDataSqLite {
 	private static String[] energyLevels = {"energy_eV", "jump", "level_width_eV"};
 	private static double[] trasformEL = {0.001, 1.0, 0.001};
 	private static String[] yield = {"fluo_yield"};
-	private static String[] costerKronigLabels = {"f1", "f12", "f13", "fp13", "f23"};
+	private static String[] costerKronigLabels = {"f1", "f12", "f13", /*"fp13", */"f23"};
 	private static String[] costerKronigLabels_m = {"fM12", "fM13", "fM14", "fM15", "fM23", "fM24", "fM25", "fM34", "fM35", "fM45"};
+   private static int costerKronigMax_k = 1;
+	private static int costerKronigMax_l = 2;
+	private static int costerKronigMax_m = 4;
 	private static String[] transitionLabels = {"transition_id", "energy_eV", "probability"};
 	private static double[] trasformL = {1.0, 0.001, 1.0};
 	private static String[] henkef1f2Labels = {"energy_eV", "f1", "f2"};
@@ -111,19 +116,21 @@ public class XRayDataSqLite {
 	public static Vector<Vector<double[]>> ebelTauRange = null;
 	public static Vector<AtomShellData> shellData = null;
 	public static Vector<Vector<double[]>> yieldData = null;
-	public static Vector<double[]> costerKronigData_l = null;
-	public static Vector<double[]> costerKronigData_m = null;
+	public static Hashtable<Integer, Hashtable<Integer, double[][]>> costerKronigData = new Hashtable<>();
 	public static Vector<Vector<int[]>> transitionShellIDs = null;
 	public static Vector<Vector<double[]>> transitionEnergies = null;
 	public static Vector<double[][]> henkeEnergyf1f2 = null;
 	public static double linesMinimumEnergy = 0.1;
+   public static Hashtable<Integer, Vector<double[]>> auger_probability = new Hashtable<Integer, Vector<double[]>>();
+	public static boolean ebelAndShellLoaded = false;
 
-	public static void loadEbelAndShellTables(boolean forceReload) {
 
-		linesMinimumEnergy = MaudPreferences.getDouble("fluorescenceLines.minimum_keV", linesMinimumEnergy);
+	public static boolean loadEbelAndShellTables(boolean forceReload) {
 
 		if (ebelElastic != null && !forceReload)
-			return;
+			return true;
+
+		linesMinimumEnergy = MaudPreferences.getDouble("fluorescenceLines.minimum_keV", linesMinimumEnergy);
 
 		// load the sqlite-JDBC driver using the current class loader
 		try {
@@ -150,7 +157,7 @@ public class XRayDataSqLite {
 				ebelElastic.add(coeffs);
 			}
 
-			ebelInelastic = new Vector<double[]>(atomsNumber, 1);
+			ebelInelastic = new Vector<>(atomsNumber, 1);
 			rs = statement.executeQuery("SELECT * FROM xraydata_ebel_inelastic");
 			while(rs.next()) {
 				double[] coeffs = new double[coefficientIDs.length];
@@ -159,52 +166,59 @@ public class XRayDataSqLite {
 				ebelInelastic.add(coeffs);
 			}
 
-			costerKronigData_l = new Vector<double[]>(atomsNumber, 1);
-			rs = statement.executeQuery("SELECT * FROM xraydata_coster_kronig_l");
-			boolean createInitial = true;
-			while(rs.next()) {
-				int z_id = rs.getInt("Z_id");
-				if (createInitial) {
-					for (int j = 0; j < z_id; j++) {
-						double[] coeffs = new double[costerKronigLabels.length];
-						coeffs[0] = 1.0;
-						costerKronigData_l.add(coeffs);
-					}
-					createInitial = false;
-				}
-				double[] coeffs = new double[costerKronigLabels.length];
-				for (int k = 0; k < costerKronigLabels.length; k++)
-					coeffs[k] = rs.getDouble(costerKronigLabels[k]);
-				costerKronigData_l.add(coeffs);
+
+			Hashtable<Integer, double[][]> costerKronigData_k = new Hashtable<>(atomsNumber, 1);
+			for (int j = 0; j < atomsNumber; j++) {
+            double[][] coeffs = new double[costerKronigMax_k][costerKronigMax_k];
+            costerKronigData_k.put(j, coeffs);
 			}
+         costerKronigData.put(K, costerKronigData_k);
 
-/*			costerKronigData_m = new Vector<double[]>(atomsNumber, 1);
-			rs = statement.executeQuery("SELECT * FROM xraydata_coster_kronig_m");
-			createInitial = true;
+			Hashtable<Integer, double[][]> costerKronigData_l = new Hashtable<>(atomsNumber, 1);
+			rs = statement.executeQuery("SELECT * FROM xraydata_coster_kronig_l");
 			while(rs.next()) {
 				int z_id = rs.getInt("Z_id");
-				if (createInitial) {
-					for (int j = 0; j < z_id; j++) {
-						double[] coeffs = new double[costerKronigLabels_m.length];
-						coeffs[0] = 1.0;
-						costerKronigData_m.add(coeffs);
-					}
-					createInitial = false;
-				}
-				double[] coeffs = new double[costerKronigLabels_m.length];
-				for (int k = 0; k < costerKronigLabels_m.length; k++)
-					coeffs[k] = rs.getDouble(costerKronigLabels_m[k]);
-				costerKronigData_m.add(coeffs);
-			}*/
+				double[][] coeffs = new double[costerKronigMax_l][costerKronigMax_l];
+				for (int k = 0; k < costerKronigMax_l; k++)
+               for (int l = 0; l < k + 1; l++) {
+                  StringBuffer tmp = new StringBuffer("f");
+                  tmp.append(String.valueOf(l + 1));
+                  tmp.append(String.valueOf(k + 2));
+                  coeffs[l][k] = rs.getDouble(tmp.toString());
+               }
+				costerKronigData_l.put(z_id - 1, coeffs);
+			}
+         costerKronigData.put(L1, costerKronigData_l);
 
-			aRho = new Vector<double[]>(atomsNumber, 1);
-			ebelTauShell = new Vector<Vector<double[]>>(atomsNumber, 1);
-			ebelTauRange = new Vector<Vector<double[]>>(atomsNumber, 1);
-			shellData = new Vector<AtomShellData>(atomsNumber, 1);
-			yieldData = new Vector<Vector<double[]>>(atomsNumber, 1);
-			transitionShellIDs = new Vector<Vector<int[]>>(atomsNumber, 1);
-			transitionEnergies = new Vector<Vector<double[]>>(atomsNumber, 1);
-			henkeEnergyf1f2 = new Vector<double[][]>(atomsNumber, 1);
+			Hashtable<Integer, double[][]> costerKronigData_m = new Hashtable<>(atomsNumber, 1);
+			rs = statement.executeQuery("SELECT * FROM xraydata_coster_kronig_m");
+//         System.out.println("Reading xraydata_coster_kronig_m:");
+			while(rs.next()) {
+				int z_id = rs.getInt("Z_id");
+//            System.out.println("AtomSite: " + z_id);
+				double[][] coeffs = new double[costerKronigMax_m][costerKronigMax_m];
+//            System.out.print("Coeff: ");
+				for (int k = 0; k < costerKronigMax_m; k++)
+               for (int l = 0; l < k + 1; l++)  {
+                  StringBuffer tmp = new StringBuffer("fM");
+                  tmp.append(String.valueOf(l + 1));
+                  tmp.append(String.valueOf(k + 2));
+                  coeffs[l][k] = rs.getDouble(tmp.toString());
+//                  System.out.print(" " + tmp.toString() + "=" + coeffs[l][k] + " ");
+               }
+				costerKronigData_m.put(z_id - 1, coeffs);
+//            System.out.println();
+			}
+         costerKronigData.put(M1, costerKronigData_m);
+
+			aRho = new Vector<>(atomsNumber, 1);
+			ebelTauShell = new Vector<>(atomsNumber, 1);
+			ebelTauRange = new Vector<>(atomsNumber, 1);
+			shellData = new Vector<>(atomsNumber, 1);
+			yieldData = new Vector<>(atomsNumber, 1);
+			transitionShellIDs = new Vector<>(atomsNumber, 1);
+			transitionEnergies = new Vector<>(atomsNumber, 1);
+			henkeEnergyf1f2 = new Vector<>(atomsNumber, 1);
 			for (int i = 0; i < atomsNumber; i++) {
 				aRho.add(new double[0]);
 				ebelTauShell.add(null);
@@ -353,6 +367,7 @@ public class XRayDataSqLite {
 				System.err.println(e);
 			}
 		}
+		return true;
 	}
 
 	public static int getShellNumberFromLabel(String label) {
@@ -364,9 +379,9 @@ public class XRayDataSqLite {
 
 	public static double getTotalAbsorptionForAtomAndEnergy(int atomNumber, double energyInKeV) {
 		atomNumber--; // start from 0
-		loadEbelAndShellTables(false);
 		if (atomNumber < 0 || atomNumber >= ebelElastic.size())
 			return 0.0;
+		loadEbelAndShellTables(false);
 		return getCoherentScatteringForAtomAndEnergy(atomNumber, energyInKeV) +
 				getIncoherentScatteringForAtomAndEnergy(atomNumber, energyInKeV) +
 				getPhotoAbsorptionForAtomAndEnergy(atomNumber, energyInKeV);
@@ -387,7 +402,7 @@ public class XRayDataSqLite {
 			f1f2[0] = energyf1f2[1][lowindex] + (energyf1f2[1][index] - energyf1f2[1][lowindex]) * x_part;
 			f1f2[1] = energyf1f2[2][lowindex] + (energyf1f2[2][index] - energyf1f2[2][lowindex]) * x_part;
 		}
-//		System.out.println("Atom #:" + (atomNumber + 1) + " " + energyInKeV + " " + f1f2[0] + " " + f1f2[1]);
+//		System.out.println("AtomSite #:" + (atomNumber + 1) + " " + energyInKeV + " " + f1f2[0] + " " + f1f2[1]);
 		return f1f2;
 	}
 
@@ -403,12 +418,12 @@ public class XRayDataSqLite {
 		int shellNumber = getHighestShellIdForAtomAndEnergy(atomNumber_1, energyInKeV);
 		if (shellNumber < 0)
 			return -1;
-		int mainShellNumber = mainShellIndex[shellNumber];
+		int mainShell = mainShellNumber[shellNumber];
 		Vector<double[]> elementData = ebelTauRange.elementAt(atomNumber_1);
-		if (mainShellNumber >= elementData.size())
-			mainShellNumber = elementData.size() - 1;
+		if (mainShell >= elementData.size())
+			mainShell = elementData.size() - 1;
 //		System.out.println((atomNumber_1 + 1) + " " + energyInKeV + " " + shellNumber + " " + mainShellNumber);
-		double result = MoreMath.getEbelLogarithmicInterpolation(elementData.elementAt(mainShellNumber), energyInKeV);
+		double result = MoreMath.getEbelLogarithmicInterpolation(elementData.elementAt(mainShell), energyInKeV);
 		// now we divide by the jump ratio for certain shellIDs
 		if (shellNumber > L1 && shellNumber < M1) {
 			AtomShellData atomData = shellData.elementAt(atomNumber_1);
@@ -480,13 +495,39 @@ public class XRayDataSqLite {
 		return MoreMath.getEbelLogarithmicInterpolation(ebelTauShell.elementAt(atomNumber_1).elementAt(shellID),
 				energyInKeV);
 	}
+        
+   public static double getAugerProbability(int atom_number_1, int innerShell, int outerShell1, int outerShell2) {
+      return 0.0;
+   }
 
-	public static double getSensitivity(int atomNumber_1, int shellID, double energyInKeV) {
-		double sensitivity = 0.0; // getFluorescenceYield(atomNumber_1, shellID);
-		double[] ck_coeff = new double[1];
-		switch (shellID) {
-			case K:
-			case L1:
+	public static double getSensitivityByCascade(int atomNumber_1, int shellID, double energyInKeV) {
+            
+            double absorptionEdgeEnergy = getAbsorptionEdge(atomNumber_1, shellID);
+            boolean energy_over_shell = (energyInKeV >= absorptionEdgeEnergy);
+            if (!energy_over_shell)
+                return getSensitivity(atomNumber_1, shellID, energyInKeV);
+            
+            double[] ck_coeff = new double[1];
+            int shellID1 = shellID + 1;
+            double[] fluorescence_yeld = new double[shellID1];
+            double[] shellSensitivity = new double[shellID1];
+            double[] tau_shell = new double[shellID1];
+            for (int i = 0; i < shellID1; i++) {
+                fluorescence_yeld[i] = getFluorescenceYield(atomNumber_1, i);
+                tau_shell[i] = getTauShell(atomNumber_1, i, energyInKeV);
+            }
+            if (shellID >= K)
+                shellSensitivity[K] = tau_shell[K];
+            else 
+                return 0;
+            if (shellID >= L1) {
+                double aug_K_L1_out1 = getAugerProbability(atomNumber_1, K, L1, -1);
+                double aug_K_L1_out2 = getAugerProbability(atomNumber_1, K, -1, L1);
+                double pare_K_L1 = aug_K_L1_out1 + aug_K_L1_out2;
+                shellSensitivity[L1] = tau_shell[L1] + (1.0 - fluorescence_yeld[K]) * tau_shell[K] * pare_K_L1;
+            } else return shellSensitivity[shellID];
+/*
+            case L1:
 				sensitivity = getTauShell(atomNumber_1, shellID, energyInKeV);
 //				System.out.println((atomNumber_1 + 1) + " " + shellID + " " + energyInKeV + " " + sensitivity + " " + ck_coeff[0]);
 				break;
@@ -502,14 +543,33 @@ public class XRayDataSqLite {
 						(ck_coeff[2] + ck_coeff[3] + ck_coeff[1] * ck_coeff[4]) * getTauShell(atomNumber_1, L1, energyInKeV);
 				break;
 			default: {}
-		}
+		}*/
 //		System.out.println((atomNumber_1 + 1) + " " + shellID + " " + energyInKeV + " " + sensitivity);
-		return sensitivity;
+            return shellSensitivity[shellID];
 	}
+   
+	public static double getSensitivity(int atomNumber_1, int shellID, double energyInKeV) {
+      if (mainShellNumber[shellID] > 2) return 0;
+		int msi = mainShellIndex[shellID];
+		Hashtable<Integer, double[][]> ckv = costerKronigData.get(msi);
+		if (ckv == null) return 0;
+		double[][] ck_coeff = ckv.get(atomNumber_1);
+		if (ck_coeff == null) return 0;
+      double[] sensitivityTr = new double[shellID - msi + 1];
+      for (int i = msi; i <= shellID; i++) {
+         sensitivityTr[i - msi] = getTauShell(atomNumber_1, i, energyInKeV);
+         for (int j = msi; j < i; j++)
+	         sensitivityTr[i - msi] += sensitivityTr[j - msi] * ck_coeff[j - msi][i - msi - 1];
+      }
+ 		return sensitivityTr[shellID - msi];
+  	}
 
 	public static Vector<FluorescenceLine> getFluorescenceLinesFor(int atomNumber, double energyInKeV) {
-		linesMinimumEnergy = MaudPreferences.getDouble("fluorescenceLines.minimum_keV", linesMinimumEnergy);
 		return getFluorescenceLinesFor(atomNumber, energyInKeV, linesMinimumEnergy);
+	}
+
+	public static void checkMinimumEnergy() {
+		linesMinimumEnergy = MaudPreferences.getDouble("fluorescenceLines.minimum_keV", linesMinimumEnergy);
 	}
 
 	public static Vector<FluorescenceLine> getFluorescenceLinesFor(int atomNumber, double energyInKeV,
@@ -539,7 +599,7 @@ public class XRayDataSqLite {
 	}
 
 	public static Vector<FluorescenceLine> getFluorescenceLinesNoSensitivityFor(int atomNumber, double energyInKeV) {
-		linesMinimumEnergy = MaudPreferences.getDouble("fluorescenceLines.minimum_keV", linesMinimumEnergy);
+//		linesMinimumEnergy = MaudPreferences.getDouble("fluorescenceLines.minimum_keV", linesMinimumEnergy);
 		return getFluorescenceLinesNoSensitivityFor(atomNumber, energyInKeV, linesMinimumEnergy);
 	}
 

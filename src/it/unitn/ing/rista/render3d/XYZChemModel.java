@@ -66,7 +66,7 @@ public class XYZChemModel {
 
     int numberAtoms = phase.getFullAtomList().size();   // to be ported to the new model
     for (int i = 0; i < numberAtoms; i++) {
-      Atom anatom = (Atom) phase.getFullAtomList().get(i);
+      AtomSite anatom = (AtomSite) phase.getFullAtomList().get(i);
       anatom.refreshPositions(true);
       int numPositions = anatom.getSiteMultiplicity();
       for (int ix = 0; ix < numPositions; ix++) {
@@ -99,7 +99,7 @@ public class XYZChemModel {
   }
 
   /** Add a vertex to this model */
-  int addVert(Component frame, Atom name, double x, double y, double z) {
+  int addVert(Component frame, AtomSite name, double x, double y, double z) {
     int i = nvert;
     if (i >= maxvert)
       if (vert == null) {
@@ -115,7 +115,7 @@ public class XYZChemModel {
         System.arraycopy(atoms, 0, na, 0, atoms.length);
         atoms = na;
       }
-    AtomBall a = new AtomBall(name.getAtomWeight(), name.getAtomRadius());
+    AtomBall a = new AtomBall(name.getMeanWeight(), name.getMeanRadius());
     a.setFrame(frame);
 //		if (a == null) a = defaultAtom;
     atoms[i] = a;

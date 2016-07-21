@@ -6,8 +6,9 @@
         <entry dir="file://$APPLICATION_HOME_DIR$/lib/ant/lib" />
         <entry path="file://$PROJECT_DIR$/libs/commons-net-3.3.jar" />
         <entry path="file://$PROJECT_DIR$/Installers/infinitekind-appbundler-9d6ca23b3bee/appbundler/bin/appbundler-1.0ea.jar" />
+        <entry path="file:///Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home/lib/ant-javafx.jar" />
       </additionalClassPath>
-      <maximumHeapSize value="512" />
+      <maximumHeapSize value="1024" />
     </buildFile>
   </component>
   <component name="ArtifactManager">
@@ -147,6 +148,27 @@
     <option name="CHECKOUT_AFTER_IMPORT" value="true" />
     <option name="KEYWORD_SUBSTITUTION_WRAPPERS" value="" />
     <option name="MAKE_NEW_FILES_READ_ONLY" value="false" />
+  </component>
+  <component name="InspectionProjectProfileManager">
+    <profile version="1.0">
+      <option name="myName" value="Project Default" />
+      <inspection_tool class="FieldCanBeLocal" enabled="false" level="WARNING" enabled_by_default="false" />
+      <inspection_tool class="FinalPrivateMethod" enabled="false" level="WARNING" enabled_by_default="false" />
+      <inspection_tool class="FinalStaticMethod" enabled="false" level="WARNING" enabled_by_default="false" />
+      <inspection_tool class="LoggerInitializedWithForeignClass" enabled="false" level="WARNING" enabled_by_default="false">
+        <option name="loggerClassName" value="org.apache.log4j.Logger,org.slf4j.LoggerFactory,org.apache.commons.logging.LogFactory,java.util.logging.Logger" />
+        <option name="loggerFactoryMethodName" value="getLogger,getLogger,getLog,getLogger" />
+      </inspection_tool>
+      <inspection_tool class="ParameterCanBeLocal" enabled="false" level="WARNING" enabled_by_default="false" />
+      <inspection_tool class="SpellCheckingInspection" enabled="false" level="TYPO" enabled_by_default="false">
+        <option name="processCode" value="true" />
+        <option name="processLiterals" value="true" />
+        <option name="processComments" value="true" />
+      </inspection_tool>
+    </profile>
+    <option name="PROJECT_PROFILE" value="Project Default" />
+    <option name="USE_PROJECT_PROFILE" value="true" />
+    <version value="1.0" />
   </component>
   <component name="JavadocGenerationManager">
     <option name="OUTPUT_DIRECTORY" />
@@ -327,9 +349,9 @@
         </XML>
         <codeStyleSettings language="JAVA">
           <indentOptions>
-            <option name="INDENT_SIZE" value="2" />
-            <option name="CONTINUATION_INDENT_SIZE" value="4" />
-            <option name="TAB_SIZE" value="2" />
+            <option name="INDENT_SIZE" value="3" />
+            <option name="CONTINUATION_INDENT_SIZE" value="6" />
+            <option name="TAB_SIZE" value="3" />
             <option name="USE_TAB_CHARACTER" value="true" />
             <option name="SMART_TABS" value="true" />
           </indentOptions>
@@ -337,6 +359,9 @@
       </value>
     </option>
     <option name="USE_PER_PROJECT_SETTINGS" value="true" />
+  </component>
+  <component name="ProjectDictionaryState">
+    <dictionary name="luca" />
   </component>
   <component name="ProjectModuleManager">
     <modules>

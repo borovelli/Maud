@@ -22,6 +22,7 @@ package it.unitn.ing.rista.diffr;
 
 import it.unitn.ing.rista.awt.*;
 import it.unitn.ing.rista.comp.*;
+import it.unitn.ing.rista.diffr.detector.XRFDetector;
 import it.unitn.ing.rista.interfaces.Function;
 import it.unitn.ing.rista.interfaces.basicObj;
 import it.unitn.ing.rista.io.cif.CIFItem;
@@ -1001,7 +1002,30 @@ public class FilePar extends XRDcat implements lFilePar, Function {
 	  refreshAll(true);
 	  for (int i = 0; i < getSample(0).getDatasetsList().size(); i++) {
 		  DataFileSet data = getSample(0).getDataSet(i);
+
 		  data.forceRangeCut();
+	  }
+	  if (getVersion() < 2.61) {
+		  for (int i = 0; i < getSample(0).getDatasetsList().size(); i++) {
+			  DataFileSet dataset = getSample(0).getDataSet(i);
+			  if (dataset.getInstrument().getDetector() instanceof XRFDetector) {
+				  double theta2 = ((XRFDetector) dataset.getInstrument().getDetector()).getThetaDetector();
+				  double eta = dataset.getInstrument().getDetector().getEtaDetector(null);
+				  for (int j = 0; j < dataset.datafilesnumber(); j++) {
+					  dataset.getDataFile(j).setAngleValue(4, theta2 + dataset.getDataFile(j).getAngleValue(0));
+					  if (dataset.getDataFile(j).getAngleValue(3) == 45.0)
+						  dataset.getDataFile(j).setAngleValue(3, 0);
+					  if (getVersion() > 2.56) {
+						  DiffrDataFile datafile = dataset.getDataFile(j);
+						  double start = datafile.getXDataOriginal(0);
+						  System.out.println("Shifting uncalibrated x by " + start);
+						  for (int k = 0; k < datafile.twotheta.length; k++) {
+							  datafile.setXData(k, datafile.getXDataOriginal(k) - start);
+						  }
+					  }
+				  }
+			  }
+		  }
 	  }
 	  if (Constants.testing)
 		  System.out.println("End refresh");
@@ -3076,7 +3100,8 @@ public class FilePar extends XRDcat implements lFilePar, Function {
   }
 
   public void updatePlot() {
-    themainframe.updateDataFilePlot(false);
+	  if (!Constants.textonly)
+      themainframe.updateDataFilePlot(false);
   }
 
   private OutputStream outputResultStream = null;
@@ -3309,7 +3334,7 @@ public class FilePar extends XRDcat implements lFilePar, Function {
   }
 
   public boolean storeSpectraWithAnalysis() {
-    return stringField[20].equalsIgnoreCase("true") || Constants.sandboxEnabled;
+    return stringField[20].equalsIgnoreCase("true");// || Constants.sandboxEnabled;
   }
 
   public principalJFrame getMainFrame() {

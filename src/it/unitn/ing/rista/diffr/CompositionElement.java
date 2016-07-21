@@ -55,7 +55,7 @@ public class CompositionElement extends XRDcat {
 	}
 
 	public CompositionElement(XRDcat aobj) {
-		this(aobj, "Atom fraction");
+		this(aobj, "AtomSite fraction");
 	}
 
 	public void initConstant() {

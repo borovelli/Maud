@@ -64,7 +64,7 @@ public class StructureSolutionReverseMontecarlo extends StructureSolutionMethod 
   public StructureSolutionReverseMontecarlo(XRDcat aobj, String alabel) {
     super(aobj, alabel);
     initXRD();
-    identifier = "Reverse Montecarlo SDPD";
+    identifier = "Disabled Reverse Montecarlo SDPD";
     IDlabel = "Reverse Montecarlo SDPD";
     description = "select this to use a Reverse Montecarlo";
   }
@@ -74,7 +74,7 @@ public class StructureSolutionReverseMontecarlo extends StructureSolutionMethod 
   }
 
   public StructureSolutionReverseMontecarlo() {
-    identifier = "Reverse Montecarlo SDPD";
+    identifier = "Disabled Reverse Montecarlo SDPD";
     IDlabel = "Reverse Montecarlo SDPD";
     description = "select this to use a Reverse Montecarlo";
   }
@@ -385,9 +385,9 @@ public class StructureSolutionReverseMontecarlo extends StructureSolutionMethod 
       for (int j = 0; j < reflectionNumber; j++) {
         StructureFactor sf = structureFactorList[i].structureFactor[j];
         Radiation rad = structureFactorList[i].radiation.getRadiation(0);
-        double Fhkl2 = aphase.Fhklcomp(sf.h, sf.k, sf.l, sf.d_spacing,
-                rad.getRadiationIDNumber(), rad.tubeNumber);
-        sf.Fhkl_calc = Math.sqrt(Fhkl2);
+// todo fix        double Fhkl2 = aphase.Fhklcomp(sf.h, sf.k, sf.l, sf.d_spacing,
+//                rad.getRadiationIDNumber(), rad.tubeNumber);
+//        sf.Fhkl_calc = Math.sqrt(Fhkl2);
         if (sf.weight > 0) {
           ws1 += sf.Fhkl_calc;
           ws2 += sf.Fhkl_exp;

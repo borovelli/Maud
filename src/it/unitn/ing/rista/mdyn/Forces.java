@@ -28,15 +28,15 @@ abstract public class Forces
   public int interactions;
 
 
-  /** Convert an array of Atom indices to an array of Atom object references.
+  /** Convert an array of AtomSite indices to an array of AtomSite object references.
    * @param mol Molecule object
-   * @param indices Vector of arrays of Atom indices
-   * @return Vector of arrays[num] of Atom references
+   * @param indices Vector of arrays of AtomSite indices
+   * @return Vector of arrays[num] of AtomSite references
    */
 
   static protected Vector indices2Atoms(Molecule mol, Vector indices) {
 
-    // allocate Atom vector
+    // allocate AtomSite vector
     Vector at = new Vector(20);
 
     // iterate through all connections
@@ -69,7 +69,7 @@ abstract public class Forces
    * vec = Vector where all complete connections are added
    * mol = Molecule structure
    * at  = Array of indices of Atoms, which is the "history" of the walk
-   * cur = Number of Atom currently examined
+   * cur = Number of AtomSite currently examined
    * num = Number of Atoms still to go
    */
 
@@ -115,7 +115,7 @@ abstract public class Forces
    * This only steps SEQUENTIALLY through the bonds
    * @param mol Molecule object
    * @param num number of atoms in a row
-   * @return Vector of arrays[num] of Atom indices
+   * @return Vector of arrays[num] of AtomSite indices
    */
 
   static protected Vector collectIndices(Molecule mol, int num) {
@@ -146,7 +146,7 @@ abstract public class Forces
    * This only steps SEQUENTIALLY through the bonds
    * @param mol Molecule object
    * @param num number of atoms in a row
-   * @return Vector of arrays[num] of Atom references
+   * @return Vector of arrays[num] of AtomSite references
    */
 
   static protected Vector collectAtoms(Molecule mol, int num) {

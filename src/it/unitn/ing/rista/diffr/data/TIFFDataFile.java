@@ -67,8 +67,9 @@ public class TIFFDataFile extends it.unitn.ing.rista.diffr.MultDiffrDataFile {
     if (name != null) {
       ImagePlus imp = (new Opener()).openImage(directory, name);
       if (imp != null) {
+	      AngularCalibration angcal = getDataFileSet().getInstrument().getAngularCalibration();
 	      getDataFileSet().getInstrument().getAngularCalibration().loadAndUnrollImage(imp, this);
-/*	      if (angcal != null) {
+	      if (angcal != null) {
 		      if (angcal instanceof AngularInclinedFlatImageCalibration) {
 			      loadSuccessfull = readReflectionImage(imp);
 		      } else if (angcal instanceof AngularFlatImageTransmissionCalibration) {
@@ -80,7 +81,7 @@ public class TIFFDataFile extends it.unitn.ing.rista.diffr.MultDiffrDataFile {
 		      } else if (angcal instanceof AngularCameraCalibration) {
 			      loadSuccessfull = readCameraImage(imp);
 		      }
-	      }*/
+	      }
       }
     }
     isAbilitatetoRefresh = tmpB;
@@ -92,7 +93,7 @@ public class TIFFDataFile extends it.unitn.ing.rista.diffr.MultDiffrDataFile {
 	public boolean readReflectionImage(ImagePlus imp) {
 		boolean loadSuccessfull = false;
 		AngularCalibration angcal = getDataFileSet().getInstrument().getAngularCalibration();
-		String directory = getFolder(); //od.getDirectory();
+		String directory = Constants.cachesDirectory; // getFolder(); //od.getDirectory();
 		String name = getLabel(); //od.getFileName();
 
 		ij.measure.Calibration cal = imp.getCalibration();
@@ -280,7 +281,7 @@ public class TIFFDataFile extends it.unitn.ing.rista.diffr.MultDiffrDataFile {
 	public boolean readCurvedReflectionImage(ImagePlus imp) { // todo
 		boolean loadSuccessfull = false;
 		AngularCalibration angcal = getDataFileSet().getInstrument().getAngularCalibration();
-		String directory = getFolder(); //od.getDirectory();
+		String directory = Constants.cachesDirectory; // getFolder(); //od.getDirectory();
 		String name = getLabel(); //od.getFileName();
 
 		ij.measure.Calibration cal = imp.getCalibration();
@@ -357,7 +358,7 @@ public class TIFFDataFile extends it.unitn.ing.rista.diffr.MultDiffrDataFile {
 		double[][] profile = roi.getPixels();
 		int startX = MaudPreferences.getInteger("ovalROI.minX", 0);
 		int endX = MaudPreferences.getInteger("ovalROI.maxX", 10000);
-		String directory = getFolder(); //od.getDirectory();
+		String directory = Constants.cachesDirectory; // getFolder(); //od.getDirectory();
 		String name = getLabel(); //od.getFileName();
 		int dotLocation = name.indexOf(".");
 		String filename = name.substring(0, dotLocation) + ".esg";
@@ -479,7 +480,7 @@ public class TIFFDataFile extends it.unitn.ing.rista.diffr.MultDiffrDataFile {
 				profile[etaIndex][ix] = single_profile[0][ix];
 			}
 		}
-		String directory = getFolder(); //od.getDirectory();
+		String directory = Constants.cachesDirectory; // getFolder(); //od.getDirectory();
 		String name = getLabel(); //od.getFileName();
 		int dotLocation = name.indexOf(".");
 		String filename = name.substring(0, dotLocation) + ".esg";

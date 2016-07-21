@@ -25,7 +25,6 @@ import it.unitn.ing.rista.util.Misc;
 import it.unitn.ing.rista.util.Coordinates;
 import it.unitn.ing.rista.interfaces.AtomsStructureI;
 
-import java.util.Vector;
 import java.util.StringTokenizer;
 import java.io.*;
 
@@ -85,9 +84,9 @@ public class MolecularImporter {
             double x = Double.parseDouble(st.nextToken());
             double y = Double.parseDouble(st.nextToken());
             double z = Double.parseDouble(st.nextToken());
-            Atom atom = new Atom((XRDcat) structure, atomLabel);
+            AtomSite atom = new AtomSite((XRDcat) structure, atomLabel);
             structure.addAtom(atom);
-            atom.setAtomSymbol(atomType);
+            atom.addAtomWithSymbol(atomType);
             atom.setLocalCoordinates(new Coordinates(x, y, z));
           }
         }

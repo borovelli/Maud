@@ -436,6 +436,9 @@ public class SpectrumPlotPanel extends CopyPrintablePanel {
 	public CopyPrintPanel createGraph(boolean keepMaxima) {
 		CopyPrintPanel fullGraphPanel;
 		int mode = PlotDataFile.checkScaleModeX();
+		PlotDataFile.checkCalibrateIntensity();
+		PlotDataFile.checkBackgroundSubtraction();
+		XRayDataSqLite.checkMinimumEnergy();
 
 		if (dataset == null) {
 			return new NoDatafileCanvas();
@@ -998,6 +1001,12 @@ public class SpectrumPlotPanel extends CopyPrintablePanel {
 	  if (afile == null) {
       return new NoDatafileCanvas();
     }
+
+		int mode = PlotDataFile.checkScaleModeX();
+		PlotDataFile.checkCalibrateIntensity();
+		PlotDataFile.checkBackgroundSubtraction();
+		XRayDataSqLite.checkMinimumEnergy();
+
 //    if (peaks != null)
     peaksList = peaks;
 //    if (derivative2 != null)
@@ -1087,7 +1096,7 @@ public class SpectrumPlotPanel extends CopyPrintablePanel {
 		    if (datafile[0].hasfit() || peaksLocated) {
 			    datafit = new double[2 * np];
 		    }
-		    int mode = PlotDataFile.checkScaleModeX();
+		    mode = PlotDataFile.checkScaleModeX();
 		    for (int is1 = 0; is1 < xlength; is1++) {
 			    int is2 = is1 * 2;
 			    data[is2] = xmin + is1 * stepX;
@@ -1732,6 +1741,11 @@ public class SpectrumPlotPanel extends CopyPrintablePanel {
       return new NoDatafileCanvas();
     }
 
+	  int mode = PlotDataFile.checkScaleModeX();
+	  PlotDataFile.checkCalibrateIntensity();
+	  PlotDataFile.checkBackgroundSubtraction();
+	  XRayDataSqLite.checkMinimumEnergy();
+
 //    datafile[0] = afile;
 //    if (peaks != null)
     peaksList = peaks;
@@ -1829,7 +1843,7 @@ public class SpectrumPlotPanel extends CopyPrintablePanel {
       double data[] = new double[2 * np];
 
 //          boolean forceDspace = MaudPreferences.getBoolean(xaxisModePref, xplotMode[0]);
-      int mode = PlotDataFile.checkScaleModeX();
+      mode = PlotDataFile.checkScaleModeX();
       for (i = j = 0; i < np; i++, j += 2) {
         int index = i + startingIndexG;
         if (index >= afile.startingindex && index < afile.finalindex) {

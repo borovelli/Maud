@@ -130,6 +130,8 @@ public class InstrumentBroadeningPVCaglioti extends InstrumentBroadening {
     if (initialized)
       return;
     initialized = true;
+
+		setAsymmetryTanDependent(true);
     addparameterloopField(0, new Parameter(this, getParameterString(0, 0), 72.17134,
         ParameterPreferences.getDouble(getParameterString(0, 0) + ".min", 5.0),
         ParameterPreferences.getDouble(getParameterString(0, 0) + ".max", 1000)));

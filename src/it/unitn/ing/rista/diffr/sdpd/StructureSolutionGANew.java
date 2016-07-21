@@ -95,7 +95,7 @@ public class StructureSolutionGANew extends StructureSolutionMethod {
 	public StructureSolutionGANew(XRDcat aobj, String alabel) {
 		super(aobj, alabel);
 		initXRD();
-		identifier = "Genetic Algorithm NEW";
+		identifier = "Disabled Genetic Algorithm NEW";
 		IDlabel = "Genetic Algorithm NEW";
 		description = "select this to use a Genetic Algorithm";
 	}
@@ -105,7 +105,7 @@ public class StructureSolutionGANew extends StructureSolutionMethod {
 	}
 
 	public StructureSolutionGANew() {
-		identifier = "Genetic Algorithm NEW";
+		identifier = "Disabled Genetic Algorithm NEW";
 		IDlabel = "Genetic Algorithm NEW";
 		description = "select this to use a Genetic Algorithm";
 	}
@@ -341,9 +341,9 @@ public class StructureSolutionGANew extends StructureSolutionMethod {
 			for (int j = 0; j < reflectionNumber; j++) {
 				StructureFactor sf = structureFactorList[i].structureFactor[j];
         Radiation rad = structureFactorList[i].radiation.getRadiation(0);
-        double Fhkl2 = gaPhase.Fhklcomp(sf.h, sf.k, sf.l, sf.d_spacing,
-					rad.getRadiationIDNumber(), rad.tubeNumber);
-				sf.Fhkl_calc = Math.sqrt(Fhkl2);
+// todo fix        double Fhkl2 = gaPhase.Fhklcomp(sf.h, sf.k, sf.l, sf.d_spacing,
+//					rad.getRadiationIDNumber(), rad.tubeNumber);
+//				sf.Fhkl_calc = Math.sqrt(Fhkl2);
         if (sf.weight > 0) {
           ws1 += sf.Fhkl_calc;
 				  ws2 += sf.Fhkl_exp;

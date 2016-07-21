@@ -44,7 +44,7 @@ public class JSubordListPane extends JPanel {
   JList thelist;
   JButton addB;
   JTextField[] valueTF = null;
-  XRDcat itsparent;
+  XRDcat itsparent = null;
   int theindex = 0, selected = -1;
   JPanel fieldsPanel;
   int fieldNumber;
@@ -103,8 +103,15 @@ public class JSubordListPane extends JPanel {
     fieldsPanel = new JPanel();
     fieldsPanel.setLayout(new BorderLayout(6, 6));
     jp2.add(fieldsPanel);
+	  initListener();
+
+	  addCustomControlsToFieldsPanel();
 
   }
+
+	public void addCustomControlsToFieldsPanel() {
+
+	}
 
   public void setFrameParent(Frame parent) {
     theparent = parent;
@@ -125,22 +132,49 @@ public class JSubordListPane extends JPanel {
       return null;
   }
 
+	ActionListener buttonListener = null;
+	ListSelectionListener listSelection = null;
+
   public void initListener() {
-    addB.addActionListener(new ActionListener() {
+	  if (buttonListener == null)
+    addB.addActionListener(buttonListener = new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         addB_Clicked();
       }
     });
-    thelist.addListSelectionListener(new ListSelectionListener() {
+	  if (listSelection == null)
+    thelist.addListSelectionListener(listSelection = new ListSelectionListener() {
       public void valueChanged(ListSelectionEvent event) {
         thelist_ListSelect();
       }
     });
   }
 
-  public void setFields(String[] labels) {
-    int i;
+	public void removeListener() {
+		addB.removeActionListener(buttonListener);
+		thelist.removeListSelectionListener(listSelection);
+		listSelection = null;
+		buttonListener = null;
+	}
 
+	public void setFields(String[] labels) {
+		if (valueTF != null) {
+			for (int i = 0; i < valueTF.length; i++) {
+//				System.out.println("Removing: " + i + " " + valueTF[i].getText() + " " + valueTF[i].toString());
+				((myJFrame) getFrameParent()).removeComponentfromlist(valueTF[i]);
+				if (valueTF[i] != null) {
+					valueTF[i].removeAll();
+//					valueTF[i].revalidate();
+//					valueTF[i].repaint();
+				}
+
+//				valueTF[i].removeAll();
+				valueTF[i] = null;
+			}
+		}
+		fieldsPanel.removeAll();
+		addCustomControlsToFieldsPanel();
+//		System.out.println("New JTextField");
     valueTF = new JTextField[fieldNumber];
     JPanel jp1 = new JPanel();
     if (fieldNumber > 8)
@@ -148,40 +182,51 @@ public class JSubordListPane extends JPanel {
     else
       jp1.setLayout(new GridLayout(0, 1, 3, 3));
     fieldsPanel.add(BorderLayout.CENTER, jp1);
-    for (i = 0; i < fieldNumber; i++) {
+    for (int i = 0; i < fieldNumber; i++) {
       JPanel jp2 = new JPanel();
       jp2.setLayout(new FlowLayout(FlowLayout.RIGHT, 3, 3));
       jp2.add(new JLabel(labels[i]));
       valueTF[i] = new JTextField(Constants.FLOAT_FIELD);
       valueTF[i].setText("0");
       jp2.add(valueTF[i]);
+//	    System.out.println("Added: " + i + " " + valueTF[i].getText() + " " + valueTF[i].toString());
+//	    System.out.println("Adding focus: " + i);
       valueTF[i].addFocusListener(new FocusListener() {
         public void focusLost(FocusEvent fe) {
           retrieveparlist(selected);
         }
-
         public void focusGained(FocusEvent fe) {
         }
       });
       jp1.add(jp2);
     }
+		fieldsPanel.revalidate();
+		fieldsPanel.repaint();
   }
 
   public void setList(XRDcat aparent, int index, int number, String[] labels) {
+	  if (itsparent != null) {
+//		  System.out.println("Retrieving");
+		  retrieveparlist();
+	  }
+	  if (itsparent == aparent && theindex == index)
+		  return;
+//	  System.out.println("Changing list: " + aparent.getLabel() + " " + index + " " + number + " " + labels[0]);
     itsparent = aparent;
     theindex = index;
     fieldNumber = number;
     setFields(labels);
     if (itsparent != null) {
+	    selected = -1;
       int numb = itsparent.subordinateloopField[theindex].setList(thelist);
       if (totTF != null)
         totTF.setText(String.valueOf(numb));
       if (numb > 0) {
         setparameterlist(0);
-        selected = 0;
+	      selected = 0;
       }
     }
-    initListener();
+//    initListener();
   }
 
   public void setparameterlist(int numb) {
@@ -192,18 +237,22 @@ public class JSubordListPane extends JPanel {
     }
   }
 
+	public XRDcat selectedObject = null;
+
   public void setparameterlist() {
     if (itsparent != null) {
       XRDcat obj = (XRDcat) itsparent.subordinateloopField[theindex].selectedElement();
-      if (obj != null)
+      if (obj != null && obj != selectedObject)
+	      selectedObject = obj;
         for (int i = 0; i < fieldNumber; i++) {
           Parameter apar = obj.parameterField[i];
           if (apar != null) {
-            valueTF[i].setText(apar.getValue());
+	          ((myJFrame) getFrameParent()).removeComponentfromlist(valueTF[i]);
             ((myJFrame) getFrameParent()).addComponenttolist(valueTF[i], apar);
-          } else {
+	          valueTF[i].setText(apar.getValue());
+          } /*else {
             ((myJFrame) getFrameParent()).removeComponentfromlist(valueTF[i]);
-          }
+          }*/
         }
     }
   }

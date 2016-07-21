@@ -427,7 +427,7 @@ public class LaueOvalStepRoi extends OpenRoi {
 
     DataFileSet data = AreaImage.getData();
     String filename = Utility.openFileDialog(new Frame(), "Save as CIF (.esg)...",
-            FileDialog.SAVE, data.getFilePar().getDirectory(), null, "put a name (no extension)");
+            FileDialog.SAVE, data.getFilePar().getDirectory(), null, "put a name (with extension).esg");
     if (filename == null)
       return;
 
@@ -437,7 +437,7 @@ public class LaueOvalStepRoi extends OpenRoi {
     filename = folderAndName[1];
 
     if (filename == null) return;
-    if (!filename.endsWith(".esg"))
+    if (Constants.sandboxEnabled && !filename.endsWith(".esg"))
       filename = filename + ".esg";
 
     IJ.wait(250);  // give system time to redraw ImageJ window
@@ -525,80 +525,6 @@ public class LaueOvalStepRoi extends OpenRoi {
     IJ.wait(250);  // give system time to save the file
     if (filename != null && data != null)
       data.addDataFileforName(folder + filename, false);
-
-  }
-
-  void saveAsTextMultiple(double[][] profile, int nprofiles, int startX, int endX, double coneStep, int centerIndex) {
-
-    DataFileSet data = AreaImage.getData();
-    String filename = Utility.openFileDialog(new Frame(), "Save as CIF...",
-            FileDialog.SAVE, data.getFilePar().getDirectory(), null, "put a name (no extension)");
-    if (filename == null)
-      return;
-
-    String[] folderAndName = Misc.getFolderandName(filename);
-
-    String folder = folderAndName[0];
-    filename = folderAndName[1];
-
-    if (filename == null) return;
-    if (filename.endsWith(".cif"))
-      filename = filename.substring(0, filename.length() - 4);
-
-    IJ.wait(250);  // give system time to redraw ImageJ window
-    IJ.showStatus("Saving plot values...");
-
-    for (int ij = 0; ij < nprofiles; ij++) {
-      double eta = (ij - centerIndex) * coneStep;
-      String filename1 = filename + "_" + Double.toString(eta);
-      filename1 = filename1 + ".cif";
-
-      BufferedWriter output = Misc.getWriter(folder, filename1);
-      try {
-
-        output.write("_pd_meas_orientation_omega " + Double.toString(omega));
-        output.newLine();
-        output.write("_pd_meas_orientation_chi " + Double.toString(chi));
-        output.newLine();
-        output.write("_pd_meas_orientation_phi " + Double.toString(phi));
-        output.newLine();
-        output.write("_pd_meas_orientation_eta " + Double.toString(eta));
-        output.newLine();
-        if (calibrated && radius > 0)
-          output.write("_riet_meas_datafile_calibrated true");
-        else
-          output.write("_riet_meas_datafile_calibrated false");
-        output.newLine();
-        output.newLine();
-        output.write("loop_");
-        output.newLine();
-        output.write(DiffrDataFile.CIFXcoord2T);
-        output.newLine();
-        output.write(DiffrDataFile.intensityExpCIFstring);
-        output.newLine();
-        for (int i = startX; i < endX; i++) {
-          double x = i * coordTrasfX;
-          if (calibrated)
-            x = (x - getX()) / radius * Constants.PITODEG;
-          double intensity = profile[ij][i - startX];
-          if (Double.isNaN(intensity))
-            intensity = -1;
-          if (intensity > 0) {
-            output.write(" " + Fmt.format(x) + " " + Fmt.format(intensity));
-            output.newLine();
-          }
-        }
-      } catch (IOException io) {
-      }
-
-      try {
-        output.close();
-      } catch (IOException io) {
-      }
-      IJ.wait(250);  // give system time to save the file
-      if (filename1 != null && data != null)
-        data.addDataFileforName(folder + filename1, false);
-    }
 
   }
 

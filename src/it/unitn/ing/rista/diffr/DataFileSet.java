@@ -1169,7 +1169,7 @@ public class DataFileSet extends XRDcat {
 	 }
 
 	public void reloadScatteringFactors(Phase phase) {
-		Vector<Atom> atoms = phase.getFullAtomList();
+		Vector<AtomSite> atoms = phase.getFullAtomList();
 		int atomsNumber = atoms.size();
 		int numberofpeaks = phase.gethklNumber() + 1;
 		int linesCount = 1; // todo, should be this in the end: getInstrument().getRadiationType().getLinesCount();
@@ -1185,28 +1185,21 @@ public class DataFileSet extends XRDcat {
 			phaseScatFactors.put(phase, scatFactors);
 		}
 		double[] fu = new double[2];
-		Radiation rad1 = getInstrument().getRadiationType().getRadiation(0);
-		boolean isXray = !rad1.isElectron() && !rad1.isNeutron();
+//		boolean isXray = !rad1.isElectron() && !rad1.isNeutron();
 		for (int j = 0; j < linesCount; j++) {
-			double lambda = getInstrument().getRadiationType().getRadiationWavelength(j);
-			double energyInKeV = Constants.ENERGY_LAMBDA / lambda * 0.001;
-			if (!isXray) {
-				fu[0] = 0;
-				fu[1] = 0;
-			}
+			Radiation rad1 = getInstrument().getRadiationType().getRadiation(j);
+//			double lambda = getInstrument().getRadiationType().getRadiationWavelength(j);
+//			double energyInKeV = Constants.ENERGY_LAMBDA / lambda * 0.001;
+			fu[0] = 0;
+			fu[1] = 0;
 			for (int ato = 0; ato < atomsNumber; ato++) {
-				Atom atom = atoms.elementAt(ato);
-				int atomNumber = atom.getAtomicNumber();
-				if (isXray) {
-					fu = XRayDataSqLite.getF1F2FromHenkeForAtomAndEnergy(atomNumber, energyInKeV);
-					fu[0] -= atomNumber;
-				}
-				double[] scatteringFactors = atom.scatfactorNoDispersion(0, rad1);
+				AtomSite atom = atoms.elementAt(ato);
+				double[] scatteringFactors = atom.scatfactor(0, rad1);
 				scatFactors[0][j][ato][0] = scatteringFactors[0] + fu[0];
 				scatFactors[0][j][ato][1] = fu[1];
 				for (int kj = 1; kj < numberofpeaks; kj++) {
 					Reflection refl = phase.getReflex(kj - 1);
-					scatteringFactors = atom.scatfactorNoDispersion(refl.d_space, rad1);
+					scatteringFactors = atom.scatfactor(refl.d_space, rad1);
 					scatFactors[kj][j][ato][0] = scatteringFactors[0] + fu[0];
 					scatFactors[kj][j][ato][1] = fu[1];
 				}
@@ -1402,7 +1395,7 @@ public class DataFileSet extends XRDcat {
     double[] intensity = null;
 
     String filename = Utility.openFileDialog(aframe, "Save summed datafile as (CIF file)",
-        FileDialog.SAVE, getFilePar().getDirectory(), null, "put a name (no extension)");
+        FileDialog.SAVE, getFilePar().getDirectory(), null, "put a name (with extension).cif");
     if (filename == null)
       return;
 
@@ -1411,7 +1404,7 @@ public class DataFileSet extends XRDcat {
     String folder = folderAndName[0];
     filename = folderAndName[1];
 
-    if (!filename.endsWith(".cif"))
+    if (Constants.sandboxEnabled && !filename.endsWith(".cif"))
       filename += ".cif";
 //    int numberOfFilesTotal = 0;
     Vector datafiles = getSelectedDatafiles();
@@ -1565,7 +1558,7 @@ public class DataFileSet extends XRDcat {
     double[] angleRange = MoreMath.abs(angle);
 
     String filename = Utility.openFileDialog(aframe, "Save summed datafile as (group CIF file)",
-        FileDialog.SAVE, getFilePar().getDirectory(), null, "put a name (no extension)");
+        FileDialog.SAVE, getFilePar().getDirectory(), null, "put a name (with extension).cif");
     if (filename == null)
       return;
 
@@ -1761,7 +1754,7 @@ public class DataFileSet extends XRDcat {
     String folder = folderAndName[0];
     filename = folderAndName[1];
 
-    if (!filename.endsWith(".cif"))
+    if (Constants.sandboxEnabled && !filename.endsWith(".cif"))
       filename += ".cif";
 //    int numberOfFilesTotal = 0;
     Vector datafiles = getSelectedDatafiles();
@@ -3022,6 +3015,8 @@ public class DataFileSet extends XRDcat {
 
 //    int datasetNumber = getIndex();
     DiffrDataFile datafiletmp = null;// = adatafile[0];
+	  if (activedatafilesnumber() == 0)
+		  return;
 
     if (datafiletmp == null)
       datafiletmp = this.getActiveDataFile(0);
@@ -3668,6 +3663,13 @@ public class DataFileSet extends XRDcat {
 			DiffrDataFile tmpdatafile = (DiffrDataFile) datafiles.elementAt(i);
 			tmpdatafile.useCountTimeToScale(status);
 		}
+	}
+
+	public boolean isDiffraction() {
+		if (getFluorescence().identifier.toLowerCase().startsWith("none") &&
+				getReflectivity().identifier.toLowerCase().startsWith("none"))
+			return true;
+		return false;
 	}
 
 	static class datafileAnglesComparer implements Comparator {

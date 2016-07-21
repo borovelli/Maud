@@ -138,7 +138,7 @@ public class DistanceAngleBondRestraints extends ForceField {
     getDistancePair().setElementAt(r12, index);
   }
 
-  public void setRepulsionDistance(int index, Atom atm1, Atom atm2, double dist, double kappa) {
+  public void setRepulsionDistance(int index, AtomSite atm1, AtomSite atm2, double dist, double kappa) {
     RepulsionDistance r12 = new RepulsionDistance(atm1, atm2, dist, kappa);
     RepulsionDistance rij = (RepulsionDistance) getDistancePair().elementAt(index);
     if (r12.equals(rij))
@@ -159,7 +159,7 @@ public class DistanceAngleBondRestraints extends ForceField {
         .append(String.valueOf(dst.dist)).append(" ").append(String.valueOf(dst.kappa)).toString();
   }
 
-  public static double getDistance(Atom atm1, Atom atm2) {
+  public static double getDistance(AtomSite atm1, AtomSite atm2) {
 	  if (atm1 == atm2)
 		  return getDistanceFromSelf(atm1);
     double distance = 1E9;
@@ -176,7 +176,7 @@ public class DistanceAngleBondRestraints extends ForceField {
     return distance;
   }
 
-	public static double getDistanceFromSelf(Atom atm1) {
+	public static double getDistanceFromSelf(AtomSite atm1) {
 		double distance = 1E9;
 		for (int np1 = 0; np1 < atm1.getCartesianCoords().size(); np1++) {
 			Coordinates c1 = atm1.getCartesianCoords(np1);
@@ -191,7 +191,7 @@ public class DistanceAngleBondRestraints extends ForceField {
 		return distance;
 	}
 
-	public static int[] getPairWithShorterDistance(Atom atm1, Atom atm2, Atom atm3) {
+	public static int[] getPairWithShorterDistance(AtomSite atm1, AtomSite atm2, AtomSite atm3) {
 		int[] pair = new int[3];
 		int[] pair1 = getPairWithShorterDistance(atm1, atm2);
 		int pair2 = getPairWithShorterDistance(atm1, atm3, pair1[0]);
@@ -201,7 +201,7 @@ public class DistanceAngleBondRestraints extends ForceField {
 		return pair;
 	}
 
-	public static int[] getPairWithShorterDistance(Atom atm1, Atom atm2) {
+	public static int[] getPairWithShorterDistance(AtomSite atm1, AtomSite atm2) {
     double distance = 1E9;
     int[] pair = new int[2];
     for (int np1 = 0; np1 < atm1.getCartesianCoords().size(); np1++) {
@@ -220,7 +220,7 @@ public class DistanceAngleBondRestraints extends ForceField {
     return pair;
   }
 
-	public static int[] getPairWithShorterDistanceFromSelf(Atom atm1, Atom atm2) {
+	public static int[] getPairWithShorterDistanceFromSelf(AtomSite atm1, AtomSite atm2) {
 		int[] pair = new int[3];
 		int[] pair1 = getPairWithShorterDistance(atm1, atm2);
 		int pair2 = getPairWithShorterDistance(atm1, atm2, pair1);
@@ -230,7 +230,7 @@ public class DistanceAngleBondRestraints extends ForceField {
 		return pair;
 	}
 
-	public static int getPairWithShorterDistance(Atom atm1, Atom atm2, int np1) {
+	public static int getPairWithShorterDistance(AtomSite atm1, AtomSite atm2, int np1) {
     double distance = 1E9;
     int pair = 0;
     Coordinates c1 = atm1.getCartesianCoords(np1);
@@ -246,7 +246,7 @@ public class DistanceAngleBondRestraints extends ForceField {
     return pair;
   }
 
-	public static int getPairWithShorterDistance(Atom atm1, Atom atm2, int[] np1) {
+	public static int getPairWithShorterDistance(AtomSite atm1, AtomSite atm2, int[] np1) {
 		double distance = 1E9;
 		int pair = 0;
 		Coordinates c1 = atm1.getCartesianCoords(np1[0]);
@@ -264,7 +264,7 @@ public class DistanceAngleBondRestraints extends ForceField {
 		return pair;
 	}
 
-	public static double getAngle(Atom a1, Atom a2, Atom a3) {
+	public static double getAngle(AtomSite a1, AtomSite a2, AtomSite a3) {
 	  int[] pair1;
 	  if (a2 == a3)
 		  pair1 = getPairWithShorterDistanceFromSelf(a1, a2);
@@ -284,14 +284,14 @@ public class DistanceAngleBondRestraints extends ForceField {
     return MoreMath.acosd(cost);
   }
 
-  public Atom getAtom(String label) {
+  public AtomSite getAtom(String label) {
     StructureAtomic m_Struct = getParentStructure();
     Phase aphase = m_Struct.getPhaseParent();
     Vector atoms = aphase.getFullAtomList();
 
     int na = atoms.size();
     for (int i = 0; i < na; i++) {
-      Atom atom1 = (Atom) atoms.get(i);
+      AtomSite atom1 = (AtomSite) atoms.get(i);
       if (atom1.getLabel().equalsIgnoreCase(label))
         return atom1;
     }
@@ -309,7 +309,7 @@ public class DistanceAngleBondRestraints extends ForceField {
 
       int na = atoms.size();
       for (int i = 0; i < na; i++) {
-        Atom atom1 = (Atom) atoms.get(i);
+        AtomSite atom1 = (AtomSite) atoms.get(i);
 	      atom1.refreshComputation = true;
         atom1.refreshPositions(true);
       }
@@ -335,11 +335,11 @@ public class DistanceAngleBondRestraints extends ForceField {
     ArrayList atomPairs = new ArrayList();
     int na = atoms.size();
     for (int i = 0; i < na; i++) {
-      Atom atom1 = (Atom) atoms.get(i);
+      AtomSite atom1 = (AtomSite) atoms.get(i);
       atom1.refreshPositions(true);
       if (!atom1.isDummyAtom()) {
         for (int j = i + plus1; j < na; j++) {
-          Atom atom2 = (Atom) atoms.get(j);
+          AtomSite atom2 = (AtomSite) atoms.get(j);
           if (!atom2.isDummyAtom()) {
             double dist = getDistance(atom1, atom2);
 //	          System.out.println("Checking distance for atoms (" + atom1.getLabel() + ", " + atom2.getLabel() + "): " + dist);
@@ -393,14 +393,14 @@ public class DistanceAngleBondRestraints extends ForceField {
     ArrayList atomT = new ArrayList();
     na = atoms.size();
     for (int i = 0; i < na; i++) {
-      Atom atom1 = (Atom) atoms.get(i);
+      AtomSite atom1 = (AtomSite) atoms.get(i);
       if (!atom1.isDummyAtom()) {
         for (int k = 0; k < na; k++) {
-          Atom atom3 = (Atom) atoms.get(k);
+          AtomSite atom3 = (AtomSite) atoms.get(k);
           if (!atom3.isDummyAtom()) {
             for (int j = k + plus1; j < na; j++) {
               if (i != j && i != k) {
-                Atom atom2 = (Atom) atoms.get(j);
+                AtomSite atom2 = (AtomSite) atoms.get(j);
                 if (!atom2.isDummyAtom()) {
                   double dist1 = getDistance(atom1, atom2);
                   double dist2 = getDistance(atom1, atom3);
@@ -514,7 +514,7 @@ public class DistanceAngleBondRestraints extends ForceField {
     getAngles().setElementAt(r12, index);
   }
 
-  public void setOptimumAngle(int index, Atom atm1, Atom atm2, Atom atm3, double dist, double kappa) {
+  public void setOptimumAngle(int index, AtomSite atm1, AtomSite atm2, AtomSite atm3, double dist, double kappa) {
     OptimumAngle r12 = new OptimumAngle(atm1, atm2, atm3, dist, kappa);
     OptimumAngle rij = (OptimumAngle) getAngles().elementAt(index);
     if (r12.equals(rij))
@@ -642,16 +642,16 @@ public class DistanceAngleBondRestraints extends ForceField {
     public void retrieveParameters() {
 //      stringloopField[0].removeAllItems();
       for (int nd = 0; nd < data.length; nd++) {
-        Atom atm1 = (Atom) data[nd][0];
-        Atom atm2 = (Atom) data[nd][1];
+        AtomSite atm1 = (AtomSite) data[nd][0];
+        AtomSite atm2 = (AtomSite) data[nd][1];
         Double dist = (Double) data[nd][3];
         Double kappa = (Double) data[nd][4];
         setRepulsionDistance(nd, atm1, atm2, dist.doubleValue(), kappa.doubleValue());
       }
       for (int nd = 0; nd < angleData.length; nd++) {
-        Atom atm1 = (Atom) angleData[nd][0];
-        Atom atm2 = (Atom) angleData[nd][1];
-        Atom atm3 = (Atom) angleData[nd][2];
+        AtomSite atm1 = (AtomSite) angleData[nd][0];
+        AtomSite atm2 = (AtomSite) angleData[nd][1];
+        AtomSite atm3 = (AtomSite) angleData[nd][2];
         Double dist = (Double) angleData[nd][4];
         Double kappa = (Double) angleData[nd][5];
         setOptimumAngle(nd, atm1, atm2, atm3, dist.doubleValue(), kappa.doubleValue());
@@ -662,7 +662,7 @@ public class DistanceAngleBondRestraints extends ForceField {
     class srTableModel extends AbstractTableModel {
 
       public srTableModel() {
-        columnNames = new String[]{"Atom 1", "Atom 2", "Act. bond", "Opt. bond", "Strength"};
+        columnNames = new String[]{"AtomSite 1", "AtomSite 2", "Act. bond", "Opt. bond", "Strength"};
         data = new Object[getDistancePairNumber()][5];
         for (int nd = 0; nd < getDistancePairNumber(); nd++) {
           RepulsionDistance r12 = getRepulsionDistance(nd);
@@ -711,7 +711,7 @@ public class DistanceAngleBondRestraints extends ForceField {
     class anTableModel extends AbstractTableModel {
 
       public anTableModel() {
-        angleColumnNames = new String[]{"Pivot atom", "Atom 1", "Atom 2", "Act. Angle", "Opt. Angle", "Strength"};
+        angleColumnNames = new String[]{"Pivot atom", "AtomSite 1", "AtomSite 2", "Act. Angle", "Opt. Angle", "Strength"};
         angleData = new Object[getAnglesNumber()][6];
         for (int nd = 0; nd < getAnglesNumber(); nd++) {
           OptimumAngle r12 = getOptimumAngle(nd);
@@ -760,29 +760,29 @@ public class DistanceAngleBondRestraints extends ForceField {
   }
 
   public class RepulsionDistance {
-    public Atom atm1;
-    public Atom atm2;
+    public AtomSite atm1;
+    public AtomSite atm2;
     public double dist;
     public double kappa;
 
     public RepulsionDistance() {
     }
 
-    public RepulsionDistance(Atom a1, Atom a2) {
+    public RepulsionDistance(AtomSite a1, AtomSite a2) {
       atm1 = a1;
       atm2 = a2;
-      dist = AtomInfo.retrieveAtomRadius(a1.getAtomSymbol()) + AtomInfo.retrieveAtomRadius(a2.getAtomSymbol());
+      dist = a1.getMeanRadius() + a2.getMeanRadius();
       kappa = 0.0;
     }
 
-    public RepulsionDistance(Atom a1, Atom a2, double d) {
+    public RepulsionDistance(AtomSite a1, AtomSite a2, double d) {
       atm1 = a1;
       atm2 = a2;
       dist = d;
       kappa = 0.0;
     }
 
-    public RepulsionDistance(Atom a1, Atom a2, double d, double kappaSpring) {
+    public RepulsionDistance(AtomSite a1, AtomSite a2, double d, double kappaSpring) {
       atm1 = a1;
       atm2 = a2;
       dist = d;
@@ -800,16 +800,16 @@ public class DistanceAngleBondRestraints extends ForceField {
   }
 
   public class OptimumAngle {
-    public Atom atm1;
-    public Atom atm2;
-    public Atom atm3;
+    public AtomSite atm1;
+    public AtomSite atm2;
+    public AtomSite atm3;
     public double angle;
     public double kappa;
 
     public OptimumAngle() {
     }
 
-    public OptimumAngle(Atom a1, Atom a2, Atom a3) {
+    public OptimumAngle(AtomSite a1, AtomSite a2, AtomSite a3) {
       atm1 = a1;
       atm2 = a2;
       atm3 = a3;
@@ -817,7 +817,7 @@ public class DistanceAngleBondRestraints extends ForceField {
       kappa = 0.0;
     }
 
-    public OptimumAngle(Atom a1, Atom a2, Atom a3, double d) {
+    public OptimumAngle(AtomSite a1, AtomSite a2, AtomSite a3, double d) {
       atm1 = a1;
       atm2 = a2;
       atm3 = a3;
@@ -825,7 +825,7 @@ public class DistanceAngleBondRestraints extends ForceField {
       kappa = 0.0;
     }
 
-    public OptimumAngle(Atom a1, Atom a2, Atom a3, double d, double kappaSpring) {
+    public OptimumAngle(AtomSite a1, AtomSite a2, AtomSite a3, double d, double kappaSpring) {
       atm1 = a1;
       atm2 = a2;
       atm3 = a3;

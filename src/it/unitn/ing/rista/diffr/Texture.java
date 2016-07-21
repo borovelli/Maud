@@ -29,11 +29,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 
-import fr.ensicaen.odfplot.engine.Controller;
+/*import fr.ensicaen.odfplot.engine.Controller;
 import fr.ensicaen.odfplot.functionSelector.FunctionSelector;
 import fr.ensicaen.odfplot.sectionsVisualizer.SectionsFrame;
 import fr.ensicaen.odfplot.functionVisualizer.OptionsFrame;
-import fr.ensicaen.odfplot.isometricVisualizer.IsometricFrame;
+import fr.ensicaen.odfplot.isometricVisualizer.IsometricFrame;*/
 
 /**
  * The Texture is a basic class for all texture computation models, all texture
@@ -363,7 +363,7 @@ public class Texture extends XRDcat {
             IntensityMin, IntensityMax, (double) (alphaStart * Constants.PITODEG), (double) (alphaEnd * Constants.PITODEG));
 
         break;
-      case 1:
+/*      case 1:
         prepare3Dplot(alphaStart1, alphaEnd1, alphaStep1,
                          betaStart1, betaEnd1, betaStep1, map3ToPlot);
         OptionsFrame frame = new OptionsFrame(controller, "ODF 3D");
@@ -380,7 +380,7 @@ public class Texture extends XRDcat {
                          betaStart1, betaEnd1, betaStep1, map3ToPlot);
         IsometricFrame frame2 = new IsometricFrame(controller, "ODF isometric");
         frame2.setVisible(true);
-        break;
+        break;*/
       case 4:
         Utilities3DRendering.show3DODF(new Frame(), map3ToPlot, alphaSlices, betaSlices, gammaSlices, 1, false, 256);
         break;
@@ -390,7 +390,7 @@ public class Texture extends XRDcat {
 
 // 3D plot by Daniel
 
-  protected Controller controller = null;
+/*  protected Controller controller = null;
 
   protected FunctionSelector selectionneurFonction = null;
 
@@ -401,7 +401,7 @@ public class Texture extends XRDcat {
     selectionneurFonction = new FunctionSelector(controller);
     controller.identifierFichier(alphaStart1, alphaEnd1, alphaStep1,
                          betaStart1, betaEnd1, betaStep1, map3ToPlot, getPhase().getLabel());
-  }
+  }*/
 
 // End 3D plot
 

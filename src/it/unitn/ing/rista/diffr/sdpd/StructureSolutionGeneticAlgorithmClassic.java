@@ -88,7 +88,7 @@ public class StructureSolutionGeneticAlgorithmClassic extends StructureSolutionM
 	public StructureSolutionGeneticAlgorithmClassic(XRDcat aobj, String alabel) {
 		super(aobj, alabel);
 		initXRD();
-		identifier = "Genetic Algorithm SDPD Classic";
+		identifier = "Disabled Genetic Algorithm SDPD Classic";
   	IDlabel = "Genetic Algorithm SDPD Classic";
   	description = "select this to use a Genetic Algorithm";
 	}
@@ -203,15 +203,15 @@ public class StructureSolutionGeneticAlgorithmClassic extends StructureSolutionM
 //    aphase.setStructureParams(bestParams);
     bestParams = new double[defParams.length];
 //    double defWSS1 = getOldFitness(defParams);
-    sitenumber = aphase.getSitePositionNumber();
+    sitenumber = aphase.getPhaseInfo().getSitePositionNumber();
     sitepos = new SitePosition[sitenumber];
     for (int i = 0; i < sitenumber; i++)
-    	sitepos[i] = aphase.sitePositionv.elementAt(i);
+    	sitepos[i] = aphase.getPhaseInfo().sitePositionv.elementAt(i);
 
     nAtom = 0;
     Vector atomVector = aphase.getFullAtomList();
     for (int i = 0; i < atomVector.size(); i++) {
-      if (((Atom) atomVector.elementAt(i)).useThisAtom) {
+      if (((AtomSite) atomVector.elementAt(i)).useThisAtom) {
         nAtom++;
       }
     }
@@ -220,14 +220,14 @@ public class StructureSolutionGeneticAlgorithmClassic extends StructureSolutionM
 //    int np = 0;
 //    System.out.println(nAtom + " " + sitenumber);
   	for (int n = 0; n < nAtom; n++) {
-  		Atom ato = (Atom) aphase.getFullAtomList().get(n);
+  		AtomSite ato = aphase.getFullAtomList().get(n);
       if (ato.useThisAtom) {
       for (int i = 0; i < structureFactorList.length; i++) {
         int reflectionNumber = structureFactorList[i].structureFactor.length;
         for (int j = 0; j < reflectionNumber; j++) {
           StructureFactor sf = structureFactorList[i].structureFactor[j];
           Radiation rad = structureFactorList[i].radiation.getRadiation(0);
-          double[] scatft = ato.scatfactorNoDispersion(sf.d_spacing, rad);
+          double[] scatft = ato.scatfactor(sf.d_spacing, rad);
           double i_dspace = 0.25 / (sf.d_spacing * sf.d_spacing);
           double DWfactor = ato.DebyeWaller(sf.h, sf.k, sf.l, i_dspace) * ato.getQuantityD() / sitenumber;
             //ato.DebyeWaller(sf.h, sf.k, sf.l, sf.d_spacing) * ato.getQuantityD() / sitenumber;
