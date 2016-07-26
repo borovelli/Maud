@@ -60,35 +60,4 @@ public class MicroAbsorptionNone extends MicroAbsorption {
     description = "No microabsorption correction is performed";
   }
 
-  public double getApparentQuantity(double volFraction, RadiationType rad,
-                                    Layer alayer, double crystSize) {
-    return volFraction;
-  }
-
-  public JOptionsDialog getOptionsDialog(Frame parent) {
-    JOptionsDialog adialog = new JMicroAbsorptionOptionsD(parent, this);
-    return adialog;
-  }
-
-  public class JMicroAbsorptionOptionsD extends JOptionsDialog {
-
-    public JMicroAbsorptionOptionsD(Frame parent, XRDcat obj) {
-
-      super(parent, obj);
-
-      principalPanel.setLayout(new FlowLayout());
-      principalPanel.add(new JLabel("No options for this model"));
-
-      setTitle("Options panel");
-      initParameters();
-      pack();
-    }
-
-    public void initParameters() {
-    }
-
-    public void retrieveParameters() {
-    }
-  }
-
 }

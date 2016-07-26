@@ -110,19 +110,60 @@ public class JAtomTypeListPane extends JSubordListPane {
 
 		int plotCounts = 3000;
 		double[] x = new double[plotCounts];
+
 		double[] y = new double[plotCounts];
 		double xstart = 1.01;
 		double xstep = 0.01;
 		for (int i = 0; i < plotCounts; i++) {
 			x[i] = xstart + i * xstep;
 			y[i] = XRayDataSqLite.getTotalAbsorptionForAtomAndEnergy(atomicNumber, x[i]);
-//			x[i] = MoreMath.log10(x[i]);
 			if (y[i] > 0)
 				y[i] = MoreMath.log10(y[i]);
 			else
 				y[i] = 0;
 		}
-		(new PlotSimpleData(getFrameParent(), x, y, false)).setVisible(true);
+		(new PlotSimpleData(getFrameParent(), x, y)).setVisible(true);
+
+		for (int i = 0; i < plotCounts; i++) {
+			x[i] = xstart + i * xstep;
+			y[i] = XRayDataSqLite.getCoherentScatteringForAtomAndEnergy(atomicNumber, x[i]);
+			if (y[i] > 0)
+				y[i] = MoreMath.log10(y[i]);
+			else
+				y[i] = 0;
+		}
+		(new PlotSimpleData(getFrameParent(), x, y)).setVisible(true);
+
+		for (int i = 0; i < plotCounts; i++) {
+			x[i] = xstart + i * xstep;
+			y[i] = XRayDataSqLite.getIncoherentScatteringForAtomAndEnergy(atomicNumber, x[i]);
+			if (y[i] > 0)
+				y[i] = MoreMath.log10(y[i]);
+			else
+				y[i] = 0;
+		}
+		(new PlotSimpleData(getFrameParent(), x, y)).setVisible(true);
+
+		for (int i = 0; i < plotCounts; i++) {
+			x[i] = xstart + i * xstep;
+			y[i] = XRayDataSqLite.getPhotoAbsorptionForAtomAndEnergy(atomicNumber, x[i]);
+			if (y[i] > 0)
+				y[i] = MoreMath.log10(y[i]);
+			else
+				y[i] = 0;
+		}
+		(new PlotSimpleData(getFrameParent(), x, y)).setVisible(true);
+
+/*		for (int i = 0; i < plotCounts; i++) {
+			x[i] = xstart + i * xstep;
+			y[i] = XRayDataSqLite.getPhotoAbsorptionForAtomAndEnergyDiv(atomicNumber, x[i]);
+			if (y[i] > 0)
+				y[i] = MoreMath.log10(y[i]);
+			else
+				y[i] = 0;
+		}
+		(new PlotSimpleData(getFrameParent(), x, y)).setVisible(true);*/
+
 
 	}
 

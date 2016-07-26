@@ -88,7 +88,7 @@ public class TubeSpectrumTransmission extends Fluorescence {
 //			System.out.println(ej + " " + lambda + " " + energy_intensity);
 			double energy = Constants.ENERGY_LAMBDA / lambda;    // in eV
 			double energyInKeV = energy * 0.001;
-			FluorescenceLine transfertLine = new FluorescenceLine(energyInKeV, -1, 0);
+			FluorescenceLine transfertLine = new FluorescenceLine(energyInKeV, -1, 0, "source");
 			transfertLine.setIntensity(transfertLine.getIntensity() * energy_intensity);
 			fluorescenceLines.add(transfertLine);
 

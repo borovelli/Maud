@@ -323,7 +323,7 @@ public class XRFDetector extends Detector {
 					if (intensities[j]  > maxIntensity) {
 						double sumEnergy = firstLineEnergy + secondLine.getEnergy();
 						if (sumEnergy < maxEnergyInKeV) {
-							FluorescenceLine newLine = new FluorescenceLine(sumEnergy, -1, 0);
+							FluorescenceLine newLine = new FluorescenceLine(sumEnergy, -1, 0, firstLine.transitionID + "+" + secondLine.transitionID);
 							double totalSumIntensity = firstLineIntensityRatio * intensities[j];
 							newLine.setIntensity(totalSumIntensity);
 							firstLine.setIntensity(firstLine.getIntensity() - totalSumIntensity);

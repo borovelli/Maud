@@ -36,261 +36,27 @@
     <option name="USER" value="" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3188ddab-ee7e-4799-90e9-3d5065d3cd7a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/ElementalTableModel.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/JAtomTypeListPane.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/AtomScatterer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Scatterer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/instbroad/EDSAsymmetricBroadening.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/DefaultsForm.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/EvolutionState.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/Population.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/SelectionMethod.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/coevolve/GroupedProblemForm.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/coevolve/package-frame.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/exchange/InterPopulationExchange.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/exchange/package-tree.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/gp/breed/GPBreedDefaults.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/gp/breed/InternalCrossoverPipeline.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/gp/breed/MutateERCPipeline.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/gp/breed/MutateSwapPipeline.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/gp/breed/package-frame.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/gp/build/GPBuildDefaults.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/gp/build/RandomBranch.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/gp/build/package-frame.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/gp/build/package-summary.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/gp/build/package-tree.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/parsimony/DoubleTournament.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/parsimony/LexicographicTournament.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/parsimony/ParsimonyBinaryTournament.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/parsimony/ProportionalTournament.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/parsimony/RatioBucketTournament.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/parsimony/package-frame.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/parsimony/package-tree.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/rule/breed/RuleCrossoverPipeline.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/rule/breed/RuleMutationPipeline.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/rule/breed/package-frame.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/rule/breed/package-summary.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/rule/breed/package-tree.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/steadystate/SteadyStateDefaults.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/steadystate/SteadyStateEvolutionState.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/steadystate/SteadyStateSpeciesForm.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/steadystate/package-frame.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/steadystate/package-tree.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/teambots/EvolvedControlSystem.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/teambots/TeambotsProblem.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/classdocs/ec/teambots/package-summary.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/license.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ec/docs/parameters.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/files/instruments.mdb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/files/structures.mdb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/.cvsignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/ODF.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/engine/Controller.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/engine/Couleur.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/engine/Coupe.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/engine/FonctionAffine.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/engine/FunctionODF.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/engine/GenerateurPlageCouleur.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/engine/Interpolator.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/engine/ODFPoint.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/engine/Parametre.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/engine/PointSurEcran.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/engine/PointSurEcranSelectionnable.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/engine/SelectionneurTranche.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/engine/Tri.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/engine/Triangle.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/engine/View.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/functionSelector/FSPanel.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/functionSelector/FunctionSelector.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/functionSelector/Label.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/functionSelector/Representation.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/functionVisualizer/Frame3D.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/functionVisualizer/Graph3D.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/functionVisualizer/OptionsFrame.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/graphicInterface/ECanvas.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/graphicInterface/Filter.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/graphicInterface/Legend.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/graphicInterface/MainWindow.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/isometricVisualizer/FicherExport.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/isometricVisualizer/IAxe.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/isometricVisualizer/IECanvas.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/isometricVisualizer/IEchelle.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/isometricVisualizer/IFiltreIntensite.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/isometricVisualizer/IGraphe.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/isometricVisualizer/IOptionCouleur.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/isometricVisualizer/IOutil.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/isometricVisualizer/IsometricFrame.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/isometricVisualizer/Selection.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/sectionsVisualizer/SAxe.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/sectionsVisualizer/SCiblage.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/sectionsVisualizer/SECanvas.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/sectionsVisualizer/SEchelle.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/sectionsVisualizer/SGraphe.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/sectionsVisualizer/SLegend.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/sectionsVisualizer/SOutil.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/sectionsVisualizer/SectionsFrame.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/ensicaen/odfplot/sectionsVisualizer/Selection.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/gov/noaa/pmel/io/package.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/gov/noaa/pmel/sgt/overview.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/AboutITSMaud.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/license/license_ecj.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/license/license_maud.txt" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Atom.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/AtomSite.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Maud.ipr" afterPath="$PROJECT_DIR$/Maud.ipr" />
+    <list default="true" id="3188ddab-ee7e-4799-90e9-3d5065d3cd7a" name="Default" comment="New version 2.68&#10;Photo absorption edge correction, intreshell lines eliminated, M2 Fluorescence Yeld updated for atom number &gt; 65">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/files/xraydata.db" afterPath="$PROJECT_DIR$/src/files/xraydata.db" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Maud.iws" afterPath="$PROJECT_DIR$/Maud.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.xml" afterPath="$PROJECT_DIR$/build.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cctbxForMaud/cctbxForMaud.xcodeproj/project.pbxproj" afterPath="$PROJECT_DIR$/cctbxForMaud/cctbxForMaud.xcodeproj/project.pbxproj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cctbxForMaud/cctbxForMaud.xcodeproj/xcuserdata/luca.xcuserdatad/xcschemes/cctbxForMaud.xcscheme" afterPath="$PROJECT_DIR$/cctbxForMaud/cctbxForMaud.xcodeproj/xcuserdata/luca.xcuserdatad/xcschemes/cctbxForMaud.xcscheme" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/Ni3Al_faults.par" afterPath="$PROJECT_DIR$/src/examples/Ni3Al_faults.par" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/Steel16CrNi4.par" afterPath="$PROJECT_DIR$/src/examples/Steel16CrNi4.par" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/alzrc.par" afterPath="$PROJECT_DIR$/src/examples/alzrc.par" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/bbm48bis.par" afterPath="$PROJECT_DIR$/src/examples/bbm48bis.par" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/cpd1h.par" afterPath="$PROJECT_DIR$/src/examples/cpd1h.par" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/default.par" afterPath="$PROJECT_DIR$/src/examples/default.par" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/film1.par" afterPath="$PROJECT_DIR$/src/examples/film1.par" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/g11maud.par" afterPath="$PROJECT_DIR$/src/examples/g11maud.par" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/gtial1.par" afterPath="$PROJECT_DIR$/src/examples/gtial1.par" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/sio250.par" afterPath="$PROJECT_DIR$/src/examples/sio250.par" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/y2o3.par" afterPath="$PROJECT_DIR$/src/examples/y2o3.par" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/help/readme.txt" afterPath="$PROJECT_DIR$/src/help/readme.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ij/gui/FlatCCDReflectionSquareRoi.java" afterPath="$PROJECT_DIR$/src/ij/gui/FlatCCDReflectionSquareRoi.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ij/gui/LaueCircleStepRoi.java" afterPath="$PROJECT_DIR$/src/ij/gui/LaueCircleStepRoi.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ij/gui/LaueOvalRoi.java" afterPath="$PROJECT_DIR$/src/ij/gui/LaueOvalRoi.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ij/gui/LaueOvalStepRoi.java" afterPath="$PROJECT_DIR$/src/ij/gui/LaueOvalStepRoi.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ij/gui/PlotWindow.java" afterPath="$PROJECT_DIR$/src/ij/gui/PlotWindow.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ij/gui/SpectraPlotWindow.java" afterPath="$PROJECT_DIR$/src/ij/gui/SpectraPlotWindow.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ij/plugin/EdfRead.java" afterPath="$PROJECT_DIR$/src/ij/plugin/EdfRead.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ij/plugin/filter/MultiSpectraFromLinearImage.java" afterPath="$PROJECT_DIR$/src/ij/plugin/filter/MultiSpectraFromLinearImage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/AtomPanel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/AtomPanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/ChooseAtomD.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/ChooseAtomD.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/DiffractionMainFrame.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/DiffractionMainFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/JSubordListPane.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/JSubordListPane.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/JSubordSListPane.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/JSubordSListPane.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/MultiPlotFitting.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/MultiPlotFitting.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/ParameterTreeTableFrame.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/ParameterTreeTableFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PhaseD.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PhaseD.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PlotDataFile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PlotDataFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PlotFitting.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PlotFitting.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/SectionPlotData2D.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/SectionPlotData2D.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/SpectrumPlotPanel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/SpectrumPlotPanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/StructureAtomicEditPanel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/StructureAtomicEditPanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/StructureParamEditD.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/StructureParamEditD.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/TexturePlot.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/TexturePlot.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/Utility.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/Utility.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/myJFrame.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/myJFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/principalJFrame.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/principalJFrame.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/JAtomTypeListPane.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/JAtomTypeListPane.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PlotSimpleData.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PlotSimpleData.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/Ck.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/Ck.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/FluorescenceEdge.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/FluorescenceEdge.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/FluorescenceElement.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/FluorescenceElement.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/Line.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/Line.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/XRayDataSqLite.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/XRayDataSqLite.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/comp/HybridMonteCarloRefinement.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/comp/HybridMonteCarloRefinement.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/comp/HybridRefinement.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/comp/HybridRefinement.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/comp/LeastSquareFit.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/comp/LeastSquareFit.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/comp/MarqardLeastSquares.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/comp/MarqardLeastSquares.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/AbsorptionWindow.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/AbsorptionWindow.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/CompositionElement.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/CompositionElement.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/DataFileSet.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/DataFileSet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/DiffrDataFile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/DiffrDataFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/FilePar.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/FilePar.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/FourierTransformPeak.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/FourierTransformPeak.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Fragment.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Fragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Layer.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Layer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Parameter.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Parameter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Phase.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Phase.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/PlanarDefects.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/PlanarDefects.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/PseudoVoigtPeak.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/PseudoVoigtPeak.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/RadiationType.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/RadiationType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Reflection.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Reflection.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Sample.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Sample.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/StructureModel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/StructureModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/StructureSolutionMethod.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/StructureSolutionMethod.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Texture.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Texture.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/XRDcat.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/XRDcat.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/basicPeak.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/basicPeak.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/cal/AngularDisalignment.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/cal/AngularDisalignment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/cal/AngularInclinedFlatImageCalibration.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/cal/AngularInclinedFlatImageCalibration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/cal/EDXRFAngularCalibration.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/cal/EDXRFAngularCalibration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/cal/XSpiderAngularCalibration.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/cal/XSpiderAngularCalibration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/CIFDataFile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/CIFDataFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/D19ImageDataFile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/D19ImageDataFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/EsquiGoDataFile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/EsquiGoDataFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/FdtDataFile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/FdtDataFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/GSASNewDataFile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/GSASNewDataFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/TIFFDataFile.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/TIFFDataFile.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/detector/XRFDetector.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/detector/XRFDetector.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/GIXRFModel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/GIXRFModel.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/QuantitativeXRF.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/QuantitativeXRF.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/TubeSpectrumTransmission.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/TubeSpectrumTransmission.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/forcefield/ABINITEnergyComputation.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/forcefield/ABINITEnergyComputation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/forcefield/DistanceAngleBondRestraints.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/forcefield/DistanceAngleBondRestraints.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/forcefield/ForceFieldLennardJones.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/forcefield/ForceFieldLennardJones.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/forcefield/ForceFieldSimpleRepulsion.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/forcefield/ForceFieldSimpleRepulsion.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/instbroad/EDXRFInstrumentBroadening.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/instbroad/EDXRFInstrumentBroadening.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/instbroad/InstrumentBroadeningPVCaglioti.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/instbroad/InstrumentBroadeningPVCaglioti.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/magnetic/ConeMagneticStructure.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/magnetic/ConeMagneticStructure.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/microabs/LaueMicroAbsorption.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/microabs/LaueMicroAbsorption.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/rta/ExpHarmonicTexture.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/rta/ExpHarmonicTexture.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/rta/FEMRodriguezTexture.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/rta/FEMRodriguezTexture.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/rta/IntegralEWIMVTexture.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/rta/IntegralEWIMVTexture.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/ChargeFlippingDensityMap.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/ChargeFlippingDensityMap.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/FourierMapMEM_ComputatorExtractor.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/FourierMapMEM_ComputatorExtractor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/GiacovazzoSirIC.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/GiacovazzoSirIC.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/SDPDFourierMapsMEM.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/SDPDFourierMapsMEM.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/SDPDutilities.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/SDPDutilities.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/ShelxsSolution.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/ShelxsSolution.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/StructureFactorSolveCrystalStructure.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/StructureFactorSolveCrystalStructure.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/StructureSolutionGANew.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/StructureSolutionGANew.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/StructureSolutionGeneticAlgorithm.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/StructureSolutionGeneticAlgorithm.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/StructureSolutionGeneticAlgorithmClassic.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/StructureSolutionGeneticAlgorithmClassic.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/StructureSolutionReverseMontecarlo.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/StructureSolutionReverseMontecarlo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sfm/FullProfStructureModel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sfm/FullProfStructureModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sfm/StructureFactorStandardModel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sfm/StructureFactorStandardModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/shape/SampleShapePopa.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/shape/SampleShapePopa.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/DiffaXLayerModel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/DiffaXLayerModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/PlanarDefectsReciprocalModel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/PlanarDefectsReciprocalModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/PlanarDefectsWarren.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/PlanarDefectsWarren.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/SizeStrainHarmonicTexture.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/SizeStrainHarmonicTexture.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/SizeStrainLS.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/SizeStrainLS.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/SizeStrainOnlyVoigt.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/SizeStrainOnlyVoigt.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/SizeStrainSymBFrules.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/SizeStrainSymBFrules.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/SizeStrainWarrenAverbach.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/SizeStrainWarrenAverbach.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/structure/StructureAtomic.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/structure/StructureAtomic.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/interfaces/AtomsStructureI.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/interfaces/AtomsStructureI.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/io/MolecularImporter.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/io/MolecularImporter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/mdyn/Atom.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/mdyn/Atom.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/mdyn/Forces.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/mdyn/Forces.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/mdyn/Molecule.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/mdyn/Molecule.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/models/xyzTableModel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/models/xyzTableModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/render3d/Structure3Dgl.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/render3d/Structure3Dgl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/render3d/Structure3Djgl.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/render3d/Structure3Djgl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/render3d/XYZChemModel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/render3d/XYZChemModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/AtomQuantity.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/AtomQuantity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/microabs/MicroAbsorptionNone.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/microabs/MicroAbsorptionNone.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/radiation/XrayEbelTubeRadiation.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/radiation/XrayEbelTubeRadiation.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/io/StringNumber.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/io/StringNumber.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/Constants.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/Constants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/ConvertTextImageFromColumnsToArea.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/ConvertTextImageFromColumnsToArea.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/ListVector.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/ListVector.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/MaudPreferences.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/MaudPreferences.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/Misc.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/Misc.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/MoreMath.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/MoreMath.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/NovaQuantitativeAnalysis.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/NovaQuantitativeAnalysis.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/SimpleSite.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/SimpleSite.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/batchProcess.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/batchProcess.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/gaStructureProblem.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/gaStructureProblem.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/FluorescenceLine.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/FluorescenceLine.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/wizard/wizard.properties" afterPath="$PROJECT_DIR$/src/it/unitn/ing/wizard/wizard.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/AdditionExpressionNode.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/AdditionExpressionNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/ConstantExpressionNode.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/ConstantExpressionNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/EvaluationException.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/EvaluationException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/ExponentiationExpressionNode.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/ExponentiationExpressionNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/ExpressionNode.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/ExpressionNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/FunctionExpressionNode.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/FunctionExpressionNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/MultiplicationExpressionNode.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/MultiplicationExpressionNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/ParserException.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/ParserException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/SequenceExpressionNode.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/SequenceExpressionNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/Test.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/Test.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/Tokenizer.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/Tokenizer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/VariableExpressionNode.java" afterPath="$PROJECT_DIR$/src/uk/co/cogitolearning/cogpar/VariableExpressionNode.java" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -299,7 +65,6 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="Commander">
     <leftPanel />
     <rightPanel />
@@ -615,171 +380,104 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Layer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Layer.java">
+      <file leaf-file-name="XRayDataSqLite.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/XRayDataSqLite.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="860" column="2" selection-start-line="860" selection-start-column="2" selection-end-line="860" selection-end-column="2" />
-              <folding />
+            <state relative-caret-position="148">
+              <caret line="426" column="58" selection-start-line="426" selection-start-column="24" selection-end-line="426" selection-end-column="58" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Constants.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Constants.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/util/Constants.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="269" column="42" selection-start-line="269" selection-start-column="42" selection-end-line="269" selection-end-column="42" />
+            <state relative-caret-position="-4605">
+              <caret line="269" column="43" selection-start-line="269" selection-start-column="43" selection-end-line="269" selection-end-column="43" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SpectrumPlotPanel.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/awt/SpectrumPlotPanel.java">
+      <file leaf-file-name="TXRFluorescence.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/TXRFluorescence.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="2387" column="37" selection-start-line="2387" selection-start-column="37" selection-end-line="2387" selection-end-column="37" />
+            <state relative-caret-position="158">
+              <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="readme.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/help/readme.txt">
+      <file leaf-file-name="FluorescenceBase.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/FluorescenceBase.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="46" column="60" selection-start-line="46" selection-start-column="60" selection-end-line="46" selection-end-column="60" />
+            <state relative-caret-position="180">
+              <caret line="38" column="13" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="QuantitativeEDXRF.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/QuantitativeEDXRF.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-278">
-              <caret line="870" column="73" selection-start-line="870" selection-start-column="73" selection-end-line="870" selection-end-column="73" />
+            <state relative-caret-position="31485">
+              <caret line="2099" column="18" selection-start-line="2099" selection-start-column="18" selection-end-line="2099" selection-end-column="18" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Properties.3D" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/files/Properties.3D">
+      <file leaf-file-name="QuantitativeXRF.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/QuantitativeXRF.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="218">
+              <caret line="350" column="55" selection-start-line="350" selection-start-column="55" selection-end-line="350" selection-end-column="55" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AtomQuantity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/util/AtomQuantity.java">
+      <file leaf-file-name="Parameter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Parameter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+            <state relative-caret-position="-1740">
+              <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AtomSite.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/AtomSite.java">
+      <file leaf-file-name="myJFrame.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/awt/myJFrame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="20025">
-              <caret line="1406" column="36" selection-start-line="1406" selection-start-column="36" selection-end-line="1406" selection-end-column="36" />
-              <folding>
-                <element signature="e#0#82230#0" expanded="false" />
-                <element signature="imports" expanded="false" />
-                <element signature="e#3711#3724#0" expanded="false" />
-                <element signature="e#3797#3811#0" expanded="false" />
-                <element signature="e#3887#3901#0" expanded="false" />
-                <element signature="e#5847#5848#0" expanded="false" />
-                <element signature="e#5879#5880#0" expanded="false" />
-                <element signature="e#11619#11620#0" expanded="false" />
-                <element signature="e#11671#11672#0" expanded="false" />
-                <element signature="e#11710#11711#0" expanded="false" />
-                <element signature="e#11768#11769#0" expanded="false" />
-                <element signature="e#12978#12979#0" expanded="false" />
-                <element signature="e#13030#13031#0" expanded="false" />
-                <element signature="e#18204#18205#0" expanded="false" />
-                <element signature="e#18237#18238#0" expanded="false" />
-                <element signature="e#18377#18378#0" expanded="false" />
-                <element signature="e#18403#18404#0" expanded="false" />
-                <element signature="e#18665#18666#0" expanded="false" />
-                <element signature="e#18696#18697#0" expanded="false" />
-                <element signature="e#18959#18960#0" expanded="false" />
-                <element signature="e#18984#18985#0" expanded="false" />
-                <element signature="e#19245#19246#0" expanded="false" />
-                <element signature="e#19309#19310#0" expanded="false" />
-                <element signature="e#19707#19708#0" expanded="false" />
-                <element signature="e#19741#19742#0" expanded="false" />
-                <element signature="e#19928#19929#0" expanded="false" />
-                <element signature="e#19965#19966#0" expanded="false" />
-                <element signature="e#20142#20143#0" expanded="false" />
-                <element signature="e#20187#20188#0" expanded="false" />
-                <element signature="e#20364#20365#0" expanded="false" />
-                <element signature="e#20409#20410#0" expanded="false" />
-                <element signature="e#20586#20587#0" expanded="false" />
-                <element signature="e#20631#20632#0" expanded="false" />
-                <element signature="e#21108#21109#0" expanded="false" />
-                <element signature="e#21151#21152#0" expanded="false" />
-                <element signature="e#21294#21295#0" expanded="false" />
-                <element signature="e#21328#21329#0" expanded="false" />
-                <element signature="e#21502#21503#0" expanded="false" />
-                <element signature="e#21537#21538#0" expanded="false" />
-                <element signature="e#27958#27959#0" expanded="false" />
-                <element signature="e#28053#28054#0" expanded="false" />
-                <element signature="e#28080#28081#0" expanded="false" />
-                <element signature="e#28175#28176#0" expanded="false" />
-                <element signature="e#28202#28203#0" expanded="false" />
-                <element signature="e#28297#28298#0" expanded="false" />
-                <element signature="e#31216#31217#0" expanded="false" />
-                <element signature="e#31247#31248#0" expanded="false" />
-                <element signature="e#34019#34020#0" expanded="false" />
-                <element signature="e#34050#34051#0" expanded="false" />
-                <element signature="e#34098#34099#0" expanded="false" />
-                <element signature="e#34130#34131#0" expanded="false" />
-                <element signature="e#50337#50338#0" expanded="false" />
-                <element signature="e#50376#50377#0" expanded="false" />
-                <element signature="e#53422#53423#0" expanded="false" />
-                <element signature="e#53467#53468#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="330">
+              <caret line="794" column="19" selection-start-line="794" selection-start-column="14" selection-end-line="794" selection-end-column="25" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AtomScatterer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/AtomScatterer.java">
+      <file leaf-file-name="Angular2DCurvedDetectorCalibration.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/cal/Angular2DCurvedDetectorCalibration.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3180">
-              <caret line="251" column="2" selection-start-line="251" selection-start-column="2" selection-end-line="251" selection-end-column="2" />
-              <folding>
-                <element signature="e#0#12371#0" expanded="false" />
-                <element signature="imports" expanded="false" />
-                <element signature="e#2262#2263#0" expanded="false" />
-                <element signature="e#2302#2303#0" expanded="false" />
-                <element signature="e#3045#3046#0" expanded="false" />
-                <element signature="e#3115#3116#0" expanded="false" />
-                <element signature="e#3166#3167#0" expanded="false" />
-                <element signature="e#3238#3239#0" expanded="false" />
-                <element signature="e#6771#6772#0" expanded="false" />
-                <element signature="e#6799#6800#0" expanded="false" />
-                <element signature="e#7441#7442#0" expanded="false" />
-                <element signature="e#7461#7462#0" expanded="false" />
-                <element signature="e#7495#7496#0" expanded="false" />
-                <element signature="e#7515#7516#0" expanded="false" />
-                <element signature="e#7558#7559#0" expanded="false" />
-                <element signature="e#7608#7609#0" expanded="false" />
-                <element signature="e#7641#7642#0" expanded="false" />
-                <element signature="e#7692#7693#0" expanded="false" />
-                <element signature="e#7835#7836#0" expanded="false" />
-                <element signature="e#7912#7913#0" expanded="false" />
-                <element signature="e#11561#11562#0" expanded="false" />
-                <element signature="e#11608#11609#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="165">
+              <caret line="271" column="9" selection-start-line="271" selection-start-column="9" selection-end-line="271" selection-end-column="9" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -821,14 +519,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/SizeStrainLS.java" />
-        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/SizeStrainOnlyVoigt.java" />
-        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/shape/SampleShapePopa.java" />
-        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/ChargeFlippingDensityMap.java" />
-        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/GiacovazzoSirIC.java" />
-        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/SDPDFourierMapsMEM.java" />
-        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/ShelxsSolution.java" />
-        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/StructureFactorSolveCrystalStructure.java" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/StructureSolutionGANew.java" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/StructureSolutionGeneticAlgorithm.java" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sdpd/StructureSolutionGeneticAlgorithmClassic.java" />
@@ -838,8 +528,6 @@
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/Utility.java" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/MultDiffrDataFile.java" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/util/MaudPreferences.java" />
-        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/GIXRFModel.java" />
-        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/QuantitativeXRF.java" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PlotDataFile.java" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/SpectrumPlotPanel.java" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/MultiPlotFitting.java" />
@@ -857,7 +545,6 @@
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/DiffractionMainFrame.java" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/util/batchProcess.java" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/cal/AngularDisalignment.java" />
-        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/XRayDataSqLite.java" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/DiffrDataFile.java" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/util/MoreMath.java" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/PlanarDefectsReciprocalModel.java" />
@@ -869,9 +556,20 @@
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Phase.java" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/AtomScatterer.java" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Layer.java" />
-        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/util/Constants.java" />
-        <option value="$PROJECT_DIR$/src/help/readme.txt" />
         <option value="$PROJECT_DIR$/build.xml" />
+        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/detector/XRFDetector.java" />
+        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/GIXRFModel.java" />
+        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/TubeSpectrumTransmission.java" />
+        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/radiation/XrayEbelTubeRadiation.java" />
+        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/util/FluorescenceLine.java" />
+        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PlotSimpleData.java" />
+        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/JAtomTypeListPane.java" />
+        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/QuantitativeXRF.java" />
+        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/XRayDataSqLite.java" />
+        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/instbroad/EDXRFInstrumentBroadening.java" />
+        <option value="$PROJECT_DIR$/src/help/readme.txt" />
+        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/microabs/MicroAbsorptionNone.java" />
+        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/util/Constants.java" />
       </list>
     </option>
   </component>
@@ -1573,16 +1271,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Maud" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="Scope">
         <subPane subId="Problems">
           <PATH>
@@ -1619,6 +1307,20 @@
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
             <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="Maud">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -1720,85 +1422,7 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="sizestrain">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="rista">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="diffr">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="rta">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="rista">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="diffr">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="instrument">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="rista">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="diffr">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="instbroad">
+            <PATH_ELEMENT USER_OBJECT="microabs">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -1846,201 +1470,7 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="diffr">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="data">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="rista">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
             <PATH_ELEMENT USER_OBJECT="chemistry">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="rista">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="awt">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="esqui">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="wizard">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="it/unitn/ing">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="esqui">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="ij">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="ij">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="gui">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="help">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="files">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="examples">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="radiographema">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -2058,6 +1488,16 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="Maud" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Maud" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -2165,11 +1605,19 @@
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
       <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="DEBUGGER_TYPE" value="Java" />
       <option name="USE_LAST_SELECTED_DEVICE" value="false" />
       <option name="PREFERRED_AVD" value="" />
+      <Java />
+      <Profilers>
+        <option name="GAPID_DISABLE_PCS" value="false" />
+      </Profilers>
       <option name="DEEP_LINK" value="" />
       <option name="ACTIVITY_CLASS" value="" />
-      <method />
+      <method>
+        <option name="Make" enabled="true" />
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
     </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
       <module name="" />
@@ -2185,9 +1633,17 @@
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
       <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="DEBUGGER_TYPE" value="Java" />
       <option name="USE_LAST_SELECTED_DEVICE" value="false" />
       <option name="PREFERRED_AVD" value="" />
-      <method />
+      <Java />
+      <Profilers>
+        <option name="GAPID_DISABLE_PCS" value="false" />
+      </Profilers>
+      <method>
+        <option name="Make" enabled="true" />
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
     </configuration>
     <configuration default="true" type="Applet" factoryName="Applet">
       <module />
@@ -2519,7 +1975,14 @@
       <option name="project" value="LOCAL" />
       <updated>1463762370373</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="New version 2.67">
+      <created>1469115048072</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1469115048072</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -2544,27 +2007,27 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1137" height="873" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18755119" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22191273" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23507462" sideWeight="0.55672824" order="19" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23507462" sideWeight="0.55672824" order="19" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23507462" sideWeight="0.43711522" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329602" sideWeight="0.43799472" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32983193" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329602" sideWeight="0.43799472" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32929516" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" show_stripe_button="true" weight="0.26609442" sideWeight="0.8434874" order="0" side_tool="true" content_ui="combo" x="1138" y="196" width="257" height="349" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23507462" sideWeight="0.5628848" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" show_stripe_button="true" weight="0.30905306" sideWeight="0.3119748" order="2" side_tool="false" content_ui="tabs" x="1138" y="546" width="257" height="348" />
-      <window_info id="Ant Build" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" show_stripe_button="true" weight="0.1546287" sideWeight="0.8434874" order="1" side_tool="true" content_ui="tabs" x="1139" y="23" width="258" height="195" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" show_stripe_button="true" weight="0.26609442" sideWeight="0.8434874" order="0" side_tool="true" content_ui="combo" x="1138" y="196" width="302" height="349" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23507462" sideWeight="0.5628848" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" show_stripe_button="true" weight="0.30905306" sideWeight="0.3119748" order="2" side_tool="false" content_ui="tabs" x="1138" y="546" width="302" height="348" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" show_stripe_button="true" weight="0.1546287" sideWeight="0.8434874" order="1" side_tool="true" content_ui="tabs" x="1139" y="23" width="297" height="188" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28419328" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32997844" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39969134" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32997844" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Run2" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="20" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32868218" sideWeight="0.5" order="22" side_tool="false" content_ui="tabs" />
@@ -2677,7 +2140,8 @@
     <MESSAGE value="Adding some more libraries" />
     <MESSAGE value="New version 2.60, first commit" />
     <MESSAGE value="Fixing project structure, adding few files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing project structure, adding few files" />
+    <MESSAGE value="New version 2.67" />
+    <option name="LAST_COMMIT_MESSAGE" value="New version 2.67" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
   <component name="VssConfiguration">
@@ -2719,7 +2183,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="23" />
+      <option name="time" value="28" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -2863,833 +2327,6 @@
     <option name="myLastEditedConfigurable" value="Default" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/render3d/Structure3Djgl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="79" column="16" selection-start-line="79" selection-start-column="16" selection-end-line="79" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sfm/StructureFactorStandardModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="39" column="68" selection-start-line="39" selection-start-column="68" selection-end-line="39" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/QuantitativeXRF.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="151" column="80" selection-start-line="151" selection-start-column="80" selection-end-line="151" selection-end-column="80" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/data/EsquiGoCIFDataFile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9">
-          <caret line="169" column="33" selection-start-line="169" selection-start-column="20" selection-end-line="169" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/cal/AngularSplineCalibration.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1020">
-          <caret line="42" column="13" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/instbroad/InstrumentBroadeningGSAS1f.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="570" column="33" selection-start-line="570" selection-start-column="33" selection-end-line="570" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/awt/DataD.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="1866" column="20" selection-start-line="1866" selection-start-column="16" selection-end-line="1866" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/cal/EDXRFAngularCalibration.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="121" column="2" selection-start-line="121" selection-start-column="2" selection-end-line="121" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Fluorescence.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="36" column="13" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/FluorescenceBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="38" column="13" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/FluorescenceNone.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/DataFileSet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50760">
-          <caret line="3671" column="19" selection-start-line="3671" selection-start-column="19" selection-end-line="3671" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#128851#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#5630#5636#0" expanded="false" />
-            <element signature="e#7196#7215#0" expanded="false" />
-            <element signature="e#7287#7310#0" expanded="false" />
-            <element signature="e#7475#7476#0" expanded="false" />
-            <element signature="e#7513#7514#0" expanded="false" />
-            <element signature="e#9254#9255#0" expanded="false" />
-            <element signature="e#9300#9301#0" expanded="false" />
-            <element signature="e#12203#12204#0" expanded="false" />
-            <element signature="e#12228#12229#0" expanded="false" />
-            <element signature="e#12309#12310#0" expanded="false" />
-            <element signature="e#12337#12338#0" expanded="false" />
-            <element signature="e#12424#12425#0" expanded="false" />
-            <element signature="e#12455#12456#0" expanded="false" />
-            <element signature="e#12544#12545#0" expanded="false" />
-            <element signature="e#12574#12575#0" expanded="false" />
-            <element signature="e#20589#20590#0" expanded="false" />
-            <element signature="e#20616#20617#0" expanded="false" />
-            <element signature="e#20659#20660#0" expanded="false" />
-            <element signature="e#20704#20705#0" expanded="false" />
-            <element signature="e#20751#20752#0" expanded="false" />
-            <element signature="e#20796#20797#0" expanded="false" />
-            <element signature="e#21226#21227#0" expanded="false" />
-            <element signature="e#21255#21256#0" expanded="false" />
-            <element signature="e#21305#21306#0" expanded="false" />
-            <element signature="e#21342#21343#0" expanded="false" />
-            <element signature="e#21376#21377#0" expanded="false" />
-            <element signature="e#21394#21395#0" expanded="false" />
-            <element signature="e#21737#21738#0" expanded="false" />
-            <element signature="e#21808#21809#0" expanded="false" />
-            <element signature="e#23946#23947#0" expanded="false" />
-            <element signature="e#23992#23993#0" expanded="false" />
-            <element signature="e#24023#24024#0" expanded="false" />
-            <element signature="e#24067#24068#0" expanded="false" />
-            <element signature="e#24098#24099#0" expanded="false" />
-            <element signature="e#24142#24143#0" expanded="false" />
-            <element signature="e#24184#24185#0" expanded="false" />
-            <element signature="e#24224#24225#0" expanded="false" />
-            <element signature="e#24266#24267#0" expanded="false" />
-            <element signature="e#24306#24307#0" expanded="false" />
-            <element signature="e#27861#27862#0" expanded="false" />
-            <element signature="e#27901#27902#0" expanded="false" />
-            <element signature="e#27954#27955#0" expanded="false" />
-            <element signature="e#27991#27992#0" expanded="false" />
-            <element signature="e#29212#29227#0" expanded="false" />
-            <element signature="e#31055#31056#0" expanded="false" />
-            <element signature="e#31114#31115#0" expanded="false" />
-            <element signature="e#34479#34480#0" expanded="false" />
-            <element signature="e#34505#34506#0" expanded="false" />
-            <element signature="e#43170#43171#0" expanded="false" />
-            <element signature="e#43218#43219#0" expanded="false" />
-            <element signature="e#45081#45082#0" expanded="false" />
-            <element signature="e#45122#45123#0" expanded="false" />
-            <element signature="e#58264#58274#0" expanded="false" />
-            <element signature="e#58344#58367#0" expanded="false" />
-            <element signature="e#58912#58927#0" expanded="false" />
-            <element signature="e#63526#63527#0" expanded="false" />
-            <element signature="e#63571#63572#0" expanded="false" />
-            <element signature="e#67221#67231#0" expanded="false" />
-            <element signature="e#72375#72376#0" expanded="false" />
-            <element signature="e#72412#72413#0" expanded="false" />
-            <element signature="e#72461#72462#0" expanded="false" />
-            <element signature="e#72491#72492#0" expanded="false" />
-            <element signature="e#72536#72537#0" expanded="false" />
-            <element signature="e#72570#72571#0" expanded="false" />
-            <element signature="e#72614#72615#0" expanded="false" />
-            <element signature="e#72647#72648#0" expanded="false" />
-            <element signature="e#72704#72705#0" expanded="false" />
-            <element signature="e#72732#72733#0" expanded="false" />
-            <element signature="e#72780#72781#0" expanded="false" />
-            <element signature="e#72809#72810#0" expanded="false" />
-            <element signature="e#72842#72843#0" expanded="false" />
-            <element signature="e#72880#72881#0" expanded="false" />
-            <element signature="e#72923#72924#0" expanded="false" />
-            <element signature="e#72961#72962#0" expanded="false" />
-            <element signature="e#72994#72995#0" expanded="false" />
-            <element signature="e#73032#73033#0" expanded="false" />
-            <element signature="e#73075#73076#0" expanded="false" />
-            <element signature="e#73113#73114#0" expanded="false" />
-            <element signature="e#73147#73148#0" expanded="false" />
-            <element signature="e#73193#73194#0" expanded="false" />
-            <element signature="e#73227#73228#0" expanded="false" />
-            <element signature="e#73273#73274#0" expanded="false" />
-            <element signature="e#73326#73327#0" expanded="false" />
-            <element signature="e#73374#73375#0" expanded="false" />
-            <element signature="e#73572#73573#0" expanded="false" />
-            <element signature="e#73619#73620#0" expanded="false" />
-            <element signature="e#73661#73662#0" expanded="false" />
-            <element signature="e#73715#73716#0" expanded="false" />
-            <element signature="e#73758#73759#0" expanded="false" />
-            <element signature="e#73796#73797#0" expanded="false" />
-            <element signature="e#74199#74200#0" expanded="false" />
-            <element signature="e#74236#74237#0" expanded="false" />
-            <element signature="e#74268#74269#0" expanded="false" />
-            <element signature="e#74312#74313#0" expanded="false" />
-            <element signature="e#74342#74343#0" expanded="false" />
-            <element signature="e#74366#74367#0" expanded="false" />
-            <element signature="e#74404#74405#0" expanded="false" />
-            <element signature="e#74447#74448#0" expanded="false" />
-            <element signature="e#74486#74487#0" expanded="false" />
-            <element signature="e#74536#74537#0" expanded="false" />
-            <element signature="e#74572#74573#0" expanded="false" />
-            <element signature="e#74602#74603#0" expanded="false" />
-            <element signature="e#74651#74652#0" expanded="false" />
-            <element signature="e#74695#74696#0" expanded="false" />
-            <element signature="e#75526#75527#0" expanded="false" />
-            <element signature="e#75564#75565#0" expanded="false" />
-            <element signature="e#75602#75603#0" expanded="false" />
-            <element signature="e#75634#75635#0" expanded="false" />
-            <element signature="e#75674#75675#0" expanded="false" />
-            <element signature="e#75711#75712#0" expanded="false" />
-            <element signature="e#75745#75746#0" expanded="false" />
-            <element signature="e#75797#75798#0" expanded="false" />
-            <element signature="e#76115#76116#0" expanded="false" />
-            <element signature="e#76175#76176#0" expanded="false" />
-            <element signature="e#76227#76228#0" expanded="false" />
-            <element signature="e#76273#76274#0" expanded="false" />
-            <element signature="e#76327#76328#0" expanded="false" />
-            <element signature="e#76386#76387#0" expanded="false" />
-            <element signature="e#76440#76441#0" expanded="false" />
-            <element signature="e#76506#76507#0" expanded="false" />
-            <element signature="e#76564#76565#0" expanded="false" />
-            <element signature="e#76617#76618#0" expanded="false" />
-            <element signature="e#76835#76836#0" expanded="false" />
-            <element signature="e#76887#76888#0" expanded="false" />
-            <element signature="e#76934#76935#0" expanded="false" />
-            <element signature="e#76993#76994#0" expanded="false" />
-            <element signature="e#77044#77045#0" expanded="false" />
-            <element signature="e#77101#77102#0" expanded="false" />
-            <element signature="e#77316#77317#0" expanded="false" />
-            <element signature="e#77364#77365#0" expanded="false" />
-            <element signature="e#77409#77410#0" expanded="false" />
-            <element signature="e#77444#77445#0" expanded="false" />
-            <element signature="e#77649#77650#0" expanded="false" />
-            <element signature="e#77701#77702#0" expanded="false" />
-            <element signature="e#77750#77751#0" expanded="false" />
-            <element signature="e#77787#77788#0" expanded="false" />
-            <element signature="e#77834#77835#0" expanded="false" />
-            <element signature="e#77884#77885#0" expanded="false" />
-            <element signature="e#78319#78320#0" expanded="false" />
-            <element signature="e#78358#78359#0" expanded="false" />
-            <element signature="e#78398#78399#0" expanded="false" />
-            <element signature="e#78431#78432#0" expanded="false" />
-            <element signature="e#78510#78511#0" expanded="false" />
-            <element signature="e#78558#78559#0" expanded="false" />
-            <element signature="e#79048#79049#0" expanded="false" />
-            <element signature="e#79126#79127#0" expanded="false" />
-            <element signature="e#79211#79212#0" expanded="false" />
-            <element signature="e#79262#79263#0" expanded="false" />
-            <element signature="e#79477#79478#0" expanded="false" />
-            <element signature="e#79528#79529#0" expanded="false" />
-            <element signature="e#79693#79694#0" expanded="false" />
-            <element signature="e#79732#79733#0" expanded="false" />
-            <element signature="e#79772#79773#0" expanded="false" />
-            <element signature="e#79812#79813#0" expanded="false" />
-            <element signature="e#79854#79855#0" expanded="false" />
-            <element signature="e#79894#79895#0" expanded="false" />
-            <element signature="e#79936#79937#0" expanded="false" />
-            <element signature="e#80003#80004#0" expanded="false" />
-            <element signature="e#80043#80044#0" expanded="false" />
-            <element signature="e#80082#80083#0" expanded="false" />
-            <element signature="e#80130#80131#0" expanded="false" />
-            <element signature="e#80196#80197#0" expanded="false" />
-            <element signature="e#80243#80244#0" expanded="false" />
-            <element signature="e#80272#80273#0" expanded="false" />
-            <element signature="e#80309#80310#0" expanded="false" />
-            <element signature="e#80338#80339#0" expanded="false" />
-            <element signature="e#80383#80384#0" expanded="false" />
-            <element signature="e#80412#80413#0" expanded="false" />
-            <element signature="e#80447#80448#0" expanded="false" />
-            <element signature="e#80476#80477#0" expanded="false" />
-            <element signature="e#80512#80513#0" expanded="false" />
-            <element signature="e#80560#80561#0" expanded="false" />
-            <element signature="e#81173#81174#0" expanded="false" />
-            <element signature="e#81202#81203#0" expanded="false" />
-            <element signature="e#81255#81256#0" expanded="false" />
-            <element signature="e#81306#81307#0" expanded="false" />
-            <element signature="e#83752#84117#0" expanded="false" />
-            <element signature="e#84116#84117#0" expanded="false" />
-            <element signature="e#84489#84629#0" expanded="false" />
-            <element signature="e#84628#84629#0" expanded="false" />
-            <element signature="e#84728#85088#0" expanded="false" />
-            <element signature="e#85087#85088#0" expanded="false" />
-            <element signature="e#86917#87055#0" expanded="false" />
-            <element signature="e#87054#87055#0" expanded="false" />
-            <element signature="e#87411#87556#0" expanded="false" />
-            <element signature="e#87555#87556#0" expanded="false" />
-            <element signature="e#93096#93097#0" expanded="false" />
-            <element signature="e#93133#93134#0" expanded="false" />
-            <element signature="e#95632#95633#0" expanded="false" />
-            <element signature="e#95673#95674#0" expanded="false" />
-            <element signature="e#110619#110620#0" expanded="false" />
-            <element signature="e#110662#110663#0" expanded="false" />
-            <element signature="e#110701#110702#0" expanded="false" />
-            <element signature="e#110743#110744#0" expanded="false" />
-            <element signature="e#111614#111615#0" expanded="false" />
-            <element signature="e#111680#111681#0" expanded="false" />
-            <element signature="e#111710#111711#0" expanded="false" />
-            <element signature="e#111776#111777#0" expanded="false" />
-            <element signature="e#111806#111807#0" expanded="false" />
-            <element signature="e#111872#111873#0" expanded="false" />
-            <element signature="e#112322#112323#0" expanded="false" />
-            <element signature="e#112397#112398#0" expanded="false" />
-            <element signature="e#112605#112606#0" expanded="false" />
-            <element signature="e#112679#112680#0" expanded="false" />
-            <element signature="e#113731#114100#0" expanded="false" />
-            <element signature="e#114099#114100#0" expanded="false" />
-            <element signature="e#115564#115565#0" expanded="false" />
-            <element signature="e#115582#115583#0" expanded="false" />
-            <element signature="e#116260#116261#0" expanded="false" />
-            <element signature="e#116311#116312#0" expanded="false" />
-            <element signature="e#116352#116353#0" expanded="false" />
-            <element signature="e#116370#116371#0" expanded="false" />
-            <element signature="e#117034#117035#0" expanded="false" />
-            <element signature="e#117084#117085#0" expanded="false" />
-            <element signature="e#117120#117121#0" expanded="false" />
-            <element signature="e#117138#117139#0" expanded="false" />
-            <element signature="e#117421#117422#0" expanded="false" />
-            <element signature="e#117496#117497#0" expanded="false" />
-            <element signature="e#117732#117733#0" expanded="false" />
-            <element signature="e#117777#117778#0" expanded="false" />
-            <element signature="e#117825#117826#0" expanded="false" />
-            <element signature="e#117887#117888#0" expanded="false" />
-            <element signature="e#117923#117924#0" expanded="false" />
-            <element signature="e#117941#117942#0" expanded="false" />
-            <element signature="e#118224#118225#0" expanded="false" />
-            <element signature="e#118299#118300#0" expanded="false" />
-            <element signature="e#118535#118536#0" expanded="false" />
-            <element signature="e#118580#118581#0" expanded="false" />
-            <element signature="e#118628#118629#0" expanded="false" />
-            <element signature="e#118690#118691#0" expanded="false" />
-            <element signature="e#121148#121149#0" expanded="false" />
-            <element signature="e#121198#121199#0" expanded="false" />
-            <element signature="e#123930#123931#0" expanded="false" />
-            <element signature="e#123977#123978#0" expanded="false" />
-            <element signature="e#124010#124011#0" expanded="false" />
-            <element signature="e#124057#124058#0" expanded="false" />
-            <element signature="e#124095#124096#0" expanded="false" />
-            <element signature="e#124123#124124#0" expanded="false" />
-            <element signature="e#124155#124156#0" expanded="false" />
-            <element signature="e#124196#124197#0" expanded="false" />
-            <element signature="e#124231#124232#0" expanded="false" />
-            <element signature="e#124266#124267#0" expanded="false" />
-            <element signature="e#124314#124315#0" expanded="false" />
-            <element signature="e#124366#124367#0" expanded="false" />
-            <element signature="e#126863#126864#0" expanded="false" />
-            <element signature="e#126895#126896#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Sample.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22770">
-          <caret line="1652" column="54" selection-start-line="1652" selection-start-column="54" selection-end-line="1652" selection-end-column="54" />
-          <folding>
-            <element signature="e#0#79933#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#4073#4074#0" expanded="false" />
-            <element signature="e#4106#4107#0" expanded="false" />
-            <element signature="e#7076#7077#0" expanded="false" />
-            <element signature="e#7121#7122#0" expanded="false" />
-            <element signature="e#7162#7163#0" expanded="false" />
-            <element signature="e#7194#7195#0" expanded="false" />
-            <element signature="e#7227#7228#0" expanded="false" />
-            <element signature="e#7256#7257#0" expanded="false" />
-            <element signature="e#7301#7302#0" expanded="false" />
-            <element signature="e#7332#7333#0" expanded="false" />
-            <element signature="e#7389#7390#0" expanded="false" />
-            <element signature="e#7418#7419#0" expanded="false" />
-            <element signature="e#7708#7709#0" expanded="false" />
-            <element signature="e#7739#7740#0" expanded="false" />
-            <element signature="e#7795#7796#0" expanded="false" />
-            <element signature="e#7861#7862#0" expanded="false" />
-            <element signature="e#8290#8291#0" expanded="false" />
-            <element signature="e#8353#8354#0" expanded="false" />
-            <element signature="e#8386#8387#0" expanded="false" />
-            <element signature="e#8413#8414#0" expanded="false" />
-            <element signature="e#8444#8445#0" expanded="false" />
-            <element signature="e#8482#8483#0" expanded="false" />
-            <element signature="e#8520#8521#0" expanded="false" />
-            <element signature="e#8566#8567#0" expanded="false" />
-            <element signature="e#8605#8606#0" expanded="false" />
-            <element signature="e#8651#8652#0" expanded="false" />
-            <element signature="e#8682#8683#0" expanded="false" />
-            <element signature="e#8721#8722#0" expanded="false" />
-            <element signature="e#11431#11432#0" expanded="false" />
-            <element signature="e#11476#11477#0" expanded="false" />
-            <element signature="e#11509#11510#0" expanded="false" />
-            <element signature="e#11550#11551#0" expanded="false" />
-            <element signature="e#11589#11590#0" expanded="false" />
-            <element signature="e#11626#11627#0" expanded="false" />
-            <element signature="e#12223#12224#0" expanded="false" />
-            <element signature="e#12266#12267#0" expanded="false" />
-            <element signature="e#15845#15846#0" expanded="false" />
-            <element signature="e#15907#15908#0" expanded="false" />
-            <element signature="e#15950#15951#0" expanded="false" />
-            <element signature="e#15988#15989#0" expanded="false" />
-            <element signature="e#16041#16042#0" expanded="false" />
-            <element signature="e#16080#16081#0" expanded="false" />
-            <element signature="e#16418#16419#0" expanded="false" />
-            <element signature="e#16446#16447#0" expanded="false" />
-            <element signature="e#16484#16485#0" expanded="false" />
-            <element signature="e#16529#16530#0" expanded="false" />
-            <element signature="e#16558#16559#0" expanded="false" />
-            <element signature="e#16626#16627#0" expanded="false" />
-            <element signature="e#18196#18197#0" expanded="false" />
-            <element signature="e#18225#18226#0" expanded="false" />
-            <element signature="e#19691#19692#0" expanded="false" />
-            <element signature="e#19725#19726#0" expanded="false" />
-            <element signature="e#19756#19757#0" expanded="false" />
-            <element signature="e#19790#19791#0" expanded="false" />
-            <element signature="e#19821#19822#0" expanded="false" />
-            <element signature="e#19855#19856#0" expanded="false" />
-            <element signature="e#19888#19889#0" expanded="false" />
-            <element signature="e#19922#19923#0" expanded="false" />
-            <element signature="e#19955#19956#0" expanded="false" />
-            <element signature="e#19989#19990#0" expanded="false" />
-            <element signature="e#20022#20023#0" expanded="false" />
-            <element signature="e#20056#20057#0" expanded="false" />
-            <element signature="e#20098#20099#0" expanded="false" />
-            <element signature="e#20132#20133#0" expanded="false" />
-            <element signature="e#20179#20180#0" expanded="false" />
-            <element signature="e#20213#20214#0" expanded="false" />
-            <element signature="e#20259#20260#0" expanded="false" />
-            <element signature="e#20293#20294#0" expanded="false" />
-            <element signature="e#20337#20338#0" expanded="false" />
-            <element signature="e#20371#20372#0" expanded="false" />
-            <element signature="e#20415#20416#0" expanded="false" />
-            <element signature="e#20450#20451#0" expanded="false" />
-            <element signature="e#20492#20493#0" expanded="false" />
-            <element signature="e#20537#20538#0" expanded="false" />
-            <element signature="e#20577#20578#0" expanded="false" />
-            <element signature="e#20622#20623#0" expanded="false" />
-            <element signature="e#20662#20663#0" expanded="false" />
-            <element signature="e#20707#20708#0" expanded="false" />
-            <element signature="e#20749#20750#0" expanded="false" />
-            <element signature="e#20794#20795#0" expanded="false" />
-            <element signature="e#20836#20837#0" expanded="false" />
-            <element signature="e#20881#20882#0" expanded="false" />
-            <element signature="e#20923#20924#0" expanded="false" />
-            <element signature="e#20968#20969#0" expanded="false" />
-            <element signature="e#22301#22302#0" expanded="false" />
-            <element signature="e#22321#22322#0" expanded="false" />
-            <element signature="e#22351#22352#0" expanded="false" />
-            <element signature="e#22371#22372#0" expanded="false" />
-            <element signature="e#22401#22402#0" expanded="false" />
-            <element signature="e#22421#22422#0" expanded="false" />
-            <element signature="e#22459#22460#0" expanded="false" />
-            <element signature="e#22490#22491#0" expanded="false" />
-            <element signature="e#22530#22531#0" expanded="false" />
-            <element signature="e#22561#22562#0" expanded="false" />
-            <element signature="e#22606#22607#0" expanded="false" />
-            <element signature="e#22642#22643#0" expanded="false" />
-            <element signature="e#22685#22686#0" expanded="false" />
-            <element signature="e#22717#22718#0" expanded="false" />
-            <element signature="e#22758#22759#0" expanded="false" />
-            <element signature="e#22791#22792#0" expanded="false" />
-            <element signature="e#22833#22834#0" expanded="false" />
-            <element signature="e#22866#22867#0" expanded="false" />
-            <element signature="e#25358#25359#0" expanded="false" />
-            <element signature="e#25384#25385#0" expanded="false" />
-            <element signature="e#40886#40887#0" expanded="false" />
-            <element signature="e#40921#40922#0" expanded="false" />
-            <element signature="e#41361#41362#0" expanded="false" />
-            <element signature="e#41405#41406#0" expanded="false" />
-            <element signature="e#41929#41930#0" expanded="false" />
-            <element signature="e#41979#41980#0" expanded="false" />
-            <element signature="e#64870#64871#0" expanded="false" />
-            <element signature="e#64924#64925#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/comp/GeneticAlgorithmAltRefinement.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="742" column="36" selection-start-line="742" selection-start-column="36" selection-end-line="742" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/comp/LeastSquareFit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="298" column="34" selection-start-line="298" selection-start-column="34" selection-end-line="298" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/FilePar.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8640">
-          <caret line="3103" column="6" selection-start-line="3103" selection-start-column="6" selection-end-line="3103" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/awt/principalJFrame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5070">
-          <caret line="83" column="4" selection-start-line="83" selection-start-column="4" selection-end-line="83" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/awt/DiffractionMainFrame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="516">
-          <caret line="98" column="24" selection-start-line="98" selection-start-column="24" selection-end-line="98" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/radiographema/MaudText.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="63" column="39" selection-start-line="63" selection-start-column="31" selection-end-line="63" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/util/batchProcess.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4515">
-          <caret line="328" column="6" selection-start-line="328" selection-start-column="6" selection-end-line="328" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/instrument/DefaultInstrument.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="36" column="13" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Instrument.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8205">
-          <caret line="649" column="17" selection-start-line="649" selection-start-column="17" selection-end-line="649" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#25771#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#3589#3590#0" expanded="false" />
-            <element signature="e#3626#3627#0" expanded="false" />
-            <element signature="e#6866#6867#0" expanded="false" />
-            <element signature="e#6915#6916#0" expanded="false" />
-            <element signature="e#6956#6957#0" expanded="false" />
-            <element signature="e#6989#6990#0" expanded="false" />
-            <element signature="e#7026#7027#0" expanded="false" />
-            <element signature="e#7055#7056#0" expanded="false" />
-            <element signature="e#7240#7241#0" expanded="false" />
-            <element signature="e#7274#7275#0" expanded="false" />
-            <element signature="e#7312#7313#0" expanded="false" />
-            <element signature="e#7376#7377#0" expanded="false" />
-            <element signature="e#7420#7421#0" expanded="false" />
-            <element signature="e#7463#7464#0" expanded="false" />
-            <element signature="e#8499#8500#0" expanded="false" />
-            <element signature="e#8549#8550#0" expanded="false" />
-            <element signature="e#8599#8600#0" expanded="false" />
-            <element signature="e#8655#8656#0" expanded="false" />
-            <element signature="e#8709#8710#0" expanded="false" />
-            <element signature="e#8781#8782#0" expanded="false" />
-            <element signature="e#11705#11706#0" expanded="false" />
-            <element signature="e#11723#11724#0" expanded="false" />
-            <element signature="e#12629#12630#0" expanded="false" />
-            <element signature="e#12682#12683#0" expanded="false" />
-            <element signature="e#12727#12728#0" expanded="false" />
-            <element signature="e#12795#12796#0" expanded="false" />
-            <element signature="e#12837#12838#0" expanded="false" />
-            <element signature="e#12855#12856#0" expanded="false" />
-            <element signature="e#13733#13734#0" expanded="false" />
-            <element signature="e#13784#13785#0" expanded="false" />
-            <element signature="e#13836#13837#0" expanded="false" />
-            <element signature="e#13900#13901#0" expanded="false" />
-            <element signature="e#13932#13933#0" expanded="false" />
-            <element signature="e#13950#13951#0" expanded="false" />
-            <element signature="e#14384#14385#0" expanded="false" />
-            <element signature="e#14451#14452#0" expanded="false" />
-            <element signature="e#14485#14486#0" expanded="false" />
-            <element signature="e#14526#14527#0" expanded="false" />
-            <element signature="e#14562#14563#0" expanded="false" />
-            <element signature="e#14580#14581#0" expanded="false" />
-            <element signature="e#15047#15048#0" expanded="false" />
-            <element signature="e#15120#15121#0" expanded="false" />
-            <element signature="e#15157#15158#0" expanded="false" />
-            <element signature="e#15201#15202#0" expanded="false" />
-            <element signature="e#15239#15240#0" expanded="false" />
-            <element signature="e#15257#15258#0" expanded="false" />
-            <element signature="e#15746#15747#0" expanded="false" />
-            <element signature="e#15823#15824#0" expanded="false" />
-            <element signature="e#15862#15863#0" expanded="false" />
-            <element signature="e#15908#15909#0" expanded="false" />
-            <element signature="e#16208#16209#0" expanded="false" />
-            <element signature="e#16255#16256#0" expanded="false" />
-            <element signature="e#16288#16289#0" expanded="false" />
-            <element signature="e#16336#16337#0" expanded="false" />
-            <element signature="e#16458#16459#0" expanded="false" />
-            <element signature="e#16545#16546#0" expanded="false" />
-            <element signature="e#16739#16740#0" expanded="false" />
-            <element signature="e#16757#16758#0" expanded="false" />
-            <element signature="e#17191#17192#0" expanded="false" />
-            <element signature="e#17258#17259#0" expanded="false" />
-            <element signature="e#17292#17293#0" expanded="false" />
-            <element signature="e#17333#17334#0" expanded="false" />
-            <element signature="e#17368#17369#0" expanded="false" />
-            <element signature="e#17386#17387#0" expanded="false" />
-            <element signature="e#17844#17845#0" expanded="false" />
-            <element signature="e#17915#17916#0" expanded="false" />
-            <element signature="e#17951#17952#0" expanded="false" />
-            <element signature="e#17994#17995#0" expanded="false" />
-            <element signature="e#18039#18040#0" expanded="false" />
-            <element signature="e#18057#18058#0" expanded="false" />
-            <element signature="e#18760#18761#0" expanded="false" />
-            <element signature="e#18813#18814#0" expanded="false" />
-            <element signature="e#25233#25234#0" expanded="false" />
-            <element signature="e#25291#25292#0" expanded="false" />
-            <element signature="e#25325#25326#0" expanded="false" />
-            <element signature="e#25398#25399#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/cal/AngularInclinedFlatImageCalibration.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2820">
-          <caret line="272" column="0" selection-start-line="266" selection-start-column="0" selection-end-line="272" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/instbroad/InstrumentBroadeningPVCaglioti.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1605">
-          <caret line="137" column="0" selection-start-line="128" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/cal/AngularDisalignment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1800">
-          <caret line="158" column="47" selection-start-line="158" selection-start-column="47" selection-end-line="158" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/PlanarDefects.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="96" column="16" selection-start-line="96" selection-start-column="16" selection-end-line="96" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/rta/DiscreteODFTexture.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9915">
-          <caret line="701" column="27" selection-start-line="701" selection-start-column="23" selection-end-line="701" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#93183#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#3120#3121#0" expanded="false" />
-            <element signature="e#3148#3149#0" expanded="false" />
-            <element signature="e#3230#3231#0" expanded="false" />
-            <element signature="e#3275#3276#0" expanded="false" />
-            <element signature="e#3320#3321#0" expanded="false" />
-            <element signature="e#3353#3354#0" expanded="false" />
-            <element signature="e#3482#3483#0" expanded="false" />
-            <element signature="e#3563#3564#0" expanded="false" />
-            <element signature="e#6993#6994#0" expanded="false" />
-            <element signature="e#7013#7014#0" expanded="false" />
-            <element signature="e#14100#14101#0" expanded="false" />
-            <element signature="e#14155#14156#0" expanded="false" />
-            <element signature="e#14196#14197#0" expanded="false" />
-            <element signature="e#14216#14217#0" expanded="false" />
-            <element signature="e#75007#75008#0" expanded="false" />
-            <element signature="e#75024#75025#0" expanded="false" />
-            <element signature="e#84514#84515#0" expanded="false" />
-            <element signature="e#84550#84551#0" expanded="false" />
-            <element signature="e#85428#85429#0" expanded="false" />
-            <element signature="e#85449#85450#0" expanded="false" />
-            <element signature="e#85488#85489#0" expanded="false" />
-            <element signature="e#85509#85510#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/rta/MEMLTexture.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="60" column="59" selection-start-line="60" selection-start-column="59" selection-end-line="60" selection-end-column="59" />
-          <folding>
-            <element signature="e#0#118207#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#3873#3874#0" expanded="false" />
-            <element signature="e#3900#3901#0" expanded="false" />
-            <element signature="e#6548#6549#0" expanded="false" />
-            <element signature="e#6580#6581#0" expanded="false" />
-            <element signature="e#6790#6791#0" expanded="false" />
-            <element signature="e#6819#6820#0" expanded="false" />
-            <element signature="e#6858#6859#0" expanded="false" />
-            <element signature="e#6906#6907#0" expanded="false" />
-            <element signature="e#6940#6941#0" expanded="false" />
-            <element signature="e#6955#6956#0" expanded="false" />
-            <element signature="e#6997#6998#0" expanded="false" />
-            <element signature="e#7015#7016#0" expanded="false" />
-            <element signature="e#7084#7085#0" expanded="false" />
-            <element signature="e#7103#7104#0" expanded="false" />
-            <element signature="e#7203#7204#0" expanded="false" />
-            <element signature="e#7221#7222#0" expanded="false" />
-            <element signature="e#7309#7310#0" expanded="false" />
-            <element signature="e#7357#7358#0" expanded="false" />
-            <element signature="e#7390#7391#0" expanded="false" />
-            <element signature="e#7440#7441#0" expanded="false" />
-            <element signature="e#7490#7491#0" expanded="false" />
-            <element signature="e#7519#7520#0" expanded="false" />
-            <element signature="e#7559#7560#0" expanded="false" />
-            <element signature="e#7587#7588#0" expanded="false" />
-            <element signature="e#7628#7629#0" expanded="false" />
-            <element signature="e#7683#7684#0" expanded="false" />
-            <element signature="e#7732#7733#0" expanded="false" />
-            <element signature="e#7762#7763#0" expanded="false" />
-            <element signature="e#7801#7802#0" expanded="false" />
-            <element signature="e#7830#7831#0" expanded="false" />
-            <element signature="e#7870#7871#0" expanded="false" />
-            <element signature="e#7895#7896#0" expanded="false" />
-            <element signature="e#8208#8209#0" expanded="false" />
-            <element signature="e#8236#8237#0" expanded="false" />
-            <element signature="e#8410#8411#0" expanded="false" />
-            <element signature="e#8438#8439#0" expanded="false" />
-            <element signature="e#8479#8480#0" expanded="false" />
-            <element signature="e#8520#8521#0" expanded="false" />
-            <element signature="e#8568#8569#0" expanded="false" />
-            <element signature="e#8597#8598#0" expanded="false" />
-            <element signature="e#8945#8946#0" expanded="false" />
-            <element signature="e#8998#8999#0" expanded="false" />
-            <element signature="e#9169#9170#0" expanded="false" />
-            <element signature="e#9198#9199#0" expanded="false" />
-            <element signature="e#9234#9235#0" expanded="false" />
-            <element signature="e#9288#9289#0" expanded="false" />
-            <element signature="e#9465#9466#0" expanded="false" />
-            <element signature="e#9495#9496#0" expanded="false" />
-            <element signature="e#9534#9535#0" expanded="false" />
-            <element signature="e#9587#9588#0" expanded="false" />
-            <element signature="e#9766#9767#0" expanded="false" />
-            <element signature="e#9795#9796#0" expanded="false" />
-            <element signature="e#9832#9833#0" expanded="false" />
-            <element signature="e#9885#9886#0" expanded="false" />
-            <element signature="e#10060#10061#0" expanded="false" />
-            <element signature="e#10089#10090#0" expanded="false" />
-            <element signature="e#10134#10135#0" expanded="false" />
-            <element signature="e#10163#10164#0" expanded="false" />
-            <element signature="e#10198#10199#0" expanded="false" />
-            <element signature="e#10226#10227#0" expanded="false" />
-            <element signature="e#10269#10270#0" expanded="false" />
-            <element signature="e#10295#10296#0" expanded="false" />
-            <element signature="e#10328#10329#0" expanded="false" />
-            <element signature="e#10354#10355#0" expanded="false" />
-            <element signature="e#10738#10739#0" expanded="false" />
-            <element signature="e#10768#10769#0" expanded="false" />
-            <element signature="e#10802#10803#0" expanded="false" />
-            <element signature="e#10831#10832#0" expanded="false" />
-            <element signature="e#10866#10867#0" expanded="false" />
-            <element signature="e#10915#10916#0" expanded="false" />
-            <element signature="e#10957#10958#0" expanded="false" />
-            <element signature="e#11011#11012#0" expanded="false" />
-            <element signature="e#11206#11207#0" expanded="false" />
-            <element signature="e#11236#11237#0" expanded="false" />
-            <element signature="e#11285#11286#0" expanded="false" />
-            <element signature="e#11334#11335#0" expanded="false" />
-            <element signature="e#11373#11374#0" expanded="false" />
-            <element signature="e#11402#11403#0" expanded="false" />
-            <element signature="e#11442#11443#0" expanded="false" />
-            <element signature="e#11471#11472#0" expanded="false" />
-            <element signature="e#11520#11521#0" expanded="false" />
-            <element signature="e#11550#11551#0" expanded="false" />
-            <element signature="e#11583#11584#0" expanded="false" />
-            <element signature="e#11609#11610#0" expanded="false" />
-            <element signature="e#11646#11647#0" expanded="false" />
-            <element signature="e#11705#11706#0" expanded="false" />
-            <element signature="e#11744#11745#0" expanded="false" />
-            <element signature="e#11768#11769#0" expanded="false" />
-            <element signature="e#11804#11805#0" expanded="false" />
-            <element signature="e#11828#11829#0" expanded="false" />
-            <element signature="e#11876#11877#0" expanded="false" />
-            <element signature="e#11901#11902#0" expanded="false" />
-            <element signature="e#11988#11989#0" expanded="false" />
-            <element signature="e#12005#12006#0" expanded="false" />
-            <element signature="e#12034#12035#0" expanded="false" />
-            <element signature="e#12051#12052#0" expanded="false" />
-            <element signature="e#16325#16326#0" expanded="false" />
-            <element signature="e#16357#16358#0" expanded="false" />
-            <element signature="e#17677#17678#0" expanded="false" />
-            <element signature="e#17694#17695#0" expanded="false" />
-            <element signature="e#17800#17801#0" expanded="false" />
-            <element signature="e#17819#17820#0" expanded="false" />
-            <element signature="e#26259#26260#0" expanded="false" />
-            <element signature="e#26286#26287#0" expanded="false" />
-            <element signature="e#26320#26321#0" expanded="false" />
-            <element signature="e#26346#26347#0" expanded="false" />
-            <element signature="e#26414#26415#0" expanded="false" />
-            <element signature="e#26433#26434#0" expanded="false" />
-            <element signature="e#26467#26468#0" expanded="false" />
-            <element signature="e#26493#26494#0" expanded="false" />
-            <element signature="e#40887#40888#0" expanded="false" />
-            <element signature="e#40930#40931#0" expanded="false" />
-            <element signature="e#40960#40961#0" expanded="false" />
-            <element signature="e#41003#41004#0" expanded="false" />
-            <element signature="e#41033#41034#0" expanded="false" />
-            <element signature="e#41076#41077#0" expanded="false" />
-            <element signature="e#41240#41241#0" expanded="false" />
-            <element signature="e#41289#41290#0" expanded="false" />
-            <element signature="e#41332#41333#0" expanded="false" />
-            <element signature="e#41381#41382#0" expanded="false" />
-            <element signature="e#41424#41425#0" expanded="false" />
-            <element signature="e#41473#41474#0" expanded="false" />
-            <element signature="e#43887#43888#0" expanded="false" />
-            <element signature="e#43912#43913#0" expanded="false" />
-            <element signature="e#43948#43949#0" expanded="false" />
-            <element signature="e#43971#43972#0" expanded="false" />
-            <element signature="e#45107#45108#0" expanded="false" />
-            <element signature="e#45177#45178#0" expanded="false" />
-            <element signature="e#60662#60663#0" expanded="false" />
-            <element signature="e#60705#60706#0" expanded="false" />
-            <element signature="e#60753#60754#0" expanded="false" />
-            <element signature="e#60797#60798#0" expanded="false" />
-            <element signature="e#91432#91433#0" expanded="false" />
-            <element signature="e#91454#91455#0" expanded="false" />
-            <element signature="e#100364#100365#0" expanded="false" />
-            <element signature="e#100386#100387#0" expanded="false" />
-            <element signature="e#100429#100430#0" expanded="false" />
-            <element signature="e#100450#100451#0" expanded="false" />
-            <element signature="e#100507#100508#0" expanded="false" />
-            <element signature="e#100522#100523#0" expanded="false" />
-            <element signature="e#101168#101169#0" expanded="false" />
-            <element signature="e#101219#101220#0" expanded="false" />
-            <element signature="e#106170#106171#0" expanded="false" />
-            <element signature="e#106232#106233#0" expanded="false" />
-            <element signature="e#107461#107462#0" expanded="false" />
-            <element signature="e#107487#107488#0" expanded="false" />
-            <element signature="e#108015#108016#0" expanded="false" />
-            <element signature="e#108081#108082#0" expanded="false" />
-            <element signature="e#108435#108436#0" expanded="false" />
-            <element signature="e#108498#108499#0" expanded="false" />
-            <element signature="e#108851#108852#0" expanded="false" />
-            <element signature="e#108884#108885#0" expanded="false" />
-            <element signature="e#112310#112311#0" expanded="false" />
-            <element signature="e#112325#112326#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/awt/Utility.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1260">
@@ -3724,32 +2361,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/XRayDataSqLite.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1800">
-          <caret line="127" column="68" selection-start-line="127" selection-start-column="25" selection-end-line="127" selection-end-column="68" />
-          <folding>
-            <element signature="e#5090#5117#0" expanded="false" />
-            <element signature="e#9629#9639#0" expanded="false" />
-            <element signature="e#10069#10076#0" expanded="false" />
-            <element signature="e#27504#27505#0" expanded="false" />
-            <element signature="e#27528#27529#0" expanded="false" />
-            <element signature="e#27822#27823#0" expanded="false" />
-            <element signature="e#27887#27888#0" expanded="false" />
-            <element signature="e#27929#27930#0" expanded="false" />
-            <element signature="e#27950#27951#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/util/MoreMath.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="53" column="30" selection-start-line="53" selection-start-column="26" selection-end-line="53" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/sizestrain/PlanarDefectsReciprocalModel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -3777,6 +2388,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="135" column="60" selection-start-line="135" selection-start-column="60" selection-end-line="135" selection-end-column="60" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -3814,166 +2426,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Phase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="62130">
-          <caret line="4310" column="77" selection-start-line="4310" selection-start-column="77" selection-end-line="4310" selection-end-column="77" />
-          <folding>
-            <element signature="e#0#166139#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#6708#6720#0" expanded="false" />
-            <element signature="e#8566#8567#0" expanded="false" />
-            <element signature="e#8590#8591#0" expanded="false" />
-            <element signature="e#8620#8621#0" expanded="false" />
-            <element signature="e#8648#8649#0" expanded="false" />
-            <element signature="e#9064#9065#0" expanded="false" />
-            <element signature="e#9085#9086#0" expanded="false" />
-            <element signature="e#9127#9128#0" expanded="false" />
-            <element signature="e#9143#9144#0" expanded="false" />
-            <element signature="e#9464#9465#0" expanded="false" />
-            <element signature="e#9496#9497#0" expanded="false" />
-            <element signature="e#12993#12994#0" expanded="false" />
-            <element signature="e#13037#13038#0" expanded="false" />
-            <element signature="e#29471#29472#0" expanded="false" />
-            <element signature="e#29502#29503#0" expanded="false" />
-            <element signature="e#29548#29549#0" expanded="false" />
-            <element signature="e#29582#29583#0" expanded="false" />
-            <element signature="e#29636#29637#0" expanded="false" />
-            <element signature="e#29686#29687#0" expanded="false" />
-            <element signature="e#29856#29857#0" expanded="false" />
-            <element signature="e#29903#29904#0" expanded="false" />
-            <element signature="e#29946#29947#0" expanded="false" />
-            <element signature="e#29987#29988#0" expanded="false" />
-            <element signature="e#30750#30751#0" expanded="false" />
-            <element signature="e#30789#30790#0" expanded="false" />
-            <element signature="e#30826#30827#0" expanded="false" />
-            <element signature="e#30866#30867#0" expanded="false" />
-            <element signature="e#30917#30918#0" expanded="false" />
-            <element signature="e#30968#30969#0" expanded="false" />
-            <element signature="e#31426#31427#0" expanded="false" />
-            <element signature="e#31471#31472#0" expanded="false" />
-            <element signature="e#31508#31509#0" expanded="false" />
-            <element signature="e#31539#31540#0" expanded="false" />
-            <element signature="e#31578#31579#0" expanded="false" />
-            <element signature="e#31609#31610#0" expanded="false" />
-            <element signature="e#31650#31651#0" expanded="false" />
-            <element signature="e#31681#31682#0" expanded="false" />
-            <element signature="e#41613#41614#0" expanded="false" />
-            <element signature="e#41656#41657#0" expanded="false" />
-            <element signature="e#42011#42012#0" expanded="false" />
-            <element signature="e#42042#42043#0" expanded="false" />
-            <element signature="e#42083#42084#0" expanded="false" />
-            <element signature="e#42114#42115#0" expanded="false" />
-            <element signature="e#42146#42147#0" expanded="false" />
-            <element signature="e#42177#42178#0" expanded="false" />
-            <element signature="e#42457#42458#0" expanded="false" />
-            <element signature="e#42488#42489#0" expanded="false" />
-            <element signature="e#42628#42629#0" expanded="false" />
-            <element signature="e#42659#42660#0" expanded="false" />
-            <element signature="e#42688#42689#0" expanded="false" />
-            <element signature="e#42728#42729#0" expanded="false" />
-            <element signature="e#42923#42924#0" expanded="false" />
-            <element signature="e#42979#42980#0" expanded="false" />
-            <element signature="e#43400#43401#0" expanded="false" />
-            <element signature="e#43418#43419#0" expanded="false" />
-            <element signature="e#43466#43467#0" expanded="false" />
-            <element signature="e#43529#43530#0" expanded="false" />
-            <element signature="e#43800#43801#0" expanded="false" />
-            <element signature="e#43846#43847#0" expanded="false" />
-            <element signature="e#44348#44349#0" expanded="false" />
-            <element signature="e#44366#44367#0" expanded="false" />
-            <element signature="e#44404#44405#0" expanded="false" />
-            <element signature="e#44457#44458#0" expanded="false" />
-            <element signature="e#44701#44702#0" expanded="false" />
-            <element signature="e#44736#44737#0" expanded="false" />
-            <element signature="e#44782#44783#0" expanded="false" />
-            <element signature="e#44822#44823#0" expanded="false" />
-            <element signature="e#44859#44860#0" expanded="false" />
-            <element signature="e#44890#44891#0" expanded="false" />
-            <element signature="e#44930#44931#0" expanded="false" />
-            <element signature="e#44979#44980#0" expanded="false" />
-            <element signature="e#45234#45235#0" expanded="false" />
-            <element signature="e#45310#45311#0" expanded="false" />
-            <element signature="e#45344#45345#0" expanded="false" />
-            <element signature="e#45362#45363#0" expanded="false" />
-            <element signature="e#45403#45404#0" expanded="false" />
-            <element signature="e#45459#45460#0" expanded="false" />
-            <element signature="e#45704#45705#0" expanded="false" />
-            <element signature="e#45756#45757#0" expanded="false" />
-            <element signature="e#46137#46138#0" expanded="false" />
-            <element signature="e#46155#46156#0" expanded="false" />
-            <element signature="e#46199#46200#0" expanded="false" />
-            <element signature="e#46258#46259#0" expanded="false" />
-            <element signature="e#46518#46519#0" expanded="false" />
-            <element signature="e#46580#46581#0" expanded="false" />
-            <element signature="e#46620#46621#0" expanded="false" />
-            <element signature="e#46682#46683#0" expanded="false" />
-            <element signature="e#46724#46725#0" expanded="false" />
-            <element signature="e#46780#46781#0" expanded="false" />
-            <element signature="e#47173#47174#0" expanded="false" />
-            <element signature="e#47191#47192#0" expanded="false" />
-            <element signature="e#47233#47234#0" expanded="false" />
-            <element signature="e#47296#47297#0" expanded="false" />
-            <element signature="e#47563#47564#0" expanded="false" />
-            <element signature="e#47615#47616#0" expanded="false" />
-            <element signature="e#48035#48036#0" expanded="false" />
-            <element signature="e#48112#48113#0" expanded="false" />
-            <element signature="e#48149#48150#0" expanded="false" />
-            <element signature="e#48167#48168#0" expanded="false" />
-            <element signature="e#48205#48206#0" expanded="false" />
-            <element signature="e#48264#48265#0" expanded="false" />
-            <element signature="e#48505#48506#0" expanded="false" />
-            <element signature="e#48550#48551#0" expanded="false" />
-            <element signature="e#48999#49000#0" expanded="false" />
-            <element signature="e#49067#49068#0" expanded="false" />
-            <element signature="e#49097#49098#0" expanded="false" />
-            <element signature="e#49115#49116#0" expanded="false" />
-            <element signature="e#49152#49153#0" expanded="false" />
-            <element signature="e#49204#49205#0" expanded="false" />
-            <element signature="e#49411#49412#0" expanded="false" />
-            <element signature="e#49444#49445#0" expanded="false" />
-            <element signature="e#50428#50429#0" expanded="false" />
-            <element signature="e#50495#50496#0" expanded="false" />
-            <element signature="e#51051#51052#0" expanded="false" />
-            <element signature="e#51079#51080#0" expanded="false" />
-            <element signature="e#51828#51829#0" expanded="false" />
-            <element signature="e#51862#51863#0" expanded="false" />
-            <element signature="e#63280#63281#0" expanded="false" />
-            <element signature="e#63319#63320#0" expanded="false" />
-            <element signature="e#65510#65511#0" expanded="false" />
-            <element signature="e#65537#65538#0" expanded="false" />
-            <element signature="e#67895#67896#0" expanded="false" />
-            <element signature="e#67964#67965#0" expanded="false" />
-            <element signature="e#70420#70421#0" expanded="false" />
-            <element signature="e#70478#70479#0" expanded="false" />
-            <element signature="e#74070#74071#0" expanded="false" />
-            <element signature="e#74117#74118#0" expanded="false" />
-            <element signature="e#79188#79189#0" expanded="false" />
-            <element signature="e#79216#79217#0" expanded="false" />
-            <element signature="e#97602#97614#0" expanded="false" />
-            <element signature="e#103378#103379#0" expanded="false" />
-            <element signature="e#103403#103404#0" expanded="false" />
-            <element signature="e#133868#133869#0" expanded="false" />
-            <element signature="e#133913#133914#0" expanded="false" />
-            <element signature="e#133944#133945#0" expanded="false" />
-            <element signature="e#133989#133990#0" expanded="false" />
-            <element signature="e#134019#134020#0" expanded="false" />
-            <element signature="e#134064#134065#0" expanded="false" />
-            <element signature="e#149600#149614#0" expanded="false" />
-            <element signature="e#153088#153089#0" expanded="false" />
-            <element signature="e#153125#153126#0" expanded="false" />
-            <element signature="e#154881#154882#0" expanded="false" />
-            <element signature="e#154929#154930#0" expanded="false" />
-            <element signature="e#154985#154986#0" expanded="false" />
-            <element signature="e#155045#155046#0" expanded="false" />
-            <element signature="e#155088#155089#0" expanded="false" />
-            <element signature="e#155135#155136#0" expanded="false" />
-            <element signature="e#155190#155191#0" expanded="false" />
-            <element signature="e#155249#155250#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/util/AtomQuantity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -3982,106 +2434,74 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/AtomSite.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="20025">
-          <caret line="1406" column="36" selection-start-line="1406" selection-start-column="36" selection-end-line="1406" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#82230#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#3711#3724#0" expanded="false" />
-            <element signature="e#3797#3811#0" expanded="false" />
-            <element signature="e#3887#3901#0" expanded="false" />
-            <element signature="e#5847#5848#0" expanded="false" />
-            <element signature="e#5879#5880#0" expanded="false" />
-            <element signature="e#11619#11620#0" expanded="false" />
-            <element signature="e#11671#11672#0" expanded="false" />
-            <element signature="e#11710#11711#0" expanded="false" />
-            <element signature="e#11768#11769#0" expanded="false" />
-            <element signature="e#12978#12979#0" expanded="false" />
-            <element signature="e#13030#13031#0" expanded="false" />
-            <element signature="e#18204#18205#0" expanded="false" />
-            <element signature="e#18237#18238#0" expanded="false" />
-            <element signature="e#18377#18378#0" expanded="false" />
-            <element signature="e#18403#18404#0" expanded="false" />
-            <element signature="e#18665#18666#0" expanded="false" />
-            <element signature="e#18696#18697#0" expanded="false" />
-            <element signature="e#18959#18960#0" expanded="false" />
-            <element signature="e#18984#18985#0" expanded="false" />
-            <element signature="e#19245#19246#0" expanded="false" />
-            <element signature="e#19309#19310#0" expanded="false" />
-            <element signature="e#19707#19708#0" expanded="false" />
-            <element signature="e#19741#19742#0" expanded="false" />
-            <element signature="e#19928#19929#0" expanded="false" />
-            <element signature="e#19965#19966#0" expanded="false" />
-            <element signature="e#20142#20143#0" expanded="false" />
-            <element signature="e#20187#20188#0" expanded="false" />
-            <element signature="e#20364#20365#0" expanded="false" />
-            <element signature="e#20409#20410#0" expanded="false" />
-            <element signature="e#20586#20587#0" expanded="false" />
-            <element signature="e#20631#20632#0" expanded="false" />
-            <element signature="e#21108#21109#0" expanded="false" />
-            <element signature="e#21151#21152#0" expanded="false" />
-            <element signature="e#21294#21295#0" expanded="false" />
-            <element signature="e#21328#21329#0" expanded="false" />
-            <element signature="e#21502#21503#0" expanded="false" />
-            <element signature="e#21537#21538#0" expanded="false" />
-            <element signature="e#27958#27959#0" expanded="false" />
-            <element signature="e#28053#28054#0" expanded="false" />
-            <element signature="e#28080#28081#0" expanded="false" />
-            <element signature="e#28175#28176#0" expanded="false" />
-            <element signature="e#28202#28203#0" expanded="false" />
-            <element signature="e#28297#28298#0" expanded="false" />
-            <element signature="e#31216#31217#0" expanded="false" />
-            <element signature="e#31247#31248#0" expanded="false" />
-            <element signature="e#34019#34020#0" expanded="false" />
-            <element signature="e#34050#34051#0" expanded="false" />
-            <element signature="e#34098#34099#0" expanded="false" />
-            <element signature="e#34130#34131#0" expanded="false" />
-            <element signature="e#50337#50338#0" expanded="false" />
-            <element signature="e#50376#50377#0" expanded="false" />
-            <element signature="e#53422#53423#0" expanded="false" />
-            <element signature="e#53467#53468#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/AtomScatterer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3180">
-          <caret line="251" column="2" selection-start-line="251" selection-start-column="2" selection-end-line="251" selection-end-column="2" />
-          <folding>
-            <element signature="e#0#12371#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#2262#2263#0" expanded="false" />
-            <element signature="e#2302#2303#0" expanded="false" />
-            <element signature="e#3045#3046#0" expanded="false" />
-            <element signature="e#3115#3116#0" expanded="false" />
-            <element signature="e#3166#3167#0" expanded="false" />
-            <element signature="e#3238#3239#0" expanded="false" />
-            <element signature="e#6771#6772#0" expanded="false" />
-            <element signature="e#6799#6800#0" expanded="false" />
-            <element signature="e#7441#7442#0" expanded="false" />
-            <element signature="e#7461#7462#0" expanded="false" />
-            <element signature="e#7495#7496#0" expanded="false" />
-            <element signature="e#7515#7516#0" expanded="false" />
-            <element signature="e#7558#7559#0" expanded="false" />
-            <element signature="e#7608#7609#0" expanded="false" />
-            <element signature="e#7641#7642#0" expanded="false" />
-            <element signature="e#7692#7693#0" expanded="false" />
-            <element signature="e#7835#7836#0" expanded="false" />
-            <element signature="e#7912#7913#0" expanded="false" />
-            <element signature="e#11561#11562#0" expanded="false" />
-            <element signature="e#11608#11609#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Layer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
+        <state relative-caret-position="11595">
           <caret line="860" column="2" selection-start-line="860" selection-start-column="2" selection-end-line="860" selection-end-column="2" />
-          <folding />
+          <folding>
+            <element signature="e#0#40652#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#2378#2379#0" expanded="false" />
+            <element signature="e#2410#2411#0" expanded="false" />
+            <element signature="e#4060#4061#0" expanded="false" />
+            <element signature="e#4086#4087#0" expanded="false" />
+            <element signature="e#4113#4114#0" expanded="false" />
+            <element signature="e#4138#4139#0" expanded="false" />
+            <element signature="e#4425#4426#0" expanded="false" />
+            <element signature="e#4488#4489#0" expanded="false" />
+            <element signature="e#4521#4522#0" expanded="false" />
+            <element signature="e#4548#4549#0" expanded="false" />
+            <element signature="e#5421#5422#0" expanded="false" />
+            <element signature="e#5458#5459#0" expanded="false" />
+            <element signature="e#5654#5655#0" expanded="false" />
+            <element signature="e#5698#5699#0" expanded="false" />
+            <element signature="e#9876#9877#0" expanded="false" />
+            <element signature="e#9930#9931#0" expanded="false" />
+            <element signature="e#9967#9968#0" expanded="false" />
+            <element signature="e#10001#10002#0" expanded="false" />
+            <element signature="e#10040#10041#0" expanded="false" />
+            <element signature="e#10088#10089#0" expanded="false" />
+            <element signature="e#10125#10126#0" expanded="false" />
+            <element signature="e#10170#10171#0" expanded="false" />
+            <element signature="e#10213#10214#0" expanded="false" />
+            <element signature="e#10250#10251#0" expanded="false" />
+            <element signature="e#10295#10296#0" expanded="false" />
+            <element signature="e#10336#10337#0" expanded="false" />
+            <element signature="e#10381#10382#0" expanded="false" />
+            <element signature="e#10422#10423#0" expanded="false" />
+            <element signature="e#10460#10461#0" expanded="false" />
+            <element signature="e#10494#10495#0" expanded="false" />
+            <element signature="e#10534#10535#0" expanded="false" />
+            <element signature="e#10578#10579#0" expanded="false" />
+            <element signature="e#10624#10625#0" expanded="false" />
+            <element signature="e#10666#10667#0" expanded="false" />
+            <element signature="e#10712#10713#0" expanded="false" />
+            <element signature="e#10754#10755#0" expanded="false" />
+            <element signature="e#10792#10793#0" expanded="false" />
+            <element signature="e#10863#10864#0" expanded="false" />
+            <element signature="e#10903#10904#0" expanded="false" />
+            <element signature="e#10947#10948#0" expanded="false" />
+            <element signature="e#10993#10994#0" expanded="false" />
+            <element signature="e#11035#11036#0" expanded="false" />
+            <element signature="e#11072#11073#0" expanded="false" />
+            <element signature="e#11106#11107#0" expanded="false" />
+            <element signature="e#11145#11146#0" expanded="false" />
+            <element signature="e#11188#11189#0" expanded="false" />
+            <element signature="e#11225#11226#0" expanded="false" />
+            <element signature="e#11265#11266#0" expanded="false" />
+            <element signature="e#11309#11310#0" expanded="false" />
+            <element signature="e#11350#11351#0" expanded="false" />
+            <element signature="e#11395#11396#0" expanded="false" />
+            <element signature="e#11436#11437#0" expanded="false" />
+            <element signature="e#11911#11912#0" expanded="false" />
+            <element signature="e#11987#11988#0" expanded="false" />
+            <element signature="e#15649#15650#0" expanded="false" />
+            <element signature="e#15716#15717#0" expanded="false" />
+            <element signature="e#15771#15772#0" expanded="false" />
+            <element signature="e#15830#15831#0" expanded="false" />
+            <element signature="e#22488#22489#0" expanded="false" />
+            <element signature="e#22549#22550#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -4093,42 +2513,325 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/awt/SpectrumPlotPanel.java">
+    <entry file="file://$PROJECT_DIR$/Installers/Maud_linux64/Maud/Maud.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="2387" column="37" selection-start-line="2387" selection-start-column="37" selection-end-line="2387" selection-end-column="37" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/TubeSpectrumTransmission.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="90" column="93" selection-start-line="90" selection-start-column="93" selection-end-line="90" selection-end-column="93" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/util/Constants.java">
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/GIXRFModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="269" column="42" selection-start-line="269" selection-start-column="42" selection-end-line="269" selection-end-column="42" />
+        <state relative-caret-position="187">
+          <caret line="517" column="109" selection-start-line="517" selection-start-column="91" selection-end-line="517" selection-end-column="109" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/detector/XRFDetector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="325" column="141" selection-start-line="325" selection-start-column="87" selection-end-line="325" selection-end-column="141" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/radiation/XrayEbelTubeRadiation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="487">
+          <caret line="346" column="3" selection-start-line="346" selection-start-column="3" selection-end-line="346" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/util/FluorescenceLine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1478">
+          <caret line="154" column="105" selection-start-line="154" selection-start-column="105" selection-end-line="154" selection-end-column="105" />
+          <folding>
+            <element signature="e#4316#4317#0" expanded="true" />
+            <element signature="e#4341#4342#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/awt/StructureAtomicEditPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="45" column="13" selection-start-line="45" selection-start-column="13" selection-end-line="45" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/AbsorptionWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="185" column="53" selection-start-line="185" selection-start-column="53" selection-end-line="185" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/AtomScatterer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="271" column="46" selection-start-line="271" selection-start-column="46" selection-end-line="271" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home/src.zip!/java/lang/Math.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="86" column="19" selection-start-line="86" selection-start-column="19" selection-end-line="86" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/awt/SpectrumPlotPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="682">
+          <caret line="1340" column="121" selection-start-line="1340" selection-start-column="121" selection-end-line="1340" selection-end-column="121" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/awt/MultiPlotFitting.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2850">
+          <caret line="43" column="13" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PlotSimpleData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="276" column="42" selection-start-line="276" selection-start-column="42" selection-end-line="276" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/util/MoreMath.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="11940">
+          <caret line="1271" column="24" selection-start-line="1271" selection-start-column="24" selection-end-line="1271" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/awt/JAtomTypeListPane.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1238">
+          <caret line="164" column="70" selection-start-line="164" selection-start-column="70" selection-end-line="164" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/instbroad/EDXRFInstrumentBroadening.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="213" column="39" selection-start-line="213" selection-start-column="39" selection-end-line="213" selection-end-column="39" />
+          <folding>
+            <element signature="e#6664#6665#0" expanded="false" />
+            <element signature="e#6705#6706#0" expanded="false" />
+            <element signature="e#6746#6747#0" expanded="false" />
+            <element signature="e#6795#6796#0" expanded="false" />
+            <element signature="e#6830#6831#0" expanded="false" />
+            <element signature="e#6876#6877#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/awt/AtomPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="264" column="46" selection-start-line="264" selection-start-column="41" selection-end-line="264" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/AtomSite.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="1142" column="46" selection-start-line="1142" selection-start-column="46" selection-end-line="1142" selection-end-column="46" />
+          <folding>
+            <element signature="e#18665#18666#0" expanded="false" />
+            <element signature="e#18696#18697#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/help/readme.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="46" column="60" selection-start-line="46" selection-start-column="60" selection-end-line="46" selection-end-column="60" />
+        <state relative-caret-position="225">
+          <caret line="101" column="19" selection-start-line="101" selection-start-column="19" selection-end-line="101" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Installers/Maud_linux64/Maud/Maud.sh">
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/instbroad/EDSAsymmetricBroadening.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="187">
+          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/radiographema/Maud.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1470">
+          <caret line="44" column="13" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/radiographema/MaudText.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-510">
+          <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Phase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-645">
+          <caret line="50" column="13" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/microabs/MicroAbsorptionVien.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-82">
+          <caret line="43" column="13" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/microabs/MicroAbsorptionBrindley.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1372">
+          <caret line="49" column="40" selection-start-line="49" selection-start-column="5" selection-end-line="49" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/microabs/MicroAbsorptionNone.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="50" column="3" selection-start-line="50" selection-start-column="3" selection-end-line="50" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/MicroAbsorption.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="74" column="66" selection-start-line="74" selection-start-column="66" selection-end-line="74" selection-end-column="66" />
+          <folding>
+            <element signature="e#1488#1489#0" expanded="true" />
+            <element signature="e#1517#1518#0" expanded="true" />
+            <element signature="e#1558#1559#0" expanded="true" />
+            <element signature="e#1594#1595#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/XRDcat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-8505">
+          <caret line="48" column="13" selection-start-line="48" selection-start-column="13" selection-end-line="48" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Parameter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1740">
+          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/awt/myJFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="794" column="19" selection-start-line="794" selection-start-column="14" selection-end-line="794" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/cal/Angular2DCurvedDetectorCalibration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="271" column="9" selection-start-line="271" selection-start-column="9" selection-end-line="271" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/XRayDataSqLite.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="426" column="58" selection-start-line="426" selection-start-column="24" selection-end-line="426" selection-end-column="58" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/TXRFluorescence.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="158">
+          <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/FluorescenceBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="38" column="13" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/QuantitativeEDXRF.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/QuantitativeXRF.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="218">
+          <caret line="350" column="55" selection-start-line="350" selection-start-column="55" selection-end-line="350" selection-end-column="55" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-278">
-          <caret line="870" column="73" selection-start-line="870" selection-start-column="73" selection-end-line="870" selection-end-column="73" />
+        <state relative-caret-position="31485">
+          <caret line="2099" column="18" selection-start-line="2099" selection-start-column="18" selection-end-line="2099" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/util/Constants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4605">
+          <caret line="269" column="43" selection-start-line="269" selection-start-column="43" selection-end-line="269" selection-end-column="43" />
           <folding />
         </state>
       </provider>

@@ -47,18 +47,21 @@ public class FluorescenceLine {
 	int coreShellID = -1;
 	double fluorescenceYield = 0;
 	double coreShellEnergy = 0;
+	public String transitionID = "";
 
-	public FluorescenceLine(double energyPosition, int inner_shell_ID, double innerShellEnergy) {
+	public FluorescenceLine(double energyPosition, int inner_shell_ID, double innerShellEnergy, String id) {
     energy = energyPosition;
     intensity = 1.0;
 		coreShellID = inner_shell_ID;
 		coreShellEnergy = innerShellEnergy;
+		transitionID = id;
   }
 
 	public FluorescenceLine(FluorescenceLine lineToCopy) {
 		energy = lineToCopy.energy;
 		intensity = lineToCopy.intensity;
 		coreShellID = lineToCopy.coreShellID;
+		transitionID = lineToCopy.transitionID;
 		transitionProbability = lineToCopy.transitionProbability;
 		fluorescenceYield = lineToCopy.fluorescenceYield;
 		coreShellEnergy = lineToCopy.coreShellEnergy;
@@ -149,7 +152,7 @@ public class FluorescenceLine {
 	}
 
 	public String toString() {
-		return XRayDataSqLite.shellIDs[getCoreShellID()] + " " + getEnergy() + " " + getTransitionProbability();
+		return transitionID + " " + getEnergy() + " " + getTransitionProbability() * getFluorescenceYield();
 	}
 
 	public void printToConsole() {

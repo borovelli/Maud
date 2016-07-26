@@ -41,6 +41,8 @@ public class PlotSimpleData extends GraphFrame {
   double[] function = null;
   double[] xCoord = null;
 	boolean dotsPlot = false;
+	Axis xaxis = null, yaxis = null;
+
 
 	public PlotSimpleData(Frame parent, double[] function, boolean dots) {
 
@@ -86,7 +88,17 @@ public class PlotSimpleData extends GraphFrame {
 
   }
 
-  public PlotSimpleData(Frame parent, float[] function) {
+	public PlotSimpleData(Frame parent, double[] x, double[][] function) {
+
+		super(parent);
+
+		initializeFrame();
+
+		createGraph(x, function);
+
+	}
+
+	public PlotSimpleData(Frame parent, float[] function) {
 
     super(parent);
 
@@ -230,7 +242,50 @@ public class PlotSimpleData extends GraphFrame {
 
   }
 
-  public void saveFile() {
+	private void createGraph(double[] x, double[][] function) {
+/*
+**      Retrieve the data Set.
+*/
+
+		if (function != null) {
+			this.function = null;
+			this.xCoord = x;
+//          System.out.println("Loading data....");
+
+			for (int k = 0; k < function.length; k++) {
+				int np = function.length;
+				double data[] = new double[2 * np];
+				for (int i = 0, j = 0; i < np; i++, j += 2) {
+					data[j] = x[i];
+					data[j + 1] = function[k][i];
+				}
+
+//          System.out.println("Data loaded");
+
+				DataSet data1 = graph.loadDataSet(data, np);
+				data1.linecolor = SpectrumPlotPanel.getPastelColor(k);
+				if (dotsPlot) {
+					data1.linestyle = 0;
+					data1.marker = 3;
+					data1.markerscale = 1;
+					data1.markercolor = SpectrumPlotPanel.getPastelColor(k);
+				}
+
+				if (xaxis == null)
+					createAxes(data1);
+				else {
+					xaxis.attachDataSet(data1);
+					yaxis.attachDataSet(data1);
+				}
+			}
+
+		} else
+			fullGraphPanel.add("South", new Label("No function available!"));
+		setComponentToPrint(fullGraphPanel);
+
+	}
+
+	public void saveFile() {
     // nothing by default
     if (function == null)
       return;
@@ -270,7 +325,7 @@ public class PlotSimpleData extends GraphFrame {
 */
 //          System.out.println("Attaching X-axis....");
 
-    Axis xaxis = graph.createAxis(Axis.BOTTOM);
+    xaxis = graph.createAxis(Axis.BOTTOM);
     xaxis.attachDataSet(data1);
     xaxis.setTitleText("x");
     xaxis.setTitleFont(new Font("TimesRoman", Font.BOLD, 14));
@@ -281,7 +336,7 @@ public class PlotSimpleData extends GraphFrame {
 */
 //          System.out.println("Attaching Y-axis....");
 
-    Axis yaxis = graph.createAxis(Axis.LEFT);
+    yaxis = graph.createAxis(Axis.LEFT);
     yaxis.attachDataSet(data1);
     yaxis.setTitleText("Function");
     yaxis.setTitleFont(new Font("TimesRoman", Font.BOLD, 14));

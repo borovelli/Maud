@@ -261,13 +261,13 @@ public class Constants {
   public static String resultsFile = "results.txt";
   public static String userName = null;
   public static String startPath = "/";
-  public static String maudReleaseBuilt = "$Revision: 2.67 $";
-  public static String maudDateBuilt = "$Date: 2016/07/21 15:09:00 $";
+  public static String maudReleaseBuilt = "$Revision: 2.68 $";
+  public static String maudDateBuilt = "$Date: 2016/07/26 16:22:00 $";
 
   public static final double arg2PIover3 = PI2 / 3.;
   public static final double sinArg2PIover3 = Math.sin(arg2PIover3);
   public static final double cosArg2PIover3 = Math.cos(arg2PIover3);
-  public static double maud_version = 2.67;
+  public static double maud_version = 2.68;
 	public static boolean useOpenCL = false;
 	public static Vector<OpenCLDevice> openClDevices= null;
 	public static OpenCLDevice openclDevice = null;

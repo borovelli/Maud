@@ -464,7 +464,7 @@ public class GIXRFModel extends FluorescenceBase {
 							for (int sub_i = 0; sub_i < sub20; sub_i++) {
 								subEnergy += stepEnergy;
 								subEnergyInt += stepIntEnergy;
-								FluorescenceLine transfertLine = new FluorescenceLine(subEnergy, -1, 0);
+								FluorescenceLine transfertLine = new FluorescenceLine(subEnergy, -1, 0, "source");
 								double absorptionLineLambda = layer.getAbsorption(subEnergy) * density;
 								double totalIntensity = Math.exp(-layer.getOverLayerAbsorption(subEnergy) * density / sinPhid)
 										* subEnergyInt;
@@ -515,7 +515,7 @@ public class GIXRFModel extends FluorescenceBase {
 						} else {
 							double subEnergy = energyInKeV;
 							double subEnergyInt = energy_intensity;
-							FluorescenceLine transfertLine = new FluorescenceLine(subEnergy, -1, 0);
+							FluorescenceLine transfertLine = new FluorescenceLine(subEnergy, -1, 0, "transfert line");
 							double absorptionLineLambda = layer.getAbsorption(subEnergy) * density;
 							double totalIntensity = Math.exp(-layer.getOverLayerAbsorption(subEnergy) * density / sinPhid)
 									* subEnergyInt;

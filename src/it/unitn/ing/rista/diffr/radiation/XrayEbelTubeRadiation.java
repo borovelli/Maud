@@ -332,7 +332,7 @@ public class XrayEbelTubeRadiation extends RadiationType {
 	double[] atomWeight = null;
 
 	public void computeAll() {
-		double minimumAcceptedIntensity = MaudPreferences.getDouble("ebelTube.BremsStrahlung_minimumIntensity", 0.001);
+		double minimumAcceptedIntensity = MaudPreferences.getDouble("ebelTube.BremsStrahlung_minimumIntensity", 0.0001);
 		// here goes the tube spectrum computation
 
 //		System.out.println("Computing Ebel tube spectrum for anode: " + getRadiation(0).getWavelengthID());

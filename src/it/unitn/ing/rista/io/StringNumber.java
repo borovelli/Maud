@@ -64,11 +64,6 @@ public class StringNumber {
           token = st.nextToken();
           error = Double.valueOf(token).doubleValue();
         }
-
-/*			int decnumber = numberofdecimal();
-			int exponent = getE();
-			value = getValue() * Math.pow(10.0, (double) exponent);
-			error = getError() * Math.pow(10.0, (double) (exponent - decnumber + 1));*/
         if (hasError)
           thestring = thestring.substring(0, errorpos);
         return true;
