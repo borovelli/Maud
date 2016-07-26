@@ -297,6 +297,8 @@ public class Constants {
 
   public static boolean useNewAbsorption = true;
 
+	public static boolean forceOverwrite = true;
+
   public static long tmpTime = 0l;
 
   public static final int COMPUTED = 0, EXPERIMENTAL = 1, UNITARY = 2;
@@ -1162,7 +1164,7 @@ public class Constants {
             entryName1.indexOf("Files") == -1 &&
 		        entryName1.indexOf("files") == -1 &&
             entryName1.indexOf(".DS_Store") == -1) {
-          if (!Misc.checkForFile(folder + entryName)) {
+          if (forceOverwrite || !Misc.checkForFile(folder + entryName)) {
 	          it.unitn.ing.rista.util.FFT obj = new it.unitn.ing.rista.util.FFT();
 	          BufferedInputStream in = new BufferedInputStream((obj.getClass().getResource("/" + entryName)).openStream());
 	          FileOutputStream out = new FileOutputStream(folder + entryName1);
@@ -1223,7 +1225,7 @@ public class Constants {
 				    entryName1.indexOf("Examples") == -1 &&
 				    entryName1.indexOf("examples") == -1 &&
 				    entryName1.indexOf(".DS_Store") == -1) {
-			    if (!Misc.checkForFile(folder + entryName)) {
+			    if (forceOverwrite || !Misc.checkForFile(folder + entryName)) {
 				    it.unitn.ing.rista.util.FFT obj = new it.unitn.ing.rista.util.FFT();
 				    BufferedInputStream in = new BufferedInputStream((obj.getClass().getResource("/" + entryName)).openStream());
 				    FileOutputStream out = new FileOutputStream(folder + entryName1);

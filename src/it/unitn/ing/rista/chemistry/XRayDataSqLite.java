@@ -571,7 +571,7 @@ public class XRayDataSqLite {
 
 	public static double getTauShell(int atomNumber_1, int shellID, double energyInKeV) {
 //		System.out.println(atomNumber_1 + " " + shellID + " " + energyInKeV + " " + getAbsorptionEdge(atomNumber_1, shellID));
-		if (shellID < 0 || getAbsorptionEdge(atomNumber_1, shellID) > energyInKeV)
+		if (shellID < 0) // || getAbsorptionEdge(atomNumber_1, shellID) > energyInKeV)
 			return 0;
 		if (shellID >= ebelTauShell.elementAt(atomNumber_1).size())
 			shellID = ebelTauShell.elementAt(atomNumber_1).size() - 1;
@@ -639,6 +639,8 @@ public class XRayDataSqLite {
 		double[][] ck_coeff = ckv.get(atomNumber_1);
 		if (ck_coeff == null) return 0;
       double[] sensitivityTr = new double[shellID - msi + 1];
+//		if (atomNumber_1 == 39)
+//			System.out.println(energyInKeV + " " + getTauShell(atomNumber_1, 0, energyInKeV));
       for (int i = msi; i <= shellID; i++) {
          sensitivityTr[i - msi] = getTauShell(atomNumber_1, i, energyInKeV);
          for (int j = msi; j < i; j++)
@@ -655,9 +657,9 @@ public class XRayDataSqLite {
 		linesMinimumEnergy = MaudPreferences.getDouble("fluorescenceLines.minimum_keV", linesMinimumEnergy);
 	}
 
-	public static Vector<FluorescenceLine> getFluorescenceLinesFor(int atomNumb, double energyInKeV,
+	public static Vector<FluorescenceLine> getFluorescenceLinesFor(int atomNumber, double energyInKeV,
 	                                                               double minimumEnergyInKeV) {
-		int atomNumber = atomNumb - 1;
+		atomNumber--;
 		Vector<FluorescenceLine> linesForAtom = new Vector(0, 10);
 		loadEbelAndShellTables(false);
 
@@ -673,6 +675,9 @@ public class XRayDataSqLite {
 				double sensitivity = getSensitivity(atomNumber, innerShell, energyInKeV);
 				FluorescenceLine aLine = new FluorescenceLine(transitionEnergy[0], innerShell, getAbsorptionEdge(atomNumber, innerShell), id);
 				aLine.setFluorescenceYield(fluorescenceYield);
+//				if (atomNumber == 39)
+//					System.out.println(energyInKeV + " " + transitionEnergy[0] + " " + sensitivity + " " +
+//							innerShell + " " + transitionEnergy[1] + " " + fluorescenceYield + " " + getAbsorptionEdge(atomNumber, innerShell));
 				if (sensitivity < 0)
 					sensitivity = 0;
 				aLine.setIntensity(fluorescenceYield * sensitivity * transitionEnergy[1]); // this is the probability

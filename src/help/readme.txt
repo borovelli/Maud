@@ -43,10 +43,15 @@ from the older one.
 
 Maud Version notes:
 
-(29/06/2016):   2.67.
+(26/07/2016):   2.68. The "Notch and Steve" release.
+                You don't need more than a week to be brave...
+                Corrected few bugs for fluorescence computation for M, N lines
+                of heavy elements and photoabsorption on the edges.
+
+(21/07/2016):   2.67.
                 Maud.jar has been moved to the lib directory.
 
-(29/06/2016):   2.66. The "Swimming" release.
+(20/07/2016):   2.66. The "Swimming" release.
                 I learned you have to start swimming in air first.....
                 Corrected a bug resulting in wrong elemental fraction in the
                 output results.

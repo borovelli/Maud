@@ -222,6 +222,7 @@ public class GIXRFModel extends FluorescenceBase {
 		double[] cPerm;
 		double lastEnergyInKeV = 0;
 		double lastEnergyIntensity = 0;
+//		System.out.println(rad_lines + " " + phiIntegrationNumber);
 		for (int ej = 0; ej < rad_lines; ej++) {
 			double lambda = radType.getRadiationWavelengthForFluorescence(ej);
 			double energy_intensity = radType.getRadiationWeightForFluorescence(ej);
@@ -515,7 +516,7 @@ public class GIXRFModel extends FluorescenceBase {
 						} else {
 							double subEnergy = energyInKeV;
 							double subEnergyInt = energy_intensity;
-							FluorescenceLine transfertLine = new FluorescenceLine(subEnergy, -1, 0, "transfert line");
+							FluorescenceLine transfertLine = new FluorescenceLine(subEnergy, -1, 0, "source");
 							double absorptionLineLambda = layer.getAbsorption(subEnergy) * density;
 							double totalIntensity = Math.exp(-layer.getOverLayerAbsorption(subEnergy) * density / sinPhid)
 									* subEnergyInt;
@@ -569,7 +570,7 @@ public class GIXRFModel extends FluorescenceBase {
 						int atomNumber = AtomInfo.retrieveAtomNumber(chemicalComposition.elementAt(k).label);
 						Vector<FluorescenceLine> linesForAtom = XRayDataSqLite.getFluorescenceLinesFor(
 								atomNumber, energyInKeV);
-//			  System.out.print(atomNumber + " " + chemicalComposition.elementAt(k).label);
+//			  System.out.println(atomNumber + " " + chemicalComposition.elementAt(k).label);
 //			  Vector <double[]> photoForAtom = AtomInfo.getPhotoAbsorptionFor(atomsLabels[k]);
 						double atomsQuantities = chemicalComposition.elementAt(k).quantity_weight;
 						if (atomsQuantities > 0) {
@@ -577,6 +578,7 @@ public class GIXRFModel extends FluorescenceBase {
 								FluorescenceLine line = linesForAtom.elementAt(ij);
 								double lineEnergyKeV = line.getEnergy(); // in KeV
 								if (lineEnergyKeV <= energyInKeV) {
+									System.out.println(chemicalComposition.elementAt(k).label + " " + lineEnergyKeV + " " + line.getIntensity());
 //				  double lineEnergy = lineEnergyKeV * 1000; // in eV
 //				  double lineLambda = Constants.ENERGY_LAMBDA / lineEnergy;
 									double absorptionLineLambda = layer.getAbsorption(lineEnergyKeV) * density;
@@ -610,9 +612,9 @@ public class GIXRFModel extends FluorescenceBase {
 									totalRe += MoreMath.complexMultiply(AE[2], AE[3], res[0], res[1])[0];
 									totalRe *= density;
 //  				  System.out.println(AE[2] + " " + AE[3] + " " + totalRe);
-//						System.out.println("Layer: " + j + " " + chemicalComposition.elementAt(k).label + " " + lineEnergyKeV + " " + line.getIntensity() + " " + atomsQuantities + " " + totalRe + " " + totalIntensity + " " + detectorAbsorption + " " + detectorEfficiency + " " + getIntensityCorrection(atomNumber));
 									double detectorAbsorption = ((XRFDetector) detector).computeAbsorptionForLineWithEnergy(lineEnergyKeV);
 									double detectorEfficiency = ((XRFDetector) detector).computeDetectorEfficiency(lineEnergyKeV);
+//						System.out.println("Layer: " + j + " " + chemicalComposition.elementAt(k).label + " " + lineEnergyKeV + " " + line.getIntensity() + " " + atomsQuantities + " " + totalRe + " " + totalIntensity + " " + detectorAbsorption + " " + detectorEfficiency);
 									double areaCorrection = ((XRFDetector) detector).getAreaCorrection(sampleLinearArea);
 //									if (lineEnergyKeV * 1000 > xEnergy[0] && lineEnergyKeV * 1000 < xEnergy[numberOfPoints - 1])
 //									System.out.println("# " + lineEnergyKeV + " " + line.getIntensity() + " " + atomsQuantities + " " + (totalIntensity * totalRe) + " " + detectorAbsorption + " " +

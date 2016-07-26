@@ -36,26 +36,17 @@
     <option name="USER" value="" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3188ddab-ee7e-4799-90e9-3d5065d3cd7a" name="Default" comment="New version 2.68&#10;Photo absorption edge correction, intreshell lines eliminated, M2 Fluorescence Yeld updated for atom number &gt; 65">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/files/xraydata.db" afterPath="$PROJECT_DIR$/src/files/xraydata.db" />
+    <list default="true" id="3188ddab-ee7e-4799-90e9-3d5065d3cd7a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Maud.iws" afterPath="$PROJECT_DIR$/Maud.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.xml" afterPath="$PROJECT_DIR$/build.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/help/readme.txt" afterPath="$PROJECT_DIR$/src/help/readme.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/JAtomTypeListPane.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/JAtomTypeListPane.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PlotSimpleData.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PlotSimpleData.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/Ck.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/Ck.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/FluorescenceEdge.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/FluorescenceEdge.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/FluorescenceElement.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/FluorescenceElement.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/Line.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/Line.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/XRayDataSqLite.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/XRayDataSqLite.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/detector/XRFDetector.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/detector/XRFDetector.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/GIXRFModel.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/GIXRFModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/QuantitativeXRF.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/QuantitativeXRF.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/TubeSpectrumTransmission.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/TubeSpectrumTransmission.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/microabs/MicroAbsorptionNone.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/microabs/MicroAbsorptionNone.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/radiation/XrayEbelTubeRadiation.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/radiation/XrayEbelTubeRadiation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/io/StringNumber.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/io/StringNumber.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/Constants.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/Constants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/FluorescenceLine.java" afterPath="$PROJECT_DIR$/src/it/unitn/ing/rista/util/FluorescenceLine.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/it/unitn/ing/wizard/wizard.properties" afterPath="$PROJECT_DIR$/src/it/unitn/ing/wizard/wizard.properties" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -383,8 +374,8 @@
       <file leaf-file-name="XRayDataSqLite.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/XRayDataSqLite.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="148">
-              <caret line="426" column="58" selection-start-line="426" selection-start-column="24" selection-end-line="426" selection-end-column="58" />
+            <state relative-caret-position="-77">
+              <caret line="675" column="108" selection-start-line="675" selection-start-column="91" selection-end-line="675" selection-end-column="108" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -392,11 +383,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Constants.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Constants.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/util/Constants.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4605">
-              <caret line="269" column="43" selection-start-line="269" selection-start-column="43" selection-end-line="269" selection-end-column="43" />
+            <state relative-caret-position="330">
+              <caret line="299" column="29" selection-start-line="299" selection-start-column="29" selection-end-line="299" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -405,8 +396,18 @@
       <file leaf-file-name="TXRFluorescence.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/TXRFluorescence.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="158">
+            <state relative-caret-position="225">
               <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="readme.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/help/readme.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="45" column="42" selection-start-line="45" selection-start-column="42" selection-end-line="45" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -422,21 +423,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="QuantitativeEDXRF.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/QuantitativeEDXRF.java">
+      <file leaf-file-name="GIXRFModel.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/GIXRFModel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
+            <state relative-caret-position="-392">
+              <caret line="570" column="82" selection-start-line="570" selection-start-column="73" selection-end-line="570" selection-end-column="96" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="build.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/build.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="31485">
-              <caret line="2099" column="18" selection-start-line="2099" selection-start-column="18" selection-end-line="2099" selection-end-column="18" />
+            <state relative-caret-position="3397">
+              <caret line="2161" column="18" selection-start-line="2161" selection-start-column="18" selection-end-line="2161" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -445,28 +446,8 @@
       <file leaf-file-name="QuantitativeXRF.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/QuantitativeXRF.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
-              <caret line="350" column="55" selection-start-line="350" selection-start-column="55" selection-end-line="350" selection-end-column="55" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Parameter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Parameter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1740">
-              <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="myJFrame.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/awt/myJFrame.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="794" column="19" selection-start-line="794" selection-start-column="14" selection-end-line="794" selection-end-column="25" />
+            <state relative-caret-position="420">
+              <caret line="174" column="65" selection-start-line="174" selection-start-column="65" selection-end-line="174" selection-end-column="65" />
               <folding />
             </state>
           </provider>
@@ -556,20 +537,20 @@
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Phase.java" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/AtomScatterer.java" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/Layer.java" />
-        <option value="$PROJECT_DIR$/build.xml" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/detector/XRFDetector.java" />
-        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/GIXRFModel.java" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/TubeSpectrumTransmission.java" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/radiation/XrayEbelTubeRadiation.java" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/util/FluorescenceLine.java" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/PlotSimpleData.java" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/awt/JAtomTypeListPane.java" />
-        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/QuantitativeXRF.java" />
-        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/XRayDataSqLite.java" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/instbroad/EDXRFInstrumentBroadening.java" />
-        <option value="$PROJECT_DIR$/src/help/readme.txt" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/microabs/MicroAbsorptionNone.java" />
+        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/GIXRFModel.java" />
+        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/XRayDataSqLite.java" />
+        <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/QuantitativeXRF.java" />
+        <option value="$PROJECT_DIR$/build.xml" />
         <option value="$PROJECT_DIR$/src/it/unitn/ing/rista/util/Constants.java" />
+        <option value="$PROJECT_DIR$/src/help/readme.txt" />
       </list>
     </option>
   </component>
@@ -1475,6 +1456,56 @@
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="help">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="com">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="radiographema">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="com">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="deadmoo">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scratches" />
@@ -1564,6 +1595,11 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="347" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
+  </component>
+  <component name="Push.Settings">
+    <excluded-roots>
+      <path value="$PROJECT_DIR$/cctbxForMaud" />
+    </excluded-roots>
   </component>
   <component name="RecentsManager">
     <key name="MoveMembersDialog.RECENTS_KEY">
@@ -1982,7 +2018,14 @@
       <option name="project" value="LOCAL" />
       <updated>1469115048072</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="New version 2.68&#10;Photo absorption fine edge calculation correction, intrashell lines eliminated.&#10;M2 Fluorescence Yeld updated in xraydata.db for atom number &gt; 65">
+      <created>1469543360975</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1469543360975</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -2007,11 +2050,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1137" height="873" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18755119" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22191273" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23507462" sideWeight="0.55672824" order="19" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23507462" sideWeight="0.55672824" order="19" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23507462" sideWeight="0.43711522" order="8" side_tool="true" content_ui="tabs" />
@@ -2022,7 +2065,7 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" show_stripe_button="true" weight="0.26609442" sideWeight="0.8434874" order="0" side_tool="true" content_ui="combo" x="1138" y="196" width="302" height="349" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23507462" sideWeight="0.5628848" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23507462" sideWeight="0.5628848" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" show_stripe_button="true" weight="0.30905306" sideWeight="0.3119748" order="2" side_tool="false" content_ui="tabs" x="1138" y="546" width="302" height="348" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" show_stripe_button="true" weight="0.1546287" sideWeight="0.8434874" order="1" side_tool="true" content_ui="tabs" x="1139" y="23" width="297" height="188" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28419328" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -2141,7 +2184,8 @@
     <MESSAGE value="New version 2.60, first commit" />
     <MESSAGE value="Fixing project structure, adding few files" />
     <MESSAGE value="New version 2.67" />
-    <option name="LAST_COMMIT_MESSAGE" value="New version 2.67" />
+    <MESSAGE value="New version 2.68&#10;Photo absorption fine edge calculation correction, intrashell lines eliminated.&#10;M2 Fluorescence Yeld updated in xraydata.db for atom number &gt; 65" />
+    <option name="LAST_COMMIT_MESSAGE" value="New version 2.68&#10;Photo absorption fine edge calculation correction, intrashell lines eliminated.&#10;M2 Fluorescence Yeld updated in xraydata.db for atom number &gt; 65" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
   <component name="VssConfiguration">
@@ -2528,14 +2572,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/GIXRFModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="517" column="109" selection-start-line="517" selection-start-column="91" selection-end-line="517" selection-end-column="109" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/detector/XRFDetector.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -2549,17 +2585,6 @@
         <state relative-caret-position="487">
           <caret line="346" column="3" selection-start-line="346" selection-start-column="3" selection-end-line="346" selection-end-column="3" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/util/FluorescenceLine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1478">
-          <caret line="154" column="105" selection-start-line="154" selection-start-column="105" selection-end-line="154" selection-end-column="105" />
-          <folding>
-            <element signature="e#4316#4317#0" expanded="true" />
-            <element signature="e#4341#4342#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2669,14 +2694,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/help/readme.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="101" column="19" selection-start-line="101" selection-start-column="19" selection-end-line="101" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/instbroad/EDSAsymmetricBroadening.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -2738,10 +2755,10 @@
         <state relative-caret-position="315">
           <caret line="74" column="66" selection-start-line="74" selection-start-column="66" selection-end-line="74" selection-end-column="66" />
           <folding>
-            <element signature="e#1488#1489#0" expanded="true" />
-            <element signature="e#1517#1518#0" expanded="true" />
-            <element signature="e#1558#1559#0" expanded="true" />
-            <element signature="e#1594#1595#0" expanded="true" />
+            <element signature="e#1488#1489#0" expanded="false" />
+            <element signature="e#1517#1518#0" expanded="false" />
+            <element signature="e#1558#1559#0" expanded="false" />
+            <element signature="e#1594#1595#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2778,20 +2795,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/XRayDataSqLite.java">
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/QuantitativeEDXRF.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="426" column="58" selection-start-line="426" selection-start-column="24" selection-end-line="426" selection-end-column="58" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/TXRFluorescence.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
+        <state relative-caret-position="195">
+          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -2804,34 +2811,68 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/QuantitativeEDXRF.java">
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/util/FluorescenceLine.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
+        <state relative-caret-position="308">
+          <caret line="51" column="10" selection-start-line="51" selection-start-column="10" selection-end-line="51" selection-end-column="10" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/GIXRFModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-392">
+          <caret line="570" column="82" selection-start-line="570" selection-start-column="73" selection-end-line="570" selection-end-column="96" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/chemistry/XRayDataSqLite.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-77">
+          <caret line="675" column="108" selection-start-line="675" selection-start-column="91" selection-end-line="675" selection-end-column="108" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/QuantitativeXRF.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="350" column="55" selection-start-line="350" selection-start-column="55" selection-end-line="350" selection-end-column="55" />
+        <state relative-caret-position="420">
+          <caret line="174" column="65" selection-start-line="174" selection-start-column="65" selection-end-line="174" selection-end-column="65" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.xml">
+    <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/diffr/fluorescence/TXRFluorescence.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="31485">
-          <caret line="2099" column="18" selection-start-line="2099" selection-start-column="18" selection-end-line="2099" selection-end-column="18" />
+        <state relative-caret-position="225">
+          <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/it/unitn/ing/rista/util/Constants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4605">
-          <caret line="269" column="43" selection-start-line="269" selection-start-column="43" selection-end-line="269" selection-end-column="43" />
+        <state relative-caret-position="330">
+          <caret line="299" column="29" selection-start-line="299" selection-start-column="29" selection-end-line="299" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/help/readme.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="45" column="42" selection-start-line="45" selection-start-column="42" selection-end-line="45" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3397">
+          <caret line="2161" column="18" selection-start-line="2161" selection-start-column="18" selection-end-line="2161" selection-end-column="18" />
           <folding />
         </state>
       </provider>
